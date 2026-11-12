@@ -1,37 +1,41 @@
 #!/bin/bash
-# Sonda instalacji offline: jakie obrazy offline ma Leap i ile waży zestaw pakietów produktu Shrimp.
+# Sonda instalacji offline: co jest w oficjalnym obrazie Leap offline (repozytorium, podpis, rozmiar).
 # Uruchamiana jako root w kontenerze openSUSE (.github/workflows/offline-probe.yml).
 #   tools/offline-probe.sh LEAP_VERSION OUTDIR
 set -uo pipefail
 V=${1:-16.1}; OUT=${2:-out/offline}
 mkdir -p "$OUT"; OUT=$(cd "$OUT" && pwd)
 exec > >(tee "$OUT/probe.txt") 2>&1
-for v in "$V" 16.0; do
-  for d in "" iso/ offline/ installer/ agama/ appliances/; do
-    u="https://download.opensuse.org/distribution/leap/$v/$d"
-    echo "== $u"
-    curl -fsSL "$u" 2>/dev/null | grep -oE 'href="[^"?]+"' | sed 's/href=//;s/"//g' | grep -vE '^(/|\.\./|https?:)' | head -60
-  done
+zypper -n in --no-recommends xorriso gawk >/dev/null
+ISO=/var/tmp/leap-offline.iso
+curl -fsSL -o "$ISO" "https://download.opensuse.org/distribution/leap/$V/offline/Leap-$V-offline-installer-x86_64.install.iso"
+ls -l "$ISO"
+xorriso -indev "$ISO" -pvd_info 2>&1 | grep -i 'volume id\|Volume Set'
+echo "== top"
+xorriso -indev "$ISO" -lsl / 2>/dev/null
+echo "== du (MiB) per top dir"
+for d in $(xorriso -indev "$ISO" -ls / 2>/dev/null | tr -d "'"); do
+  echo "$d $(xorriso -indev "$ISO" -du "/$d" 2>/dev/null | tail -1)"
 done
-for v in "$V" 16.0; do
-  u="https://download.opensuse.org/distribution/leap/$v/offline/"
-  for f in $(curl -fsSL "$u" 2>/dev/null | grep -oE 'href="[^"?]+\.iso"' | sed 's/href=//;s/"//g' | sort -u); do
-    echo "SIZE $u$f $(curl -fsSLI "$u$f" | grep -i '^content-length' | tail -1)"
+echo "== repodata / content files"
+xorriso -indev "$ISO" -find / -name repomd.xml\* 2>/dev/null
+xorriso -indev "$ISO" -find / -maxdepth 2 -type f 2>/dev/null | head -60
+echo "== media.1"
+xorriso -indev "$ISO" -find / -path '*media.1*' 2>/dev/null | head
+M=/var/tmp/leap-mnt; mkdir -p $M
+xorriso -osirrox on -indev "$ISO" -extract /media.1 $M/media.1 >/dev/null 2>&1 && cat $M/media.1/* 2>/dev/null | head -20
+r=$(xorriso -indev "$ISO" -find / -name repomd.xml 2>/dev/null | head -1 | tr -d "'")
+echo "repomd: $r"
+if [ -n "$r" ]; then
+  d=$(dirname "$(dirname "$r")")
+  xorriso -osirrox on -indev "$ISO" -extract "$d/repodata" $M/repodata >/dev/null 2>&1
+  ls -l $M/repodata
+  pk=$(ls $M/repodata/*primary.xml* | head -1)
+  case $pk in *.zst) zstd -dc $pk ;; *.gz) zcat $pk ;; *) cat $pk ;; esac > $M/primary.xml
+  echo "packages: $(grep -c '<package ' $M/primary.xml)"
+  grep -o '<name>[^<]*</name>' $M/primary.xml | sed 's/<[^>]*>//g' | sort -u > "$OUT/offline-names.txt"
+  for n in kernel-firmware-all gnome-shell gdm flatpak NetworkManager exfatprogs ntfsprogs steam-devices gamemode libwebkitgtk-6_0-4 gnome-shell-lang glibc-locale ffmpeg-7 gstreamer-plugins-bad sof-firmware fwupd ModemManager b43-fwcutter python3-nautilus inter-fonts google-noto-sans-cjk-fonts; do
+    grep -qx "$n" "$OUT/offline-names.txt" && echo "HAS $n" || echo "MISSING $n"
   done
-done
-base="https://download.opensuse.org/distribution/leap/$V/repo/oss"
-REPO=""
-for c in "$base/x86_64" "$base"; do curl -fsSLI "$c/repodata/repomd.xml" >/dev/null 2>&1 && { REPO=$c; break; }; done
-echo "repo: $REPO"
-R=/var/tmp/off-root
-Z=(zypper -n --root "$R" --gpg-auto-import-keys)
-rm -rf "$R"; mkdir -p "$R"
-"${Z[@]}" ar -f "$REPO" leap >/dev/null; "${Z[@]}" ref >/dev/null
-PK="Leap_immutable-release NetworkManager openSUSE-repos-Leap sudo-policy-wheel-auth-self flatpak gdm libwebkitgtk-6_0-4 parted dosfstools exfatprogs ntfsprogs steam-devices gamemode os-prober kernel-default grub2-x86_64-efi shim"
-echo "== product set (patterns immutable_base gnome + packages)"
-"${Z[@]}" in --dry-run --download-only --auto-agree-with-licenses pattern:immutable_base pattern:gnome $PK 2>&1 | tail -8
-echo "== firmware / microcode packages"
-"${Z[@]}" se -t package 'kernel-firmware*' 'ucode-*' 2>/dev/null | awk -F'|' 'NR>4 {gsub(/ /,"",$2); print $2}' | sort -u | tr '\n' ' '; echo
-"${Z[@]}" in --dry-run --download-only --auto-agree-with-licenses pattern:immutable_base pattern:gnome $PK 'kernel-firmware*' 'ucode-*' 2>&1 | tail -4
-echo "== repo total"
-"${Z[@]}" se -t package 2>/dev/null | wc -l
+  grep -c -- '-lang$' "$OUT/offline-names.txt"
+fi
