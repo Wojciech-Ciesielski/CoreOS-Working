@@ -161,6 +161,7 @@ done
 # pierwsza konfiguracja potrzebuje Wi-Fi, zanim cokolwiek pobierze. shrimp-setup-apply sprawdzi je ponownie.
 DRV=/usr/share/shrimp/linux/drivers.conf
 if [ -f "$DRV" ]; then
+  # shellcheck source=/dev/null
   DRIVER_PACKAGES=$(. "$DRV"; echo "${DRIVER_PACKAGES:-}")
   for p in $DRIVER_PACKAGES; do
     chroot "$T" rpm -q --whatprovides "$p" >/dev/null 2>&1 && continue
