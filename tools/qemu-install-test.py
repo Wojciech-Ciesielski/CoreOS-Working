@@ -344,6 +344,8 @@ finally:
         pass
     for phase, start_mark, end_mark in (("live", "=== offline: connectivity", "=== REPROBE"),
                                         ("live", "=== issues after config", "=== POST install"),
+                                        ("live", "=== POST install", "=== journal"),
+                                        ("live", "=== journal", "=== post-install / target"),
                                         ("live", "=== post-install / target", "===AGAMA-DONE"),
                                         ("installed", "===DIAG", "===DIAG-END")):
         try:
