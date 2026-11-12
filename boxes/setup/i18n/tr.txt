@@ -179,3 +179,28 @@
 179	Kanarya Adaları
 180	Sidney
 181	Perth
+223	Temel bilgisayar kullanımı (her zaman kurulur)
+224	Eğlence
+225	Ofis
+226	Sohbet ve sesli görüşme
+227	Kayıt ve yayın
+228	Ses düzenleme
+229	Lisanslar
+230	Bazı codec'ler ve sürücüler özgür yazılım değildir. Ne olduklarını okuyun ve kurulup kurulmayacağına karar verin.
+231	Video ve ses codec'leri
+232	H.264, Cisco Systems'in ikili lisansıyla sağladığı OpenH264 ile oynatılır (patent ücretlerini Cisco öder). FFmpeg ve GStreamer eklentileri LGPL ve GPL lisanslıdır; bazı biçimler ülkenizde patentli olabilir.
+233	NVIDIA sürücüsü
+234	NVIDIA ekran kartında resmi sürücüyü NVIDIA deposundan kurarız. NVIDIA Software License kapsamındadır: ücretsizdir ama kaynak kodu kapalıdır.
+235	Aygıt yazılımı
+236	Wi-Fi, Bluetooth, ses ve modem yongaları (Intel, Broadcom, Realtek ve diğerleri) üreticilerinin aygıt yazılımına ihtiyaç duyar. Dağıtılabilir ama değiştirilemez.
+237	Kabul ediyorum
+238	Yalnızca açık sürücüler ve codec'ler
+239	Videolar, müzik ve oyunlar hemen çalışır, en iyi grafik performansıyla.
+240	Bazı videolar oynatılamayabilir ve NVIDIA kartı açık sürücüyü kullanır (oyunlarda daha yavaş). Bunu daha sonra Cocktail'de değiştirebilirsiniz.
+241	Windows'tan dosyalarınız
+242	Shrimp Install {files} dosya ({size}) getirdi.
+243	Klasörlerime yerleştir
+244	Ayrı bir klasörde bırak
+245	Belgeler Belgeler'e, fotoğraflar Resimler'e gider, Windows'taki gibi.
+246	Her şey ev klasörünüzdeki Windows klasörüne gider.
+247	Windows

@@ -179,3 +179,28 @@
 179	Isole Canarie
 180	Sydney
 181	Perth
+223	Uso di base del computer (sempre installato)
+224	Intrattenimento
+225	Ufficio
+226	Chat e chiamate vocali
+227	Registrazione e streaming
+228	Editing audio
+229	Licenze
+230	Alcuni codec e driver non sono software libero. Leggi di cosa si tratta e decidi se installarli.
+231	Codec video e audio
+232	L'H.264 viene riprodotto con OpenH264, fornito da Cisco Systems con la sua licenza binaria (Cisco paga i brevetti). FFmpeg e i plugin GStreamer sono sotto LGPL e GPL; alcuni formati possono essere brevettati nel tuo paese.
+233	Driver NVIDIA
+234	Con una scheda grafica NVIDIA installiamo il driver ufficiale dal repository NVIDIA. È coperto dalla NVIDIA Software License: gratuito, ma con codice chiuso.
+235	Firmware dei dispositivi
+236	I chip Wi-Fi, Bluetooth, audio e modem (Intel, Broadcom, Realtek e altri) richiedono il firmware dei produttori. Può essere ridistribuito, ma non modificato.
+237	Accetto
+238	Solo driver e codec liberi
+239	Video, musica e giochi funzionano subito, con le migliori prestazioni grafiche.
+240	Alcuni video potrebbero non essere riprodotti e una scheda NVIDIA userà il driver libero (più lento nei giochi). Potrai cambiarlo in seguito in Cocktail.
+241	I tuoi file da Windows
+242	Shrimp Install ha portato {files} file ({size}).
+243	Mettili nelle mie cartelle
+244	Lasciali in una cartella separata
+245	I documenti vanno in Documenti, le foto in Immagini e così via, come in Windows.
+246	Tutto va nella cartella Windows nella tua cartella home.
+247	Windows

@@ -179,3 +179,28 @@
 179	Kanarische Inseln
 180	Sydney
 181	Perth
+223	Grundlegende Computernutzung (immer installiert)
+224	Unterhaltung
+225	Büro
+226	Chat und Sprachanrufe
+227	Aufnahme und Streaming
+228	Audiobearbeitung
+229	Lizenzen
+230	Einige Codecs und Treiber sind keine freie Software. Lies, worum es sich handelt, und entscheide, ob sie installiert werden.
+231	Video- und Audio-Codecs
+232	H.264 wird mit OpenH264 abgespielt, das Cisco Systems unter seiner Binärlizenz bereitstellt (Cisco zahlt die Patentgebühren). FFmpeg und die GStreamer-Plugins stehen unter LGPL und GPL; einige Formate können in deinem Land patentiert sein.
+233	NVIDIA-Treiber
+234	Bei einer NVIDIA-Grafikkarte installieren wir den offiziellen Treiber aus dem NVIDIA-Repository. Er unterliegt der NVIDIA Software License: kostenlos nutzbar, aber mit geschlossenem Quellcode.
+235	Gerätefirmware
+236	WLAN-, Bluetooth-, Audio- und Modemchips (Intel, Broadcom, Realtek und andere) brauchen Firmware ihrer Hersteller. Sie darf weitergegeben, aber nicht verändert werden.
+237	Ich stimme zu
+238	Nur offene Treiber und Codecs
+239	Videos, Musik und Spiele funktionieren sofort, mit der besten Grafikleistung.
+240	Manche Videos werden eventuell nicht abgespielt, und eine NVIDIA-Karte nutzt den offenen Treiber (langsamer in Spielen). Du kannst das später in Cocktail ändern.
+241	Deine Dateien aus Windows
+242	Shrimp Install hat {files} Dateien ({size}) mitgebracht.
+243	In meine Ordner legen
+244	In einem eigenen Ordner lassen
+245	Dokumente kommen in Dokumente, Bilder in Bilder und so weiter, wie in Windows.
+246	Alles kommt in den Ordner Windows in deinem persönlichen Ordner.
+247	Windows

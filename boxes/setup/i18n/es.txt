@@ -179,3 +179,28 @@
 179	Islas Canarias
 180	Sídney
 181	Perth
+223	Uso básico del ordenador (siempre se instala)
+224	Entretenimiento
+225	Oficina
+226	Chat y llamadas de voz
+227	Grabación y retransmisión
+228	Edición de audio
+229	Licencias
+230	Algunos códecs y controladores no son software libre. Lee de qué se trata y decide si quieres instalarlos.
+231	Códecs de vídeo y audio
+232	H.264 se reproduce con OpenH264, proporcionado por Cisco Systems bajo su licencia binaria (Cisco paga las patentes). FFmpeg y los complementos de GStreamer usan LGPL y GPL; algunos formatos pueden estar patentados en tu país.
+233	Controlador de NVIDIA
+234	Con una tarjeta gráfica NVIDIA instalamos el controlador oficial del repositorio de NVIDIA. Está cubierto por la NVIDIA Software License: es gratuito, pero su código es cerrado.
+235	Firmware de dispositivos
+236	Los chips de Wi-Fi, Bluetooth, sonido y módem (Intel, Broadcom, Realtek y otros) necesitan firmware de sus fabricantes. Se puede redistribuir, pero no modificar.
+237	Acepto
+238	Solo controladores y códecs libres
+239	Los vídeos, la música y los juegos funcionan enseguida, con el mejor rendimiento gráfico.
+240	Puede que algunos vídeos no se reproduzcan y una tarjeta NVIDIA usará el controlador libre (más lento en juegos). Podrás cambiarlo más tarde en Cocktail.
+241	Tus archivos de Windows
+242	Shrimp Install trajo {files} archivos ({size}).
+243	Ponerlos en mis carpetas
+244	Dejarlos en una carpeta aparte
+245	Los documentos van a Documentos, las fotos a Imágenes, etc., como en Windows.
+246	Todo va a la carpeta Windows de tu carpeta personal.
+247	Windows

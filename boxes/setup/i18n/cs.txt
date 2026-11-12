@@ -179,3 +179,28 @@
 179	Kanárské ostrovy
 180	Sydney
 181	Perth
+223	Základní používání počítače (instaluje se vždy)
+224	Zábava
+225	Kancelář
+226	Chat a hlasové hovory
+227	Nahrávání a streamování
+228	Úprava zvuku
+229	Licence
+230	Některé kodeky a ovladače nejsou svobodný software. Přečtěte si, o co jde, a rozhodněte, zda je nainstalovat.
+231	Video a audio kodeky
+232	H.264 se přehrává pomocí OpenH264 od Cisco Systems pod jeho binární licencí (patentové poplatky platí Cisco). FFmpeg a zásuvné moduly GStreamer jsou pod LGPL a GPL; některé formáty mohou být ve vaší zemi patentované.
+233	Ovladač NVIDIA
+234	U grafické karty NVIDIA instalujeme oficiální ovladač z repozitáře NVIDIA. Vztahuje se na něj NVIDIA Software License: je zdarma, ale s uzavřeným kódem.
+235	Firmware zařízení
+236	Čipy Wi-Fi, Bluetooth, zvuku a modemů (Intel, Broadcom, Realtek a další) potřebují firmware od výrobců. Lze jej šířit, ale ne měnit.
+237	Souhlasím
+238	Pouze otevřené ovladače a kodeky
+239	Videa, hudba a hry fungují hned, s nejlepším grafickým výkonem.
+240	Některá videa se nemusí přehrát a karta NVIDIA použije otevřený ovladač (pomalejší ve hrách). Později to můžete změnit v aplikaci Cocktail.
+241	Vaše soubory z Windows
+242	Shrimp Install přenesl soubory: {files} ({size}).
+243	Dát je do mých složek
+244	Nechat je v samostatné složce
+245	Dokumenty půjdou do Dokumentů, fotky do Obrázků a tak dále, jako ve Windows.
+246	Vše půjde do složky Windows ve vaší domovské složce.
+247	Windows

@@ -179,3 +179,28 @@
 179	Canarische Eilanden
 180	Sydney
 181	Perth
+223	Basisgebruik van de computer (altijd geïnstalleerd)
+224	Ontspanning
+225	Kantoor
+226	Chat en spraakgesprekken
+227	Opnemen en streamen
+228	Audiobewerking
+229	Licenties
+230	Sommige codecs en stuurprogramma's zijn geen vrije software. Lees waar het om gaat en beslis of je ze installeert.
+231	Video- en audiocodecs
+232	H.264 wordt afgespeeld met OpenH264, geleverd door Cisco Systems onder zijn binaire licentie (Cisco betaalt de patentkosten). FFmpeg en de GStreamer-plug-ins vallen onder LGPL en GPL; sommige formaten kunnen in jouw land gepatenteerd zijn.
+233	NVIDIA-stuurprogramma
+234	Bij een NVIDIA-videokaart installeren we het officiële stuurprogramma uit de NVIDIA-repository. Daarvoor geldt de NVIDIA Software License: gratis te gebruiken, maar met gesloten broncode.
+235	Firmware van apparaten
+236	Wifi-, bluetooth-, geluids- en modemchips (Intel, Broadcom, Realtek en andere) hebben firmware van hun makers nodig. Die mag worden verspreid, maar niet aangepast.
+237	Ik ga akkoord
+238	Alleen open stuurprogramma's en codecs
+239	Video's, muziek en games werken meteen, met de beste grafische prestaties.
+240	Sommige video's spelen mogelijk niet af en een NVIDIA-kaart gebruikt het open stuurprogramma (trager in games). Je kunt dit later wijzigen in Cocktail.
+241	Je bestanden uit Windows
+242	Shrimp Install heeft {files} bestanden ({size}) meegebracht.
+243	In mijn mappen zetten
+244	In een aparte map laten
+245	Documenten gaan naar Documenten, foto's naar Afbeeldingen enzovoort, zoals in Windows.
+246	Alles gaat naar de map Windows in je persoonlijke map.
+247	Windows

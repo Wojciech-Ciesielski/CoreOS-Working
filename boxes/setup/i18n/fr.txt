@@ -179,3 +179,28 @@
 179	Îles Canaries
 180	Sydney
 181	Perth
+223	Utilisation de base de l'ordinateur (toujours installée)
+224	Divertissement
+225	Bureautique
+226	Discussion et appels vocaux
+227	Enregistrement et diffusion
+228	Montage audio
+229	Licences
+230	Certains codecs et pilotes ne sont pas des logiciels libres. Lisez de quoi il s'agit et décidez s'il faut les installer.
+231	Codecs vidéo et audio
+232	Le H.264 est lu avec OpenH264, fourni par Cisco Systems sous sa licence binaire (Cisco paie les droits de brevet). FFmpeg et les greffons GStreamer sont sous LGPL et GPL ; certains formats peuvent être brevetés dans votre pays.
+233	Pilote NVIDIA
+234	Avec une carte graphique NVIDIA, nous installons le pilote officiel depuis le dépôt NVIDIA. Il est couvert par la NVIDIA Software License : gratuit, mais à code source fermé.
+235	Micrologiciels des périphériques
+236	Les puces Wi-Fi, Bluetooth, son et modem (Intel, Broadcom, Realtek et autres) ont besoin du micrologiciel de leur fabricant. Il peut être redistribué, mais pas modifié.
+237	J'accepte
+238	Seulement les pilotes et codecs libres
+239	Les vidéos, la musique et les jeux fonctionnent tout de suite, avec les meilleures performances graphiques.
+240	Certaines vidéos pourraient ne pas être lues, et une carte NVIDIA utilise le pilote libre (plus lent en jeu). Vous pourrez changer cela plus tard dans Cocktail.
+241	Vos fichiers de Windows
+242	Shrimp Install a apporté {files} fichiers ({size}).
+243	Les ranger dans mes dossiers
+244	Les garder dans un dossier à part
+245	Les documents vont dans Documents, les photos dans Images, et ainsi de suite, comme sous Windows.
+246	Tout va dans le dossier Windows de votre dossier personnel.
+247	Windows
