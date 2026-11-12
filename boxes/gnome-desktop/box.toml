@@ -13,8 +13,9 @@ image = [
     "gnome-session",
     "gnome-control-center",
     "nautilus",
-    "gnome-console",
+    # terminal: Cherry (Shrimps) zamiast gnome-console
     "gnome-keyring",
+    "gnome-disk-utility",
     "xdg-user-dirs-gtk",
     "xdg-desktop-portal-gnome",
     "adwaita-icon-theme",
@@ -29,6 +30,7 @@ image = [
     "gnome-control-center-lang",
     "gnome-session-lang",
     "nautilus-lang",
+    "gnome-disk-utility-lang",
     "gtk4-lang",
     "libadwaita-lang",
 ]

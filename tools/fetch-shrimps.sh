@@ -1,5 +1,5 @@
 #!/bin/bash
-# Dokłada do boxes/ aplikacje Shrimps (Shrimp Apps, Cocktail, Panko i ich biblioteki) z repozytorium Shrimps-Working.
+# Dokłada do boxes/ aplikacje Shrimps (Shrimp Apps, Cocktail, Panko, Cherry i ich biblioteki) z repozytorium Shrimps-Working.
 # Wersja jest przypięta w tools/shrimps.ref („właściciel/repo@tag-albo-commit”), więc ISO zawsze buduje się z tego samego kodu.
 # Boxy, które CoreOS już ma (np. shrimp-box, i18n-core), zostają z CoreOS. Pobrane boxy tracą wpis `ci`
 # (ich CI jest w Shrimps-Working) i są w .gitignore, więc nie trafiają do commita.

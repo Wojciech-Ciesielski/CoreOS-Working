@@ -5,6 +5,7 @@ out/
 # Boxy z Shrimps-Working (tools/fetch-shrimps.sh)
 /boxes/cocktail/
 /boxes/panko/
+/boxes/cherry/
 /boxes/shrimp-apps/
 /boxes/shrimp-i18n/
 /boxes/web-apps/

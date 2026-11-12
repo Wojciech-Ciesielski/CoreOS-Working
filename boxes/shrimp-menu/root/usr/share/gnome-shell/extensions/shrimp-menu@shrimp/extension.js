@@ -173,7 +173,7 @@ class ShrimpMenuButton extends PanelMenu.Button {
         const tools = [
             ['org.gnome.SystemMonitor.desktop', 'gnome-system-monitor.desktop'],
             ['org.gnome.DiskUtility.desktop', 'gnome-disks.desktop'],
-            ['org.gnome.Console.desktop', 'org.gnome.Terminal.desktop'],
+            ['org.shrimp.Cherry.desktop', 'org.gnome.Console.desktop', 'org.gnome.Terminal.desktop'],
             ['org.gnome.Extensions.desktop', 'com.mattjakeman.ExtensionManager.desktop'],
         ];
         if (tools.map(ids => this._appItem(null, ids)).some(Boolean))

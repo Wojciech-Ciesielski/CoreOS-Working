@@ -3,7 +3,7 @@ name: Build ISO
 on:
   push:
     branches: [main, "claude/**"]
-    paths: ["boxes/branding/**", "boxes/icon-theme/**", "boxes/fonts/**", "boxes/plymouth-theme/**", "boxes/grub-theme/**", "boxes/gnome-desktop/**", "boxes/shell-theme/**", "boxes/shell-extensions/**", "boxes/shrimp-menu/**", "boxes/app-style/**", "boxes/flathub/**", "boxes/linu-x/**", "boxes/gdm/**", "boxes/shrimp-apps/**", "boxes/shrimp-i18n/**", "boxes/i18n-core/**", "boxes/web-apps/**", "boxes/help-links/**", "boxes/cocktail/**", "boxes/panko/**", "boxes/image-base/**", "boxes/setup/**", "boxes/install-schema/**", "boxes/live-session/**", "boxes/shrimp-box/**", "containers/iso-live.toml", "containers/desktop.toml", "tools/build-iso.sh", "tools/fetch-shrimps.sh", "tools/shrimps.ref", ".github/workflows/build-iso.yml"]
+    paths: ["boxes/branding/**", "boxes/icon-theme/**", "boxes/fonts/**", "boxes/plymouth-theme/**", "boxes/grub-theme/**", "boxes/gnome-desktop/**", "boxes/shell-theme/**", "boxes/shell-extensions/**", "boxes/shrimp-menu/**", "boxes/app-style/**", "boxes/flathub/**", "boxes/linu-x/**", "boxes/gdm/**", "boxes/shrimp-apps/**", "boxes/shrimp-i18n/**", "boxes/i18n-core/**", "boxes/web-apps/**", "boxes/help-links/**", "boxes/cocktail/**", "boxes/panko/**", "boxes/cherry/**", "boxes/image-base/**", "boxes/setup/**", "boxes/install-schema/**", "boxes/live-session/**", "boxes/shrimp-box/**", "containers/iso-live.toml", "containers/desktop.toml", "tools/build-iso.sh", "tools/fetch-shrimps.sh", "tools/shrimps.ref", ".github/workflows/build-iso.yml"]
   workflow_call:
   workflow_dispatch:
     inputs:

@@ -247,7 +247,7 @@ try:
     pause(3)
 
     # Terminal with diagnostics; everything is copied to the serial port.
-    run_dialog("kgx")
+    run_dialog("cherry")
     pause(8)
     stage("terminal", keep_duplicates=True)
     type_text("sudo -v\n")
