@@ -1,0 +1,35 @@
+name: Offline probe
+
+# Which offline install images Leap offers and how big the Shrimp package set is. Result: artifact "offline" (14 days).
+
+on:
+  push:
+    branches: [main, "claude/**"]
+    paths: ["tools/offline-probe.sh", ".github/workflows/offline-probe.yml"]
+  workflow_dispatch:
+    inputs:
+      leap_version:
+        description: "openSUSE Leap version"
+        default: "16.1"
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - name: Probe offline install
+        run: |
+          mkdir -p test-results/offline
+          sudo docker run --rm -v "$PWD:/work" -w /work docker.io/opensuse/tumbleweed:latest \
+            bash tools/offline-probe.sh "${{ github.event.inputs.leap_version || '16.1' }}" test-results/offline
+          sudo chown -R "$(id -u):$(id -g)" test-results/offline
+          cat test-results/offline/probe.txt
+      - uses: actions/upload-artifact@v7
+        with:
+          name: offline
+          path: test-results/offline
+          retention-days: 14
