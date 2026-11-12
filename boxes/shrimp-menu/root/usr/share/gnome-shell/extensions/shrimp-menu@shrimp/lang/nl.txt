@@ -1,0 +1,4 @@
+1	Over deze computer
+3	Software
+4	Updates
+15	Systeemherstel

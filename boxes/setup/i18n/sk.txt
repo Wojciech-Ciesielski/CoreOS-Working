@@ -1,0 +1,181 @@
+1	Späť
+2	Informácie
+3	Logo Shrimpu
+4	Ovládač NVIDIA ponúka plný výkon v hrách a grafických programoch. Otvorený ovládač je jednoduchší, ale pomalší.
+5	(Odporúča sa)
+6	Ďalej
+7	Preskočiť
+8	Zrušiť
+9	Hotovo
+10	Rozšírené
+11	Automaticky
+12	Žiadny
+13	Pripravme Shrimp vo vašom počítači.
+14	Začnime
+15	Vyberte jazyk
+16	Kde sa nachádzate?
+17	Nastavíme časové pásmo a formát dátumu.
+18	Vyberte rozloženie klávesnice
+19	Vyskúšať rozloženie
+20	programátorské
+21	písací stroj
+22	Jednotka
+23	prázdna
+24	Šifrovanie disku
+25	Vypnuté
+26	Zapnuté
+27	Heslo disku
+28	Zopakujte heslo disku
+29	Kam sa má Shrimp nainštalovať?
+30	Vedľa Windowsu
+31	Namiesto Windowsu
+32	Windows sa odstráni. Súbory, ktoré ste si ponechali, presunieme do nového systému.
+33	Inštalácia vedľa Windowsu nie je možná, pretože jednotka s Windowsom je šifrovaná pomocou BitLockera.
+34	Shrimp použije celú jednotku {name}.
+35	Windows zostane na druhej jednotke.
+36	Rozdelenie disku
+37	Počítač sa na toto heslo opýta pri každom spustení. Bez neho nebudete môcť obnoviť svoje údaje.
+38	Vytvorte účet
+39	Budete ho potrebovať na prihlásenie.
+40	Celé meno
+41	Používateľské meno
+42	Heslo
+43	Potvrdenie hesla
+44	Pripravené na inštaláciu
+45	Kým neklepnete na „Nainštalovať“, nič sa nezmení.
+46	Jazyk
+47	Oblasť
+48	Klávesnica
+49	Jednotka
+50	Inštalácia
+51	Celá jednotka
+52	Rozdelenie disku
+53	Windows {win} · Shrimp {shrimp}
+54	Účet
+55	Šifrovanie
+56	Nainštalovať
+57	Inštaluje sa Shrimp
+58	Inštalácia
+59	Príprava jednotky
+60	Inštalácia systému
+61	Obnovenie súborov
+62	Zostáva približne {min} min
+63	Ešte chvíľu
+64	Inštalácia je dokončená
+65	Dokončite reštartovaním počítača.
+66	Reštartovať
+67	Ahoj, {name}
+68	ty
+69	Dokončime nastavenie. Zaberie to len chvíľu.
+70	Pripojte sa k sieti
+71	Heslo k sieti {ssid}
+72	Zabezpečená
+73	Otvorená
+74	Otvorená sieť. Ostatní môžu vidieť, čo v nej robíte.
+75	Skrytá sieť
+76	Zadajte údaje o sieti, ktorá nie je v zozname.
+77	Názov siete
+78	Zabezpečenie
+79	Pripojiť
+80	Adresa IP
+81	Server DNS
+82	Proxy
+83	Ručne
+84	Vyberte vzhľad
+85	Svetlý
+86	Tmavý
+87	Môžete to kedykoľvek zmeniť v Nastaveniach.
+88	Vyberte farbu
+89	Modrá
+90	Azúrová
+91	Zelená
+92	Žltá
+93	Oranžová
+94	Červená
+95	Ružová
+96	Fialová
+97	Sivá
+98	Obraz a zvuk bez starostí
+99	Nainštalujeme ovládače a kodeky, ktoré potrebujete, aby videá a hry fungovali hneď.
+100	Nainštalovať
+101	Urobím to neskôr
+102	Grafická karta NVIDIA
+103	Našli sme kartu {name}.
+104	Ovládač NVIDIA
+105	Otvorený ovládač
+106	Najlepší výkon v hrách a grafických programoch.
+107	Jednoduchší na prevádzku, ale menej výkonný.
+108	Ako používate počítač?
+109	Nainštalujeme programy, ktoré potrebujete najviac.
+110	Práca a štúdium
+111	Hry
+112	Tvorba
+113	Programovanie
+114	Multimédiá
+115	Vaše programy z Windowsu
+116	Našli sme ich vo vašom počítači. Vyberte, ktoré nainštalovať.
+117	Navrhované programy
+118	Vyberte, ktoré nainštalovať.
+119	Nič nie je vybraté.
+120	Inštalácia programov
+121	Preberanie a inštalácia
+122	Všetko je pripravené
+123	Prajeme príjemné používanie Shrimpu.
+124	Chcem sa dozvedieť viac
+125	{n} z {total}
+126	Shrimp je Linux
+127	Linux je bezplatný systém, ktorý vytvárajú ľudia z celého sveta. Beží na ňom väčšina serverov a telefónov s Androidom.
+128	Vedľa Windowsu
+129	Pri každom spustení si vyberiete Shrimp alebo Windows.
+130	Programy
+131	Súbory .exe z Windowsu tu nefungujú. Programy inštalujete zo Shrimp Apps a pre väčšinu známych aplikácií tam nájdete ekvivalent.
+132	Heslo pri zmenách
+133	Keď inštalujete programy alebo meníte dôležité nastavenia, systém sa opýta na vaše heslo. Je to normálne a chráni to váš počítač.
+134	Vaše súbory
+135	Dokumenty, fotky a stiahnuté súbory nájdete v aplikácii Súbory vo svojom domovskom priečinku.
+136	Nájdete tam aj jednotku s Windowsom.
+137	Panko
+138	Prestalo po nejakej zmene niečo fungovať? V Panku sa môžete vrátiť do stavu pred ňou.
+139	Cocktail
+140	Aktualizácie, ovládače a kodeky na jednom mieste. Aktualizácie sa inštalujú pri reštarte.
+141	Rýchle vyhľadávanie
+142	Stlačte kláves Super, ten s logom Windowsu, a nájdete programy, súbory aj nastavenia.
+143	Pomocník
+144	Odpovede nájdete na stránkach pomocníka Shrimpu, v dokumentácii GNOME a openSUSE a na komunitných fórach.
+145	Heslá disku sa nezhodujú
+146	Zadajte do oboch polí rovnaké heslo. Bez neho počítač nespustíte, preto si ho uložte na bezpečné miesto.
+147	Heslá sa nezhodujú
+148	Zadajte do oboch polí rovnaké heslo a skúste to znova.
+149	Skúsiť znova
+150	Nedostatok miesta
+151	Na jednotke nie je pre Shrimp dosť miesta. Zmenšite Windows alebo vyberte inú jednotku.
+152	Zmeniť veľkosť
+153	Späť
+154	Inštalácia zlyhala
+155	Niečo sa pokazilo. Vaše súbory sú v bezpečí. Môžete to skúsiť znova.
+156	Ukončiť
+157	Pripojenie zlyhalo
+158	Skontrolujte heslo k sieti a skúste to znova.
+159	Skontrolujte heslo k sieti {ssid} a skúste to znova.
+160	Žiadne pripojenie na internet
+161	Programy sa nepodarilo stiahnuť. Skontrolujte pripojenie a skúste to znova.
+162	Dokumenty a tabuľky
+163	E-mail
+164	Hry
+165	Hry z Epicu a GOGu
+166	Kreslenie
+167	Strih videa
+168	Grafika
+169	Editor kódu
+170	Vývojové prostredie
+171	Filmy a hudba
+172	Hudba
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Kanárske ostrovy
+180	Sydney
+181	Perth

@@ -1,0 +1,2 @@
+1	Setările computerului
+2	Shrimp pornește în %d s

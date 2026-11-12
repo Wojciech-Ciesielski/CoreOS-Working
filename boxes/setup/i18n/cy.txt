@@ -1,0 +1,181 @@
+1	Yn ôl
+2	Gwybodaeth
+3	Logo Shrimp
+4	Mae gyrrwr NVIDIA yn rhoi perfformiad llawn mewn gemau a rhaglenni graffeg. Mae'r gyrrwr agored yn symlach ond yn arafach.
+5	(Argymhellir)
+6	Nesaf
+7	Hepgor
+8	Diddymu
+9	Wedi'i wneud
+10	Uwch
+11	Awtomatig
+12	Dim
+13	Gadewch i ni baratoi Shrimp ar eich cyfrifiadur.
+14	Dewch i ni ddechrau
+15	Dewiswch iaith
+16	Ble ydych chi?
+17	Byddwn yn gosod y gylchfa amser a fformat y dyddiad.
+18	Dewiswch gynllun bysellfwrdd
+19	Profwch y gosodiad
+20	rhaglennydd
+21	teipiadur
+22	Gyriant
+23	gwag
+24	Amgryptio disg
+25	I ffwrdd
+26	Ymlaen
+27	Cyfrinair y ddisg
+28	Ailadroddwch gyfrinair y ddisg
+29	Ble dylid gosod Shrimp?
+30	Wrth ymyl Windows
+31	Yn lle Windows
+32	Bydd Windows yn cael ei dynnu. Byddwn yn symud y ffeiliau a gadwoch i'r system newydd.
+33	Nid yw'n bosibl gosod wrth ymyl Windows oherwydd bod gyriant Windows wedi'i amgryptio gyda BitLocker.
+34	Bydd Shrimp yn defnyddio'r gyriant {name} cyfan.
+35	Mae Windows yn aros ar y gyriant arall.
+36	Rhannu'r ddisg
+37	Bydd y cyfrifiadur yn gofyn am y cyfrinair hwn bob tro y mae'n cychwyn. Hebddo ni allwch adfer eich data.
+38	Creu cyfrif
+39	Bydd ei angen arnoch i fewngofnodi.
+40	Enw llawn
+41	Enw defnyddiwr
+42	Cyfrinair
+43	Cadarnhau'r cyfrinair
+44	Yn barod i'w osod
+45	Does dim yn newid nes i chi glicio “Gosod”.
+46	Iaith
+47	Rhanbarth
+48	Bysellfwrdd
+49	Gyriant
+50	Gosod
+51	Gyriant cyfan
+52	Rhannu'r ddisg
+53	Windows {win} · Shrimp {shrimp}
+54	Cyfrif
+55	Amgryptio
+56	Gosod
+57	Yn gosod Shrimp
+58	Yn gosod
+59	Paratoi'r gyriant
+60	Gosod y system
+61	Adfer ffeiliau
+62	Tua {min} mun ar ôl
+63	Eiliad
+64	Gosod wedi'i gwblhau
+65	Ailgychwynnwch y cyfrifiadur i orffen.
+66	Ailgychwyn
+67	Helo, {name}
+68	chi
+69	Gadewch i ni orffen y gosod. Dim ond eiliad fydd e.
+70	Cysylltu â rhwydwaith
+71	Cyfrinair ar gyfer rhwydwaith {ssid}
+72	Diogel
+73	Agored
+74	Rhwydwaith agored. Gall eraill weld beth rydych chi'n ei wneud arno.
+75	Rhwydwaith cudd
+76	Rhowch fanylion rhwydwaith nad yw'n ymddangos yn y rhestr.
+77	Enw'r rhwydwaith
+78	Diogelwch
+79	Cysylltu
+80	Cyfeiriad IP
+81	Gweinydd DNS
+82	Dirprwy
+83	Â llaw
+84	Dewiswch olwg
+85	Golau
+86	Tywyll
+87	Gallwch newid hyn unrhyw bryd yn y Gosodiadau.
+88	Dewiswch liw
+89	Glas
+90	Gwyrddlas
+91	Gwyrdd
+92	Melyn
+93	Oren
+94	Coch
+95	Pinc
+96	Porffor
+97	Llwyd
+98	Llun a sain heb drafferth
+99	Byddwn yn gosod y gyrwyr a'r codecs sydd eu hangen fel bod fideos a gemau'n gweithio ar unwaith.
+100	Gosod
+101	Gwnaf hyn yn nes ymlaen
+102	Cerdyn graffeg NVIDIA
+103	Daethom o hyd i gerdyn {name}.
+104	Gyrrwr NVIDIA
+105	Gyrrwr agored
+106	Y perfformiad gorau mewn gemau a rhaglenni graffeg.
+107	Symlach i'w redeg, ond llai pwerus.
+108	Sut ydych chi'n defnyddio'ch cyfrifiadur?
+109	Byddwn yn gosod y rhaglenni sydd eu hangen fwyaf arnoch.
+110	Gwaith ac astudio
+111	Gemau
+112	Creadigrwydd
+113	Rhaglennu
+114	Amlgyfrwng
+115	Eich rhaglenni o Windows
+116	Daethom o hyd iddyn nhw ar eich cyfrifiadur. Dewiswch pa rai i'w gosod.
+117	Rhaglenni a awgrymir
+118	Dewiswch pa rai i'w gosod.
+119	Dim wedi'i ddewis.
+120	Gosod rhaglenni
+121	Llwytho i lawr a gosod
+122	Popeth yn barod
+123	Mwynhewch Shrimp.
+124	Rwyf am wybod mwy
+125	{n} o {total}
+126	Linux yw Shrimp
+127	Mae Linux yn system rydd a wnaed gan bobl o bob cwr o'r byd. Mae'n rhedeg y rhan fwyaf o weinyddion a ffonau Android.
+128	Windows drws nesaf
+129	Bob tro y bydd yn cychwyn byddwch yn dewis Shrimp neu Windows.
+130	Rhaglenni
+131	Nid yw ffeiliau .exe Windows yn rhedeg yma. Rydych chi'n gosod rhaglenni o Shrimp Apps, ac ar gyfer y rhan fwyaf o apiau adnabyddus fe welwch rywbeth cyfatebol yno.
+132	Cyfrinair ar gyfer newidiadau
+133	Pan fyddwch chi'n gosod rhaglenni neu'n newid gosodiadau pwysig, bydd y system yn gofyn am eich cyfrinair. Mae hynny'n arferol ac yn diogelu'ch cyfrifiadur.
+134	Eich ffeiliau
+135	Mae dogfennau, lluniau a llwythi i lawr yn yr ap Ffeiliau, yn eich ffolder cartref.
+136	Fe welwch yriant Windows yno hefyd.
+137	Panko
+138	A wnaeth rhywbeth roi'r gorau i weithio ar ôl newid? Yn Panko gallwch fynd yn ôl i sut roedd pethau o'r blaen.
+139	Cocktail
+140	Diweddariadau, gyrwyr a codecs mewn un lle. Mae diweddariadau'n cael eu gosod pan fyddwch chi'n ailgychwyn.
+141	Chwilio cyflym
+142	Pwyswch yr allwedd Super, yr un gyda logo Windows, i ddod o hyd i raglenni, ffeiliau a gosodiadau.
+143	Cymorth
+144	Fe welwch atebion ar dudalennau cymorth Shrimp, yn nogfennaeth GNOME ac openSUSE ac ar fforymau'r gymuned.
+145	Nid yw cyfrineiriau'r ddisg yn cyfateb
+146	Rhowch yr un cyfrinair yn y ddau faes. Ni allwch gychwyn y cyfrifiadur hebddo, felly cadwch ef yn rhywle diogel.
+147	Nid yw'r cyfrineiriau'n cyfateb
+148	Rhowch yr un cyfrinair yn y ddau faes a rhowch gynnig arall arni.
+149	Ceisio eto
+150	Dim digon o le
+151	Does dim digon o le ar y gyriant ar gyfer Shrimp. Gwnewch Windows yn llai neu dewiswch yriant arall.
+152	Newid y maint
+153	Yn ôl
+154	Methodd y gosod
+155	Aeth rhywbeth o'i le. Mae eich ffeiliau'n ddiogel. Gallwch roi cynnig arall arni.
+156	Gadael
+157	Methu cysylltu
+158	Gwiriwch gyfrinair y rhwydwaith a rhowch gynnig arall arni.
+159	Gwiriwch y cyfrinair ar gyfer rhwydwaith {ssid} a rhowch gynnig arall arni.
+160	Dim cysylltiad â'r rhyngrwyd
+161	Methu llwytho'r rhaglenni i lawr. Gwiriwch eich cysylltiad a rhowch gynnig arall arni.
+162	Dogfennau a thaenlenni
+163	E-bost
+164	Gemau
+165	Gemau o Epic a GOG
+166	Lluniadu
+167	Golygu fideo
+168	Graffeg
+169	Golygydd cod
+170	Amgylchedd datblygu
+171	Ffilmiau a cherddoriaeth
+172	Cerddoriaeth
+173	Efrog Newydd
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Yr Ynysoedd Dedwydd
+180	Sydney
+181	Perth

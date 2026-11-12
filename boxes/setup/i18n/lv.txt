@@ -1,0 +1,181 @@
+1	Atpakaļ
+2	Informācija
+3	Shrimp logotips
+4	NVIDIA draiveris nodrošina pilnu veiktspēju spēlēs un grafikas programmās. Atvērtais draiveris ir vienkāršāks, bet lēnāks.
+5	(Ieteicams)
+6	Tālāk
+7	Izlaist
+8	Atcelt
+9	Gatavs
+10	Papildu
+11	Automātiski
+12	Nav
+13	Sagatavosim Shrimp jūsu datorā.
+14	Sāksim
+15	Izvēlieties valodu
+16	Kur jūs atrodaties?
+17	Mēs iestatīsim laika joslu un datuma formātu.
+18	Izvēlieties tastatūras izkārtojumu
+19	Pārbaudiet izkārtojumu
+20	programmētājs
+21	rakstāmmašīna
+22	Disks
+23	tukšs
+24	Diska šifrēšana
+25	Izslēgta
+26	Ieslēgta
+27	Diska parole
+28	Atkārtojiet diska paroli
+29	Kur uzstādīt Shrimp?
+30	Līdzās Windows
+31	Windows vietā
+32	Windows tiks noņemts. Saglabātos failus pārvietosim uz jauno sistēmu.
+33	Uzstādīšana līdzās Windows nav iespējama, jo Windows disks ir šifrēts ar BitLocker.
+34	Shrimp izmantos visu disku {name}.
+35	Windows paliks otrā diskā.
+36	Diska sadalījums
+37	Dators šo paroli prasīs katrā startēšanas reizē. Bez tās datus atgūt nevarēsiet.
+38	Izveidot kontu
+39	Tā būs vajadzīga, lai pieteiktos.
+40	Pilns vārds
+41	Lietotājvārds
+42	Parole
+43	Apstipriniet paroli
+44	Gatavs uzstādīšanai
+45	Nekas nemainīsies, līdz nospiedīsiet “Uzstādīt”.
+46	Valoda
+47	Reģions
+48	Tastatūra
+49	Disks
+50	Uzstādīšana
+51	Viss disks
+52	Diska sadalījums
+53	Windows {win} · Shrimp {shrimp}
+54	Konts
+55	Šifrēšana
+56	Uzstādīt
+57	Notiek Shrimp uzstādīšana
+58	Notiek uzstādīšana
+59	Notiek diska sagatavošana
+60	Notiek sistēmas uzstādīšana
+61	Notiek failu atjaunošana
+62	Atlikušas apmēram {min} min
+63	Brīdi
+64	Uzstādīšana pabeigta
+65	Lai pabeigtu, restartējiet datoru.
+66	Restartēt
+67	Sveiki, {name}
+68	jūs
+69	Pabeigsim iestatīšanu. Tas aizņems tikai brīdi.
+70	Izveidot savienojumu ar tīklu
+71	Tīkla {ssid} parole
+72	Aizsargāts
+73	Atvērts
+74	Atvērts tīkls. Citi var redzēt, ko jūs tajā darāt.
+75	Slēpts tīkls
+76	Ievadiet tāda tīkla datus, kas nav redzams sarakstā.
+77	Tīkla nosaukums
+78	Drošība
+79	Savienot
+80	IP adrese
+81	DNS serveris
+82	Starpniekserveris
+83	Manuāli
+84	Izvēlieties izskatu
+85	Gaišs
+86	Tumšs
+87	To vienmēr varēsiet mainīt iestatījumos.
+88	Izvēlieties krāsu
+89	Zila
+90	Zilganzaļa
+91	Zaļa
+92	Dzeltena
+93	Oranža
+94	Sarkana
+95	Rozā
+96	Violeta
+97	Pelēka
+98	Attēls un skaņa bez raižēm
+99	Uzstādīsim nepieciešamos draiverus un kodekus, lai video un spēles darbotos uzreiz.
+100	Uzstādīt
+101	Izdarīšu vēlāk
+102	NVIDIA grafikas karte
+103	Atradām karti {name}.
+104	NVIDIA draiveris
+105	Atvērtais draiveris
+106	Labākā veiktspēja spēlēs un grafikas programmās.
+107	Vienkāršāks, bet mazāk jaudīgs.
+108	Kā jūs izmantojat datoru?
+109	Uzstādīsim programmas, kas jums vajadzīgas visvairāk.
+110	Darbs un mācības
+111	Spēles
+112	Radošums
+113	Programmēšana
+114	Multivide
+115	Jūsu programmas no Windows
+116	Atradām tās jūsu datorā. Izvēlieties, kuras uzstādīt.
+117	Ieteiktās programmas
+118	Izvēlieties, kuras uzstādīt.
+119	Nekas nav izvēlēts.
+120	Notiek programmu uzstādīšana
+121	Notiek lejupielāde un uzstādīšana
+122	Viss gatavs
+123	Baudiet Shrimp.
+124	Vēlos uzzināt vairāk
+125	{n} no {total}
+126	Shrimp ir Linux
+127	Linux ir bezmaksas sistēma, ko veido cilvēki visā pasaulē. Tā darbina lielāko daļu serveru un Android tālruņu.
+128	Windows blakus
+129	Katrā startēšanas reizē izvēlēsieties Shrimp vai Windows.
+130	Programmas
+131	Windows .exe faili šeit nedarbojas. Programmas uzstāda no Shrimp Apps, un lielākajai daļai pazīstamo lietotņu tur atradīsiet ekvivalentu.
+132	Parole izmaiņām
+133	Kad uzstādāt programmas vai mainiet svarīgus iestatījumus, sistēma prasīs jūsu paroli. Tas ir normāli un aizsargā datoru.
+134	Jūsu faili
+135	Dokumenti, fotoattēli un lejupielādes ir lietotnē Faili, jūsu mājas mapē.
+136	Tur atradīsiet arī Windows disku.
+137	Panko
+138	Pēc izmaiņas kaut kas pārstāja darboties? Programmā Panko varat atgriezties pie iepriekšējā stāvokļa.
+139	Cocktail
+140	Atjauninājumi, draiveri un kodeki vienuviet. Atjauninājumi tiek uzstādīti pēc restartēšanas.
+141	Ātrā meklēšana
+142	Nospiediet taustiņu Super, to ar Windows logotipu, lai atrastu programmas, failus un iestatījumus.
+143	Palīdzība
+144	Atbildes atradīsiet Shrimp palīdzības lapās, GNOME un openSUSE dokumentācijā un kopienas forumos.
+145	Diska paroles nesakrīt
+146	Abos laukos ievadiet vienādu paroli. Bez tās dators nestartēsies, tāpēc glabājiet to drošā vietā.
+147	Paroles nesakrīt
+148	Abos laukos ievadiet vienādu paroli un mēģiniet vēlreiz.
+149	Mēģināt vēlreiz
+150	Nepietiek vietas
+151	Diskā nepietiek vietas Shrimp. Samaziniet Windows vai izvēlieties citu disku.
+152	Mainīt izmēru
+153	Atpakaļ
+154	Uzstādīšana neizdevās
+155	Kaut kas nogāja greizi. Jūsu faili ir drošībā. Varat mēģināt vēlreiz.
+156	Iziet
+157	Neizdevās izveidot savienojumu
+158	Pārbaudiet tīkla paroli un mēģiniet vēlreiz.
+159	Pārbaudiet tīkla {ssid} paroli un mēģiniet vēlreiz.
+160	Nav interneta savienojuma
+161	Neizdevās lejupielādēt programmas. Pārbaudiet savienojumu un mēģiniet vēlreiz.
+162	Dokumenti un izklājlapas
+163	E-pasts
+164	Spēles
+165	Spēles no Epic un GOG
+166	Zīmēšana
+167	Video rediģēšana
+168	Grafika
+169	Koda redaktors
+170	Izstrādes vide
+171	Filmas un mūzika
+172	Mūzika
+173	Ņujorka
+174	Čikāga
+175	Denvera
+176	Losandželosa
+177	Toronto
+178	Vankūvera
+179	Kanāriju salas
+180	Sidneja
+181	Perta

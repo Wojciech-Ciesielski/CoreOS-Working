@@ -1,0 +1,2 @@
+1	Komputilaj agordoj
+2	Shrimp komenciĝos post %d s

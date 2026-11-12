@@ -1,0 +1,181 @@
+1	Precedent
+2	Informacions
+3	Lògo de Shrimp
+4	Lo pilòt NVIDIA dona las performàncias completas dins los jòcs e los programas grafics. Lo pilòt dobèrt es mai simple, mas mai lent.
+5	(Recomandat)
+6	Seguent
+7	Passar
+8	Anullar
+9	Acabat
+10	Avançat
+11	Automatic
+12	Cap
+13	Preparem Shrimp sus vòstre ordenador.
+14	Començam
+15	Causissètz una lenga
+16	Ont sètz ?
+17	Configurarem lo fus orari e lo format de la data.
+18	Causissètz una disposicion de clavièr
+19	Ensajar la disposicion
+20	programaire
+21	maquina d’escriure
+22	Disc
+23	void
+24	Chifratge del disc
+25	Desactivat
+26	Activat
+27	Senhal del disc
+28	Repetissètz lo senhal del disc
+29	Ont installar Shrimp ?
+30	Al costat de Windows
+31	A la plaça de Windows
+32	Windows serà suprimit. Desplaçarem los fichièrs qu’avètz gardats cap al sistèma novèl.
+33	L’installacion al costat de Windows es pas possibla perque lo disc de Windows es chifrat amb BitLocker.
+34	Shrimp utilizarà tot lo disc {name}.
+35	Windows demòra sus l’autre disc.
+36	Division del disc
+37	L’ordenador demandarà aqueste senhal a cada aviada. Sens el, poiretz pas recuperar vòstras donadas.
+38	Crear un compte
+39	Vos caldrà per vos connectar.
+40	Nom complet
+41	Nom d'utilizaire
+42	Senhal
+43	Confirmar lo senhal
+44	Prèst per installar
+45	Res cambia pas abans que cliquètz « Installar ».
+46	Lenga
+47	Region
+48	Clavièr
+49	Disc
+50	Installacion
+51	Disc entièr
+52	Division del disc
+53	Windows {win} · Shrimp {shrimp}
+54	Compte
+55	Chiframent
+56	Installar
+57	Installacion de Shrimp
+58	Installacion
+59	Preparacion del disc
+60	Installacion del sistèma
+61	Restauracion dels fichièrs
+62	Demòran a l’entorn de {min} min
+63	Un moment
+64	Installacion acabada
+65	Reaviatz l'ordenador per acabar.
+66	Reaviar
+67	Adieu, {name}
+68	vos
+69	Acabem la configuracion. Prendrà pas qu’un moment.
+70	Se connectar a un ret
+71	Senhal per la ret {ssid}
+72	Securizada
+73	Dobèrta
+74	Ret dobèrta. D’autres pòdon veire çò que i fasètz.
+75	Ret amagada
+76	Picatz los detalhs d’una ret que figura pas dins la lista.
+77	Nom de la ret
+78	Seguretat
+79	Se connectar
+80	Adreça IP
+81	Servidor DNS
+82	Proxy
+83	Manual
+84	Causissètz un aspècte
+85	Clar
+86	Escur
+87	O podètz totjorn cambiar dins los Paramètres.
+88	Causissètz una color
+89	Blau
+90	Verd blau
+91	Verd
+92	Jaune
+93	Irange
+94	Roge
+95	Ròse
+96	Violet
+97	Gris
+98	Imatge e son sens problèma
+99	Installarem los pilòts e los codecs necessaris per que las vidèos e los jòcs foncionen sulpic.
+100	Installar
+101	O farai mai tard
+102	Carta grafica NVIDIA
+103	Avèm trobat una carta {name}.
+104	Pilòt NVIDIA
+105	Pilòt dobèrt
+106	Las melhoras performàncias dins los jòcs e los programas grafics.
+107	Mai simple, mas mens potent.
+108	Cossí utilizatz vòstre ordenador ?
+109	Installarem los programas que vos fan mai mestièr.
+110	Trabalh e estudis
+111	Jòcs
+112	Creativitat
+113	Programacion
+114	Multimèdia
+115	Vòstres programas de Windows
+116	Los avèm trobats sus vòstre ordenador. Causissètz los que cal installar.
+117	Programas suggerits
+118	Causissètz los que cal installar.
+119	Res de seleccionat.
+120	Installacion dels programas
+121	Telecargament e installacion
+122	Tot es prèst
+123	Profechatz de Shrimp.
+124	Vòli ne saber mai
+125	{n} sus {total}
+126	Shrimp es Linux
+127	Linux es un sistèma liure fach per de personas del mond entièr. Fa foncionar la màger part dels servidors e dels telefòns Android.
+128	Windows al costat
+129	A cada aviada, causiretz Shrimp o Windows.
+130	Programas
+131	Los fichièrs .exe de Windows foncionan pas aquí. Installatz los programas a partir de Shrimp Apps, e per la màger part de las aplicacions conegudas i trobaretz un equivalent.
+132	Senhal per las modificacions
+133	Quand installatz de programas o modificatz de paramètres importants, lo sistèma vos demandarà vòstre senhal. Es normal e protegís vòstre ordenador.
+134	Vòstres fichièrs
+135	Los documents, las fòtos e los telecargaments son dins l’aplicacion Fichièrs, dins vòstre dorsièr personal.
+136	I trobaretz tanben lo disc de Windows.
+137	Panko
+138	Quicòm a quitat de foncionar aprèp una modificacion ? Dins Panko podètz tornar a l’estat d’abans.
+139	Cocktail
+140	Mesas a jorn, pilòts e codecs al meteis endrech. Las mesas a jorn s’installan al reaviament.
+141	Recèrca rapida
+142	Quichatz la tòca Super, la del lògo de Windows, per trobar de programas, de fichièrs e de paramètres.
+143	Ajuda
+144	Trobaretz de responsas sus las paginas d’ajuda de Shrimp, dins la documentacion de GNOME e d’openSUSE e suls forums de la comunautat.
+145	Los senhals del disc correspondon pas
+146	Picatz lo meteis senhal dins los dos camps. Sens el podètz pas aviar l’ordenador, gardatz-lo doncas en un luòc segur.
+147	Los senhals correspondon pas
+148	Picatz lo meteis senhal dins los dos camps e tornatz ensajar.
+149	Tornar ensajar
+150	Pas pro d'espaci
+151	I a pas pro d’espaci sul disc per Shrimp. Reduisètz Windows o causissètz un autre disc.
+152	Cambiar la talha
+153	Tornar
+154	L'installacion a fracassat
+155	Quicòm a mal virat. Vòstres fichièrs son en seguretat. Podètz tornar ensajar.
+156	Quitar
+157	Connexion impossibla
+158	Verificatz lo senhal de la ret e tornatz ensajar.
+159	Verificatz lo senhal de la ret {ssid} e tornatz ensajar.
+160	Cap de connexion a Internet
+161	Impossible de telecargar los programas. Verificatz vòstra connexion e tornatz ensajar.
+162	Documents e fuèlhs de calcul
+163	Corrièr electronic
+164	Jòcs
+165	Jòcs d’Epic e GOG
+166	Dessenh
+167	Montatge vidèo
+168	Grafisme
+169	Editor de còdi
+170	Environament de desvolopament
+171	Filmes e musica
+172	Musica
+173	Nòva York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Illas Canàrias
+180	Sydney
+181	Perth

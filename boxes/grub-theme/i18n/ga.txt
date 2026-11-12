@@ -1,0 +1,2 @@
+1	Socruithe an ríomhaire
+2	Tosóidh Shrimp i gceann %d s

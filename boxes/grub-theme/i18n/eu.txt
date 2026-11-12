@@ -1,0 +1,2 @@
+1	Ordenagailuaren ezarpenak
+2	Shrimp %d s barru hasiko da

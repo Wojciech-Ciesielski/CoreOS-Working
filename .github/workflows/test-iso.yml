@@ -1,0 +1,88 @@
+name: Test ISO
+
+# Boots the newest successful "Build ISO" artifact in QEMU/KVM (uefi, secureboot, bios) and keeps the
+# serial log and the inspection report as an artifact (14 days). No screenshots, nothing is committed.
+
+on:
+  push:
+    branches: [main, "claude/**"]
+    paths: ["tools/qemu-test.py", "tools/inspect-iso.sh", ".github/workflows/test-iso.yml"]
+  workflow_dispatch:
+    inputs:
+      build_run_id:
+        description: "Build ISO run id (empty = newest successful)"
+        default: ""
+      grub_lang:
+        description: "GRUB menu language tag to test, e.g. ja, ar, de (empty = English, as without Shrimp Install)"
+        default: ""
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  boot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [uefi, secureboot, bios]
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Download ISO
+        run: |
+          id="${{ github.event.inputs.build_run_id }}"
+          # newest successful build of this branch, otherwise of any branch
+          [ -n "$id" ] || id=$(gh run list -R "$GITHUB_REPOSITORY" -w build-iso.yml -s success -b "$GITHUB_REF_NAME" -L 1 --json databaseId -q '.[0].databaseId')
+          [ -n "$id" ] || id=$(gh run list -R "$GITHUB_REPOSITORY" -w build-iso.yml -s success -L 1 --json databaseId -q '.[0].databaseId')
+          echo "Build ISO run: $id"
+          echo "$id" > build-run-id.txt
+          gh run download "$id" -R "$GITHUB_REPOSITORY" -n shrimp-live-iso -D iso
+          ls -l iso
+
+      - name: Set GRUB language (${{ github.event.inputs.grub_lang }})
+        if: github.event.inputs.grub_lang != ''
+        env:
+          GRUB_LANG: ${{ github.event.inputs.grub_lang }}
+        run: |
+          # what Shrimp Install writes next to the ISO files on the stick (boot/grub2/shrimp-lang.cfg)
+          sudo apt-get install -yq --no-install-recommends xorriso
+          printf 'set shrimp_lang=%s\n' "$GRUB_LANG" > shrimp-lang.cfg
+          src=$(ls iso/*.iso | head -n1)
+          xorriso -indev "$src" -outdev iso/with-lang.iso -boot_image any replay -map shrimp-lang.cfg /boot/grub2/shrimp-lang.cfg
+          mv iso/with-lang.iso "$src"
+          ls -l iso
+
+      - name: Enable KVM and install QEMU
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          sudo apt-get update -q
+          sudo apt-get install -yq --no-install-recommends qemu-system-x86 ovmf libglib2.0-bin squashfs-tools dosfstools
+          ls -l /dev/kvm /usr/share/OVMF/
+
+      - name: Inspect ISO contents
+        if: matrix.mode == 'uefi'
+        continue-on-error: true
+        run: |
+          mkdir -p out/uefi
+          sudo tools/inspect-iso.sh iso/*.iso 2>&1 | tee out/uefi/inspect.txt
+
+      - name: Boot and capture (${{ matrix.mode }})
+        run: python3 tools/qemu-test.py iso/*.iso out/${{ matrix.mode }} ${{ matrix.mode }}
+
+      - name: Id of the tested build
+        if: always()
+        run: cp build-run-id.txt out/${{ matrix.mode }}/ || true
+
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: iso-test-${{ matrix.mode }}
+          path: out/${{ matrix.mode }}
+          retention-days: 14

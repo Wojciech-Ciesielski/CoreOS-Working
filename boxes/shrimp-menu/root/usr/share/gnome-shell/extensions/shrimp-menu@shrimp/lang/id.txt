@@ -1,0 +1,4 @@
+1	Tentang komputer ini
+3	Perangkat lunak
+4	Pembaruan
+15	Pemulihan sistem

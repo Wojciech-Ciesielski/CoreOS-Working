@@ -1,0 +1,222 @@
+1	Wstecz
+2	Informacje
+3	Logo Shrimp
+4	Sterownik NVIDIA zapewnia pełną wydajność w grach i programach graficznych. Sterownik otwarty jest prostszy, ale działa wolniej.
+5	(Zalecane)
+6	Dalej
+7	Pomiń
+8	Anuluj
+9	Gotowe
+10	Zaawansowane
+11	Automatyczny
+12	Brak
+13	Przygotujmy Shrimp na Twoim komputerze.
+14	Zaczynajmy
+15	Wybierz język
+16	Gdzie jesteś?
+17	Ustawimy strefę czasową i format dat.
+18	Wybierz układ klawiatury
+19	Sprawdź układ
+20	programisty
+21	maszynistki
+22	Dysk
+23	pusty
+24	Szyfrowanie dysku
+25	Wyłączone
+26	Włączone
+27	Hasło dysku
+28	Powtórz hasło dysku
+29	Gdzie zainstalować Shrimp?
+30	Obok Windows
+31	Zamiast Windows
+32	Windows zostanie usunięty. Zachowane pliki przeniesiemy do nowego systemu.
+33	Obok Windows nie da się zainstalować, bo dysk z Windows jest zaszyfrowany funkcją BitLocker.
+34	Shrimp zajmie cały dysk {name}.
+35	Windows zostaje na drugim dysku.
+36	Podział dysku
+37	Komputer zapyta o to hasło przy każdym uruchomieniu. Bez niego nie odzyskasz danych.
+38	Utwórz konto
+39	Będzie potrzebne do logowania.
+40	Imię i nazwisko
+41	Nazwa użytkownika
+42	Hasło
+43	Potwierdź hasło
+44	Gotowi do instalacji
+45	Nic nie zmieni się, dopóki nie klikniesz „Zainstaluj”.
+46	Język
+47	Region
+48	Klawiatura
+49	Dysk
+50	Instalacja
+51	Cały dysk
+52	Podział dysku
+53	Windows {win} · Shrimp {shrimp}
+54	Konto
+55	Szyfrowanie
+56	Zainstaluj
+57	Instalowanie Shrimp
+58	Instalowanie
+59	Przygotowanie dysku
+60	Instalowanie systemu
+61	Przywracanie plików
+62	Pozostało około {min} min
+63	Za chwilę
+64	Instalacja zakończona
+65	Uruchom ponownie komputer, aby dokończyć.
+66	Uruchom ponownie
+67	Cześć, {name}
+68	tam
+69	Dokończmy konfigurację. To zajmie chwilę.
+70	Połącz z siecią
+71	Hasło sieci {ssid}
+72	Zabezpieczona
+73	Otwarta
+74	Sieć otwarta. Inni mogą widzieć, co w niej robisz.
+75	Ukryta sieć
+76	Wpisz dane sieci, której nie widać na liście.
+77	Nazwa sieci
+78	Zabezpieczenie
+79	Połącz
+80	Adres IP
+81	Serwer DNS
+82	Proxy
+83	Ręczny
+84	Wybierz wygląd
+85	Jasny
+86	Ciemny
+87	Zawsze możesz to zmienić w ustawieniach.
+88	Wybierz kolor
+89	Niebieski
+90	Morski
+91	Zielony
+92	Żółty
+93	Pomarańczowy
+94	Czerwony
+95	Różowy
+96	Fioletowy
+97	Szary
+98	Obraz i dźwięk bez problemów
+99	Zainstalujemy potrzebne sterowniki i kodeki, aby filmy oraz gry działały od razu.
+100	Zainstaluj
+101	Zrobię to później
+102	Karta graficzna NVIDIA
+103	Wykryliśmy kartę {name}.
+104	Sterownik NVIDIA
+105	Sterownik otwarty
+106	Najlepsza wydajność w grach i programach graficznych.
+107	Prostszy w działaniu, ale mniej wydajny.
+108	Jak używasz swojego komputera?
+109	Zainstalujemy najpotrzebniejsze programy.
+110	Praca i nauka
+111	Gry
+112	Twórczość
+113	Programowanie
+114	Multimedia
+115	Twoje programy z Windows
+116	Znaleźliśmy je na Twoim komputerze. Wybierz, które zainstalować.
+117	Proponowane programy
+118	Wybierz, które zainstalować.
+119	Nic nie wybrano.
+120	Instalowanie programów
+121	Pobieranie i instalowanie
+122	Wszystko gotowe
+123	Miłego korzystania z Shrimp.
+124	Chcę wiedzieć więcej
+125	{n} z {total}
+126	Shrimp to Linux
+127	Linux to darmowy system tworzony przez ludzi z całego świata. Działa na nim większość serwerów i telefonów z Androidem.
+128	Windows obok
+129	Przy każdym uruchomieniu wybierzesz Shrimp lub Windows.
+130	Programy
+131	Pliki .exe z Windows tu nie działają. Programy instalujesz z Shrimp Apps, a dla większości znanych aplikacji znajdziesz tam odpowiednik.
+132	Hasło przy zmianach
+133	Przy instalowaniu programów lub zmianie ważnych ustawień system poprosi o Twoje hasło. To normalne i chroni komputer.
+134	Twoje pliki
+135	Dokumenty, zdjęcia i pobrane pliki są w aplikacji Pliki, w folderze domowym.
+136	Tam też znajdziesz dysk z Windows.
+137	Panko
+138	Coś przestało działać po zmianie? W Panko wrócisz do stanu sprzed niej.
+139	Cocktail
+140	Aktualizacje, sterowniki i kodeki w jednym miejscu. Aktualizacje instalują się przy ponownym uruchomieniu.
+141	Szybkie wyszukiwanie
+142	Naciśnij klawisz Super, czyli klawisz z logo Windows, aby znaleźć programy, pliki i ustawienia.
+143	Pomoc
+144	Odpowiedzi na pytania znajdziesz na stronach pomocy Shrimp, w dokumentacji GNOME i openSUSE oraz na forach społeczności.
+145	Hasła dysku się różnią
+146	Wpisz to samo hasło w obu polach. Bez niego nie uruchomisz komputera, więc zapisz je w bezpiecznym miejscu.
+147	Hasła się różnią
+148	Wpisz to samo hasło w obu polach i spróbuj ponownie.
+149	Spróbuj ponownie
+150	Za mało miejsca
+151	Na dysku nie ma wystarczająco miejsca dla Shrimp. Zmniejsz rozmiar Windows lub wybierz inny dysk.
+152	Zmień rozmiar
+153	Wróć
+154	Instalacja nie powiodła się
+155	Coś poszło nie tak. Twoje pliki są bezpieczne. Możesz spróbować ponownie.
+156	Zakończ
+157	Nie udało się połączyć
+158	Sprawdź hasło sieci i spróbuj ponownie.
+159	Sprawdź hasło sieci {ssid} i spróbuj ponownie.
+160	Brak połączenia z internetem
+161	Nie udało się pobrać programów. Sprawdź połączenie i spróbuj ponownie.
+162	Dokumenty i arkusze
+163	Poczta
+164	Gry
+165	Gry z Epic i GOG
+166	Rysowanie
+167	Montaż wideo
+168	Grafika
+169	Edytor kodu
+170	Środowisko pracy
+171	Filmy i muzyka
+172	Muzyka
+173	Nowy Jork
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Wyspy Kanaryjskie
+180	Sydney
+181	Perth
+182	Przywróć pendrive
+183	{files} plików z pendrive'a ({size}) czeka bezpiecznie na tym komputerze. Wgramy je z powrotem i pendrive będzie działał jak dawniej.
+184	Przywróć pendrive
+185	Zostaw pliki na tym komputerze
+186	Podłącz pendrive
+187	Ten, z którego instalowałeś Shrimp. Jego pliki są bezpieczne na tym komputerze.
+188	Sprawdź ponownie
+189	Przywracanie pendrive'a
+190	Pendrive jest gotowy
+191	Wszystkie Twoje pliki wróciły na pendrive.
+192	Twoje pliki są na tym komputerze
+193	Znajdziesz je w folderze Pendrive w folderze domowym.
+194	Nie udało się przywrócić pendrive'a
+195	Twoje pliki nadal są bezpieczne na tym komputerze. Podłącz pendrive i spróbuj ponownie.
+196	Spróbuj ponownie
+197	Instalacja trwa dłużej niż zwykle
+198	Od 20 minut nic się nie zmieniło. Możesz poczekać dłużej albo zakończyć i spróbować później.
+199	Czekaj dalej
+200	Instalator nie odpowiada
+201	Shrimp Setup stracił kontakt z instalatorem. Instalacja może nadal trwać: sprawdź za chwilę albo zakończ i uruchom komputer z nośnika jeszcze raz.
+202	Sprawdź ponownie
+203	Tej nazwy używa system
+204	Wybierz inną nazwę użytkownika, np. z cyfrą na końcu.
+205	Nie widzę dysku dla Shrimp
+206	Setup nie widzi wewnętrznego dysku tego komputera. W niektórych laptopach ukrywa go tryb Intel RST (VMD) w ustawieniach firmware. Sprawdź dysk i spróbuj ponownie.
+207	Shrimp pobiera system z internetu podczas instalacji. Wybierz swoją sieć Wi-Fi.
+208	Nie widzę sieci Wi-Fi. Podłącz kabel sieciowy albo podejdź bliżej routera i wyszukaj ponownie.
+209	Wyszukaj ponownie
+210	Shrimp potrzebuje internetu do instalacji. Połącz się z siecią i spróbuj ponownie.
+211	Pokaż hasło
+212	Ukryj hasło
+213	Łączę z siecią {ssid}…
+214	Połączono z siecią {ssid}. Sprawdzam połączenie z internetem…
+215	Internet działa. Shrimp czyta repozytoria openSUSE…
+216	Wi-Fi jest połączone, ale nie ma internetu. Sprawdź, czy router ma połączenie z internetem, i spróbuj ponownie.
+217	Internet działa, ale instalator nie mógł odczytać repozytoriów openSUSE. Spróbuj ponownie za chwilę.
+218	Sprawdzam dyski…
+219	Nie udało się odczytać repozytoriów
+220	Szukam sieci Wi-Fi…
+221	Komputer nie widzi karty Wi-Fi (nie załadował się jej sterownik albo firmware). Podłącz kabel sieciowy albo telefon przez USB (modem USB).
+222	Wi-Fi jest wyłączone lub zablokowane. Włącz je klawiszem na klawiaturze (tryb samolotowy) i wyszukaj ponownie.

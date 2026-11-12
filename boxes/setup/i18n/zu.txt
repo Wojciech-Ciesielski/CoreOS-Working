@@ -1,0 +1,181 @@
+1	Emuva
+2	Ulwazi
+3	Ilogo ye-Shrimp
+4	Umshayeli we-NVIDIA unikeza ukusebenza okugcwele emidlalweni nasezinhlelweni zemidwebo. Umshayeli ovulekile ulula, kodwa uyanensa.
+5	(Kunconyiwe)
+6	Okulandelayo
+7	Yeqa
+8	Khansela
+9	Kwenziwe
+10	Okuthuthukile
+11	Okuzenzakalelayo
+12	Lutho
+13	Asilungiselele i-Shrimp kukhompyutha yakho.
+14	Asiqale
+15	Khetha ulimi
+16	Ukuphi?
+17	Sizosetha indawo yesikhathi nefomethi yosuku.
+18	Khetha uhlaka lwekhibhodi
+19	Hlola isakhiwo
+20	umhleli wezinhlelo
+21	umshini wokubhala
+22	Isidluliseli
+23	akunalutho
+24	Ukubethela idiski
+25	Kuvaliwe
+26	Kuvuliwe
+27	Iphasiwedi yediski
+28	Phinda iphasiwedi yediski
+29	I-Shrimp kufanele ifakwe kuphi?
+30	Eduze kwe-Windows
+31	Esikhundleni se-Windows
+32	I-Windows izosuswa. Sizohambisa amafayela owagcinile ohlelweni olusha.
+33	Ukufaka eduze kwe-Windows akunakwenzeka ngoba idrayivu ye-Windows ibethelwe nge-BitLocker.
+34	I-Shrimp izosebenzisa yonke idrayivu ye-{name}.
+35	I-Windows ihlala kwenye idrayivu.
+36	Ukuhlukaniswa kwediski
+37	Ikhompyutha izocela le phasiwedi njalo uma iqala. Ngaphandle kwayo ngeke ukwazi ukubuyisa idatha yakho.
+38	Dala i-akhawunti
+39	Uzoyidinga ukuze ungene.
+40	Igama eligcwele
+41	Igama lomsebenzisi
+42	Iphasiwedi
+43	Qinisekisa iphasiwedi
+44	Kulungele ukufakwa
+45	Akukho okuzoshintsha uze uchofoze “Faka”.
+46	Ulimi
+47	Isifunda
+48	Ikhibhodi
+49	Isidluliseli
+50	Ukufaka
+51	Yonke idrayivu
+52	Ukuhlukaniswa kwediski
+53	Windows {win} · Shrimp {shrimp}
+54	I-akhawunti
+55	Ukubethela
+56	Faka
+57	Ifaka i-Shrimp
+58	Iyafaka
+59	Ilungisa idrayivu
+60	Ifaka uhlelo
+61	Ibuyisela amafayela
+62	Cishe amaminithi angu-{min} asele
+63	Linda kancane
+64	Ukufaka kuphelile
+65	Qala kabusha ikhompyutha ukuze uqedele.
+66	Qala kabusha
+67	Sawubona, {name}
+68	mngane
+69	Asiqedele ukusetha. Kuzothatha umzuzwana nje.
+70	Xhuma kunethiwekhi
+71	Iphasiwedi yenethiwekhi {ssid}
+72	Kuvikelekile
+73	Kuvulekile
+74	Inethiwekhi evulekile. Abanye bangabona okwenzayo kuyo.
+75	Inethiwekhi efihliwe
+76	Faka imininingwane yenethiwekhi engaboniswa ohlwini.
+77	Igama lenethiwekhi
+78	Ukuphepha
+79	Xhuma
+80	Ikheli le-IP
+81	Iseva ye-DNS
+82	I-proxy
+83	Ngesandla
+84	Khetha ukubukeka
+85	Okukhanyayo
+86	Okumnyama
+87	Ungakushintsha lokhu noma nini kokuthi Izilungiselelo.
+88	Khetha umbala
+89	Okwesibhakabhaka
+90	Okusagolide
+91	Okuluhlaza
+92	Okuphuzi
+93	Okusawolintshi
+94	Okubomvu
+95	Okuphinki
+96	Okunsomi
+97	Okumpunga
+98	Isithombe nomsindo ngaphandle kwenkinga
+99	Sizofaka abashayeli namakhodeki owadingayo ukuze amavidiyo nemidlalo kusebenze ngokushesha.
+100	Faka
+101	Ngizokwenza kamuva
+102	Ikhadi lemidwebo le-NVIDIA
+103	Sithole ikhadi le-{name}.
+104	Umshayeli we-NVIDIA
+105	Umshayeli ovulekile
+106	Ukusebenza okuhle kakhulu emidlalweni nasezinhlelweni zemidwebo.
+107	Kulula ukuwusebenzisa, kodwa awunamandla kangako.
+108	Usisebenzisa kanjani ikhompyutha yakho?
+109	Sizofaka izinhlelo ozidinga kakhulu.
+110	Umsebenzi nokufunda
+111	Imidlalo
+112	Ubuciko
+113	Ukuhlela izinhlelo
+114	Imithombo yeendaba
+115	Izinhlelo zakho ezivela ku-Windows
+116	Sizithole kukhompyutha yakho. Khetha ozozifaka.
+117	Izinhlelo eziphakanyisiwe
+118	Khetha ozozifaka.
+119	Akukhethwanga lutho.
+120	Ifaka izinhlelo
+121	Iyalanda futhi iyafaka
+122	Konke kulungile
+123	Jabulela i-Shrimp.
+124	Ngifuna ukwazi okwengeziwe
+125	{n} kwezingu-{total}
+126	I-Shrimp iyi-Linux
+127	I-Linux iwuhlelo lwamahhala olwenziwe abantu emhlabeni wonke. Iningi lamaseva namafoni e-Android lisebenza ngalo.
+128	I-Windows eduze
+129	Njalo uma uqala uzokhetha i-Shrimp noma i-Windows.
+130	Izinhlelo
+131	Amafayela e-.exe e-Windows awasebenzi lapha. Ufaka izinhlelo ku-Shrimp Apps, futhi ezinhlelweni eziningi ezaziwayo uzothola ezifanayo lapho.
+132	Iphasiwedi yezinguquko
+133	Uma ufaka izinhlelo noma ushintsha izilungiselelo ezibalulekile, uhlelo luzocela iphasiwedi yakho. Lokhu kujwayelekile futhi kuvikela ikhompyutha yakho.
+134	Amafayela akho
+135	Amadokhumenti, izithombe nokulandiwe kusohlelweni lokusebenza i-Files, kufolda yakho yasekhaya.
+136	Uzothola nedrayivu ye-Windows lapho.
+137	Panko
+138	Kukhona okuyeke ukusebenza ngemva koshintsho? Ku-Panko ungabuyela endleleni okwakunjalo ngayo ngaphambili.
+139	Cocktail
+140	Izibuyekezo, abashayeli namakhodeki endaweni eyodwa. Izibuyekezo zifakwa uma uqala kabusha.
+141	Ukusesha okusheshayo
+142	Cindezela inkinobho ye-Super, leyo enelogo ye-Windows, ukuze uthole izinhlelo, amafayela nezilungiselelo.
+143	Usizo
+144	Uzothola izimpendulo emakhasini osizo e-Shrimp, emibhalweni ye-GNOME ne-openSUSE nasezinkundleni zomphakathi.
+145	Amaphasiwedi ediski awafani
+146	Faka iphasiwedi efanayo kuzo zombili izinkambu. Ngaphandle kwayo ngeke uqale ikhompyutha, ngakho yigcine endaweni ephephile.
+147	Amaphasiwedi awafani
+148	Faka iphasiwedi efanayo kuzo zombili izinkambu bese uzama futhi.
+149	Zama futhi
+150	Ayikho indawo eyanele
+151	Asikho isikhala esanele kudrayivu se-Shrimp. Yenza i-Windows ibe ncane noma ukhethe enye idrayivu.
+152	Shintsha usayizi
+153	Buyela emuva
+154	Ukufaka kuhlulekile
+155	Kukhona okungahambanga kahle. Amafayela akho aphephile. Ungazama futhi.
+156	Phuma
+157	Ayikwazanga ukuxhuma
+158	Hlola iphasiwedi yenethiwekhi bese uzama futhi.
+159	Hlola iphasiwedi yenethiwekhi {ssid} bese uzama futhi.
+160	Akukho ukuxhumeka kwi-inthanethi
+161	Ayikwazanga ukulanda izinhlelo. Hlola ukuxhumeka kwakho bese uzama futhi.
+162	Amadokhumenti namaspredishithi
+163	I-imeyili
+164	Imidlalo
+165	Imidlalo evela ku-Epic naku-GOG
+166	Ukudweba
+167	Ukuhlela ividiyo
+168	Imidwebo
+169	Umhleli wekhodi
+170	Indawo yokuthuthukisa
+171	Amafilimu nomculo
+172	Umculo
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	iziQhingi zaseCanary
+180	Sydney
+181	Perth

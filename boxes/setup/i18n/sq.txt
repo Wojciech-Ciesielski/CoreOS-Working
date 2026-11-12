@@ -1,0 +1,181 @@
+1	Prapa
+2	Informacion
+3	Logoja e Shrimp
+4	Drejtuesi NVIDIA jep performancë të plotë në lojëra dhe programe grafike. Drejtuesi i hapur është më i thjeshtë, por më i ngadaltë.
+5	(Rekomandohet)
+6	Tjetër
+7	Kapërce
+8	Anulo
+9	U krye
+10	Të avancuara
+11	Automatike
+12	Asnjë
+13	Le ta përgatisim Shrimp në kompjuterin tuaj.
+14	Të nisim
+15	Zgjidhni një gjuhë
+16	Ku ndodheni?
+17	Do të caktojmë zonën kohore dhe formatin e datës.
+18	Zgjidhni një rregullim tastiere
+19	Provoni paraqitjen
+20	programues
+21	makinë shkrimi
+22	Disku
+23	bosh
+24	Fshehtëzimi i diskut
+25	Çaktivizuar
+26	Aktivizuar
+27	Fjalëkalimi i diskut
+28	Përsëritni fjalëkalimin e diskut
+29	Ku duhet instaluar Shrimp?
+30	Pranë Windows
+31	Në vend të Windows
+32	Windows do të hiqet. Skedarët që mbajtët do t’i kalojmë në sistemin e ri.
+33	Instalimi pranë Windows nuk është i mundur, sepse disku i Windows është i shifruar me BitLocker.
+34	Shrimp do të përdorë gjithë diskun {name}.
+35	Windows mbetet në diskun tjetër.
+36	Ndarja e diskut
+37	Kompjuteri do ta kërkojë këtë fjalëkalim në çdo nisje. Pa të nuk mund t’i rimerrni të dhënat.
+38	Krijoni një llogari
+39	Do t’ju duhet për t’u identifikuar.
+40	Emri i plotë
+41	Emri i përdoruesit
+42	Fjalëkalimi
+43	Konfirmoni fjalëkalimin
+44	Gati për instalim
+45	Asgjë nuk ndryshon derisa të klikoni “Instalo”.
+46	Gjuha
+47	Rajoni
+48	Tastiera
+49	Disku
+50	Instalimi
+51	Gjithë disku
+52	Ndarja e diskut
+53	Windows {win} · Shrimp {shrimp}
+54	Llogaria
+55	Shifrimi
+56	Instalo
+57	Po instalohet Shrimp
+58	Po instalohet
+59	Po përgatitet disku
+60	Po instalohet sistemi
+61	Po rikthehen skedarët
+62	Rreth {min} min të mbetura
+63	Edhe pak
+64	Instalimi përfundoi
+65	Rinisni kompjuterin për të përfunduar.
+66	Rinis
+67	Përshëndetje, {name}
+68	mik
+69	Le ta përfundojmë konfigurimin. Do të zgjasë vetëm një çast.
+70	Lidhuni me një rrjet
+71	Fjalëkalimi për rrjetin {ssid}
+72	E mbrojtur
+73	E hapur
+74	Rrjet i hapur. Të tjerët mund të shohin çfarë bëni në të.
+75	Rrjet i fshehur
+76	Jepni të dhënat e një rrjeti që nuk shfaqet në listë.
+77	Emri i rrjetit
+78	Siguria
+79	Lidhu
+80	Adresa IP
+81	Shërbyesi DNS
+82	Ndërmjetës
+83	Dorazi
+84	Zgjidhni pamjen
+85	E çelët
+86	E errët
+87	Këtë mund ta ndryshoni gjithmonë te Cilësimet.
+88	Zgjidhni një ngjyrë
+89	Blu
+90	E gjelbër e blertë
+91	E gjelbër
+92	E verdhë
+93	Portokalli
+94	E kuqe
+95	Rozë
+96	Vjollcë
+97	Gri
+98	Figurë dhe zë pa mundim
+99	Do të instalojmë drejtuesit dhe kodekët që ju duhen, që videot dhe lojërat të punojnë menjëherë.
+100	Instalo
+101	Do ta bëj më vonë
+102	Kartë grafike NVIDIA
+103	Gjetëm një kartë {name}.
+104	Drejtuesi NVIDIA
+105	Drejtuesi i hapur
+106	Performanca më e mirë në lojëra dhe programe grafike.
+107	Më i thjeshtë në përdorim, por më pak i fuqishëm.
+108	Si e përdorni kompjuterin?
+109	Do të instalojmë programet që ju duhen më shumë.
+110	Punë dhe mësim
+111	Lojëra
+112	Krijimtari
+113	Programim
+114	Multimedia
+115	Programet tuaja nga Windows
+116	I gjetëm në kompjuterin tuaj. Zgjidhni cilat të instalohen.
+117	Programe të sugjeruara
+118	Zgjidhni cilat të instalohen.
+119	Asgjë e zgjedhur.
+120	Po instalohen programet
+121	Po shkarkohen dhe instalohen
+122	Gjithçka gati
+123	Shijoni Shrimp.
+124	Dua të di më shumë
+125	{n} nga {total}
+126	Shrimp është Linux
+127	Linux është një sistem falas i bërë nga njerëz anembanë botës. Në të punojnë shumica e serverëve dhe telefonave Android.
+128	Windows pranë
+129	Në çdo nisje do të zgjidhni Shrimp ose Windows.
+130	Programet
+131	Skedarët .exe të Windows nuk punojnë këtu. Programet i instaloni nga Shrimp Apps, dhe për shumicën e aplikacioneve të njohura do të gjeni aty një zëvendësim.
+132	Fjalëkalim për ndryshime
+133	Kur instaloni programe ose ndryshoni cilësime të rëndësishme, sistemi do t’ju kërkojë fjalëkalimin. Kjo është normale dhe e mbron kompjuterin.
+134	Skedarët tuaj
+135	Dokumentet, fotot dhe shkarkimet janë në aplikacionin Skedarët, në dosjen tuaj kryesore.
+136	Aty do të gjeni edhe diskun e Windows.
+137	Panko
+138	Diçka pushoi së punuari pas një ndryshimi? Në Panko mund të ktheheni te gjendja e mëparshme.
+139	Cocktail
+140	Përditësimet, drejtuesit dhe kodekët në një vend. Përditësimet instalohen kur rinisni.
+141	Kërkim i shpejtë
+142	Shtypni tastin Super, atë me logon e Windows, për të gjetur programe, skedarë dhe cilësime.
+143	Ndihmë
+144	Përgjigjet do t’i gjeni në faqet e ndihmës së Shrimp, në dokumentacionin e GNOME dhe openSUSE dhe në forumet e komunitetit.
+145	Fjalëkalimet e diskut nuk përputhen
+146	Jepni të njëjtin fjalëkalim në të dyja fushat. Pa të nuk mund ta nisni kompjuterin, prandaj ruajeni në një vend të sigurt.
+147	Fjalëkalimet nuk përputhen
+148	Jepni të njëjtin fjalëkalim në të dyja fushat dhe provoni përsëri.
+149	Provo përsëri
+150	Nuk ka hapësirë të mjaftueshme
+151	Nuk ka hapësirë të mjaftueshme në disk për Shrimp. Zvogëloni Windows ose zgjidhni një disk tjetër.
+152	Ndrysho madhësinë
+153	Kthehu
+154	Instalimi dështoi
+155	Diçka shkoi keq. Skedarët tuaj janë të sigurt. Mund të provoni përsëri.
+156	Dil
+157	Lidhja dështoi
+158	Kontrolloni fjalëkalimin e rrjetit dhe provoni përsëri.
+159	Kontrolloni fjalëkalimin për rrjetin {ssid} dhe provoni përsëri.
+160	Nuk ka lidhje interneti
+161	Programet nuk u shkarkuan dot. Kontrolloni lidhjen dhe provoni përsëri.
+162	Dokumente dhe fletëllogaritëse
+163	Email
+164	Lojëra
+165	Lojëra nga Epic dhe GOG
+166	Vizatim
+167	Montim videosh
+168	Grafikë
+169	Redaktues kodi
+170	Mjedis zhvillimi
+171	Filma dhe muzikë
+172	Muzikë
+173	Nju Jork
+174	Çikago
+175	Denver
+176	Los Anxhelos
+177	Toronto
+178	Vankuver
+179	Ishujt Kanarie
+180	Sidnej
+181	Përth

@@ -1,0 +1,2 @@
+1	Impostazions dal computer
+2	Shrimp al partirà tra %d s

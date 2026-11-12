@@ -1,0 +1,181 @@
+1	Atgal
+2	Informacija
+3	„Shrimp“ logotipas
+4	„NVIDIA“ tvarkyklė suteikia visą našumą žaidimuose ir grafikos programose. Atvira tvarkyklė paprastesnė, bet lėtesnė.
+5	(Rekomenduojama)
+6	Toliau
+7	Praleisti
+8	Atšaukti
+9	Atlikta
+10	Papildomai
+11	Automatiškai
+12	Nėra
+13	Paruoškime „Shrimp“ jūsų kompiuteryje.
+14	Pradėkime
+15	Pasirinkite kalbą
+16	Kur esate?
+17	Nustatysime laiko juostą ir datos formatą.
+18	Pasirinkite klaviatūros išdėstymą
+19	Išbandykite išdėstymą
+20	programuotojas
+21	rašomoji mašinėlė
+22	Diskas
+23	tuščias
+24	Disko šifravimas
+25	Išjungta
+26	Įjungta
+27	Disko slaptažodis
+28	Pakartokite disko slaptažodį
+29	Kur įdiegti „Shrimp“?
+30	Šalia „Windows“
+31	Vietoje „Windows“
+32	„Windows“ bus pašalinta. Jūsų pasilikusius failus perkelsime į naująją sistemą.
+33	Diegti šalia „Windows“ neįmanoma, nes „Windows“ diskas užšifruotas „BitLocker“.
+34	„Shrimp“ naudos visą diską {name}.
+35	„Windows“ liks kitame diske.
+36	Disko padalijimas
+37	Kompiuteris prašys šio slaptažodžio kiekvieną kartą paleidžiant. Be jo negalėsite atkurti savo duomenų.
+38	Sukurkite paskyrą
+39	Jos prireiks prisijungiant.
+40	Vardas ir pavardė
+41	Naudotojo vardas
+42	Slaptažodis
+43	Patvirtinkite slaptažodį
+44	Paruošta diegti
+45	Niekas nepasikeis, kol nespustelėsite „Įdiegti“.
+46	Kalba
+47	Regionas
+48	Klaviatūra
+49	Diskas
+50	Diegimas
+51	Visas diskas
+52	Disko padalijimas
+53	„Windows“ {win} · „Shrimp“ {shrimp}
+54	Paskyra
+55	Šifravimas
+56	Įdiegti
+57	Diegiama „Shrimp“
+58	Diegiama
+59	Ruošiamas diskas
+60	Diegiama sistema
+61	Atkuriami failai
+62	Liko apie {min} min.
+63	Minutėlę
+64	Diegimas baigtas
+65	Paleiskite kompiuterį iš naujo, kad užbaigtumėte.
+66	Paleisti iš naujo
+67	Sveiki, {name}
+68	jūs
+69	Užbaikime nustatymą. Tai užtruks tik akimirką.
+70	Prisijunkite prie tinklo
+71	Tinklo {ssid} slaptažodis
+72	Apsaugotas
+73	Atviras
+74	Atviras tinklas. Kiti gali matyti, ką jame darote.
+75	Paslėptas tinklas
+76	Įveskite tinklo, kurio nėra sąraše, duomenis.
+77	Tinklo pavadinimas
+78	Sauga
+79	Prisijungti
+80	IP adresas
+81	DNS serveris
+82	Tarpinis serveris
+83	Rankiniu būdu
+84	Pasirinkite išvaizdą
+85	Šviesi
+86	Tamsi
+87	Tai visada galite pakeisti nustatymuose.
+88	Pasirinkite spalvą
+89	Mėlyna
+90	Žalsvai mėlyna
+91	Žalia
+92	Geltona
+93	Oranžinė
+94	Raudona
+95	Rožinė
+96	Violetinė
+97	Pilka
+98	Vaizdas ir garsas be vargo
+99	Įdiegsime reikalingas tvarkykles ir kodekus, kad vaizdo įrašai ir žaidimai veiktų iškart.
+100	Įdiegti
+101	Padarysiu vėliau
+102	„NVIDIA“ vaizdo plokštė
+103	Radome „{name}“ plokštę.
+104	„NVIDIA“ tvarkyklė
+105	Atvira tvarkyklė
+106	Geriausias našumas žaidimuose ir grafikos programose.
+107	Paprasčiau naudoti, bet mažiau galinga.
+108	Kaip naudojate kompiuterį?
+109	Įdiegsime programas, kurių jums labiausiai reikia.
+110	Darbas ir mokslas
+111	Žaidimai
+112	Kūryba
+113	Programavimas
+114	Multimedija
+115	Jūsų „Windows“ programos
+116	Radome jas jūsų kompiuteryje. Pasirinkite, kurias įdiegti.
+117	Siūlomos programos
+118	Pasirinkite, kurias įdiegti.
+119	Nieko nepasirinkta.
+120	Diegiamos programos
+121	Atsisiunčiama ir diegiama
+122	Viskas paruošta
+123	Gerų darbų su „Shrimp“.
+124	Noriu sužinoti daugiau
+125	{n} iš {total}
+126	„Shrimp“ yra „Linux“
+127	„Linux“ yra laisva sistema, kurią kuria žmonės iš viso pasaulio. Ja veikia dauguma serverių ir „Android“ telefonų.
+128	„Windows“ šalia
+129	Kiekvieną kartą paleisdami pasirinksite „Shrimp“ arba „Windows“.
+130	Programos
+131	„Windows“ .exe failai čia neveikia. Programas diegiate iš „Shrimp Apps“, o daugumai žinomų programų ten rasite atitikmenį.
+132	Slaptažodis pakeitimams
+133	Kai diegiate programas ar keičiate svarbius nustatymus, sistema paprašys jūsų slaptažodžio. Tai normalu ir saugo jūsų kompiuterį.
+134	Jūsų failai
+135	Dokumentai, nuotraukos ir atsisiuntimai yra programoje „Failai“, jūsų namų aplanke.
+136	Ten rasite ir „Windows“ diską.
+137	„Panko“
+138	Ar kas nors nustojo veikti po pakeitimo? „Panko“ galite grįžti į ankstesnę būseną.
+139	„Cocktail“
+140	Naujinimai, tvarkyklės ir kodekai vienoje vietoje. Naujinimai įdiegiami paleidus iš naujo.
+141	Greita paieška
+142	Paspauskite „Super“ klavišą, tą su „Windows“ logotipu, kad rastumėte programas, failus ir nustatymus.
+143	Žinynas
+144	Atsakymų rasite „Shrimp“ žinyno puslapiuose, „GNOME“ ir „openSUSE“ dokumentacijoje bei bendruomenės forumuose.
+145	Disko slaptažodžiai nesutampa
+146	Abiejuose laukuose įveskite tą patį slaptažodį. Be jo kompiuterio paleisti negalima, todėl saugokite jį saugioje vietoje.
+147	Slaptažodžiai nesutampa
+148	Abiejuose laukuose įveskite tą patį slaptažodį ir bandykite dar kartą.
+149	Bandyti dar kartą
+150	Nepakanka vietos
+151	Diske nepakanka vietos „Shrimp“. Sumažinkite „Windows“ arba pasirinkite kitą diską.
+152	Keisti dydį
+153	Grįžti
+154	Diegimas nepavyko
+155	Kažkas nepavyko. Jūsų failai saugūs. Galite bandyti dar kartą.
+156	Išeiti
+157	Nepavyko prisijungti
+158	Patikrinkite tinklo slaptažodį ir bandykite dar kartą.
+159	Patikrinkite tinklo {ssid} slaptažodį ir bandykite dar kartą.
+160	Nėra interneto ryšio
+161	Nepavyko atsisiųsti programų. Patikrinkite ryšį ir bandykite dar kartą.
+162	Dokumentai ir skaičiuoklės
+163	El. paštas
+164	Žaidimai
+165	Žaidimai iš „Epic“ ir GOG
+166	Piešimas
+167	Vaizdo įrašų redagavimas
+168	Grafika
+169	Kodo redaktorius
+170	Kūrimo aplinka
+171	Filmai ir muzika
+172	Muzika
+173	Niujorkas
+174	Čikaga
+175	Denveris
+176	Los Andželas
+177	Torontas
+178	Vankuveris
+179	Kanarų salos
+180	Sidnėjus
+181	Pertas

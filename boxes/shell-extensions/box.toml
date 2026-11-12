@@ -1,0 +1,18 @@
+# DING needs the GnomeDesktop 3.0 introspection data; Desktop Icons and Dash to Dock need gvfs for trash://.
+[box]
+id = "shell-extensions"
+version = "0.1.0"
+kind = "system"
+summary = "Rozszerzenia GNOME Shell z extensions.gnome.org (DING, Blur my Shell, Dash to Dock, Just Perfection, Light Style)"
+depends = ["gnome-desktop"]
+
+[packages]
+image = [
+    "gnome-shell-extensions-common",
+    "gnome-shell-extensions-common-lang",
+    "typelib-1_0-GnomeDesktop-3_0",
+    "gvfs",
+    "gvfs-backends",
+    "curl",
+    "unzip",
+]

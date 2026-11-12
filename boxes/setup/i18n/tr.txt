@@ -1,0 +1,181 @@
+1	Geri
+2	Bilgi
+3	Shrimp logosu
+4	NVIDIA sürücüsü oyunlarda ve grafik programlarında tam performans sağlar. Açık sürücü daha basittir ama daha yavaştır.
+5	(Önerilen)
+6	İleri
+7	Atla
+8	İptal
+9	Bitti
+10	Gelişmiş
+11	Otomatik
+12	Yok
+13	Shrimp'i bilgisayarınızda hazırlayalım.
+14	Başlayalım
+15	Bir dil seçin
+16	Neredesiniz?
+17	Saat dilimini ve tarih biçimini ayarlayacağız.
+18	Klavye düzeni seçin
+19	Düzeni dene
+20	programcı
+21	daktilo
+22	Sürücü
+23	boş
+24	Disk şifreleme
+25	Kapalı
+26	Açık
+27	Disk parolası
+28	Disk parolasını yineleyin
+29	Shrimp nereye kurulsun?
+30	Windows'un yanına
+31	Windows'un yerine
+32	Windows silinecek. Sakladığınız dosyaları yeni sisteme taşıyacağız.
+33	Windows sürücüsü BitLocker ile şifrelendiği için Windows'un yanına kurulum yapılamaz.
+34	Shrimp, {name} sürücüsünün tamamını kullanacak.
+35	Windows diğer sürücüde kalır.
+36	Disk bölümleme
+37	Bilgisayar her açılışta bu parolayı soracak. Parola olmadan verilerinizi kurtaramazsınız.
+38	Hesap oluşturun
+39	Oturum açmak için gerekecek.
+40	Ad soyad
+41	Kullanıcı adı
+42	Parola
+43	Parolayı onaylayın
+44	Kuruluma hazır
+45	"Yükle"ye tıklayana kadar hiçbir şey değişmez.
+46	Dil
+47	Bölge
+48	Klavye
+49	Sürücü
+50	Kurulum
+51	Sürücünün tamamı
+52	Disk bölümleme
+53	Windows {win} · Shrimp {shrimp}
+54	Hesap
+55	Şifreleme
+56	Yükle
+57	Shrimp kuruluyor
+58	Kuruluyor
+59	Sürücü hazırlanıyor
+60	Sistem kuruluyor
+61	Dosyalar geri yükleniyor
+62	Yaklaşık {min} dk kaldı
+63	Birazdan bitecek
+64	Kurulum tamamlandı
+65	Bitirmek için bilgisayarı yeniden başlatın.
+66	Yeniden başlat
+67	Merhaba, {name}
+68	siz
+69	Kurulumu tamamlayalım. Sadece bir dakikanızı alacak.
+70	Bir ağa bağlanın
+71	{ssid} ağının parolası
+72	Korumalı
+73	Açık
+74	Açık ağ. Başkaları bu ağda yaptıklarınızı görebilir.
+75	Gizli ağ
+76	Listede görünmeyen bir ağın bilgilerini girin.
+77	Ağ adı
+78	Güvenlik
+79	Bağlan
+80	IP adresi
+81	DNS sunucusu
+82	Proxy
+83	El ile
+84	Görünüm seçin
+85	Açık
+86	Koyu
+87	Bunu her zaman Ayarlar'dan değiştirebilirsiniz.
+88	Renk seçin
+89	Mavi
+90	Camgöbeği
+91	Yeşil
+92	Sarı
+93	Turuncu
+94	Kırmızı
+95	Pembe
+96	Mor
+97	Gri
+98	Sorunsuz görüntü ve ses
+99	Videoların ve oyunların hemen çalışması için gereken sürücüleri ve codec'leri kuracağız.
+100	Yükle
+101	Daha sonra yaparım
+102	NVIDIA ekran kartı
+103	{name} kartını bulduk.
+104	NVIDIA sürücüsü
+105	Açık sürücü
+106	Oyunlarda ve grafik programlarında en iyi performans.
+107	Kullanımı daha basit ama daha az güçlü.
+108	Bilgisayarınızı nasıl kullanıyorsunuz?
+109	En çok ihtiyaç duyduğunuz programları kuracağız.
+110	İş ve eğitim
+111	Oyunlar
+112	Yaratıcılık
+113	Programlama
+114	Multimedya
+115	Windows'taki programlarınız
+116	Bunları bilgisayarınızda bulduk. Hangilerinin kurulacağını seçin.
+117	Önerilen programlar
+118	Hangilerinin kurulacağını seçin.
+119	Hiçbir şey seçilmedi.
+120	Programlar kuruluyor
+121	İndiriliyor ve kuruluyor
+122	Her şey hazır
+123	Shrimp'i keyifle kullanın.
+124	Daha fazlasını öğrenmek istiyorum
+125	{n} / {total}
+126	Shrimp, Linux'tur
+127	Linux, dünyanın dört bir yanındaki insanların geliştirdiği ücretsiz bir sistemdir. Sunucuların ve Android telefonların çoğu onunla çalışır.
+128	Windows yanında
+129	Her açılışta Shrimp'i veya Windows'u seçersiniz.
+130	Programlar
+131	Windows .exe dosyaları burada çalışmaz. Programları Shrimp Apps'ten kurarsınız; bilinen uygulamaların çoğunun karşılığını orada bulursunuz.
+132	Değişikliklerde parola
+133	Program kurarken veya önemli ayarları değiştirirken sistem parolanızı ister. Bu normaldir ve bilgisayarınızı korur.
+134	Dosyalarınız
+135	Belgeler, fotoğraflar ve indirilenler, ana klasörünüzdeki Dosyalar uygulamasındadır.
+136	Windows sürücüsünü de orada bulursunuz.
+137	Panko
+138	Bir değişiklikten sonra bir şey mi çalışmayı bıraktı? Panko ile değişiklikten önceki duruma dönebilirsiniz.
+139	Cocktail
+140	Güncellemeler, sürücüler ve codec'ler tek yerde. Güncellemeler yeniden başlatırken kurulur.
+141	Hızlı arama
+142	Programları, dosyaları ve ayarları bulmak için Windows logolu Super tuşuna basın.
+143	Yardım
+144	Yanıtları Shrimp yardım sayfalarında, GNOME ve openSUSE belgelerinde ve topluluk forumlarında bulabilirsiniz.
+145	Disk parolaları eşleşmiyor
+146	Her iki alana da aynı parolayı girin. Parola olmadan bilgisayar açılmaz, bu yüzden güvenli bir yerde saklayın.
+147	Parolalar eşleşmiyor
+148	Her iki alana da aynı parolayı girin ve yeniden deneyin.
+149	Yeniden dene
+150	Yeterli yer yok
+151	Sürücüde Shrimp için yeterli yer yok. Windows'u küçültün veya başka bir sürücü seçin.
+152	Boyutu değiştir
+153	Geri dön
+154	Kurulum başarısız oldu
+155	Bir şeyler ters gitti. Dosyalarınız güvende. Yeniden deneyebilirsiniz.
+156	Çık
+157	Bağlanılamadı
+158	Ağ parolasını denetleyin ve yeniden deneyin.
+159	{ssid} ağının parolasını denetleyin ve yeniden deneyin.
+160	İnternet bağlantısı yok
+161	Programlar indirilemedi. Bağlantınızı denetleyin ve yeniden deneyin.
+162	Belgeler ve hesap tabloları
+163	E-posta
+164	Oyunlar
+165	Epic ve GOG oyunları
+166	Çizim
+167	Video düzenleme
+168	Grafik
+169	Kod düzenleyici
+170	Geliştirme ortamı
+171	Filmler ve müzik
+172	Müzik
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Kanarya Adaları
+180	Sidney
+181	Perth

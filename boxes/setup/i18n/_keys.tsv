@@ -1,0 +1,223 @@
+# id	klucz	angielski (wzorzec); nowe wiersze tylko na końcu, id się nie zmieniają
+1	back.aria	Back
+2	info.aria	Information
+3	logo.aria	Shrimp logo
+4	nvidia.pop	The NVIDIA driver gives full performance in games and graphics programs. The open driver is simpler but slower.
+5	recommended	(Recommended)
+6	next	Next
+7	skip	Skip
+8	cancel	Cancel
+9	done	Done
+10	advanced	Advanced
+11	auto	Automatic
+12	none	None
+13	welcome.sub	Let's get Shrimp ready on your computer.
+14	start	Let's start
+15	lang.title	Choose a language
+16	region.title	Where are you?
+17	region.sub	We'll set the time zone and date format.
+18	kb.title	Choose a keyboard layout
+19	kb.test	Test the layout
+20	kb.programmer	programmer
+21	kb.typist	typewriter
+22	disk.drive	Drive
+23	disk.empty	empty
+24	disk.encrypt	Disk encryption
+25	enc.off	Off
+26	enc.on	On
+27	disk.pass	Disk password
+28	disk.pass2	Repeat the disk password
+29	disk.where	Where should Shrimp be installed?
+30	place.beside	Next to Windows
+31	place.replace	Instead of Windows
+32	place.replace.d	Windows will be removed. We'll move the files you kept to the new system.
+33	place.locked	Installing next to Windows isn't possible because the Windows drive is encrypted with BitLocker.
+34	disk.whole	Shrimp will use the whole {name} drive.
+35	disk.whole.keep	Windows stays on the other drive.
+36	disk.split.aria	Disk split
+37	disk.enc.warn	The computer will ask for this password at every start. Without it you can't recover your data.
+38	account.title	Create an account
+39	account.sub	You'll need it to sign in.
+40	account.full	Full name
+41	account.user	Username
+42	account.pass	Password
+43	account.pass2	Confirm password
+44	sum.title	Ready to install
+45	sum.sub	Nothing changes until you click “Install”.
+46	sum.lang	Language
+47	sum.region	Region
+48	sum.kb	Keyboard
+49	sum.disk	Drive
+50	sum.how	Installation
+51	sum.whole	Whole drive
+52	sum.split	Disk split
+53	sum.split.v	Windows {win} · Shrimp {shrimp}
+54	sum.account	Account
+55	sum.enc	Encryption
+56	sum.go	Install
+57	inst.title	Installing Shrimp
+58	inst.aria	Installing
+59	inst.disk	Preparing the drive
+60	inst.system	Installing the system
+61	inst.files	Restoring files
+62	eta.left	About {min} min left
+63	eta.soon	Just a moment
+64	restart.title	Installation complete
+65	restart.sub	Restart the computer to finish.
+66	restart.go	Restart
+67	hi.title	Hi, {name}
+68	hi.fallback	there
+69	hi.sub	Let's finish the setup. It will only take a moment.
+70	net.title	Connect to a network
+71	net.pass	Password for network {ssid}
+72	net.secured	Secured
+73	net.open	Open
+74	net.open.note	Open network. Others may see what you do on it.
+75	net.hiddenlink	Hidden network
+76	net.hidden.sub	Enter the details of a network that isn't shown in the list.
+77	net.ssid	Network name
+78	net.security	Security
+79	net.connect	Connect
+80	net.ip	IP address
+81	net.dns	DNS server
+82	net.proxy	Proxy
+83	net.manual	Manual
+84	look.title	Choose a look
+85	look.light	Light
+86	look.dark	Dark
+87	look.note	You can always change this in Settings.
+88	look.color	Choose a color
+89	acc.blue	Blue
+90	acc.teal	Teal
+91	acc.green	Green
+92	acc.yellow	Yellow
+93	acc.orange	Orange
+94	acc.red	Red
+95	acc.pink	Pink
+96	acc.purple	Purple
+97	acc.slate	Gray
+98	drv.title	Picture and sound without trouble
+99	drv.sub	We'll install the drivers and codecs you need so videos and games work right away.
+100	drv.install	Install
+101	drv.later	I'll do it later
+102	nv.title	NVIDIA graphics card
+103	nv.sub	We found a {name} card.
+104	nv.driver	NVIDIA driver
+105	nv.open	Open driver
+106	nv.best	Best performance in games and graphics programs.
+107	nv.simple	Simpler to run, but less powerful.
+108	apps.title	How do you use your computer?
+109	apps.sub	We'll install the programs you need most.
+110	use.work	Work and study
+111	use.games	Games
+112	use.create	Creativity
+113	use.dev	Programming
+114	use.media	Multimedia
+115	win.title	Your programs from Windows
+116	win.sub	We found them on your computer. Choose which to install.
+117	prop.title	Suggested programs
+118	prop.sub	Choose which to install.
+119	prop.none	Nothing selected.
+120	apps.run	Installing programs
+121	apps.phase	Downloading and installing
+122	ready.title	All set
+123	ready.sub	Enjoy using Shrimp.
+124	ready.more	I want to know more
+125	slide.count	{n} of {total}
+126	slide.linux.t	Shrimp is Linux
+127	slide.linux.d	Linux is a free system made by people from all over the world. It runs most servers and Android phones.
+128	slide.win.t	Windows next door
+129	slide.win.d	At every start you'll choose Shrimp or Windows.
+130	slide.apps.t	Programs
+131	slide.apps.d	Windows .exe files don't run here. You install programs from Shrimp Apps, and for most well-known apps you'll find an equivalent there.
+132	slide.pass.t	Password for changes
+133	slide.pass.d	When you install programs or change important settings, the system will ask for your password. That's normal and protects your computer.
+134	slide.files.t	Your files
+135	slide.files.d	Documents, photos and downloads are in the Files app, in your home folder.
+136	slide.files.win	You'll find the Windows drive there too.
+137	slide.panko.t	Panko
+138	slide.panko.d	Did something stop working after a change? In Panko you can go back to how things were before it.
+139	slide.cocktail.t	Cocktail
+140	slide.cocktail.d	Updates, drivers and codecs in one place. Updates are installed when you restart.
+141	slide.search.t	Quick search
+142	slide.search.d	Press the Super key, the one with the Windows logo, to find programs, files and settings.
+143	slide.help.t	Help
+144	slide.help.d	You'll find answers on the Shrimp help pages, in the GNOME and openSUSE documentation and on community forums.
+145	err.dpass.t	The disk passwords don't match
+146	err.dpass.d	Enter the same password in both fields. You can't start the computer without it, so keep it somewhere safe.
+147	err.pass.t	The passwords don't match
+148	err.pass.d	Enter the same password in both fields and try again.
+149	err.retry	Try again
+150	err.space.t	Not enough space
+151	err.space.d	There isn't enough space on the drive for Shrimp. Make Windows smaller or choose another drive.
+152	err.space.p	Change the size
+153	err.space.s	Go back
+154	err.install.t	Installation failed
+155	err.install.d	Something went wrong. Your files are safe. You can try again.
+156	err.install.s	Quit
+157	err.wifi.t	Couldn't connect
+158	err.wifi.d	Check the network password and try again.
+159	err.wifi.ssid	Check the password for network {ssid} and try again.
+160	err.net.t	No internet connection
+161	err.net.d	Couldn't download the programs. Check your connection and try again.
+162	app.office	Documents and spreadsheets
+163	app.mail	Email
+164	app.games	Games
+165	app.epic	Games from Epic and GOG
+166	app.draw	Drawing
+167	app.video	Video editing
+168	app.graphics	Graphics
+169	app.code	Code editor
+170	app.ide	Development environment
+171	app.player	Movies and music
+172	app.music	Music
+173	city.newyork	New York
+174	city.chicago	Chicago
+175	city.denver	Denver
+176	city.losangeles	Los Angeles
+177	city.toronto	Toronto
+178	city.vancouver	Vancouver
+179	city.canary	Canary Islands
+180	city.sydney	Sydney
+181	city.perth	Perth
+182	usb.title	Restore your USB drive
+183	usb.sub	{files} files from the drive ({size}) are safe on this computer. We'll put them back, and the drive will work as before.
+184	usb.go	Restore the drive
+185	usb.keep	Keep the files on this computer
+186	usb.plug.title	Plug in your USB drive
+187	usb.plug.sub	The one you installed Shrimp from. Its files are safe on this computer.
+188	usb.check	Check again
+189	usb.run	Restoring the drive
+190	usb.done.t	The drive is ready
+191	usb.done.d	All your files are back on the drive.
+192	usb.home.t	Your files are on this computer
+193	usb.home.d	You'll find them in the Pendrive folder in your home folder.
+194	usb.fail.t	Couldn't restore the drive
+195	usb.fail.d	Your files are still safe on this computer. Plug the drive in and try again.
+196	usb.retry	Try again
+197	err.stall.t	Installation is taking longer than usual
+198	err.stall.d	Nothing has changed for 20 minutes. You can keep waiting or quit and try again later.
+199	err.stall.p	Keep waiting
+200	err.agama.t	The installer isn't responding
+201	err.agama.d	Shrimp Setup lost contact with the installer. It may still be working: check again in a moment, or quit and start the computer from the drive again.
+202	err.agama.p	Check again
+203	err.user.t	This user name is used by the system
+204	err.user.d	Choose a different user name, for example with a number at the end.
+205	err.nodisk.t	No drive for Shrimp
+206	err.nodisk.d	Setup can't see this computer's internal drive. On some laptops it is hidden by Intel RST (VMD) in the firmware settings. Check the drive and try again.
+207	inet.sub	Shrimp downloads the system from the internet while it installs. Choose your Wi-Fi network.
+208	inet.none	No Wi-Fi networks found. Connect a network cable or move closer to the router, then search again.
+209	inet.rescan	Search again
+210	err.offline.d	Shrimp needs the internet to install. Connect to a network and try again.
+211	pass.show	Show password
+212	pass.hide	Hide password
+213	inet.connecting	Connecting to {ssid}…
+214	inet.check	Connected to {ssid}. Checking the internet connection…
+215	inet.repo	Internet works. Shrimp is reading the openSUSE repositories…
+216	err.offline.nonet	The Wi-Fi network is connected, but there is no internet. Check that the router is connected to the internet and try again.
+217	err.offline.repo	The internet works, but the installer couldn't read the openSUSE repositories. Try again in a moment.
+218	disk.checking	Checking the disks…
+219	err.repo.t	Couldn't read the repositories
+220	inet.scanning	Looking for Wi-Fi networks…
+221	inet.nodev	The computer doesn't see a Wi-Fi card (its driver or firmware did not load). Connect a network cable or use a phone over USB (tethering).
+222	inet.off	Wi-Fi is switched off or blocked. Turn it on with the key on the keyboard (airplane mode) and search again.

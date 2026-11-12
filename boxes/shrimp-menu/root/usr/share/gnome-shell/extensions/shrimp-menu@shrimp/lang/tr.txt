@@ -1,0 +1,4 @@
+1	Bu bilgisayar hakkında
+3	Yazılım
+4	Güncellemeler
+15	Sistem geri yükleme

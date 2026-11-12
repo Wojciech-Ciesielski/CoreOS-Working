@@ -1,0 +1,15 @@
+# Po pierwszym starcie ze sterownikiem NVIDIA: biblioteki GL NVIDIA dla aplikacji z Flathub
+# (rozszerzenie org.freedesktop.Platform.GL.nvidia-* pasujące do wersji sterownika).
+[Unit]
+Description=Shrimp: biblioteki NVIDIA dla aplikacji z Flathub
+ConditionPathExists=/var/lib/shrimp-setup/nvidia-flatpak
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/flatpak update --system --noninteractive -y
+ExecStartPost=/usr/bin/rm -f /var/lib/shrimp-setup/nvidia-flatpak
+
+[Install]
+WantedBy=multi-user.target

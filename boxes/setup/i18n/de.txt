@@ -1,0 +1,181 @@
+1	Zurück
+2	Informationen
+3	Shrimp-Logo
+4	Der NVIDIA-Treiber bietet volle Leistung in Spielen und Grafikprogrammen. Der offene Treiber ist einfacher, aber langsamer.
+5	(Empfohlen)
+6	Weiter
+7	Überspringen
+8	Abbrechen
+9	Fertig
+10	Erweitert
+11	Automatisch
+12	Keine
+13	Machen wir Shrimp auf Ihrem Computer bereit.
+14	Los geht’s
+15	Sprache wählen
+16	Wo sind Sie?
+17	Wir stellen Zeitzone und Datumsformat ein.
+18	Tastaturbelegung wählen
+19	Belegung testen
+20	Programmierer
+21	Schreibmaschine
+22	Laufwerk
+23	leer
+24	Laufwerksverschlüsselung
+25	Aus
+26	An
+27	Laufwerkspasswort
+28	Laufwerkspasswort wiederholen
+29	Wo soll Shrimp installiert werden?
+30	Neben Windows
+31	Anstelle von Windows
+32	Windows wird entfernt. Die behaltenen Dateien übertragen wir auf das neue System.
+33	Neben Windows lässt sich nicht installieren, weil das Windows-Laufwerk mit BitLocker verschlüsselt ist.
+34	Shrimp belegt das gesamte Laufwerk {name}.
+35	Windows bleibt auf dem anderen Laufwerk.
+36	Laufwerksaufteilung
+37	Der Computer fragt bei jedem Start nach diesem Passwort. Ohne es können Sie Ihre Daten nicht wiederherstellen.
+38	Konto erstellen
+39	Sie brauchen es zum Anmelden.
+40	Vollständiger Name
+41	Benutzername
+42	Passwort
+43	Passwort bestätigen
+44	Bereit zur Installation
+45	Es ändert sich nichts, bis Sie auf „Installieren“ klicken.
+46	Sprache
+47	Region
+48	Tastatur
+49	Laufwerk
+50	Installation
+51	Ganzes Laufwerk
+52	Laufwerksaufteilung
+53	Windows {win} · Shrimp {shrimp}
+54	Konto
+55	Verschlüsselung
+56	Installieren
+57	Shrimp wird installiert
+58	Installation läuft
+59	Laufwerk wird vorbereitet
+60	System wird installiert
+61	Dateien werden wiederhergestellt
+62	Noch etwa {min} Min.
+63	Gleich geschafft
+64	Installation abgeschlossen
+65	Starten Sie den Computer neu, um den Vorgang abzuschließen.
+66	Neu starten
+67	Hallo, {name}
+68	Sie
+69	Schließen wir die Einrichtung ab. Das dauert nur einen Moment.
+70	Mit einem Netzwerk verbinden
+71	Passwort für das Netzwerk {ssid}
+72	Gesichert
+73	Offen
+74	Offenes Netzwerk. Andere können sehen, was Sie darin tun.
+75	Verstecktes Netzwerk
+76	Geben Sie die Daten eines Netzwerks ein, das nicht in der Liste angezeigt wird.
+77	Netzwerkname
+78	Sicherheit
+79	Verbinden
+80	IP-Adresse
+81	DNS-Server
+82	Proxy
+83	Manuell
+84	Aussehen wählen
+85	Hell
+86	Dunkel
+87	Sie können das jederzeit in den Einstellungen ändern.
+88	Farbe wählen
+89	Blau
+90	Türkis
+91	Grün
+92	Gelb
+93	Orange
+94	Rot
+95	Rosa
+96	Violett
+97	Grau
+98	Bild und Ton ohne Probleme
+99	Wir installieren die nötigen Treiber und Codecs, damit Videos und Spiele sofort funktionieren.
+100	Installieren
+101	Mache ich später
+102	NVIDIA-Grafikkarte
+103	Wir haben eine Karte {name} gefunden.
+104	NVIDIA-Treiber
+105	Offener Treiber
+106	Beste Leistung in Spielen und Grafikprogrammen.
+107	Einfacher im Betrieb, aber weniger leistungsstark.
+108	Wie verwenden Sie Ihren Computer?
+109	Wir installieren die Programme, die Sie am meisten brauchen.
+110	Arbeit und Lernen
+111	Spiele
+112	Kreativität
+113	Programmierung
+114	Multimedia
+115	Ihre Programme aus Windows
+116	Wir haben sie auf Ihrem Computer gefunden. Wählen Sie aus, welche installiert werden sollen.
+117	Vorgeschlagene Programme
+118	Wählen Sie aus, welche installiert werden sollen.
+119	Nichts ausgewählt.
+120	Programme werden installiert
+121	Wird heruntergeladen und installiert
+122	Alles bereit
+123	Viel Freude mit Shrimp.
+124	Ich möchte mehr erfahren
+125	{n} von {total}
+126	Shrimp ist Linux
+127	Linux ist ein kostenloses System, das von Menschen auf der ganzen Welt entwickelt wird. Es läuft auf den meisten Servern und Android-Telefonen.
+128	Windows nebenan
+129	Bei jedem Start wählen Sie Shrimp oder Windows.
+130	Programme
+131	Windows-.exe-Dateien laufen hier nicht. Programme installieren Sie über Shrimp Apps, und für die meisten bekannten Anwendungen finden Sie dort ein Gegenstück.
+132	Passwort bei Änderungen
+133	Wenn Sie Programme installieren oder wichtige Einstellungen ändern, fragt das System nach Ihrem Passwort. Das ist normal und schützt Ihren Computer.
+134	Ihre Dateien
+135	Dokumente, Fotos und Downloads finden Sie in der App „Dateien“, in Ihrem persönlichen Ordner.
+136	Dort finden Sie auch das Windows-Laufwerk.
+137	Panko
+138	Funktioniert nach einer Änderung etwas nicht mehr? In Panko kehren Sie zum Stand davor zurück.
+139	Cocktail
+140	Updates, Treiber und Codecs an einem Ort. Updates werden beim Neustart installiert.
+141	Schnellsuche
+142	Drücken Sie die Super-Taste, die Taste mit dem Windows-Logo, um Programme, Dateien und Einstellungen zu finden.
+143	Hilfe
+144	Antworten finden Sie auf den Hilfeseiten von Shrimp, in der Dokumentation von GNOME und openSUSE sowie in Community-Foren.
+145	Die Laufwerkspasswörter stimmen nicht überein
+146	Geben Sie in beiden Feldern dasselbe Passwort ein. Ohne es lässt sich der Computer nicht starten, bewahren Sie es also sicher auf.
+147	Die Passwörter stimmen nicht überein
+148	Geben Sie in beiden Feldern dasselbe Passwort ein und versuchen Sie es erneut.
+149	Erneut versuchen
+150	Nicht genug Platz
+151	Auf dem Laufwerk ist nicht genug Platz für Shrimp. Verkleinern Sie Windows oder wählen Sie ein anderes Laufwerk.
+152	Größe ändern
+153	Zurück
+154	Installation fehlgeschlagen
+155	Etwas ist schiefgelaufen. Ihre Dateien sind sicher. Sie können es erneut versuchen.
+156	Beenden
+157	Verbindung fehlgeschlagen
+158	Prüfen Sie das Netzwerkpasswort und versuchen Sie es erneut.
+159	Prüfen Sie das Passwort für das Netzwerk {ssid} und versuchen Sie es erneut.
+160	Keine Internetverbindung
+161	Die Programme konnten nicht heruntergeladen werden. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.
+162	Dokumente und Tabellen
+163	E-Mail
+164	Spiele
+165	Spiele von Epic und GOG
+166	Zeichnen
+167	Videobearbeitung
+168	Grafik
+169	Code-Editor
+170	Entwicklungsumgebung
+171	Filme und Musik
+172	Musik
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Kanarische Inseln
+180	Sydney
+181	Perth

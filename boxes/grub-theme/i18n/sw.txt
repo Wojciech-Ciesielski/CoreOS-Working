@@ -1,0 +1,2 @@
+1	Mipangilio ya kompyuta
+2	Shrimp itaanza baada ya %d s

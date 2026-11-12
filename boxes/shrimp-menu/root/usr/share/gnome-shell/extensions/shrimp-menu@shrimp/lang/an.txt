@@ -1,0 +1,4 @@
+1	Sobre iste ordinador
+3	Programari
+4	Actualizacions
+15	Restauración d'o sistema

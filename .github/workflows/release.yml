@@ -1,0 +1,162 @@
+name: Release
+
+# Wydanie Shrimp (ISO) z jednego commita: buduje ISO (Build ISO) albo bierze gotowy przebieg z tego samego
+# commita (reuse), liczy SHA-256, wysyła ISO, SHA256SUMS i manifest.json do Cloudflare R2, a w GitHub tworzy
+# wydanie z sumami, manifestem i opisem budowy (samo ISO jest tylko w R2: bez limitu 2 GiB na plik).
+#
+# Shrimp Install (Install-Working) czyta manifest z R2: <R2_PUBLIC_URL>/manifest.json (zawsze ostatnie wydanie).
+# Układ bucketu:  manifest.json   <tag>/<obraz>.iso   <tag>/SHA256SUMS   <tag>/manifest.json
+#
+# Ustawienia repozytorium (Settings → Secrets and variables → Actions):
+#   sekrety:  R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY (token R2 z zapisem do bucketu),
+#             SHRIMP_MANIFEST_KEY (opcjonalnie: klucz podpisu manifestu)
+#   zmienne:  R2_BUCKET (nazwa bucketu), R2_PUBLIC_URL (publiczny adres bucketu, bez / na końcu)
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag wydania (musi być nowy)"
+        required: true
+        default: "beta-5"
+      version:
+        description: "Wersja pokazywana w programie i w nazwie pobranego ISO"
+        required: true
+        default: "Beta 5"
+      source_sha:
+        description: "Tylko z reuse: commit, z którego pochodzi gotowy przebieg i który dostaje tag (puste = commit, z którego uruchomiono wydanie)"
+        required: false
+        default: ""
+      reuse:
+        description: "Użyj gotowego przebiegu Build ISO z tego samego commita (bez budowania)"
+        type: boolean
+        default: false
+      iso_run:
+        description: "Tylko z reuse: id przebiegu Build ISO do użycia (puste = ostatni udany z source_sha)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  iso:
+    if: ${{ !inputs.reuse }}
+    uses: ./.github/workflows/build-iso.yml
+
+  release:
+    needs: [iso]
+    if: ${{ always() && (inputs.reuse || needs.iso.result == 'success') }}
+    runs-on: ubuntu-24.04
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      TAG: ${{ inputs.tag }}
+      VERSION: ${{ inputs.version }}
+      SOURCE_SHA: ${{ inputs.reuse && inputs.source_sha || github.sha }}
+      ISO_RUN_IN: ${{ inputs.iso_run }}
+      MANIFEST_KEY: ${{ secrets.SHRIMP_MANIFEST_KEY }}
+      R2_BUCKET: ${{ vars.R2_BUCKET }}
+      R2_PUBLIC_URL: ${{ vars.R2_PUBLIC_URL }}
+      R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: auto
+      # R2 nie obsługuje nowych domyślnych sum kontrolnych AWS CLI (CRC64): tylko gdy wymagane.
+      AWS_REQUEST_CHECKSUM_CALCULATION: when_required
+      AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
+    steps:
+      - uses: actions/checkout@v7
+        with: { ref: "${{ inputs.reuse && inputs.source_sha || github.sha }}" }
+
+      - name: Sprawdź ustawienia R2, tag i wersję
+        run: |
+          miss=""
+          for v in R2_BUCKET R2_PUBLIC_URL R2_ACCOUNT_ID AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY; do [ -n "${!v}" ] || miss="$miss $v"; done
+          [ -z "$miss" ] || { echo "::error::Brak ustawień R2:$miss (sekrety R2_ACCOUNT_ID/R2_ACCESS_KEY_ID/R2_SECRET_ACCESS_KEY, zmienne R2_BUCKET/R2_PUBLIC_URL)"; exit 1; }
+          # Jedno źródło wersji: boxes/branding/root/usr/share/shrimp/version (os-release obrazu i systemu).
+          want=$(head -n1 boxes/branding/root/usr/share/shrimp/version)
+          # Dopuszczalny dopisek liter (np. „Beta 5r”: to samo ISO wydane ponownie z poprawką, bez zmiany obrazu).
+          if [ "$VERSION" != "$want" ] && ! [[ "$VERSION" =~ ^"$want"[a-z]+$ ]]; then
+            echo "::error::Wersja wydania „$VERSION” różni się od wersji w obrazie „$want” (boxes/branding/root/usr/share/shrimp/version)"; exit 1
+          fi
+          if gh api "repos/$REPO/git/ref/tags/$TAG" >/dev/null 2>&1; then
+            echo "::error::Tag $TAG już istnieje"; exit 1
+          fi
+          echo "R2_ENDPOINT=https://$R2_ACCOUNT_ID.r2.cloudflarestorage.com" >> "$GITHUB_ENV"
+          echo "R2_PUBLIC_URL=${R2_PUBLIC_URL%/}" >> "$GITHUB_ENV"
+
+      - name: ISO z tego przebiegu
+        if: ${{ !inputs.reuse }}
+        uses: actions/download-artifact@v8
+        with: { name: shrimp-live-iso, path: iso }
+
+      - name: Gotowy przebieg z tego samego commita
+        if: ${{ inputs.reuse }}
+        run: |
+          ISO_RUN=${ISO_RUN_IN:-$(gh run list -R "$REPO" -w build-iso.yml -c "$SOURCE_SHA" -s success -L 1 --json databaseId -q '.[0].databaseId')}
+          if [ -z "$ISO_RUN" ]; then
+            echo "::error::Brak udanego przebiegu Build ISO dla commita $SOURCE_SHA. Uruchom wydanie bez „reuse”, żeby go zbudować."; exit 1
+          fi
+          echo "Build ISO: $ISO_RUN (commit $SOURCE_SHA)"
+          gh run download "$ISO_RUN" -R "$REPO" -n shrimp-live-iso -D iso
+
+      - name: Sumy kontrolne i manifest
+        run: |
+          [ "$(ls iso/*.iso | wc -l)" = 1 ] || { echo "::error::oczekiwano jednego pliku ISO"; exit 1; }
+          iso=$(ls iso/*.iso); name=$(basename "$iso")
+          size=$(stat -c %s "$iso"); sha=$(sha256sum "$iso" | cut -d' ' -f1)
+          # Shrimp Install zapisuje nośnik FAT32: żaden plik nie może mieć 4 GiB.
+          if [ "$size" -ge $((4*1024*1024*1024)) ]; then echo "::error::ISO ma $size B (limit FAT32 4 GiB)"; exit 1; fi
+          echo "ISO_NAME=$name" >> "$GITHUB_ENV"; echo "ISO_SHA=$sha" >> "$GITHUB_ENV"; echo "ISO_SIZE=$size" >> "$GITHUB_ENV"
+          mkdir -p assets
+          mv "$iso" "assets/$name"
+          [ -f iso/build-info.txt ] && cp iso/build-info.txt assets/build-info.txt
+          (cd assets && sha256sum "$name" > SHA256SUMS)
+          url="$R2_PUBLIC_URL/$TAG/$name"
+          jq -n --arg v "$VERSION" --arg u "$url" --argjson s "$size" --arg h "$sha" \
+            '{version:$v, url:$u, size:$s, sha256:$h}' > assets/manifest.json
+          cat assets/manifest.json
+          if [ -n "$MANIFEST_KEY" ]; then
+            printf '%s' "$MANIFEST_KEY" > key.pem
+            openssl dgst -sha256 -sign key.pem -out assets/manifest.json.sig assets/manifest.json
+            rm -f key.pem
+          fi
+          ls -l assets
+
+      - name: Wyślij do R2
+        run: |
+          r2() { aws s3 --endpoint-url "$R2_ENDPOINT" "$@"; }
+          # Najpierw obraz i sumy pod <tag>/, na końcu manifest w korzeniu: Shrimp Install nigdy nie widzi
+          # manifestu, którego obrazu jeszcze nie ma.
+          r2 cp "assets/$ISO_NAME" "s3://$R2_BUCKET/$TAG/$ISO_NAME" --content-type application/x-iso9660-image --no-progress
+          for f in SHA256SUMS manifest.json manifest.json.sig build-info.txt; do
+            [ -f "assets/$f" ] && r2 cp "assets/$f" "s3://$R2_BUCKET/$TAG/$f" --no-progress
+          done
+          # Sprawdzenie publicznego adresu, zanim manifest wskaże obraz.
+          got=$(curl -fsSI "$R2_PUBLIC_URL/$TAG/$ISO_NAME" | tr -d '\r' | awk -F': ' 'tolower($1)=="content-length"{print $2}')
+          [ "$got" = "$ISO_SIZE" ] || { echo "::error::Publiczny adres $R2_PUBLIC_URL/$TAG/$ISO_NAME zwraca rozmiar „$got” zamiast $ISO_SIZE (czy bucket ma włączony publiczny dostęp?)"; exit 1; }
+          r2 cp assets/manifest.json "s3://$R2_BUCKET/manifest.json" --content-type application/json --cache-control "max-age=300" --no-progress
+          [ -f assets/manifest.json.sig ] && r2 cp assets/manifest.json.sig "s3://$R2_BUCKET/manifest.json.sig" --cache-control "max-age=300" --no-progress
+          echo "ISO: $R2_PUBLIC_URL/$TAG/$ISO_NAME" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Utwórz wydanie
+        run: |
+          cat > notes.md <<NOTES
+          Shrimp $VERSION: wydanie testowe.
+
+          - Obraz: [$ISO_NAME]($R2_PUBLIC_URL/$TAG/$ISO_NAME) ($ISO_SIZE B, SHA-256: \`$ISO_SHA\`), hostowany w Cloudflare R2.
+          - \`manifest.json\`: opis pobierania, który czyta Shrimp Install (ostatnia wersja zawsze pod $R2_PUBLIC_URL/manifest.json).
+          - Aplikacje Shrimps: \`$(grep -v '^#' tools/shrimps.ref | head -n1)\`.
+
+          ISO nie jest do instalacji bezpośrednio: nośnik przygotowuje Shrimp Install (Install-Working).
+          NOTES
+          if [ -s iso/build-warnings.txt ]; then
+            { echo; echo "Ostrzeżenia z budowy obrazu (tych elementów może brakować):"; echo
+              sed 's/^/- /' iso/build-warnings.txt; } >> notes.md
+          fi
+          files=(assets/SHA256SUMS assets/manifest.json)
+          [ -f assets/manifest.json.sig ] && files+=(assets/manifest.json.sig)
+          [ -f assets/build-info.txt ] && files+=(assets/build-info.txt)
+          gh release create "$TAG" "${files[@]}" --repo "$REPO" --target "$SOURCE_SHA" --title "Shrimp $VERSION" --notes-file notes.md --prerelease
+          gh release view "$TAG" --repo "$REPO" --json url -q .url >> "$GITHUB_STEP_SUMMARY"

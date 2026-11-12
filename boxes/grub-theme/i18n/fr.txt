@@ -1,0 +1,2 @@
+1	Paramètres de l'ordinateur
+2	Shrimp démarrera dans %d s

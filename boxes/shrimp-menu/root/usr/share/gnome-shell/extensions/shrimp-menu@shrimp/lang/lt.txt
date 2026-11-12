@@ -1,0 +1,4 @@
+1	Apie šį kompiuterį
+3	Programinė įranga
+4	Atnaujinimai
+15	Sistemos atkūrimas

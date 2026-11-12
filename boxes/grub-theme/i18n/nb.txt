@@ -1,0 +1,2 @@
+1	Datamaskininnstillinger
+2	Shrimp starter om %d s

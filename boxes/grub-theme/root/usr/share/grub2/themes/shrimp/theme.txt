@@ -1,0 +1,47 @@
+# Shrimp GRUB theme (black, DESIGN.md "Prezentacja").
+# Measured from mockups/boot.html at 1920x1080 (boxes/plymouth-theme/tools/boot-geometry.json):
+#   logo 13% of width, shifted left by 4% of its width; list 2% (38 px), item pitch 84 px;
+#   hanging chevron 36 px + 17 px gap; countdown 1.4% (27 px), 4% of width above the bottom.
+# GRUB cannot centre each menu item, so the menu box is as wide as the longest entry
+# and centred; the selected-item west slice carries the chevron, so text never moves.
+# @FONT_*@ placeholders are replaced with PF2 names at build time (boxes/grub-theme/configure.sh).
+
+title-text: ""
+desktop-color: "#000000"
+terminal-font: "@FONT_REGULAR_27@"
+
++ image {
+  file = "logo.png"
+  left = 50%-135
+  top = 50%-334
+}
+
++ boot_menu {
+  left = 50%-304
+  top = 50%+4
+  width = 574
+  height = 332
+  item_font = "@FONT_REGULAR_38@"
+  selected_item_font = "@FONT_SEMIBOLD_38@"
+  item_color = "#8c8c8c"
+  selected_item_color = "#ffffff"
+  item_height = 77
+  item_spacing = 7
+  item_padding = 0
+  icon_width = 0
+  icon_height = 0
+  item_icon_space = 0
+  selected_item_pixmap_style = "select_*.png"
+  scrollbar = false
+}
+
++ label {
+  id = "__timeout__"
+  left = 0
+  top = 50%+437
+  width = 100%
+  align = "center"
+  font = "@FONT_REGULAR_27@"
+  color = "#8c8c8c"
+  text = "Shrimp uruchomi się za %d s"
+}

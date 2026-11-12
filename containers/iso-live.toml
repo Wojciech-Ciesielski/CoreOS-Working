@@ -1,0 +1,13 @@
+# Nośnik live (ISO): pulpit + szkielet obrazu, instalator i sesja live.
+# Budowa: tools/build-iso.sh → shrimp-box image iso-live out/desc → kiwi-ng.
+[container]
+id = "iso-live"
+summary = "ISO live: pulpit, instalator Setup (Agama), sesja live"
+include = ["desktop"]
+boxes = [
+    "image-base",
+    { id = "setup", args = ["--live"] },
+    "live-session",
+]
+ci = "build-iso"
+ci_extra = ["tools/build-iso.sh", "tools/fetch-shrimps.sh", "tools/shrimps.ref"]

@@ -1,0 +1,2 @@
+1	Podešavanja računara
+2	Shrimp će početi za %d s

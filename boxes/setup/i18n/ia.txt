@@ -1,0 +1,181 @@
+1	Retro
+2	Information
+3	Logotypo de Shrimp
+4	Le driver NVIDIA da prestationes complete in jocos e programmas graphic. Le driver aperte es plus simple, ma plus lente.
+5	(Recommendate)
+6	Sequente
+7	Saltar
+8	Cancellar
+9	Facite
+10	Avantiate
+11	Automatic
+12	Nulle
+13	Preparemos Shrimp sur tu computator.
+14	Comenciamos
+15	Selige un lingua
+16	Ubi es tu?
+17	Nos configurara le fuso horari e le formato del data.
+18	Selige un disposition de claviero
+19	Proba le disposition
+20	programmator
+21	machina de scriber
+22	Unitate
+23	vacue
+24	Cryptation del disco
+25	Disactivate
+26	Activate
+27	Contrasigno del disco
+28	Repete le contrasigno del disco
+29	Ubi installar Shrimp?
+30	Presso Windows
+31	In loco de Windows
+32	Windows essera removite. Nos movera le files que tu ha conservate al nove systema.
+33	Installar al latere de Windows non es possibile proque le unitate de Windows es cryptate con BitLocker.
+34	Shrimp usara tote le unitate {name}.
+35	Windows remane sur le altere unitate.
+36	Division del disco
+37	Le computator demandara iste contrasigno a cata initio. Sin illo tu non pote recuperar tu datos.
+38	Crea un conto
+39	Tu lo necessitara pro aperir session.
+40	Nomine complete
+41	Nomine de usator
+42	Contrasigno
+43	Confirma le contrasigno
+44	Preste pro installar
+45	Nihil cambia usque tu clicca “Installar”.
+46	Lingua
+47	Region
+48	Claviero
+49	Unitate
+50	Installation
+51	Unitate integre
+52	Division del disco
+53	Windows {win} · Shrimp {shrimp}
+54	Conto
+55	Cryptation
+56	Installar
+57	Installation de Shrimp
+58	Installation
+59	Preparation del unitate
+60	Installation del systema
+61	Restauration del files
+62	Circa {min} min remanente
+63	Un momento
+64	Installation complete
+65	Reinitia le computator pro finir.
+66	Reinitiar
+67	Salute, {name}
+68	amico
+69	Finimos le configuration. Il prendera solo un momento.
+70	Connecte te a un rete
+71	Contrasigno pro le rete {ssid}
+72	Securisate
+73	Aperte
+74	Rete aperte. Alteres pote vider lo que tu face in illo.
+75	Rete celate
+76	Entra le detalios de un rete que non appare in le lista.
+77	Nomine del rete
+78	Securitate
+79	Connecter
+80	Adresse IP
+81	Servitor DNS
+82	Proxy
+83	Manual
+84	Selige un apparentia
+85	Clar
+86	Obscur
+87	Tu pote sempre cambiar isto in Configuration.
+88	Selige un color
+89	Blau
+90	Blau-verde
+91	Verde
+92	Jalne
+93	Orange
+94	Rubie
+95	Rosa
+96	Violette
+97	Gris
+98	Imagine e sono sin problemas
+99	Nos installara le drivers e codecs necessari a fin que le videos e jocos functiona immediatemente.
+100	Installar
+101	Io lo facera plus tarde
+102	Carta graphic NVIDIA
+103	Nos ha trovate un carta {name}.
+104	Driver NVIDIA
+105	Driver aperte
+106	Le melior prestationes in jocos e programmas graphic.
+107	Plus simple, ma minus potente.
+108	Como usa tu tu computator?
+109	Nos installara le programmas que tu necessita le plus.
+110	Labor e studio
+111	Jocos
+112	Creativitate
+113	Programmation
+114	Multimedia
+115	Tu programmas de Windows
+116	Nos los ha trovate sur tu computator. Selige qual installar.
+117	Programmas suggerite
+118	Selige qual installar.
+119	Nihil seligite.
+120	Installation de programmas
+121	Discargamento e installation
+122	Toto preste
+123	Bon uso de Shrimp.
+124	Io vole saper plus
+125	{n} de {total}
+126	Shrimp es Linux
+127	Linux es un systema libere facite per personas de tote le mundo. Illo functiona sur le major parte del servitores e telephonos Android.
+128	Windows al latere
+129	A cata initio tu seligera Shrimp o Windows.
+130	Programmas
+131	Le files .exe de Windows non functiona hic. Tu installa programmas ab Shrimp Apps, e pro le major parte del applicationes cognite tu trovara ibi un equivalente.
+132	Contrasigno pro cambiamentos
+133	Quando tu installa programmas o cambia configurationes importante, le systema demandara tu contrasigno. Isto es normal e protege tu computator.
+134	Tu files
+135	Documentos, photos e discargamentos es in le application Files, in tu dossier personal.
+136	Tu trovara ibi anque le unitate de Windows.
+137	Panko
+138	Ha alique cessate de functionar post un cambiamento? In Panko tu pote retornar a como le cosas esseva antea.
+139	Cocktail
+140	Actualisationes, drivers e codecs in un sol loco. Le actualisationes es installate quando tu reinitia.
+141	Recerca rapide
+142	Preme le clave Super, illo con le logotypo de Windows, pro trovar programmas, files e configurationes.
+143	Adjuta
+144	Tu trovara responsas in le paginas de adjuta de Shrimp, in le documentation de GNOME e openSUSE e in le foros del communitate.
+145	Le contrasignos del disco non corresponde
+146	Entra le mesme contrasigno in ambe campos. Tu non pote initiar le computator sin illo, dunque conserva lo in un loco secur.
+147	Le contrasignos non corresponde
+148	Entra le mesme contrasigno in ambe campos e reproba.
+149	Reprobar
+150	Non bastante spatio
+151	Il non ha bastante spatio sur le unitate pro Shrimp. Rende Windows plus parve o selige un altere unitate.
+152	Cambiar le dimension
+153	Retornar
+154	Le installation ha fallite
+155	Alique ha vadite mal. Tu files es secur. Tu pote reprobar.
+156	Quitar
+157	Impossibile connecter se
+158	Verifica le contrasigno del rete e reproba.
+159	Verifica le contrasigno pro le rete {ssid} e reproba.
+160	Nulle connexion a internet
+161	Impossibile discargar le programmas. Verifica tu connexion e reproba.
+162	Documentos e folios de calculo
+163	E-posta
+164	Jocos
+165	Jocos de Epic e GOG
+166	Designo
+167	Edition de video
+168	Graphica
+169	Editor de codice
+170	Ambiente de disveloppamento
+171	Films e musica
+172	Musica
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Insulas Canarias
+180	Sydney
+181	Perth

@@ -1,0 +1,105 @@
+name: Test install
+
+# Full Shrimp path in QEMU: a stick made like Shrimp Install makes it (ISO files on FAT32,
+# label SHRIMP_LIVE, shrimp-transfer/shrimp.json with files), Setup on the live session,
+# installation with Agama onto an empty disk (Setup's own configuration from
+# boxes/setup/web/scripts/agama-test-config.ts), then the first boot of the installed system.
+# Before that, phase 0 boots the stick with the Setup guard on and checks that a click reaches Setup.
+# Serial logs and the Agama result are kept as an artifact (14 days). No screenshots, nothing is committed.
+
+on:
+  push:
+    branches: ["claude/**"]
+    paths: ["tools/qemu-install-test.py", "tools/install-test/**", ".github/workflows/test-install.yml"]
+  workflow_dispatch:
+    inputs:
+      build_run_id:
+        description: "Build ISO run id (empty = newest successful of this branch)"
+        default: ""
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Download ISO
+        run: |
+          id="${{ github.event.inputs.build_run_id }}"
+          [ -n "$id" ] || id=$(gh run list -R "$GITHUB_REPOSITORY" -w build-iso.yml -s success -b "$GITHUB_REF_NAME" -L 1 --json databaseId -q '.[0].databaseId')
+          [ -n "$id" ] || id=$(gh run list -R "$GITHUB_REPOSITORY" -w build-iso.yml -s success -L 1 --json databaseId -q '.[0].databaseId')
+          echo "Build ISO run: $id"; echo "$id" > build-run-id.txt
+          gh run download "$id" -R "$GITHUB_REPOSITORY" -n shrimp-live-iso -D iso
+          ls -l iso
+
+      - uses: actions/setup-node@v7
+        with: { node-version: 22 }
+
+      - name: Setup's Agama configuration for the test disk
+        working-directory: boxes/setup/web
+        run: |
+          npm ci
+          npx --yes tsx scripts/agama-test-config.ts /dev/vda > ../../../tools/install-test/config.json
+          cat ../../../tools/install-test/config.json
+
+      - name: Make the stick (like Shrimp Install)
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -yq --no-install-recommends qemu-system-x86 qemu-utils ovmf dosfstools gdisk
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules && sudo udevadm trigger --name-match=kvm
+          truncate -s 8G usb.img
+          sgdisk -n1:1M:0 -t1:0700 usb.img
+          LOOP=$(sudo losetup -Pf --show usb.img)
+          sudo mkfs.vfat -F 32 -n SHRIMP_LIVE "${LOOP}p1"
+          sudo mkdir -p /mnt/usb /mnt/iso
+          sudo mount "${LOOP}p1" /mnt/usb
+          sudo mount -o loop,ro iso/*.iso /mnt/iso
+          sudo cp -r /mnt/iso/. /mnt/usb/
+          # shrimp-transfer as written by Shrimp Install (schema: boxes/install-schema)
+          sudo mkdir -p /mnt/usb/shrimp-transfer/files/documents /mnt/usb/shrimp-test
+          echo "Plik z Windows" | sudo tee /mnt/usb/shrimp-transfer/files/documents/z-windows.txt >/dev/null
+          sudo tee /mnt/usb/shrimp-transfer/shrimp.json >/dev/null <<'JSON'
+          {"version":1,"installer":"test","windows":{"firmware":"uefi","secureBoot":false,"bitlocker":false},
+           "user":{"name":"jan","fullName":"Jan Testowy"},
+           "locale":{"format":"pl-PL","language":"pl-PL","region":"PL","timezone":"Europe/Warsaw","keyboards":["00000415"]},
+           "apps":[{"name":"Mozilla Firefox (x64 pl)","publisher":"Mozilla","version":"132.0"}],"storeApps":[],
+           "files":[{"key":"documents","path":"files/documents","source":"C:\\Users\\jan\\Documents","bytes":15}],
+           "split":[],"skipped":[]}
+          JSON
+          sudo cp tools/install-test/* /mnt/usb/shrimp-test/
+          ls -la /mnt/usb /mnt/usb/shrimp-test
+          sudo umount /mnt/usb /mnt/iso
+          sudo losetup -d "$LOOP"
+          # Copy for phase 0 (Setup guard test): journal to the serial port. The stick for the install
+          # (phase 1) stays exactly as Shrimp Install writes it.
+          cp --sparse=always usb.img usb-guard.img
+          LOOP=$(sudo losetup -Pf --show usb-guard.img)
+          sudo mount "${LOOP}p1" /mnt/usb
+          for g in $(sudo find /mnt/usb -name grub.cfg); do
+            sudo sed -i -E '/^\s*linux(efi)?\s/ s/$/ console=tty0 console=ttyS0,115200 plymouth.ignore-serial-consoles systemd.journald.forward_to_console=1/' "$g"
+            echo "$g:"; sudo grep -nE '^\s*linux(efi)?\s' "$g" | head -n 4 || true
+          done
+          sudo umount /mnt/usb
+          sudo losetup -d "$LOOP"
+
+      - name: Install and first boot
+        run: python3 tools/qemu-install-test.py usb.img out
+
+      - name: Id of the tested build
+        if: always()
+        run: cp build-run-id.txt out/ || true
+
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: install-test
+          path: out
+          retention-days: 14

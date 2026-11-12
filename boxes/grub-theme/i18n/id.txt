@@ -1,0 +1,2 @@
+1	Pengaturan komputer
+2	Shrimp akan dimulai dalam %d dtk

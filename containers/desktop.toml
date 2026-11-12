@@ -1,0 +1,23 @@
+# System Shrimp: to, co użytkownik ma na pulpicie (sesja live i system po instalacji).
+# Kolejność = kolejność fragmentów config.sh; box i tak idzie po swoich `depends`.
+[container]
+id = "desktop"
+summary = "Pulpit Shrimp: GNOME, motywy, Linu(x), aplikacje Shrimp"
+boxes = [
+    "branding",
+    "icon-theme",
+    "fonts",
+    "plymouth-theme",
+    "grub-theme",
+    "gnome-desktop",
+    "shell-theme",
+    "shell-extensions",
+    "shrimp-menu",
+    "app-style",
+    "linu-x",
+    "gdm",
+    "flathub",
+    "shrimp-apps",
+    "cocktail",
+    "panko",
+]

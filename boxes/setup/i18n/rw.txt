@@ -1,0 +1,41 @@
+1	Subira inyuma
+6	Ibikurikira
+7	Simbuka
+8	Bireke
+9	Birarangiye
+10	Bihanitse
+11	Mu buryo bwikora
+12	Nta na kimwe
+14	Dutangire
+15	Hitamo ururimi
+22	Disiki
+25	Ihagaritswe
+26	Ifunguye
+29	Shrimp igomba gushyirwa he?
+30	Iruhande rwa Windows
+31	Mu mwanya wa Windows
+42	Ijambobanga
+46	Ururimi
+47	Akarere
+48	Mwandikisho
+49	Disiki
+50	Kwinjizamo
+56	Injiza
+57	Kwinjiza Shrimp
+58	Kurimo kwinjizwamo
+63	Tegereza gato
+64	Kwinjizamo byarangiye
+66	Ongera utangire
+67	Muraho, {name}
+79	Huza
+85	Cyera
+86	Icyirabura
+89	Ubururu
+91	Icyatsi
+92	Umuhondo
+94	Umutuku
+111	Imikino
+143	Ubufasha
+149	Ongera ugerageze
+153	Subira inyuma
+156	Sohoka

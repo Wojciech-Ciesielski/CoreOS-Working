@@ -1,0 +1,184 @@
+/* Setup Shrimp: styl z shrimp-handoff/mockups/setup.html (rodzina „Prezentacja”, DESIGN.md).
+   Różnice względem makiety: ekran zajmuje całe okno, ikony Adwaita zamiast Fluent, tapeta z pliku. */
+:root { --font: "Inter", "Noto Sans", system-ui, sans-serif; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+body { font: 14px/20px var(--font); -webkit-font-smoothing: antialiased; }
+button, input { font: inherit; color: inherit; }
+.i { width: 1em; height: 1em; fill: currentColor; flex: none; display: block; }
+
+
+/* focus */
+:where(button, input, [tabindex]):focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+/* ekran: jasny na początku, ciemny dopiero po wyborze wyglądu */
+.screen {
+  --s-bg: #fff; --s-fg: #000; --s-dim: #5b5f66; --s-track: rgb(0 0 0 / 14%); --s-field: rgb(0 0 0 / 7%);
+  --s-card: #fff; --danger: #d13438; --veil: rgb(255 255 255 / 72%);
+  position: fixed; inset: 0;
+  container-type: size; overflow: hidden;
+  /* Jednostka układu: wcześniej wszystko było w cqw (szerokość okna), więc na szerokim, niskim ekranie
+     laptopa (16:9, 1920×1080, Vivobook) nagłówek miał 69 px, a krok Wi-Fi nie mieścił się w pionie.
+     Teraz mniejsza z szerokości i wysokości: makieta 16:10 wygląda tak samo, a ekran 16:9 jest mniejszy. */
+  --u: min(0.84cqw, 1.36cqh);
+  background: var(--s-bg); color: var(--s-fg);
+  font-family: var(--font);
+}
+.screen[data-look="dark"] { --s-bg: #000; --s-fg: #fff; --s-dim: #a3a7ad; --s-track: rgb(255 255 255 / 18%); --s-field: rgb(255 255 255 / 11%); --s-card: #1c1c1e; --danger: #ff6b6b; --veil: rgb(0 0 0 / 80%); }
+.screen[data-look="boot"] { --s-bg: #000; --s-fg: #fff; --s-dim: #8c8c8c; --s-track: #2c2c2e; --veil: #000; }
+.screen, .screen * { transition: background-color 0.7s ease, color 0.7s ease; }
+
+/* tapeta Shrimp 26 „Mont Blanc”, mocno rozmyta */
+/* Rozmycie (≈4% szerokości), nasycenie 115% i powiększenie o 12% są wypieczone w obrazie: tak samo w WebKitGTK bez akceleracji. */
+.wall { position: absolute; inset: 0; background: url("./assets/wall-blur.jpg") center / cover; transition: opacity 0.7s ease; }
+.veil { position: absolute; inset: 0; background: var(--veil); }
+.screen[data-look="boot"] .wall { opacity: 0; }
+
+.pane { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: safe center; overflow-y: auto; scrollbar-width: none; text-align: center; padding: calc(3 * var(--u)) calc(6 * var(--u)); }
+.rise { animation: rise 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both; animation-delay: calc(var(--i, 0) * 70ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(8px) scale(0.97); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+.back, .infobtn { position: absolute; top: calc(2.2 * var(--u)); width: max(34px, calc(3.4 * var(--u))); height: max(34px, calc(3.4 * var(--u))); border: 0; border-radius: 50%; background: transparent; color: var(--s-dim); display: grid; place-items: center; font-size: max(20px, calc(2.2 * var(--u))); cursor: pointer; z-index: 2; }
+.back { left: calc(2.2 * var(--u)); }
+.infobtn { right: calc(2.2 * var(--u)); font-size: max(18px, calc(2 * var(--u))); }
+.back:hover, .infobtn:hover { color: var(--s-fg); }
+.pop { position: absolute; z-index: 3; right: calc(2.2 * var(--u)); top: calc(calc(2.2 * var(--u)) + max(34px, calc(3.4 * var(--u))) + calc(0.6 * var(--u))); width: max(240px, calc(28 * var(--u))); padding: calc(1.3 * var(--u)) calc(1.5 * var(--u)); border-radius: calc(1.1 * var(--u)); background: var(--s-card); color: var(--s-fg); text-align: left; font-size: max(12px, calc(1.3 * var(--u))); line-height: 1.5; box-shadow: 0 calc(1 * var(--u)) calc(3 * var(--u)) rgb(0 0 0 / 22%); opacity: 0; visibility: hidden; transition: opacity 0.2s ease, visibility 0s 0.2s; }
+.infobtn:hover + .pop, .infobtn:focus-visible + .pop, .pop.show { opacity: 1; visibility: visible; transition-delay: 0s; }
+
+/* logo statyczne; lekko cofnięte w lewo, bo masa kształtu jest po prawej */
+.sh { display: block; width: 100%; height: auto; fill: currentColor; color: var(--s-fg); overflow: visible; transform: translateX(-4%); }
+.sh *, .sh .in { animation: none !important; opacity: 1 !important; transform: none !important; }
+.sh .lid { display: none; }
+.logo { flex: none; }
+
+/* typografia */
+.h1 { margin: calc(2.4 * var(--u)) 0 0; font-size: max(22px, calc(3.6 * var(--u))); line-height: 1.15; font-weight: 600; letter-spacing: -0.02em; text-wrap: balance; }
+.h1.fade { opacity: 0; transition: opacity 0.35s ease, color 0.7s ease; }
+.sub { margin: calc(0.9 * var(--u)) 0 0; max-width: calc(46 * var(--u)); font-size: max(14px, calc(1.6 * var(--u))); line-height: 1.5; color: var(--s-dim); text-wrap: balance; }
+.body { margin-top: calc(2.8 * var(--u)); width: 100%; display: flex; flex-direction: column; align-items: center; }
+.pane.big .h1 { margin-top: calc(3 * var(--u)); }
+
+/* lista wyboru jak w GRUB */
+.list { display: flex; flex-direction: column; align-items: center; gap: calc(0.1 * var(--u)); }
+.list.row { flex-direction: row; gap: calc(1.6 * var(--u)); }
+.list.scroll { justify-content: flex-start; max-height: max(200px, calc(21 * var(--u))); overflow-y: auto; padding: calc(2.4 * var(--u)) calc(3 * var(--u)); scrollbar-width: none; -webkit-mask-image: linear-gradient(transparent, #000 22%, #000 78%, transparent); mask-image: linear-gradient(transparent, #000 22%, #000 78%, transparent); }
+.list.scroll::-webkit-scrollbar { display: none; }
+.boots { display: flex; flex-direction: column; align-items: center; }
+.dots { margin-top: calc(2.6 * var(--u)); width: max(200px, calc(20 * var(--u))); height: max(38px, calc(3.8 * var(--u))); border-radius: 999px; background: rgb(255 255 255 / 12%); display: flex; align-items: center; justify-content: center; gap: calc(0.7 * var(--u)); }
+.dots i { width: calc(0.7 * var(--u)); height: calc(0.7 * var(--u)); min-width: 6px; min-height: 6px; border-radius: 50%; background: #fff; animation: fade 0.2s both; }
+.dcap { margin-top: calc(1.2 * var(--u)); font-size: max(12px, calc(1.3 * var(--u))); color: var(--s-dim); }
+.opt { position: relative; display: flex; align-items: baseline; justify-content: center; gap: calc(1.2 * var(--u)); border: 0; background: transparent; padding: calc(0.5 * var(--u)) calc(1 * var(--u)); cursor: pointer; font-size: max(15px, calc(1.9 * var(--u))); line-height: 1.3; color: var(--s-dim); }
+.opt:hover { color: var(--s-fg); }
+/* Listy przewijane (język, kraj, klawiatura): bez 0,7 s przejścia koloru z .screen *, bo zaznaczenie
+   zostawało w tyle za strzałką przy szybkim ruchu, a podświetlenie pod kursorem udawało zaznaczenie. */
+.list.scroll .opt, .list.scroll .opt * { transition: none; }
+.list.scroll .opt:not(.sel):hover { color: color-mix(in srgb, var(--s-fg) 55%, var(--s-dim)); }
+.list.scroll { overscroll-behavior: contain; }
+.opt:disabled { opacity: 0.45; cursor: default; color: var(--s-dim); }
+.opt .t { position: relative; display: inline-flex; align-items: center; gap: calc(0.7 * var(--u)); }
+.opt .mk { position: absolute; right: 100%; top: 50%; margin: -0.5em calc(0.9 * var(--u)) 0 0; opacity: 0; color: var(--s-acc, var(--s-fg)); font-size: max(15px, calc(1.9 * var(--u))); }
+.opt.sel, .opt.on { color: var(--s-fg); font-weight: 600; }
+.opt.sel .mk, .opt.on .mk { opacity: 1; }
+.opt em { font-style: normal; font-weight: 400; color: var(--s-dim); }
+.opt .arr { color: var(--s-dim); font-weight: 400; padding: 0 0.5em; }
+.opt .meta { font-size: max(11px, calc(1.25 * var(--u))); font-weight: 400; color: var(--s-dim); }
+.opt .lk { font-size: max(12px, calc(1.4 * var(--u))); color: var(--s-dim); }
+.desc { margin: calc(1.5 * var(--u)) 0 0; min-height: 2.6em; max-width: calc(38 * var(--u)); font-size: max(13px, calc(1.4 * var(--u))); line-height: 1.5; color: var(--s-dim); text-wrap: balance; }
+.cols { display: flex; gap: calc(5 * var(--u)); align-items: flex-start; justify-content: center; }
+.col .cl { font-size: max(11px, calc(1.2 * var(--u))); letter-spacing: 0.02em; color: var(--s-dim); margin-bottom: calc(0.6 * var(--u)); opacity: 0.85; }
+
+/* pola tekstowe */
+.fields { display: flex; flex-direction: column; gap: calc(1.5 * var(--u)); width: max(250px, calc(27 * var(--u))); }
+.fields.wide { width: max(300px, calc(38 * var(--u))); }
+.frow { display: grid; grid-template-columns: 1fr 1fr; gap: calc(1.5 * var(--u)); }
+.f { text-align: left; }
+.f label { display: block; margin: 0 0 calc(0.5 * var(--u)) calc(0.3 * var(--u)); font-size: max(12px, calc(1.2 * var(--u))); color: var(--s-dim); }
+.f input { width: 100%; height: max(40px, calc(4.2 * var(--u))); border: 0; border-radius: calc(0.9 * var(--u)); padding: 0 calc(1.2 * var(--u)); background: var(--s-field); color: var(--s-fg); font-size: max(14px, calc(1.6 * var(--u))); }
+.f input:focus-visible { outline-offset: 2px; }
+/* hasło z przyciskiem „pokaż” (oko Adwaita) po prawej stronie pola */
+.pw { position: relative; }
+.pw input { padding-right: max(44px, calc(4.4 * var(--u))); }
+.eye { position: absolute; top: 0; right: 0; height: 100%; width: max(44px, calc(4.4 * var(--u))); border: 0; border-radius: 0 calc(0.9 * var(--u)) calc(0.9 * var(--u)) 0; background: transparent; color: var(--s-dim); display: grid; place-items: center; font-size: max(16px, calc(1.7 * var(--u))); cursor: pointer; }
+.eye:hover, .eye[aria-pressed="true"] { color: var(--s-fg); }
+html[data-rtl] .pw input { padding-right: max(12px, calc(1.2 * var(--u))); padding-left: max(44px, calc(4.4 * var(--u))); }
+html[data-rtl] .eye { right: auto; left: 0; border-radius: calc(0.9 * var(--u)) 0 0 calc(0.9 * var(--u)); }
+/* co Setup robi po „Dalej” w kroku Wi-Fi (łączenie, internet, repozytoria) */
+.nstat { margin: calc(1.2 * var(--u)) 0 0; font-size: max(12px, calc(1.3 * var(--u))); color: var(--s-dim); }
+
+
+/* przyciski: jeden rozmiar w całej prezentacji */
+.acts { margin-top: calc(3.2 * var(--u)); display: flex; flex-direction: column; align-items: center; gap: calc(1 * var(--u)); }
+.btn { height: max(42px, calc(4.5 * var(--u))); width: max(160px, calc(16 * var(--u))); border: 0; border-radius: 999px; background: var(--s-acc, var(--s-fg)); color: var(--s-acc-on, var(--s-bg)); font-size: max(14px, calc(1.55 * var(--u))); font-weight: 600; cursor: pointer; }
+.btn:hover { opacity: 0.86; }
+.btn[disabled] { opacity: 0.25; cursor: default; }
+.skip { border: 0; background: transparent; color: var(--s-dim); font-size: max(13px, calc(1.4 * var(--u))); cursor: pointer; padding: calc(0.3 * var(--u)) calc(1 * var(--u)); }
+.skip:hover { color: var(--s-fg); }
+.mini { margin-top: calc(0.8 * var(--u)); display: flex; gap: calc(2.4 * var(--u)); justify-content: center; }
+.mlink { border: 0; background: transparent; color: var(--s-dim); font-size: max(11px, calc(1.15 * var(--u))); cursor: pointer; padding: calc(0.3 * var(--u)) calc(0.4 * var(--u)); opacity: 0.9; }
+.mlink:hover { color: var(--s-fg); }
+
+/* podział dysku */
+.split { width: max(280px, calc(36 * var(--u))); display: grid; grid-template-columns: 1fr 1fr; row-gap: calc(1.2 * var(--u)); margin-top: calc(2.2 * var(--u)); }
+.sp { text-align: left; font-size: max(12px, calc(1.3 * var(--u))); color: var(--s-dim); }
+.sp b { display: block; margin-top: calc(0.2 * var(--u)); font-size: max(16px, calc(2.2 * var(--u))); font-weight: 600; color: var(--s-fg); }
+.sp.r { text-align: right; }
+.rng { grid-column: 1 / 3; -webkit-appearance: none; appearance: none; width: 100%; height: 26px; margin: 0; background: transparent; cursor: pointer; --p: calc(var(--v, 0.5) * (100% - 24px) + 12px); }
+.rng::-webkit-slider-runnable-track { height: 7px; border-radius: 999px; background: linear-gradient(to right, var(--s-dim) var(--p), var(--s-acc, var(--s-fg)) var(--p)); }
+.rng::-moz-range-track { height: 7px; border-radius: 999px; background: linear-gradient(to right, var(--s-dim) var(--p), var(--s-acc, var(--s-fg)) var(--p)); }
+.rng::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; margin-top: -8.5px; border-radius: 50%; background: var(--s-bg); border: 5px solid var(--s-fg); }
+.rng::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--s-bg); border: 5px solid var(--s-fg); }
+
+/* kolory dodatkowe GNOME */
+.sws { display: flex; flex-wrap: wrap; justify-content: center; gap: calc(1.5 * var(--u)); max-width: calc(46 * var(--u)); }
+.sw { width: max(26px, calc(3.2 * var(--u))); height: max(26px, calc(3.2 * var(--u))); border: 0; border-radius: 50%; background: var(--c); cursor: pointer; transition: transform 0.2s ease; }
+.sw:hover { transform: scale(1.08); }
+.sw[aria-checked="true"] { outline: 2px solid var(--s-fg); outline-offset: 4px; }
+.accname { margin-top: calc(1.8 * var(--u)); min-height: 1.6em; font-size: max(13px, calc(1.45 * var(--u))); color: var(--s-dim); }
+
+/* podsumowanie */
+.sum { display: grid; grid-template-columns: 1fr 1fr; gap: calc(0.8 * var(--u)) calc(1.8 * var(--u)); text-align: left; font-size: max(14px, calc(1.6 * var(--u))); line-height: 1.35; }
+.sum span { text-align: right; color: var(--s-dim); }
+.sum b { font-weight: 500; }
+
+/* pasek postępu */
+.pbar { width: calc(17 * var(--u)); height: calc(0.42 * var(--u)); min-height: 3px; border-radius: 999px; background: var(--s-track); overflow: hidden; margin-top: calc(4.2 * var(--u)); }
+.pbar > i { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--s-acc, var(--s-fg)); transition: width 0.25s linear, background-color 0.7s ease; }
+.pbar.run > i { animation: boot 3.4s linear forwards; }
+/* czekanie bez znanego czasu (np. Agama jeszcze sonduje dyski) */
+.pbar.slow > i { width: 34%; animation: sweep 1.3s ease-in-out infinite alternate; }
+@keyframes sweep { from { transform: translateX(-10%); } to { transform: translateX(206%); } }
+@keyframes boot { 0% { width: 0; } 20% { width: 24%; } 38% { width: 40%; } 60% { width: 66%; } 80% { width: 88%; } 100% { width: 100%; } }
+.cap { margin-top: calc(2.6 * var(--u)); font-size: max(12px, calc(1.4 * var(--u))); line-height: 1.6; color: var(--s-dim); }
+.cap b { display: block; font-weight: 500; color: var(--s-fg); opacity: 0.85; }
+.count { margin-top: calc(2.2 * var(--u)); font-size: max(12px, calc(1.3 * var(--u))); color: var(--s-dim); }
+
+/* okna błędów */
+.scrim { position: absolute; inset: 0; z-index: 5; display: grid; place-items: center; background: rgb(0 0 0 / 38%); animation: fade 0.25s ease; }
+.dlg { width: max(300px, calc(33 * var(--u))); padding: calc(2.6 * var(--u)) calc(2.4 * var(--u)) calc(2.2 * var(--u)); border-radius: calc(1.6 * var(--u)); background: var(--s-card); color: var(--s-fg); text-align: center; box-shadow: 0 calc(2 * var(--u)) calc(6 * var(--u)) rgb(0 0 0 / 30%); display: flex; flex-direction: column; align-items: center; animation: rise 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.dlg .ic { font-size: max(28px, calc(3 * var(--u))); color: var(--danger); }
+.dlg h2 { margin: calc(0.9 * var(--u)) 0 0; font-size: max(17px, calc(2 * var(--u))); font-weight: 600; letter-spacing: -0.01em; }
+.dlg p { margin: calc(0.8 * var(--u)) 0 0; font-size: max(13px, calc(1.4 * var(--u))); line-height: 1.5; color: var(--s-dim); text-wrap: balance; }
+.dlg .acts { margin-top: calc(2.2 * var(--u)); }
+
+
+@media (max-width: 700px) {
+  .pane { padding: calc(6 * var(--u)) calc(6 * var(--u)); } .sub, .desc { max-width: calc(84 * var(--u)); } .h1 { font-size: max(22px, calc(6.5 * var(--u))); }
+  .logo { max-width: calc(40 * var(--u)); } .frow { grid-template-columns: 1fr; } .cols { flex-direction: column; align-items: center; gap: calc(3 * var(--u)); } .sws { max-width: calc(80 * var(--u)); }
+}
+@media (prefers-reduced-motion: reduce) { .rise, .pbar.run > i, .dlg, .scrim { animation: none !important; } .pbar.run > i { width: 70%; } .pbar.slow > i { width: 100%; opacity: 0.5; } .screen, .screen * { transition: none; } }
+
+/* Pismo od prawej do lewej: kierunek każdego tekstu wynika z jego treści, a układ ekranu zostaje taki sam. */
+.h1, .sub, .desc, .cap b, .cap span, .opt .t, .opt .meta, .sum span, .sum b, .f label, .f input, .dlg h2, .dlg p, .btn, .skip, .mlink, .count, .accname, .pop { unicode-bidi: plaintext; }
+html[data-rtl] .back { left: auto; right: calc(2.2 * var(--u)); transform: scaleX(-1); }
+html[data-rtl] .infobtn { right: auto; left: calc(2.2 * var(--u)); }
+html[data-rtl] .pop { right: auto; left: calc(2.2 * var(--u)); text-align: right; }
+html[data-rtl] .opt .mk { right: auto; left: 100%; margin: -0.5em 0 0 calc(0.9 * var(--u)); transform: scaleX(-1); }
+html[data-rtl] .f { text-align: right; }
+html[data-rtl] .f label { margin: 0 calc(0.3 * var(--u)) calc(0.5 * var(--u)) 0; }
+html[data-rtl] .sum { direction: rtl; text-align: right; }
+html[data-rtl] .sum span { text-align: left; }
+/* Ekran do czasu danych z instalatora: logo 96 px na czarnym tle, jak osłona strażnika Setup i tło sesji live. */
+.pane.splash .splash-logo { width: 96px; color: rgb(255 255 255 / 92%); }
+.pane.splash .sh { transform: none; color: inherit; }

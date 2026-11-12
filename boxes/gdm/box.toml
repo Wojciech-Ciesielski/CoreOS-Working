@@ -1,0 +1,8 @@
+[box]
+id = "gdm"
+version = "0.1.0"
+kind = "system"
+summary = "Ekran logowania GDM: ustawienia (dconf)"
+
+[packages]
+image = ["gdm", "gdm-lang", "dconf"]

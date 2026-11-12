@@ -1,0 +1,4 @@
+1	Um hesa teldu
+3	Ritbúnaður
+4	Dagføringar
+15	Endurstovna kervi

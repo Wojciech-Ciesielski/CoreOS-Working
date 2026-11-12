@@ -1,0 +1,41 @@
+# Pakiety z wzorca GNOME, które Shrimp zastępuje własnymi aplikacjami albo Flatpakami
+# (post-install.sh usuwa je z nowego systemu i blokuje, żeby nie wróciły jako zalecane).
+# Jedna nazwa (lub wzorzec) w linii. Zostaje: Pliki, Ustawienia, Konsola, Dyski, Monitor systemu, Logi, Rozszerzenia.
+# Sklep i pakiety: Shrimp Apps, Cocktail
+gnome-software*
+gnome-packagekit*
+opensuse-welcome*
+# Powitania i narzędzia dla zaawansowanych (ustawienia są w Setup)
+gnome-tour
+gnome-tweaks
+dconf-editor
+# Gry
+gnome-chess
+gnome-mahjongg
+gnome-mines
+gnome-sudoku
+# Biuro, poczta, grafika: onboarding (Flatpaki LibreOffice, Thunderbird, GIMP)
+libreoffice*
+evolution
+evolution-ews
+gnome-contacts
+gimp*
+# Przeglądarka i multimedia: Firefox, Showtime, Decibels, Papers, Loupe z zestawu podstawowego
+MozillaFirefox*
+totem
+totem-plugins
+gnome-music
+evince
+evince-plugin-pdfdocument
+loupe
+# Narzędzia GNOME: Flatpaki z zestawu podstawowego
+snapshot
+simple-scan
+gnome-calculator
+gnome-characters
+gnome-clocks
+gnome-weather
+gnome-maps
+gnome-connections
+gnome-text-editor
+baobab

@@ -1,0 +1,4 @@
+1	Perihal komputer ini
+3	Perisian
+4	Kemas kini
+15	Pemulihan sistem

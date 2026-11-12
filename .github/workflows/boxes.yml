@@ -1,0 +1,30 @@
+name: Boxy
+
+# Zasady boxów i kontenerów (boxes/README.md): zależności, cykle, kontenery, pliki, paths: workflow.
+# Bez filtra paths: każda zmiana w repo może złamać zasady (np. plik poza boxes/).
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    defaults: { run: { working-directory: boxes/shrimp-box } }
+    steps:
+      - uses: actions/checkout@v7
+      - name: Shrimps (tools/shrimps.ref)
+        working-directory: .
+        run: tools/fetch-shrimps.sh
+      - run: cargo test --locked
+      - run: cargo run --locked -q -- check
+      - name: Opis obrazu ISO (config.kiwi, config.sh, root/) bez budowania
+        run: |
+          cargo run --locked -q -- kiwi iso-live /tmp/desc --repo https://download.opensuse.org/distribution/leap/16.1/repo/oss/x86_64
+          bash -n /tmp/desc/config.sh
+          shellcheck -S warning /tmp/desc/config.sh ../linu-x/root/usr/share/shrimp/linux/build/*.sh ../linu-x/root/usr/libexec/shrimp-gpu-gate ../linu-x/root/usr/share/shrimp/linux/nvidia-open.sh
+          python3 -c "import xml.dom.minidom,sys; xml.dom.minidom.parse('/tmp/desc/config.kiwi')"
+          cargo run --locked -q -- build iso-live /tmp/desc/root --repo https://example.invalid --dry-run

@@ -1,0 +1,17 @@
+# Część Linu(x) (box linu-x): wygląd aplikacji z Flathub.
+[box]
+id = "app-style"
+version = "0.1.0"
+kind = "system"
+summary = "Jeden wygląd aplikacji: GTK3, Qt i Electron z Flathub jak GTK4/libadwaita"
+depends = ["flathub"]
+
+[packages]
+image = ["flatpak"]
+
+[build]
+install = "install.sh"
+
+[image]
+enable = ["shrimp-app-style.path"]
+user_enable = ["shrimp-app-style-user.service"]

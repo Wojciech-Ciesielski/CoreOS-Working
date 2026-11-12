@@ -1,0 +1,181 @@
+1	Distro
+2	Titouroù
+3	Logo Shrimp
+4	Ar sturier NVIDIA a ro an holl varregezh er c'hoarioù hag er goulevioù grafek. Eeunoc'h eo ar sturier digor, met gorrekoc'h.
+5	(Erbedet)
+6	Da heul
+7	Lemel
+8	Nullañ
+9	Graet
+10	Araokaet
+11	Emgefreek
+12	Hini ebet
+13	Prientomp Shrimp war hoc'h urzhiataer.
+14	Kroget hon eus
+15	Dibabit ur yezh
+16	Pelec'h emaoc'h?
+17	Kefluniañ a raimp ar gwerzhid-eur ha furmad an deiziad.
+18	Dibabit un aozadur klavier
+19	Amprouit an aozadur
+20	programmer
+21	mekanik skrivañ
+22	Ardremez
+23	goullo
+24	Enrinegañ ar gantenn
+25	Diweredekaet
+26	Gweredekaet
+27	Ger-tremen ar gantenn
+28	Adskrivit ger-tremen ar gantenn
+29	E-pelec'h staliañ Shrimp?
+30	E kichen Windows
+31	E plas Windows
+32	Dilamet e vo Windows. Dilec'hiañ a raimp ar restroù hoc'h eus miret d'ar reizhiad nevez.
+33	N'haller ket staliañ e-kichen Windows peogwir eo enrineget lenner Windows gant BitLocker.
+34	Shrimp a implijo al lenner {name} a-bezh.
+35	Chom a ra Windows war al lenner all.
+36	Rannañ ar gantenn
+37	An urzhiataer a c'houlenno ar ger-tremen-mañ bep loc'hadur. Hepzañ ne c'hallit ket adtapout ho roadennoù.
+38	Krouiñ ur gont
+39	Ezhomm ho po anezhañ evit kevreañ.
+40	Anv klok
+41	Anv implijer
+42	Ger-tremen
+43	Kadarnaat ar ger-tremen
+44	Prest da staliañ
+45	Netra ne cheñch betek ma klikot war «Staliañ».
+46	Yezh
+47	Rannvro
+48	Klavier
+49	Ardremez
+50	Staliadur
+51	Al lenner a-bezh
+52	Rannañ ar gantenn
+53	Windows {win} · Shrimp {shrimp}
+54	Kont
+55	Enrinegañ
+56	Staliañ
+57	Staliañ Shrimp
+58	Oc'h staliañ
+59	O prientiñ al lenner
+60	O staliañ ar reizhiad
+61	Oc'h adsevel ar restroù
+62	War-dro {min} min a chom
+63	Ur momed
+64	Echu eo ar staliadur
+65	Adloc'hit an urzhiataer evit echuiñ.
+66	Adloc'hañ
+67	Demat, {name}
+68	mignon
+69	Echuomp ar c'hefluniañ. Ne bado nemet ur pennadig.
+70	Kevreañ ouzh ur rouedad
+71	Ger-tremen ar rouedad {ssid}
+72	Gwarezet
+73	Digor
+74	Rouedad digor. Tud all a c'hall gwelout ar pezh a rit warni.
+75	Rouedad kuzh
+76	Roit titouroù ur rouedad n'emañ ket er roll.
+77	Anv ar rouedad
+78	Surentez
+79	Kevreañ
+80	Chomlec'h IP
+81	Servijer DNS
+82	Proksi
+83	Gant an dorn
+84	Dibabit un neuz
+85	Sklaer
+86	Teñval
+87	Gallout a rit cheñch an dra-se atav en Arventennoù.
+88	Dibabit ul liv
+89	Glas
+90	Glaswer
+91	Gwer
+92	Melen
+93	Orañjez
+94	Ruz
+95	Roz
+96	Mouk
+97	Louet
+98	Skeudenn ha son hep trubuilh
+99	Staliañ a raimp ar sturioù hag ar c'hodekoù ret evit ma'z afe ar videoioù hag ar c'hoarioù en-dro diouzhtu.
+100	Staliañ
+101	Diwezhatoc'h e rin
+102	Kartenn c'hrafek NVIDIA
+103	Ur gartenn {name} hon eus kavet.
+104	Sturier NVIDIA
+105	Sturier digor
+106	Ar varregezh wellañ er c'hoarioù hag er goulevioù grafek.
+107	Eeunoc'h, met nebeutoc'h a nerzh.
+108	Penaos e implijit hoc'h urzhiataer?
+109	Staliañ a raimp ar goulevioù a vez ezhomm ar muiañ ganeoc'h.
+110	Labour ha studi
+111	C'hoarioù
+112	Krouidigezh
+113	Programmiñ
+114	Liesvedia
+115	Ho koulevioù eus Windows
+116	Kavet hon eus anezho war hoc'h urzhiataer. Dibabit pere staliañ.
+117	Goulevioù kinniget
+118	Dibabit pere staliañ.
+119	Netra diuzet.
+120	O staliañ ar goulevioù
+121	O pellgargañ hag o staliañ
+122	Prest eo pep tra
+123	Plijadur gant Shrimp.
+124	Fellout a ra din gouzout muioc'h
+125	{n} diwar {total}
+126	Linux eo Shrimp
+127	Ur reizhiad frank eo Linux, graet gant tud eus ar bed a-bezh. Lakaat a ra al lodenn vrasañ eus ar servijerioù hag eus ar pellgomzerioù Android da vont en-dro.
+128	Windows e-kichen
+129	Bep loc'hadur e tibabot Shrimp pe Windows.
+130	Goulevioù
+131	Ar restroù .exe Windows ne'z eont ket en-dro amañ. Staliañ a rit goulevioù eus Shrimp Apps, ha kavout a reot eno ur c'hevatal evit al lodenn vrasañ eus an arloadoù brudet.
+132	Ger-tremen evit ar c'hemmoù
+133	Pa stalit goulevioù pe pa cheñchit arventennoù a-bouez e c'houlenno ar reizhiad ho ker-tremen. Boas eo hag e warez hoc'h urzhiataer.
+134	Ho restroù
+135	An teulioù, ar skeudennoù hag ar pellgargadurioù a zo en arload Restroù, en ho teuliad personel.
+136	Eno e kavot ivez lenner Windows.
+137	Panko
+138	Ha paouezet en deus un dra bennak da vont en-dro goude ur c'hemm? E Panko e c'hallit distreiñ d'ar stad a-raok.
+139	Cocktail
+140	Hizivadurioù, sturioù ha kodekoù en ul lec'h hepken. Staliet e vez an hizivadurioù pa adloc'hit.
+141	Klask buan
+142	Pouezit war an douchenn Super, an hini gant logo Windows, evit kavout goulevioù, restroù hag arventennoù.
+143	Skoazell
+144	Respontoù a gavot war pajennoù skoazell Shrimp, e teuliadur GNOME hag openSUSE ha war foromoù ar gumuniezh.
+145	Ne glot ket gerioù-tremen ar gantenn
+146	Roit ar memes ger-tremen en daou vaezienn. Ne c'hallit ket loc'hañ an urzhiataer hepzañ, neuze mirit anezhañ en ul lec'h sur.
+147	Ne glot ket ar gerioù-tremen
+148	Roit ar memes ger-tremen en daou vaezienn hag adklaskit.
+149	Esaeañ en-dro
+150	N'eus ket a-walc'h a blas
+151	N'eus ket a-walc'h a blas war al lenner evit Shrimp. Bihanait Windows pe dibabit ul lenner all.
+152	Cheñch ar ment
+153	Distreiñ
+154	C'hwitet eo ar staliadur
+155	Un dra bennak a zo aet a-dreuz. En surentez emañ ho restroù. Gallout a rit adklask.
+156	Kuitaat
+157	Dibosupl kevreañ
+158	Gwiriit ger-tremen ar rouedad hag adklaskit.
+159	Gwiriit ger-tremen ar rouedad {ssid} hag adklaskit.
+160	Kevreadenn internet ebet
+161	Dibosupl pellgargañ ar goulevioù. Gwiriit ho kevreadenn hag adklaskit.
+162	Teulioù ha follennoù-jediñ
+163	Postel
+164	C'hoarioù
+165	C'hoarioù Epic ha GOG
+166	Tresañ
+167	Embann video
+168	Grafek
+169	Embanner kod
+170	Endro diorren
+171	Filmoù ha sonerezh
+172	Sonerezh
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Inizi Kanariez
+180	Sydney
+181	Perth

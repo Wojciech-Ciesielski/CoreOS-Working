@@ -1,0 +1,181 @@
+1	Quay lại
+2	Thông tin
+3	Biểu trưng Shrimp
+4	Trình điều khiển NVIDIA cho hiệu năng tối đa trong trò chơi và chương trình đồ họa. Trình điều khiển mở đơn giản hơn nhưng chậm hơn.
+5	(Khuyến nghị)
+6	Tiếp theo
+7	Bỏ qua
+8	Hủy
+9	Xong
+10	Nâng cao
+11	Tự động
+12	Không
+13	Hãy chuẩn bị Shrimp trên máy tính của bạn.
+14	Bắt đầu thôi
+15	Chọn ngôn ngữ
+16	Bạn đang ở đâu?
+17	Chúng tôi sẽ đặt múi giờ và định dạng ngày.
+18	Chọn bố cục bàn phím
+19	Thử bố cục
+20	lập trình viên
+21	máy đánh chữ
+22	Ổ đĩa
+23	trống
+24	Mã hóa đĩa
+25	Tắt
+26	Bật
+27	Mật khẩu đĩa
+28	Nhập lại mật khẩu đĩa
+29	Cài Shrimp vào đâu?
+30	Bên cạnh Windows
+31	Thay cho Windows
+32	Windows sẽ bị gỡ bỏ. Chúng tôi sẽ chuyển các tệp bạn giữ lại sang hệ thống mới.
+33	Không thể cài bên cạnh Windows vì ổ đĩa Windows được mã hóa bằng BitLocker.
+34	Shrimp sẽ dùng toàn bộ ổ đĩa {name}.
+35	Windows vẫn ở trên ổ đĩa kia.
+36	Chia đĩa
+37	Máy tính sẽ hỏi mật khẩu này mỗi lần khởi động. Không có nó, bạn không thể khôi phục dữ liệu.
+38	Tạo tài khoản
+39	Bạn sẽ cần nó để đăng nhập.
+40	Họ và tên
+41	Tên người dùng
+42	Mật khẩu
+43	Xác nhận mật khẩu
+44	Sẵn sàng cài đặt
+45	Không có gì thay đổi cho đến khi bạn nhấp “Cài đặt”.
+46	Ngôn ngữ
+47	Khu vực
+48	Bàn phím
+49	Ổ đĩa
+50	Cài đặt
+51	Toàn bộ ổ đĩa
+52	Chia đĩa
+53	Windows {win} · Shrimp {shrimp}
+54	Tài khoản
+55	Mã hóa
+56	Cài đặt
+57	Đang cài đặt Shrimp
+58	Đang cài đặt
+59	Đang chuẩn bị ổ đĩa
+60	Đang cài đặt hệ thống
+61	Đang khôi phục tệp
+62	Còn khoảng {min} phút
+63	Chờ một chút
+64	Cài đặt hoàn tất
+65	Hãy khởi động lại máy tính để hoàn tất.
+66	Khởi động lại
+67	Xin chào, {name}
+68	bạn
+69	Hãy hoàn tất thiết lập. Chỉ mất một lát.
+70	Kết nối mạng
+71	Mật khẩu của mạng {ssid}
+72	Bảo mật
+73	Mở
+74	Mạng mở. Người khác có thể thấy những gì bạn làm trên đó.
+75	Mạng ẩn
+76	Nhập thông tin của mạng không có trong danh sách.
+77	Tên mạng
+78	Bảo mật
+79	Kết nối
+80	Địa chỉ IP
+81	Máy chủ DNS
+82	Proxy
+83	Thủ công
+84	Chọn giao diện
+85	Sáng
+86	Tối
+87	Bạn luôn có thể thay đổi trong Cài đặt.
+88	Chọn màu
+89	Xanh dương
+90	Xanh ngọc
+91	Xanh lá
+92	Vàng
+93	Cam
+94	Đỏ
+95	Hồng
+96	Tím
+97	Xám
+98	Hình ảnh và âm thanh không rắc rối
+99	Chúng tôi sẽ cài các trình điều khiển và codec bạn cần để video và trò chơi chạy ngay.
+100	Cài đặt
+101	Tôi sẽ làm sau
+102	Card đồ họa NVIDIA
+103	Chúng tôi tìm thấy card {name}.
+104	Trình điều khiển NVIDIA
+105	Trình điều khiển mở
+106	Hiệu năng tốt nhất trong trò chơi và chương trình đồ họa.
+107	Dễ vận hành hơn nhưng kém mạnh hơn.
+108	Bạn dùng máy tính như thế nào?
+109	Chúng tôi sẽ cài những chương trình bạn cần nhất.
+110	Công việc và học tập
+111	Trò chơi
+112	Sáng tạo
+113	Lập trình
+114	Đa phương tiện
+115	Các chương trình của bạn từ Windows
+116	Chúng tôi tìm thấy chúng trên máy tính của bạn. Chọn chương trình cần cài.
+117	Chương trình đề xuất
+118	Chọn chương trình cần cài.
+119	Chưa chọn gì.
+120	Đang cài chương trình
+121	Đang tải về và cài đặt
+122	Mọi thứ đã sẵn sàng
+123	Chúc bạn dùng Shrimp vui vẻ.
+124	Tôi muốn biết thêm
+125	{n} trong {total}
+126	Shrimp là Linux
+127	Linux là hệ thống tự do do mọi người trên khắp thế giới tạo ra. Nó chạy hầu hết máy chủ và điện thoại Android.
+128	Windows ở bên cạnh
+129	Mỗi lần khởi động, bạn chọn Shrimp hoặc Windows.
+130	Chương trình
+131	Tệp .exe của Windows không chạy ở đây. Bạn cài chương trình từ Shrimp Apps, và với hầu hết ứng dụng nổi tiếng, bạn sẽ thấy ứng dụng tương đương ở đó.
+132	Mật khẩu cho thay đổi
+133	Khi bạn cài chương trình hoặc đổi các cài đặt quan trọng, hệ thống sẽ hỏi mật khẩu của bạn. Điều đó bình thường và giúp bảo vệ máy tính.
+134	Tệp của bạn
+135	Tài liệu, ảnh và tệp tải về nằm trong ứng dụng Tệp, ở thư mục chính của bạn.
+136	Ở đó bạn cũng thấy ổ đĩa Windows.
+137	Panko
+138	Có thứ gì ngừng hoạt động sau một thay đổi? Trong Panko, bạn có thể quay về trạng thái trước đó.
+139	Cocktail
+140	Cập nhật, trình điều khiển và codec ở một nơi. Bản cập nhật được cài khi bạn khởi động lại.
+141	Tìm nhanh
+142	Nhấn phím Super, phím có biểu tượng Windows, để tìm chương trình, tệp và cài đặt.
+143	Trợ giúp
+144	Bạn sẽ tìm thấy câu trả lời trên các trang trợ giúp của Shrimp, trong tài liệu GNOME và openSUSE và trên các diễn đàn cộng đồng.
+145	Mật khẩu đĩa không khớp
+146	Nhập cùng một mật khẩu vào cả hai ô. Không có nó, máy tính không khởi động được, nên hãy cất ở nơi an toàn.
+147	Mật khẩu không khớp
+148	Nhập cùng một mật khẩu vào cả hai ô rồi thử lại.
+149	Thử lại
+150	Không đủ dung lượng
+151	Ổ đĩa không đủ chỗ cho Shrimp. Hãy thu nhỏ Windows hoặc chọn ổ đĩa khác.
+152	Đổi kích thước
+153	Quay lại
+154	Cài đặt không thành công
+155	Đã xảy ra lỗi. Tệp của bạn vẫn an toàn. Bạn có thể thử lại.
+156	Thoát
+157	Không thể kết nối
+158	Kiểm tra mật khẩu mạng rồi thử lại.
+159	Kiểm tra mật khẩu của mạng {ssid} rồi thử lại.
+160	Không có kết nối Internet
+161	Không thể tải các chương trình. Kiểm tra kết nối rồi thử lại.
+162	Tài liệu và bảng tính
+163	Email
+164	Trò chơi
+165	Trò chơi từ Epic và GOG
+166	Vẽ
+167	Biên tập video
+168	Đồ họa
+169	Trình soạn mã
+170	Môi trường phát triển
+171	Phim và nhạc
+172	Nhạc
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Quần đảo Canary
+180	Sydney
+181	Perth

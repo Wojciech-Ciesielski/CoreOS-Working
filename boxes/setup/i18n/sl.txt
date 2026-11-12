@@ -1,0 +1,181 @@
+1	Nazaj
+2	Podatki
+3	Logotip Shrimp
+4	Gonilnik NVIDIA zagotavlja polno zmogljivost v igrah in grafičnih programih. Odprti gonilnik je preprostejši, a počasnejši.
+5	(Priporočeno)
+6	Naprej
+7	Preskoči
+8	Prekliči
+9	Končano
+10	Napredno
+11	Samodejno
+12	Brez
+13	Pripravimo Shrimp na vašem računalniku.
+14	Začnimo
+15	Izberite jezik
+16	Kje ste?
+17	Nastavili bomo časovni pas in obliko datuma.
+18	Izberite razporeditev tipkovnice
+19	Preizkusite razporeditev
+20	programer
+21	pisalni stroj
+22	Pogon
+23	prazen
+24	Šifriranje diska
+25	Izklopljeno
+26	Vklopljeno
+27	Geslo diska
+28	Ponovite geslo diska
+29	Kam naj namestimo Shrimp?
+30	Ob Windows
+31	Namesto Windows
+32	Windows bo odstranjen. Datoteke, ki ste jih obdržali, bomo prenesli v nov sistem.
+33	Namestitev ob Windows ni mogoča, ker je pogon Windows šifriran z BitLockerjem.
+34	Shrimp bo uporabil ves pogon {name}.
+35	Windows ostane na drugem pogonu.
+36	Delitev diska
+37	Računalnik bo to geslo zahteval ob vsakem zagonu. Brez njega podatkov ne morete obnoviti.
+38	Ustvarite račun
+39	Potrebovali ga boste za prijavo.
+40	Polno ime
+41	Uporabniško ime
+42	Geslo
+43	Potrdite geslo
+44	Pripravljeno za namestitev
+45	Nič se ne spremeni, dokler ne kliknete »Namesti«.
+46	Jezik
+47	Regija
+48	Tipkovnica
+49	Pogon
+50	Namestitev
+51	Celoten pogon
+52	Delitev diska
+53	Windows {win} · Shrimp {shrimp}
+54	Račun
+55	Šifriranje
+56	Namesti
+57	Nameščanje Shrimp
+58	Nameščanje
+59	Priprava pogona
+60	Nameščanje sistema
+61	Obnavljanje datotek
+62	Še približno {min} min
+63	Trenutek
+64	Namestitev je končana
+65	Za dokončanje znova zaženite računalnik.
+66	Znova zaženi
+67	Živjo, {name}
+68	ti
+69	Dokončajmo nastavitev. Vzelo bo le trenutek.
+70	Povežite se z omrežjem
+71	Geslo za omrežje {ssid}
+72	Zaščiteno
+73	Odprto
+74	Odprto omrežje. Drugi lahko vidijo, kaj počnete v njem.
+75	Skrito omrežje
+76	Vnesite podatke omrežja, ki ni prikazano na seznamu.
+77	Ime omrežja
+78	Varnost
+79	Poveži
+80	Naslov IP
+81	Strežnik DNS
+82	Posrednik
+83	Ročno
+84	Izberite videz
+85	Svetel
+86	Temen
+87	To lahko vedno spremenite v Nastavitvah.
+88	Izberite barvo
+89	Modra
+90	Turkizna
+91	Zelena
+92	Rumena
+93	Oranžna
+94	Rdeča
+95	Roza
+96	Vijolična
+97	Siva
+98	Slika in zvok brez težav
+99	Namestili bomo gonilnike in kodeke, ki jih potrebujete, da videoposnetki in igre takoj delujejo.
+100	Namesti
+101	Naredil bom pozneje
+102	Grafična kartica NVIDIA
+103	Našli smo kartico {name}.
+104	Gonilnik NVIDIA
+105	Odprti gonilnik
+106	Najboljša zmogljivost v igrah in grafičnih programih.
+107	Preprostejši za uporabo, a manj zmogljiv.
+108	Kako uporabljate računalnik?
+109	Namestili bomo programe, ki jih najbolj potrebujete.
+110	Delo in študij
+111	Igre
+112	Ustvarjalnost
+113	Programiranje
+114	Večpredstavnost
+115	Vaši programi iz sistema Windows
+116	Našli smo jih v vašem računalniku. Izberite, katere naj namestimo.
+117	Predlagani programi
+118	Izberite, katere naj namestimo.
+119	Nič ni izbrano.
+120	Nameščanje programov
+121	Prenašanje in nameščanje
+122	Vse je pripravljeno
+123	Uživajte v Shrimpu.
+124	Želim izvedeti več
+125	{n} od {total}
+126	Shrimp je Linux
+127	Linux je prost sistem, ki ga ustvarjajo ljudje z vsega sveta. Poganja večino strežnikov in telefonov Android.
+128	Windows zraven
+129	Ob vsakem zagonu izberete Shrimp ali Windows.
+130	Programi
+131	Datoteke .exe sistema Windows tu ne delujejo. Programe nameščate iz Shrimp Apps, za večino znanih programov pa boste tam našli ustreznik.
+132	Geslo za spremembe
+133	Ko nameščate programe ali spreminjate pomembne nastavitve, sistem zahteva vaše geslo. To je običajno in ščiti vaš računalnik.
+134	Vaše datoteke
+135	Dokumenti, fotografije in prenosi so v aplikaciji Datoteke, v vaši domači mapi.
+136	Tam boste našli tudi pogon Windows.
+137	Panko
+138	Je po spremembi kaj nehalo delovati? V Pankoju se lahko vrnete v prejšnje stanje.
+139	Cocktail
+140	Posodobitve, gonilniki in kodeki na enem mestu. Posodobitve se namestijo ob ponovnem zagonu.
+141	Hitro iskanje
+142	Pritisnite tipko Super, tisto z logotipom Windows, da poiščete programe, datoteke in nastavitve.
+143	Pomoč
+144	Odgovore boste našli na straneh pomoči za Shrimp, v dokumentaciji GNOME in openSUSE ter na forumih skupnosti.
+145	Gesli diska se ne ujemata
+146	V obe polji vnesite isto geslo. Brez njega računalnika ni mogoče zagnati, zato ga shranite na varno.
+147	Gesli se ne ujemata
+148	V obe polji vnesite isto geslo in poskusite znova.
+149	Poskusi znova
+150	Premalo prostora
+151	Na pogonu ni dovolj prostora za Shrimp. Zmanjšajte Windows ali izberite drug pogon.
+152	Spremeni velikost
+153	Nazaj
+154	Namestitev ni uspela
+155	Nekaj je šlo narobe. Vaše datoteke so varne. Poskusite lahko znova.
+156	Zapri
+157	Povezava ni uspela
+158	Preverite geslo omrežja in poskusite znova.
+159	Preverite geslo za omrežje {ssid} in poskusite znova.
+160	Ni internetne povezave
+161	Programov ni bilo mogoče prenesti. Preverite povezavo in poskusite znova.
+162	Dokumenti in preglednice
+163	E-pošta
+164	Igre
+165	Igre iz Epica in GOG
+166	Risanje
+167	Urejanje videa
+168	Grafika
+169	Urejevalnik kode
+170	Razvojno okolje
+171	Filmi in glasba
+172	Glasba
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Kanarski otoki
+180	Sydney
+181	Perth

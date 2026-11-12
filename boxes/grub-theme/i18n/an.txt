@@ -1,0 +1,2 @@
+1	Achustes de l'ordinador
+2	Shrimp s'enchegará en %d s

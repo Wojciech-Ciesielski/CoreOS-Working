@@ -1,0 +1,2 @@
+1	Datorinställningar
+2	Shrimp startar om %d s

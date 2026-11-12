@@ -1,0 +1,181 @@
+1	Tilbage
+2	Oplysninger
+3	Shrimp-logo
+4	NVIDIA-driveren giver fuld ydeevne i spil og grafikprogrammer. Den åbne driver er enklere, men langsommere.
+5	(Anbefalet)
+6	Næste
+7	Spring over
+8	Annuller
+9	Færdig
+10	Avanceret
+11	Automatisk
+12	Ingen
+13	Lad os gøre Shrimp klar på din computer.
+14	Lad os komme i gang
+15	Vælg et sprog
+16	Hvor er du?
+17	Vi indstiller tidszone og datoformat.
+18	Vælg et tastaturlayout
+19	Test layoutet
+20	programmør
+21	skrivemaskine
+22	Drev
+23	tomt
+24	Diskkryptering
+25	Fra
+26	Til
+27	Diskadgangskode
+28	Gentag diskadgangskoden
+29	Hvor skal Shrimp installeres?
+30	Ved siden af Windows
+31	I stedet for Windows
+32	Windows fjernes. Vi flytter de filer, du beholdt, til det nye system.
+33	Installation ved siden af Windows er ikke mulig, fordi Windows-drevet er krypteret med BitLocker.
+34	Shrimp bruger hele drevet {name}.
+35	Windows bliver på det andet drev.
+36	Diskopdeling
+37	Computeren beder om denne adgangskode ved hver start. Uden den kan du ikke gendanne dine data.
+38	Opret en konto
+39	Du skal bruge den til at logge ind.
+40	Fulde navn
+41	Brugernavn
+42	Adgangskode
+43	Bekræft adgangskode
+44	Klar til at installere
+45	Intet ændres, før du klikker på “Installer”.
+46	Sprog
+47	Område
+48	Tastatur
+49	Drev
+50	Installation
+51	Hele drevet
+52	Diskopdeling
+53	Windows {win} · Shrimp {shrimp}
+54	Konto
+55	Kryptering
+56	Installer
+57	Installerer Shrimp
+58	Installerer
+59	Forbereder drevet
+60	Installerer systemet
+61	Gendanner filer
+62	Cirka {min} min. tilbage
+63	Et øjeblik
+64	Installationen er fuldført
+65	Genstart computeren for at afslutte.
+66	Genstart
+67	Hej, {name}
+68	du
+69	Lad os gøre opsætningen færdig. Det tager kun et øjeblik.
+70	Opret forbindelse til et netværk
+71	Adgangskode til netværket {ssid}
+72	Sikret
+73	Åbent
+74	Åbent netværk. Andre kan se, hvad du foretager dig på det.
+75	Skjult netværk
+76	Indtast oplysningerne for et netværk, der ikke vises på listen.
+77	Netværksnavn
+78	Sikkerhed
+79	Opret forbindelse
+80	IP-adresse
+81	DNS-server
+82	Proxy
+83	Manuel
+84	Vælg et udseende
+85	Lyst
+86	Mørkt
+87	Du kan altid ændre det i Indstillinger.
+88	Vælg en farve
+89	Blå
+90	Blågrøn
+91	Grøn
+92	Gul
+93	Orange
+94	Rød
+95	Lyserød
+96	Lilla
+97	Grå
+98	Billede og lyd uden besvær
+99	Vi installerer de drivere og codecs, du har brug for, så videoer og spil virker med det samme.
+100	Installer
+101	Jeg gør det senere
+102	NVIDIA-grafikkort
+103	Vi fandt et {name}-kort.
+104	NVIDIA-driver
+105	Åben driver
+106	Bedste ydeevne i spil og grafikprogrammer.
+107	Enklere at køre, men mindre kraftfuld.
+108	Hvordan bruger du din computer?
+109	Vi installerer de programmer, du har mest brug for.
+110	Arbejde og studie
+111	Spil
+112	Kreativitet
+113	Programmering
+114	Multimedier
+115	Dine programmer fra Windows
+116	Vi fandt dem på din computer. Vælg, hvilke der skal installeres.
+117	Foreslåede programmer
+118	Vælg, hvilke der skal installeres.
+119	Intet valgt.
+120	Installerer programmer
+121	Henter og installerer
+122	Alt er klart
+123	God fornøjelse med Shrimp.
+124	Jeg vil vide mere
+125	{n} af {total}
+126	Shrimp er Linux
+127	Linux er et frit system lavet af mennesker fra hele verden. Det kører de fleste servere og Android-telefoner.
+128	Windows ved siden af
+129	Ved hver start vælger du Shrimp eller Windows.
+130	Programmer
+131	Windows .exe-filer kører ikke her. Du installerer programmer fra Shrimp Apps, og til de fleste kendte programmer finder du et tilsvarende der.
+132	Adgangskode til ændringer
+133	Når du installerer programmer eller ændrer vigtige indstillinger, beder systemet om din adgangskode. Det er normalt og beskytter din computer.
+134	Dine filer
+135	Dokumenter, fotos og downloads ligger i appen Filer, i din hjemmemappe.
+136	Her finder du også Windows-drevet.
+137	Panko
+138	Er noget holdt op med at virke efter en ændring? I Panko kan du gå tilbage til, som det var før.
+139	Cocktail
+140	Opdateringer, drivere og codecs ét sted. Opdateringer installeres, når du genstarter.
+141	Hurtig søgning
+142	Tryk på Super-tasten, den med Windows-logoet, for at finde programmer, filer og indstillinger.
+143	Hjælp
+144	Du finder svar på Shrimps hjælpesider, i dokumentationen til GNOME og openSUSE og på fællesskabets fora.
+145	Diskadgangskoderne er ikke ens
+146	Indtast den samme adgangskode i begge felter. Du kan ikke starte computeren uden den, så opbevar den et sikkert sted.
+147	Adgangskoderne er ikke ens
+148	Indtast den samme adgangskode i begge felter, og prøv igen.
+149	Prøv igen
+150	Ikke plads nok
+151	Der er ikke plads nok på drevet til Shrimp. Gør Windows mindre, eller vælg et andet drev.
+152	Skift størrelsen
+153	Gå tilbage
+154	Installationen mislykkedes
+155	Noget gik galt. Dine filer er i sikkerhed. Du kan prøve igen.
+156	Afslut
+157	Kunne ikke oprette forbindelse
+158	Tjek netværkets adgangskode, og prøv igen.
+159	Tjek adgangskoden til netværket {ssid}, og prøv igen.
+160	Ingen internetforbindelse
+161	Programmerne kunne ikke hentes. Tjek din forbindelse, og prøv igen.
+162	Dokumenter og regneark
+163	E-mail
+164	Spil
+165	Spil fra Epic og GOG
+166	Tegning
+167	Videoredigering
+168	Grafik
+169	Kodeeditor
+170	Udviklingsmiljø
+171	Film og musik
+172	Musik
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Kanariske Øer
+180	Sydney
+181	Perth

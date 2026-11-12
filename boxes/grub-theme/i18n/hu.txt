@@ -1,0 +1,2 @@
+1	Számítógép beállításai
+2	A Shrimp %d mp múlva indul

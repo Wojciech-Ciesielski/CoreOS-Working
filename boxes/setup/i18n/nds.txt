@@ -1,0 +1,181 @@
+1	Trüch
+2	Informatschoon
+3	Shrimp-Logo
+4	De NVIDIA-Driever gifft vulle Leisten bi Speelen un Grafikprogrammen. De apen Driever is eenfacher, man langsamer.
+5	(Anraadt)
+6	Wieder
+7	Överspringen
+8	Afbreken
+9	Fardig
+10	Verwiedert
+11	Automatisch
+12	Keen
+13	Laat uns Shrimp op dien Reekner kloormaken.
+14	Laat uns anfangen
+15	Söök en Spraak ut
+16	Wo büst du?
+17	Wi stellt de Tietrebeet un dat Datumsformaat in.
+18	Söök en Tastatuurinrichten ut
+19	Tastatuur utproberen
+20	Programmeerer
+21	Schrievmaschien
+22	Laufwark
+23	leddig
+24	Schiefverslötelung
+25	Ut
+26	An
+27	Schiefpaswoord
+28	Disk-Passwoord nochmaal ingeven
+29	Wo schall Shrimp installeert warrn?
+30	Blangen Windows
+31	In Städ vun Windows
+32	Windows warrt wegmaakt. Wi schuuvt de Dateien, de du behollen hest, in dat nee’e System.
+33	Neven Windows installeren geiht nich, wiel dat Windows-Loopwark mit BitLocker verslötelt is.
+34	Shrimp bruukt dat hele Loopwark {name}.
+35	Windows blifft op dat anner Loopwark.
+36	Disk opdelen
+37	De Reekner fraagt bi jeden Start na dit Passwoord. Ahn dat kannst du dien Daten nich wedderhalen.
+38	Maak en Konto
+39	Dat bruukst du för’t Anmellen.
+40	Vullen Naam
+41	Brukernaam
+42	Paswoord
+43	Paswoord bestätigen
+44	Klaar to’n Installeren
+45	Nix ännert sik, ehr du op „Installeren“ klickst.
+46	Spraak
+47	Regioon
+48	Tastatuur
+49	Laufwark
+50	Installatschoon
+51	Hele Loopwark
+52	Disk opdelen
+53	Windows {win} · Shrimp {shrimp}
+54	Konto
+55	Verslöteln
+56	Installeren
+57	Shrimp warrt installeert
+58	Warrt installeert
+59	Loopwark warrt vörbereit
+60	System warrt installeert
+61	Dateien warrt wedderherstellt
+62	Noch so um un bi {min} Min
+63	Een Ogenblick
+64	Installatschoon afslaten
+65	Start den Reekner nieg, um klaar to warrn.
+66	Nieg starten
+67	Moin, {name}
+68	du
+69	Laat uns de Inrichten fardig maken. Dat duurt blots en Ogenblick.
+70	Mit en Netz verbinnen
+71	Passwoord för Nettwark {ssid}
+72	Seker
+73	Apen
+74	Apen Nettwark. Annere köönt sehn, wat du dor maakst.
+75	Versteken Nettwark
+76	Giff de Daten vun en Nettwark in, dat nich in de List steiht.
+77	Nettwarknaam
+78	Sekerheit
+79	Verbinnen
+80	IP-Adress
+81	DNS-Server
+82	Proxy
+83	Vun Hand
+84	Utsehn utsöken
+85	Hell
+86	Düüster
+87	Dat kannst du jümmers in de Instellen ännern.
+88	Farv utsöken
+89	Blau
+90	Blaugröön
+91	Gröön
+92	Geel
+93	Orange
+94	Root
+95	Rosa
+96	Lila
+97	Grau
+98	Bild un Klang ahn Arger
+99	Wi installeert de Driever un Codecs, de du bruukst, dormit Videos un Speelen foorts loopt.
+100	Installeren
+101	Ik do dat later
+102	NVIDIA-Grafikkoort
+103	Wi hebbt en {name}-Koort funnen.
+104	NVIDIA-Driever
+105	Apen Driever
+106	Beste Leisten bi Speelen un Grafikprogrammen.
+107	Eenfacher, man nich so stark.
+108	Woans bruukst du dien Reekner?
+109	Wi installeert de Programmen, de du am meisten bruukst.
+110	Arbeit un Studium
+111	Speelen
+112	Kreativität
+113	Programmeren
+114	Multimedia
+115	Dien Programmen ut Windows
+116	Wi hebbt se op dien Reekner funnen. Söök ut, welke installeert warrn schöllt.
+117	Vörslagen Programmen
+118	Söök ut, welke installeert warrn schöllt.
+119	Nix utsöcht.
+120	Programmen warrt installeert
+121	Daalladen un installeren
+122	Allens klaar
+123	Veel Spaß mit Shrimp.
+124	Ik will mehr weten
+125	{n} vun {total}
+126	Shrimp is Linux
+127	Linux is en free System, maakt vun Lüüd ut de hele Welt. Dat löppt op de meisten Servers un Android-Telefonen.
+128	Windows nebenan
+129	Bi jeden Start söchst du Shrimp oder Windows ut.
+130	Programmen
+131	Windows-Dateien (.exe) loopt hier nich. Programmen installeerst du ut Shrimp Apps, un för de meisten bekannten Apps finnst du dor wat Glieks.
+132	Passwoord för Ännern
+133	Wenn du Programmen installeerst oder wichtige Instellen ännerst, fraagt dat System na dien Passwoord. Dat is normaal un schuult dien Reekner.
+134	Dien Dateien
+135	Dokmenten, Fotos un Daallaadsels sünd in de App Dateien, in dien Tohuus-Ordner.
+136	Dor finnst du ok dat Windows-Loopwark.
+137	Panko
+138	Löppt wat nich mehr na en Ännern? In Panko kannst du torüch na dat, wo dat vörher weer.
+139	Cocktail
+140	Opfrischen, Driever un Codecs an een Steed. Opfrischen warrt bi’n Nee-Start installeert.
+141	Gau Söken
+142	Drück de Super-Tast, de mit dat Windows-Logo, üm Programmen, Dateien un Instellen to finnen.
+143	Hülp
+144	Antwoorden finnst du op de Hülpsieden vun Shrimp, in de Dokmentatschoon vun GNOME un openSUSE un in Gemeenschaps-Forums.
+145	De Schiefpaswöör passen nich tosamen
+146	Giff in beide Feller dat sülve Passwoord in. Ahn dat kannst du den Reekner nich starten, also bewohr dat seker op.
+147	De Paswöör passen nich tosamen
+148	Giff in beide Feller dat sülve Passwoord in un versöök dat nochmaal.
+149	Nochmal versöken
+150	Nich nog Platz
+151	Op dat Loopwark is nich noog Platz för Shrimp. Maak Windows lütter oder söök en anner Loopwark ut.
+152	Grött ännern
+153	Trüch gahn
+154	Installatschoon fehlslaan
+155	Dor is wat scheefgahn. Dien Dateien sünd seker. Du kannst dat nochmaal versöken.
+156	Beennen
+157	Verbinnen gung nich
+158	Kiek na dat Nettwark-Passwoord un versöök dat nochmaal.
+159	Kiek na dat Passwoord för Nettwark {ssid} un versöök dat nochmaal.
+160	Keen Internetverbinnen
+161	De Programmen kunnen nich daallaadt warrn. Kiek na dien Verbinnen un versöök dat nochmaal.
+162	Dokmenten un Tabellen
+163	E-Post
+164	Speelen
+165	Speelen vun Epic un GOG
+166	Teken
+167	Videobearbeiden
+168	Grafik
+169	Code-Editor
+170	Entwicklungsümgeven
+171	Films un Musik
+172	Musik
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Kanaarsche Eilannen
+180	Sydney
+181	Perth

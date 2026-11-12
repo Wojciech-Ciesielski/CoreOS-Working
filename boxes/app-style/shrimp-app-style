@@ -1,0 +1,130 @@
+#!/bin/bash
+# shrimp-app-style: jeden wygląd dla wszystkich aplikacji z Flathub (GTK4/libadwaita jako wzorzec).
+#
+# Toolkitu aplikacji nie da się podmienić z zewnątrz, więc wyrównujemy wygląd i zachowanie:
+#   GTK4/libadwaita  bez zmian (wzorzec).
+#   GTK3             motyw adw-gtk3 (port libadwaita na GTK3), jasny/ciemny wg systemu.
+#   Qt 5/6 (KDE)     styl i paleta Adwaita z rozszerzenia org.kde.KStyle.Adwaita, pasek tytułu
+#                    Adwaita (dekoracje „adwaita” z QtWayland 6.8+), okna plików
+#                    i ustawienia przez portal xdg-desktop-portal (wybór plików z GNOME).
+#   Electron/Chromium  okna plików GNOME (portal), jasny/ciemny i kolor akcentu z portalu
+#                    Settings, Wayland; własny pasek tytułu aplikacji zostaje.
+#   wszystkie        dostęp tylko do odczytu do motywów i ikon użytkownika.
+#
+# Działa globalnie (flatpak override --system), więc obejmuje też aplikacje instalowane później.
+# Część systemowa uruchamia shrimp-app-style.path po każdej zmianie w /var/lib/flatpak/app,
+# część użytkownika usługa shrimp-app-style-user.service (przy logowaniu i zmianie trybu):
+#   shrimp-app-style            nadpisania globalne i rozszerzenia z Flathub (root)
+#   shrimp-app-style --user     motyw GTK3 według jasnego/ciemnego trybu użytkownika
+#   shrimp-app-style --watch    jak --user, potem śledzi zmiany trybu
+#   shrimp-app-style --check    pokaż, co jest ustawione
+#   shrimp-app-style --reset    usuń nadpisania Shrimp
+set -euo pipefail
+
+REMOTE=flathub
+# Rozszerzenia z Flathub, które dają wygląd Adwaita w GTK3 i Qt. Wersje gałęzi muszą pasować
+# do runtime’ów aplikacji; instalujemy te, których używają zainstalowane aplikacje.
+GTK3_THEME_EXT=org.gtk.Gtk3theme.adw-gtk3
+GTK3_THEME_EXT_DARK=org.gtk.Gtk3theme.adw-gtk3-dark
+QT_STYLE_EXT=org.kde.KStyle.Adwaita
+QT_PLATFORM_EXT=org.kde.PlatformTheme.QGnomePlatform
+
+log() { echo "shrimp-app-style: $*" >&2; }
+
+global_overrides() {
+  # GTK3/GTK4: motywy, ikony i ustawienia użytkownika tylko do odczytu, okna plików przez portal.
+  flatpak override --system \
+    --filesystem=xdg-config/gtk-3.0:ro \
+    --filesystem=xdg-config/gtk-4.0:ro \
+    --filesystem=xdg-data/themes:ro \
+    --filesystem=xdg-data/icons:ro \
+    --env=GTK_USE_PORTAL=1
+  # Qt: styl Adwaita (rozszerzenie KStyle), okna plików i jasny/ciemny przez portal.
+  flatpak override --system \
+    --env=QT_QPA_PLATFORMTHEME=xdgdesktopportal \
+    --env=QT_STYLE_OVERRIDE=Adwaita \
+    --env=QT_WAYLAND_DECORATION=adwaita
+  # Electron/Chromium: natywny Wayland (skalowanie, wygląd okien GNOME) i okna plików przez portal.
+  flatpak override --system \
+    --env=ELECTRON_OZONE_PLATFORM_HINT=auto \
+    --socket=wayland
+}
+
+# Gałęzie runtime’ów zainstalowanych aplikacji, np. „org.gnome.Platform//48”, „org.kde.Platform//6.8”.
+runtimes() {
+  flatpak list --system --app --columns=runtime 2>/dev/null | sort -u
+}
+
+install_ext() {
+  local ref=$1
+  flatpak info --system "$ref" >/dev/null 2>&1 && return 0
+  flatpak install --system --noninteractive -y "$REMOTE" "$ref" >/dev/null 2>&1 \
+    && log "zainstalowano $ref" || log "brak $ref w $REMOTE (pomijam)"
+}
+
+extensions() {
+  local need_gtk3=0 qt_branches=()
+  while read -r rt; do
+    [ -n "$rt" ] || continue
+    case "$rt" in
+      org.kde.Platform/*) qt_branches+=("${rt##*/}") ;;
+    esac
+    # GTK3 jest w każdym runtime freedesktop/GNOME; motyw jest jeden („3.22”) dla wszystkich.
+    need_gtk3=1
+  done < <(runtimes)
+  if [ $need_gtk3 = 1 ]; then
+    install_ext "$GTK3_THEME_EXT//3.22"
+    install_ext "$GTK3_THEME_EXT_DARK//3.22"
+  fi
+  for b in $(printf '%s\n' "${qt_branches[@]}" | sort -u); do
+    case "$b" in
+      5.15*) install_ext "$QT_STYLE_EXT//5.15-$(echo "$b" | cut -d- -f2)"; install_ext "$QT_PLATFORM_EXT//5.15-$(echo "$b" | cut -d- -f2)" ;;
+      *) install_ext "$QT_STYLE_EXT//$b" ;;
+    esac
+  done
+}
+
+# Czy aplikacja jest GTK3 (bez GTK4/libadwaita)? Szukamy bibliotek w plikach aplikacji.
+is_gtk3_app() {
+  local dir
+  dir=$(flatpak info --system --show-location "$1" 2>/dev/null)/files
+  [ -d "$dir" ] || return 1
+  grep -rlqsaF -m1 libgtk-4.so "$dir/bin" "$dir/lib" "$dir/libexec" 2>/dev/null && return 1
+  grep -rlqsaF -m1 libgtk-3.so "$dir/bin" "$dir/lib" "$dir/libexec" "$dir/extra" 2>/dev/null
+}
+
+# Część użytkownika: GTK3 nie czyta color-scheme z portalu, więc motyw adw-gtk3 / adw-gtk3-dark
+# ustawiamy według ustawienia użytkownika. Uruchamia ją usługa użytkownika przy logowaniu
+# i przy każdej zmianie „Wygląd” (shrimp-app-style --watch).
+per_user() {
+  local scheme theme=adw-gtk3
+  scheme=$(gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null || echo "'default'")
+  [ "$scheme" = "'prefer-dark'" ] && theme=adw-gtk3-dark
+  flatpak list --system --app --columns=application 2>/dev/null | while read -r app; do
+    [ -n "$app" ] || continue
+    if is_gtk3_app "$app"; then
+      flatpak override --user --env=GTK_THEME="$theme" "$app"
+    fi
+  done
+}
+
+case "${1:-}" in
+  --check)
+    flatpak override --system --show
+    flatpak list --system --app --columns=application | while read -r a; do
+      [ -n "$a" ] && { echo "[$a]"; flatpak override --system --show "$a"; }
+    done ;;
+  --reset)
+    flatpak override --system --reset
+    flatpak list --system --app --columns=application | while read -r a; do [ -n "$a" ] && flatpak override --system --reset "$a"; done ;;
+  "")
+    [ "$(id -u)" = 0 ] || { log "uruchom jako root"; exit 1; }
+    global_overrides
+    extensions ;;
+  --user)
+    per_user ;;
+  --watch)
+    per_user
+    gsettings monitor org.gnome.desktop.interface color-scheme | while read -r _; do per_user; done ;;
+  *) echo "użycie: shrimp-app-style [--user|--watch|--check|--reset]" >&2; exit 2 ;;
+esac

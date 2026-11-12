@@ -1,0 +1,2 @@
+1	Kompüter ayarları
+2	Shrimp %d san. sonra başlayacaq

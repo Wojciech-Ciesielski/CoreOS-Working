@@ -1,0 +1,181 @@
+1	Atrás
+2	Información
+3	Logotipo de Shrimp
+4	El controlador de NVIDIA ofrece todo el rendimiento en juegos y programas de gráficos. El controlador abierto es más sencillo, pero más lento.
+5	(Recomendado)
+6	Siguiente
+7	Omitir
+8	Cancelar
+9	Listo
+10	Avanzado
+11	Automático
+12	Ninguno
+13	Preparemos Shrimp en tu equipo.
+14	Empecemos
+15	Elige un idioma
+16	¿Dónde estás?
+17	Configuraremos la zona horaria y el formato de fecha.
+18	Elige una distribución de teclado
+19	Probar la distribución
+20	programador
+21	máquina de escribir
+22	Disco
+23	vacío
+24	Cifrado del disco
+25	Desactivado
+26	Activado
+27	Contraseña del disco
+28	Repite la contraseña del disco
+29	¿Dónde instalar Shrimp?
+30	Junto a Windows
+31	En lugar de Windows
+32	Se eliminará Windows. Los archivos que conservaste se trasladarán al nuevo sistema.
+33	No se puede instalar junto a Windows porque el disco de Windows está cifrado con BitLocker.
+34	Shrimp ocupará todo el disco {name}.
+35	Windows se queda en el otro disco.
+36	División del disco
+37	El equipo pedirá esta contraseña en cada arranque. Sin ella no podrás recuperar tus datos.
+38	Crea una cuenta
+39	La necesitarás para iniciar sesión.
+40	Nombre completo
+41	Nombre de usuario
+42	Contraseña
+43	Confirma la contraseña
+44	Listo para instalar
+45	No cambiará nada hasta que hagas clic en «Instalar».
+46	Idioma
+47	Región
+48	Teclado
+49	Disco
+50	Instalación
+51	Disco completo
+52	División del disco
+53	Windows {win} · Shrimp {shrimp}
+54	Cuenta
+55	Cifrado
+56	Instalar
+57	Instalando Shrimp
+58	Instalando
+59	Preparando el disco
+60	Instalando el sistema
+61	Restaurando archivos
+62	Quedan unos {min} min
+63	Un momento
+64	Instalación completada
+65	Reinicia el equipo para terminar.
+66	Reiniciar
+67	Hola, {name}
+68	tú
+69	Terminemos la configuración. Solo llevará un momento.
+70	Conéctate a una red
+71	Contraseña de la red {ssid}
+72	Protegida
+73	Abierta
+74	Red abierta. Otras personas pueden ver lo que haces en ella.
+75	Red oculta
+76	Introduce los datos de una red que no aparece en la lista.
+77	Nombre de la red
+78	Seguridad
+79	Conectar
+80	Dirección IP
+81	Servidor DNS
+82	Proxy
+83	Manual
+84	Elige un aspecto
+85	Claro
+86	Oscuro
+87	Siempre puedes cambiarlo en Configuración.
+88	Elige un color
+89	Azul
+90	Turquesa
+91	Verde
+92	Amarillo
+93	Naranja
+94	Rojo
+95	Rosa
+96	Morado
+97	Gris
+98	Imagen y sonido sin complicaciones
+99	Instalaremos los controladores y códecs necesarios para que los vídeos y los juegos funcionen desde el primer momento.
+100	Instalar
+101	Lo haré más tarde
+102	Tarjeta gráfica NVIDIA
+103	Hemos detectado una tarjeta {name}.
+104	Controlador de NVIDIA
+105	Controlador abierto
+106	El mejor rendimiento en juegos y programas de gráficos.
+107	Más sencillo de usar, pero menos potente.
+108	¿Cómo usas tu equipo?
+109	Instalaremos los programas que más necesitas.
+110	Trabajo y estudios
+111	Juegos
+112	Creatividad
+113	Programación
+114	Multimedia
+115	Tus programas de Windows
+116	Los hemos encontrado en tu equipo. Elige cuáles instalar.
+117	Programas sugeridos
+118	Elige cuáles instalar.
+119	No has elegido nada.
+120	Instalando programas
+121	Descargando e instalando
+122	Todo listo
+123	Que disfrutes de Shrimp.
+124	Quiero saber más
+125	{n} de {total}
+126	Shrimp es Linux
+127	Linux es un sistema gratuito creado por personas de todo el mundo. Funciona en la mayoría de los servidores y de los teléfonos Android.
+128	Windows al lado
+129	En cada arranque elegirás Shrimp o Windows.
+130	Programas
+131	Los archivos .exe de Windows no funcionan aquí. Los programas se instalan desde Shrimp Apps, donde encontrarás un equivalente para la mayoría de las aplicaciones conocidas.
+132	Contraseña para los cambios
+133	Cuando instales programas o cambies ajustes importantes, el sistema te pedirá la contraseña. Es normal y protege tu equipo.
+134	Tus archivos
+135	Los documentos, las fotos y las descargas están en la aplicación Archivos, en tu carpeta personal.
+136	Ahí también encontrarás el disco de Windows.
+137	Panko
+138	¿Algo dejó de funcionar después de un cambio? En Panko puedes volver al estado anterior.
+139	Cocktail
+140	Actualizaciones, controladores y códecs en un solo lugar. Las actualizaciones se instalan al reiniciar.
+141	Búsqueda rápida
+142	Pulsa la tecla Super, la del logotipo de Windows, para encontrar programas, archivos y ajustes.
+143	Ayuda
+144	Encontrarás respuestas en las páginas de ayuda de Shrimp, en la documentación de GNOME y openSUSE y en los foros de la comunidad.
+145	Las contraseñas del disco no coinciden
+146	Escribe la misma contraseña en ambos campos. Sin ella no podrás arrancar el equipo, así que guárdala en un lugar seguro.
+147	Las contraseñas no coinciden
+148	Escribe la misma contraseña en ambos campos e inténtalo de nuevo.
+149	Reintentar
+150	No hay espacio suficiente
+151	No hay espacio suficiente en el disco para Shrimp. Reduce Windows o elige otro disco.
+152	Cambiar el tamaño
+153	Volver
+154	Error de instalación
+155	Algo salió mal. Tus archivos están a salvo. Puedes volver a intentarlo.
+156	Salir
+157	No se pudo conectar
+158	Comprueba la contraseña de la red e inténtalo de nuevo.
+159	Comprueba la contraseña de la red {ssid} e inténtalo de nuevo.
+160	Sin conexión a Internet
+161	No se pudieron descargar los programas. Comprueba la conexión e inténtalo de nuevo.
+162	Documentos y hojas de cálculo
+163	Correo
+164	Juegos
+165	Juegos de Epic y GOG
+166	Dibujo
+167	Edición de vídeo
+168	Gráficos
+169	Editor de código
+170	Entorno de desarrollo
+171	Películas y música
+172	Música
+173	Nueva York
+174	Chicago
+175	Denver
+176	Los Ángeles
+177	Toronto
+178	Vancouver
+179	Islas Canarias
+180	Sídney
+181	Perth

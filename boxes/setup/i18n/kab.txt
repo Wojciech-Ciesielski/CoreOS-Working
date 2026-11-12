@@ -1,0 +1,41 @@
+1	Uɣal
+6	Ɣer zdat
+7	Zgel
+8	Sefsex
+9	Immed
+10	Talɣuyin
+11	Awurman
+12	Ulac
+14	Aha nebdu
+15	Fren tutlayt
+22	Aseggaf
+25	Yensa
+26	Yetteddu
+29	Anda ara yettwasebded Shrimp?
+30	Ɣer tama n Windows
+31	Deg wadda n Windows
+42	Awal uffir
+46	Tutlayt
+47	Tamnaṭ
+48	Tasarut
+49	Aseggaf
+50	Asebded
+56	Sebded
+57	Asebded n Shrimp
+58	Asebded
+63	Ddu kra n wakud
+64	Asebded yekfa
+66	Ales asenker
+67	Azul, {name}
+79	Qqen
+85	Aceɣlal
+86	Aberkan
+89	Anili
+91	Azegzaw
+92	Awraɣ
+94	Azeggaɣ
+111	Uraren
+143	Tallalt
+149	Ɛreḍ i tikkelt-nniḍen
+153	Uɣal
+156	Ffeɣ

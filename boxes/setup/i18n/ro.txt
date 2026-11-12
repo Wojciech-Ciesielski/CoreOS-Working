@@ -1,0 +1,181 @@
+1	Înapoi
+2	Informații
+3	Sigla Shrimp
+4	Driverul NVIDIA oferă performanță maximă în jocuri și în programele grafice. Driverul deschis este mai simplu, dar mai lent.
+5	(Recomandat)
+6	Înainte
+7	Omite
+8	Anulează
+9	Gata
+10	Avansat
+11	Automat
+12	Niciunul
+13	Să pregătim Shrimp pe calculatorul dvs.
+14	Să începem
+15	Alegeți limba
+16	Unde vă aflați?
+17	Vom stabili fusul orar și formatul datei.
+18	Alegeți aspectul tastaturii
+19	Testați aspectul
+20	programator
+21	mașină de scris
+22	Unitate
+23	goală
+24	Criptarea discului
+25	Dezactivată
+26	Activată
+27	Parola discului
+28	Repetați parola discului
+29	Unde să instalăm Shrimp?
+30	Lângă Windows
+31	În locul Windows
+32	Windows va fi eliminat. Vom muta fișierele păstrate în noul sistem.
+33	Instalarea lângă Windows nu este posibilă, deoarece unitatea Windows este criptată cu BitLocker.
+34	Shrimp va folosi întreaga unitate {name}.
+35	Windows rămâne pe cealaltă unitate.
+36	Împărțirea discului
+37	Calculatorul va cere această parolă la fiecare pornire. Fără ea nu vă puteți recupera datele.
+38	Creați un cont
+39	Veți avea nevoie de el pentru autentificare.
+40	Nume complet
+41	Nume de utilizator
+42	Parolă
+43	Confirmați parola
+44	Gata de instalare
+45	Nimic nu se schimbă până nu apăsați „Instalează”.
+46	Limbă
+47	Regiune
+48	Tastatură
+49	Unitate
+50	Instalare
+51	Întreaga unitate
+52	Împărțirea discului
+53	Windows {win} · Shrimp {shrimp}
+54	Cont
+55	Criptare
+56	Instalează
+57	Se instalează Shrimp
+58	Se instalează
+59	Se pregătește unitatea
+60	Se instalează sistemul
+61	Se restaurează fișierele
+62	Mai durează aproximativ {min} min
+63	Un moment
+64	Instalarea s-a încheiat
+65	Reporniți calculatorul pentru a termina.
+66	Repornește
+67	Salut, {name}
+68	tu
+69	Să terminăm configurarea. Durează doar un moment.
+70	Conectați-vă la o rețea
+71	Parola rețelei {ssid}
+72	Securizată
+73	Deschisă
+74	Rețea deschisă. Alții pot vedea ce faceți pe ea.
+75	Rețea ascunsă
+76	Introduceți datele unei rețele care nu apare în listă.
+77	Numele rețelei
+78	Securitate
+79	Conectează
+80	Adresă IP
+81	Server DNS
+82	Proxy
+83	Manual
+84	Alegeți un aspect
+85	Luminos
+86	Întunecat
+87	Puteți schimba oricând din Setări.
+88	Alegeți o culoare
+89	Albastru
+90	Turcoaz
+91	Verde
+92	Galben
+93	Portocaliu
+94	Roșu
+95	Roz
+96	Violet
+97	Gri
+98	Imagine și sunet fără bătăi de cap
+99	Vom instala driverele și codecurile de care aveți nevoie, astfel încât videoclipurile și jocurile să funcționeze imediat.
+100	Instalează
+101	O fac mai târziu
+102	Placă video NVIDIA
+103	Am găsit o placă {name}.
+104	Driver NVIDIA
+105	Driver deschis
+106	Cea mai bună performanță în jocuri și în programele grafice.
+107	Mai simplu de întreținut, dar mai puțin puternic.
+108	Cum folosiți calculatorul?
+109	Vom instala programele de care aveți cel mai mult nevoie.
+110	Muncă și studiu
+111	Jocuri
+112	Creativitate
+113	Programare
+114	Multimedia
+115	Programele dvs. din Windows
+116	Le-am găsit pe calculatorul dvs. Alegeți ce să instalăm.
+117	Programe sugerate
+118	Alegeți ce să instalăm.
+119	Nimic selectat.
+120	Se instalează programele
+121	Se descarcă și se instalează
+122	Totul este gata
+123	Spor la lucru cu Shrimp.
+124	Vreau să aflu mai multe
+125	{n} din {total}
+126	Shrimp este Linux
+127	Linux este un sistem liber, creat de oameni din întreaga lume. Rulează majoritatea serverelor și a telefoanelor Android.
+128	Windows alături
+129	La fiecare pornire veți alege Shrimp sau Windows.
+130	Programe
+131	Fișierele .exe din Windows nu rulează aici. Instalați programele din Shrimp Apps, iar pentru majoritatea programelor cunoscute veți găsi acolo un echivalent.
+132	Parola pentru modificări
+133	Când instalați programe sau schimbați setări importante, sistemul vă cere parola. Este normal și vă protejează calculatorul.
+134	Fișierele dvs.
+135	Documentele, fotografiile și descărcările se află în aplicația Fișiere, în folderul dvs. personal.
+136	Acolo găsiți și unitatea Windows.
+137	Panko
+138	S-a oprit ceva din funcționare după o modificare? În Panko puteți reveni la starea de dinainte.
+139	Cocktail
+140	Actualizări, drivere și codecuri într-un singur loc. Actualizările se instalează la repornire.
+141	Căutare rapidă
+142	Apăsați tasta Super, cea cu sigla Windows, ca să găsiți programe, fișiere și setări.
+143	Ajutor
+144	Găsiți răspunsuri în paginile de ajutor Shrimp, în documentația GNOME și openSUSE și pe forumurile comunității.
+145	Parolele discului nu se potrivesc
+146	Introduceți aceeași parolă în ambele câmpuri. Fără ea calculatorul nu pornește, așa că păstrați-o într-un loc sigur.
+147	Parolele nu se potrivesc
+148	Introduceți aceeași parolă în ambele câmpuri și încercați din nou.
+149	Încercați din nou
+150	Spațiu insuficient
+151	Pe unitate nu este destul spațiu pentru Shrimp. Micșorați Windows sau alegeți altă unitate.
+152	Schimbă dimensiunea
+153	Înapoi
+154	Instalarea a eșuat
+155	Ceva nu a mers bine. Fișierele dvs. sunt în siguranță. Puteți încerca din nou.
+156	Ieșire
+157	Nu s-a putut conecta
+158	Verificați parola rețelei și încercați din nou.
+159	Verificați parola rețelei {ssid} și încercați din nou.
+160	Fără conexiune la internet
+161	Programele nu au putut fi descărcate. Verificați conexiunea și încercați din nou.
+162	Documente și foi de calcul
+163	E-mail
+164	Jocuri
+165	Jocuri de la Epic și GOG
+166	Desen
+167	Editare video
+168	Grafică
+169	Editor de cod
+170	Mediu de dezvoltare
+171	Filme și muzică
+172	Muzică
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Insulele Canare
+180	Sydney
+181	Perth

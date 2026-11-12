@@ -1,0 +1,41 @@
+# Instalacja potrzebuje node 22+ na hoście (interfejs Vite). Z argumentem --live (kontener iso-live) dochodzi autostart instalatora i usługi Agamy.
+[box]
+id = "setup"
+version = "0.1.0"
+kind = "app"
+summary = "Shrimp Setup: instalator (Agama) i pierwsza konfiguracja, okno GTK4 + WebKitGTK"
+depends = ["linu-x"]   # drivers.conf: pakiety kroku „Obraz i dźwięk”
+build_depends = ["i18n-core", "install-schema"]
+ci = "setup"
+
+[packages]
+image = [
+    "libgtk-4-1",
+    "libwebkitgtk-6_0-4",
+    "bubblewrap",
+    "xdg-dbus-proxy",
+    "polkit",
+    "agama",
+    "agama-yast",
+    "agama-web-ui",
+    "agama-cli",
+]
+build = [
+    "bash",
+    "coreutils",
+    "findutils",
+    "gawk",
+    "gcc",
+    "pkg-config",
+    "rustup",
+    "ca-certificates",
+    "ca-certificates-mozilla",
+    "pkgconfig(gtk4)",
+    "pkgconfig(webkitgtk-6.0)",
+    "pkgconfig(libadwaita-1)",
+]
+
+[build]
+chroot = "cd shell && cargo build --release --locked"
+outputs = ["shell/target/release/shrimp-setup"]
+install = "install.sh"

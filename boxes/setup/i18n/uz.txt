@@ -1,0 +1,181 @@
+1	Orqaga
+2	Maʼlumot
+3	Shrimp logotipi
+4	NVIDIA drayveri oʻyinlar va grafik dasturlarda toʻliq unumdorlik beradi. Ochiq drayver soddaroq, lekin sekinroq.
+5	(Tavsiya etiladi)
+6	Keyingi
+7	Oʻtkazib yuborish
+8	Bekor qilish
+9	Tayyor
+10	Qoʻshimcha
+11	Avtomatik
+12	Yoʻq
+13	Keling, Shrimpʼni kompyuteringizda tayyorlaymiz.
+14	Boshlaymiz
+15	Tilni tanlang
+16	Qayerdasiz?
+17	Vaqt mintaqasi va sana formatini sozlaymiz.
+18	Klaviatura terilmasini tanlang
+19	Tartibni sinab koʻring
+20	dasturchi
+21	yozuv mashinkasi
+22	Disk
+23	boʻsh
+24	Diskni shifrlash
+25	Oʻchiq
+26	Yoqilgan
+27	Disk paroli
+28	Disk parolini takrorlang
+29	Shrimp qayerga oʻrnatilsin?
+30	Windows yoniga
+31	Windows oʻrniga
+32	Windows oʻchiriladi. Saqlab qolgan fayllaringizni yangi tizimga koʻchiramiz.
+33	Windows diski BitLocker bilan shifrlangani uchun Windows yoniga oʻrnatib boʻlmaydi.
+34	Shrimp butun {name} diskidan foydalanadi.
+35	Windows boshqa diskda qoladi.
+36	Diskni boʻlish
+37	Kompyuter har safar yonganda bu parolni soʻraydi. Usiz maʼlumotlaringizni tiklay olmaysiz.
+38	Hisob yarating
+39	U tizimga kirish uchun kerak boʻladi.
+40	Toʻliq ism
+41	Foydalanuvchi nomi
+42	Parol
+43	Parolni tasdiqlang
+44	Oʻrnatishga tayyor
+45	“Oʻrnatish” tugmasini bosmaguningizcha hech narsa oʻzgarmaydi.
+46	Til
+47	Hudud
+48	Klaviatura
+49	Disk
+50	Oʻrnatish
+51	Butun disk
+52	Diskni boʻlish
+53	Windows {win} · Shrimp {shrimp}
+54	Hisob
+55	Shifrlash
+56	Oʻrnatish
+57	Shrimp oʻrnatilmoqda
+58	Oʻrnatilmoqda
+59	Disk tayyorlanmoqda
+60	Tizim oʻrnatilmoqda
+61	Fayllar tiklanmoqda
+62	Taxminan {min} daqiqa qoldi
+63	Bir lahza
+64	Oʻrnatish yakunlandi
+65	Tugatish uchun kompyuterni qayta ishga tushiring.
+66	Qayta ishga tushirish
+67	Salom, {name}
+68	doʻstim
+69	Sozlashni tugataylik. Bu bir lahza oladi.
+70	Tarmoqqa ulaning
+71	{ssid} tarmogʻining paroli
+72	Himoyalangan
+73	Ochiq
+74	Ochiq tarmoq. Boshqalar unda nima qilayotganingizni koʻrishi mumkin.
+75	Yashirin tarmoq
+76	Roʻyxatda koʻrinmaydigan tarmoq maʼlumotlarini kiriting.
+77	Tarmoq nomi
+78	Xavfsizlik
+79	Ulanish
+80	IP manzil
+81	DNS server
+82	Proksi
+83	Qoʻlda
+84	Koʻrinishni tanlang
+85	Yorugʻ
+86	Qorongʻi
+87	Buni istalgan vaqtda Sozlamalarda oʻzgartirishingiz mumkin.
+88	Rangni tanlang
+89	Koʻk
+90	Moviy yashil
+91	Yashil
+92	Sariq
+93	Zargaldoq
+94	Qizil
+95	Pushti
+96	Binafsha
+97	Kulrang
+98	Tasvir va ovoz muammosiz
+99	Videolar va oʻyinlar darhol ishlashi uchun kerakli drayver va kodeklarni oʻrnatamiz.
+100	Oʻrnatish
+101	Keyin qilaman
+102	NVIDIA videokartasi
+103	{name} kartasini topdik.
+104	NVIDIA drayveri
+105	Ochiq drayver
+106	Oʻyinlar va grafik dasturlarda eng yaxshi unumdorlik.
+107	Ishlatish osonroq, lekin kuchsizroq.
+108	Kompyuterdan qanday foydalanasiz?
+109	Sizga eng kerakli dasturlarni oʻrnatamiz.
+110	Ish va oʻqish
+111	Oʻyinlar
+112	Ijodkorlik
+113	Dasturlash
+114	Multimedia
+115	Windowsdagi dasturlaringiz
+116	Ularni kompyuteringizda topdik. Qaysilarini oʻrnatishni tanlang.
+117	Tavsiya etilgan dasturlar
+118	Qaysilarini oʻrnatishni tanlang.
+119	Hech narsa tanlanmagan.
+120	Dasturlar oʻrnatilmoqda
+121	Yuklab olinmoqda va oʻrnatilmoqda
+122	Hammasi tayyor
+123	Shrimpdan zavqlaning.
+124	Koʻproq bilmoqchiman
+125	{n} / {total}
+126	Shrimp — bu Linux
+127	Linux butun dunyo odamlari yaratgan bepul tizim. Serverlar va Android telefonlarning aksariyati unda ishlaydi.
+128	Windows yoningizda
+129	Har safar yoqqaningizda Shrimp yoki Windowsni tanlaysiz.
+130	Dasturlar
+131	Windows .exe fayllari bu yerda ishlamaydi. Dasturlarni Shrimp Apps orqali oʻrnatasiz va mashhur ilovalarning aksariyatiga u yerda muqobil topasiz.
+132	Oʻzgartirishlar uchun parol
+133	Dastur oʻrnatganingizda yoki muhim sozlamalarni oʻzgartirganingizda tizim parolingizni soʻraydi. Bu odatiy hol va kompyuteringizni himoya qiladi.
+134	Fayllaringiz
+135	Hujjatlar, rasmlar va yuklab olinganlar Fayllar ilovasida, uy jildingizda.
+136	Windows diskini ham oʻsha yerda topasiz.
+137	Panko
+138	Oʻzgarishdan keyin nimadir ishlamay qoldimi? Panko orqali avvalgi holatga qaytishingiz mumkin.
+139	Cocktail
+140	Yangilanishlar, drayverlar va kodeklar bir joyda. Yangilanishlar qayta ishga tushirilganda oʻrnatiladi.
+141	Tezkor qidiruv
+142	Dasturlar, fayllar va sozlamalarni topish uchun Super tugmasini, Windows logotipi tushirilgan tugmani bosing.
+143	Yordam
+144	Javoblarni Shrimp yordam sahifalarida, GNOME va openSUSE hujjatlarida hamda hamjamiyat forumlarida topasiz.
+145	Disk parollari mos kelmaydi
+146	Ikkala maydonga bir xil parolni kiriting. Usiz kompyuterni yoqib boʻlmaydi, shuning uchun uni xavfsiz joyda saqlang.
+147	Parollar mos kelmaydi
+148	Ikkala maydonga bir xil parolni kiriting va qayta urinib koʻring.
+149	Qayta urinib koʻring
+150	Joy yetarli emas
+151	Diskda Shrimp uchun yetarli joy yoʻq. Windowsni kichraytiring yoki boshqa diskni tanlang.
+152	Hajmini oʻzgartirish
+153	Orqaga qaytish
+154	Oʻrnatish amalga oshmadi
+155	Nimadir notoʻgʻri ketdi. Fayllaringiz xavfsiz. Qayta urinib koʻrishingiz mumkin.
+156	Chiqish
+157	Ulanib boʻlmadi
+158	Tarmoq parolini tekshiring va qayta urinib koʻring.
+159	{ssid} tarmogʻi parolini tekshiring va qayta urinib koʻring.
+160	Internet aloqasi yoʻq
+161	Dasturlarni yuklab boʻlmadi. Ulanishni tekshiring va qayta urinib koʻring.
+162	Hujjatlar va jadvallar
+163	Elektron pochta
+164	Oʻyinlar
+165	Epic va GOG oʻyinlari
+166	Rasm chizish
+167	Video montaji
+168	Grafika
+169	Kod muharriri
+170	Dasturlash muhiti
+171	Filmlar va musiqa
+172	Musiqa
+173	Nyu-York
+174	Chikago
+175	Denver
+176	Los-Anjeles
+177	Toronto
+178	Vankuver
+179	Kanar orollari
+180	Sidney
+181	Pert

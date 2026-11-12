@@ -1,0 +1,3 @@
+# id	klucz	angielski (wzorzec); %d to licznik GRUB (sekundy)
+1	grub.fw	Computer settings
+2	grub.timeout	Shrimp will start in %d s

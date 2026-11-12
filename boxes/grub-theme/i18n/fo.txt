@@ -1,0 +1,2 @@
+1	Teldustillingar
+2	Shrimp byrjar um %d s

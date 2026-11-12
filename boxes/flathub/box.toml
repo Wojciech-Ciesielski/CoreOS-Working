@@ -1,0 +1,8 @@
+[box]
+id = "flathub"
+version = "0.1.0"
+kind = "system"
+summary = "Aplikacje tylko z Flathub (zdalne repozytorium systemowe)"
+
+[packages]
+image = ["flatpak"]

@@ -1,0 +1,181 @@
+1	Vissza
+2	Információ
+3	Shrimp logó
+4	Az NVIDIA illesztőprogram teljes teljesítményt nyújt a játékokban és a grafikus programokban. A nyílt illesztőprogram egyszerűbb, de lassabb.
+5	(Ajánlott)
+6	Tovább
+7	Kihagyás
+8	Mégse
+9	Kész
+10	Speciális
+11	Automatikus
+12	Nincs
+13	Készítsük elő a Shrimpet a számítógépén.
+14	Kezdjük el
+15	Válasszon nyelvet
+16	Hol van?
+17	Beállítjuk az időzónát és a dátumformátumot.
+18	Válasszon billentyűzetkiosztást
+19	Próbálja ki a kiosztást
+20	programozó
+21	írógép
+22	Meghajtó
+23	üres
+24	Lemeztitkosítás
+25	Ki
+26	Be
+27	Lemezjelszó
+28	Ismételje meg a lemezjelszót
+29	Hová telepítsük a Shrimpet?
+30	A Windows mellé
+31	A Windows helyére
+32	A Windows eltávolításra kerül. A megtartott fájlokat átvisszük az új rendszerbe.
+33	A Windows melletti telepítés nem lehetséges, mert a Windows meghajtó BitLockerrel titkosított.
+34	A Shrimp a teljes {name} meghajtót használja.
+35	A Windows a másik meghajtón marad.
+36	Lemezfelosztás
+37	A számítógép minden indításkor kérni fogja ezt a jelszót. Nélküle nem tudja helyreállítani az adatait.
+38	Fiók létrehozása
+39	A bejelentkezéshez lesz rá szüksége.
+40	Teljes név
+41	Felhasználónév
+42	Jelszó
+43	Jelszó megerősítése
+44	Készen áll a telepítésre
+45	Semmi sem változik, amíg a „Telepítés” gombra nem kattint.
+46	Nyelv
+47	Régió
+48	Billentyűzet
+49	Meghajtó
+50	Telepítés
+51	Teljes meghajtó
+52	Lemezfelosztás
+53	Windows {win} · Shrimp {shrimp}
+54	Fiók
+55	Titkosítás
+56	Telepítés
+57	A Shrimp telepítése
+58	Telepítés
+59	A meghajtó előkészítése
+60	A rendszer telepítése
+61	Fájlok visszaállítása
+62	Még körülbelül {min} perc
+63	Egy pillanat
+64	A telepítés befejeződött
+65	A befejezéshez indítsa újra a számítógépet.
+66	Újraindítás
+67	Szia, {name}
+68	te
+69	Fejezzük be a beállítást. Csak egy pillanatba telik.
+70	Csatlakozás hálózathoz
+71	A(z) {ssid} hálózat jelszava
+72	Védett
+73	Nyitott
+74	Nyitott hálózat. Mások láthatják, mit csinál rajta.
+75	Rejtett hálózat
+76	Adja meg a listában nem szereplő hálózat adatait.
+77	Hálózat neve
+78	Biztonság
+79	Csatlakozás
+80	IP-cím
+81	DNS-kiszolgáló
+82	Proxy
+83	Kézi
+84	Válasszon megjelenést
+85	Világos
+86	Sötét
+87	Ezt bármikor módosíthatja a Beállításokban.
+88	Válasszon színt
+89	Kék
+90	Pávakék
+91	Zöld
+92	Sárga
+93	Narancs
+94	Piros
+95	Rózsaszín
+96	Lila
+97	Szürke
+98	Kép és hang gond nélkül
+99	Telepítjük a szükséges illesztőprogramokat és kodekeket, hogy a videók és a játékok rögtön működjenek.
+100	Telepítés
+101	Később megteszem
+102	NVIDIA videokártya
+103	{name} kártyát találtunk.
+104	NVIDIA illesztőprogram
+105	Nyílt illesztőprogram
+106	A legjobb teljesítmény játékokban és grafikus programokban.
+107	Egyszerűbben működtethető, de kevésbé erős.
+108	Hogyan használja a számítógépét?
+109	Telepítjük a leggyakrabban használt programokat.
+110	Munka és tanulás
+111	Játékok
+112	Kreativitás
+113	Programozás
+114	Multimédia
+115	Windowsos programjai
+116	Megtaláltuk őket a számítógépén. Válassza ki, melyeket telepítsük.
+117	Javasolt programok
+118	Válassza ki, melyeket telepítsük.
+119	Nincs kijelölve semmi.
+120	Programok telepítése
+121	Letöltés és telepítés
+122	Minden kész
+123	Jó munkát a Shrimphez.
+124	Többet szeretnék tudni
+125	{n} / {total}
+126	A Shrimp Linux
+127	A Linux szabad rendszer, amelyet a világ minden tájáról érkező emberek készítenek. A legtöbb kiszolgálón és Android-telefonon ez fut.
+128	Windows a szomszédban
+129	Minden indításkor a Shrimp és a Windows közül választhat.
+130	Programok
+131	A Windows .exe fájljai itt nem futnak. A programokat a Shrimp Appsból telepíti, és a legtöbb ismert programhoz ott talál megfelelőt.
+132	Jelszó a módosításokhoz
+133	Programok telepítésekor vagy fontos beállítások módosításakor a rendszer a jelszavát kéri. Ez normális, és védi a számítógépét.
+134	Fájljai
+135	A dokumentumok, fényképek és letöltések a Fájlok alkalmazásban, a saját mappájában találhatók.
+136	Ott a Windows meghajtót is megtalálja.
+137	Panko
+138	Egy módosítás után valami nem működik? A Pankóban visszatérhet a korábbi állapothoz.
+139	Cocktail
+140	Frissítések, illesztőprogramok és kodekek egy helyen. A frissítések újraindításkor települnek.
+141	Gyorskeresés
+142	Nyomja meg a Super billentyűt, a Windows-logósat, programok, fájlok és beállítások kereséséhez.
+143	Súgó
+144	Válaszokat talál a Shrimp súgóoldalain, a GNOME és az openSUSE dokumentációjában, valamint a közösségi fórumokon.
+145	A lemezjelszavak nem egyeznek
+146	Mindkét mezőbe ugyanazt a jelszót írja. Nélküle a számítógép nem indítható, ezért tárolja biztonságos helyen.
+147	A jelszavak nem egyeznek
+148	Mindkét mezőbe ugyanazt a jelszót írja, és próbálja újra.
+149	Újra
+150	Nincs elég hely
+151	A meghajtón nincs elég hely a Shrimpnek. Kicsinyítse a Windowst, vagy válasszon másik meghajtót.
+152	Méret módosítása
+153	Vissza
+154	A telepítés nem sikerült
+155	Valami hiba történt. A fájljai biztonságban vannak. Próbálja újra.
+156	Kilépés
+157	Nem sikerült csatlakozni
+158	Ellenőrizze a hálózat jelszavát, és próbálja újra.
+159	Ellenőrizze a(z) {ssid} hálózat jelszavát, és próbálja újra.
+160	Nincs internetkapcsolat
+161	A programok letöltése nem sikerült. Ellenőrizze a kapcsolatot, és próbálja újra.
+162	Dokumentumok és táblázatok
+163	E-mail
+164	Játékok
+165	Játékok az Epicről és a GOG-ról
+166	Rajzolás
+167	Videószerkesztés
+168	Grafika
+169	Kódszerkesztő
+170	Fejlesztői környezet
+171	Filmek és zene
+172	Zene
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Kanári-szigetek
+180	Sydney
+181	Perth

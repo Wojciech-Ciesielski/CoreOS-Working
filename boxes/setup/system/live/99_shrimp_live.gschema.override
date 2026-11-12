@@ -1,0 +1,18 @@
+# Tylko nośnik instalacyjny (sesja live): od zalogowania do okna Setup ekran wygląda jak ekran startu
+# (czarny, logo Shrimp na środku). Bez ikon pulpitu i doku, które migały przez sekundę przed Setup.
+# Zainstalowany system tego pliku nie dostaje (post-install.sh kopiuje tylko 99_shrimp).
+[org.gnome.desktop.background]
+picture-uri='file:///usr/share/shrimp-setup/live/shrimp-live-background.svg'
+picture-uri-dark='file:///usr/share/shrimp-setup/live/shrimp-live-background.svg'
+picture-options='centered'
+primary-color='#000000'
+color-shading-type='solid'
+
+[org.gnome.desktop.screensaver]
+picture-uri='file:///usr/share/shrimp-setup/live/shrimp-live-background.svg'
+picture-options='centered'
+primary-color='#000000'
+
+[org.gnome.shell]
+enabled-extensions=['shrimp-setup-guard@shrimp']
+welcome-dialog-last-shown-version='999'

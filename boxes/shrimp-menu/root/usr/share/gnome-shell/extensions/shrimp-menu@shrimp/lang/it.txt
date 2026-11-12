@@ -1,0 +1,4 @@
+1	Informazioni su questo computer
+3	Software
+4	Aggiornamenti
+15	Ripristino di sistema

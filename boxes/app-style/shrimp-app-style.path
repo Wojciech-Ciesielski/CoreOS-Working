@@ -1,0 +1,9 @@
+[Unit]
+Description=Shrimp: wygląd aplikacji po instalacji lub aktualizacji
+
+[Path]
+PathChanged=/var/lib/flatpak/app
+PathChanged=/var/lib/flatpak/runtime
+
+[Install]
+WantedBy=multi-user.target

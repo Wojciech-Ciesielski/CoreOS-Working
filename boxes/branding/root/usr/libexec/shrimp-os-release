@@ -1,0 +1,35 @@
+#!/bin/bash
+# Shrimp w /etc/os-release (GNOME Ustawienia › O systemie, hostnamectl, zgłoszenia błędów).
+# Uruchamiane przez configure.sh boxa branding dla obrazu i przez post-install Setup dla zainstalowanego systemu.
+#   shrimp-os-release [ROOT]     (domyślnie /)
+# ID, ID_LIKE, VERSION_ID i CPE_NAME zostają z openSUSE: od nich zależy zgodność pakietów i skryptów.
+# Adresy openSUSE (HOME_URL, BUG_REPORT_URL, DOCUMENTATION_URL, SUPPORT_URL) są usuwane, bo prowadziły
+# do openSUSE. Adres strony Shrimp wpisz w HOME_URL poniżej, gdy będzie publiczny.
+set -euo pipefail
+ROOT=${1:-}
+HOME_URL=""
+# Wersja Shrimp: jedno źródło dla obrazu, zainstalowanego systemu i wydania (release.yml sprawdza zgodność).
+VERSION_FILE=/usr/share/shrimp/version
+SHRIMP_VERSION=$(head -n1 "$VERSION_FILE" 2>/dev/null || true)
+if [ -n "$ROOT" ] && [ -n "$SHRIMP_VERSION" ]; then
+  install -Dm644 "$VERSION_FILE" "$ROOT$VERSION_FILE"
+fi
+SRC=$ROOT/usr/lib/os-release
+[ -f "$SRC" ] || { echo "shrimp-os-release: brak $SRC" >&2; exit 1; }
+OUT=$ROOT/etc/os-release
+rm -f "$OUT"
+sed -e 's/^NAME=.*/NAME="Shrimp"/' \
+    -e "s/^PRETTY_NAME=.*/PRETTY_NAME=\"Shrimp ${SHRIMP_VERSION:-Beta}\"/" \
+    -e '/^IMAGE_VERSION=/d' \
+    -e 's/^LOGO=.*/LOGO="shrimp-logo"/' \
+    -e '/^HOME_URL=/d' -e '/^BUG_REPORT_URL=/d' -e '/^DOCUMENTATION_URL=/d' -e '/^SUPPORT_URL=/d' \
+    -e '/^VENDOR_NAME=/d' -e '/^VENDOR_URL=/d' -e '/^ANSI_COLOR=/d' \
+    "$SRC" > "$OUT"
+grep -q '^LOGO=' "$OUT" || echo 'LOGO="shrimp-logo"' >> "$OUT"
+echo 'VENDOR_NAME="Shrimp"' >> "$OUT"
+[ -n "$SHRIMP_VERSION" ] && echo "IMAGE_VERSION=\"$SHRIMP_VERSION\"" >> "$OUT"
+if [ -n "$HOME_URL" ]; then
+  echo "HOME_URL=\"$HOME_URL\"" >> "$OUT"
+  echo "VENDOR_URL=\"$HOME_URL\"" >> "$OUT"
+fi
+chmod 644 "$OUT"

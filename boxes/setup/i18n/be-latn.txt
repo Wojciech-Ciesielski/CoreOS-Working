@@ -1,0 +1,181 @@
+1	Nazad
+2	Zviestki
+3	Łahatyp Shrimp
+4	Drajvier NVIDIA daje poŭnuju pradukcyjnasć u hulniach i hrafičnych prahramach. Adkryty drajvier prasciejšy, ale pavolniejšy.
+5	(Rekamiendujecca)
+6	Dalej
+7	Prapuscić
+8	Skasavać
+9	Hatova
+10	Dadatkova
+11	Aŭtamatyčna
+12	Niama
+13	Davajcie padrychtujem Shrimp na vašym kampjutary.
+14	Pačniom
+15	Vybierycie movu
+16	Dzie vy?
+17	My naładzim časavy pojas i farmat daty.
+18	Vybierycie raskladku klavijatury
+19	Praviercie raskładku
+20	prahramist
+21	pišučaja mašynka
+22	Dysk
+23	pusty
+24	Šyfravannie dyska
+25	Vyklučana
+26	Uklučana
+27	Paroĺ dyska
+28	Paŭtarycie parol dyska
+29	Kudy ŭstalavać Shrimp?
+30	Pobač z Windows
+31	Zamiest Windows
+32	Windows budzie vydaleny. My pieraniasiom zachavanyja fajły ŭ novuju sistemu.
+33	Ustalavać pobač z Windows niemahčyma, bo dysk Windows zašyfravany BitLocker.
+34	Shrimp vykarystaje ŭvieś dysk {name}.
+35	Windows zastajecca na inšym dysku.
+36	Padzieł dyska
+37	Kampjutar budzie pytacca hety parol pry kožnym zapusku. Biez jaho vy nie zmožacie adnavić danyja.
+38	Stvarycie ŭlikovy zapis
+39	Jon spatrebicca dla ŭvachodu.
+40	Poŭnaje imia
+41	Jimia karystaĺnika
+42	Paroĺ
+43	Pacvierdzicie paroĺ
+44	Hatova da ŭstalavannia
+45	Ničoha nie zmienicca, pakuĺ vy nie nacisniecie «Ustalavać».
+46	Mova
+47	Rehijon
+48	Klavijatura
+49	Dysk
+50	Ustalavannie
+51	Uvieś dysk
+52	Padzieł dyska
+53	Windows {win} · Shrimp {shrimp}
+54	Ulikovy zapis
+55	Šyfravannie
+56	Ustalavać
+57	Ustalavannie Shrimp
+58	Ustalavannie
+59	Padrychtoŭka dyska
+60	Ustalavannie sistemy
+61	Adnaŭlennie fajłaŭ
+62	Zastalosia kala {min} chv
+63	Adzin momant
+64	Ustalavannie zavieršana
+65	Pierazapuscicie kampjutar, kab zaviaršyć.
+66	Pierazapuscić
+67	Pryvitannie, {name}
+68	siabar
+69	Zavieršym naładu. Heta zojmie ŭsiaho chvilinu.
+70	Padklučyciesia da sietki
+71	Paroĺ da sietki {ssid}
+72	Abaroniena
+73	Adkrytaja
+74	Adkrytaja sietka. Inšyja mohuć bačyć, što vy ŭ joj robicie.
+75	Schavanaja sietka
+76	Uviadzicie zviestki pra sietku, jakoj niama ŭ spisie.
+77	Nazva sietki
+78	Biaspieka
+79	Padklučycca
+80	IP-adras
+81	DNS-siervier
+82	Proksi
+83	Uručnuju
+84	Vybierycie vyhlad
+85	Svietly
+86	Ciomny
+87	Heta zaŭsiody možna zmianić u Naładach.
+88	Vybierycie koler
+89	Sini
+90	Biruzovy
+91	Zialony
+92	Žoŭty
+93	Aranžavy
+94	Čyrvony
+95	Ružovy
+96	Fijaletavy
+97	Šery
+98	Vidarys i huk biez kłopatu
+99	My ŭstalujem patrebnyja drajviery i kodeki, kab videa i hulni pracavali adrazu.
+100	Ustalavać
+101	Zrablu pazniej
+102	Videakarta NVIDIA
+103	My znajšli kartu {name}.
+104	Drajvier NVIDIA
+105	Adkryty drajvier
+106	Najlepšaja pradukcyjnasć u hulniach i hrafičnych prahramach.
+107	Prasciejšy ŭ pracy, ale mienš mahutny.
+108	Jak vy karystajeciesia kampjutaram?
+109	My ŭstalujem prahramy, jakija vam patrebnyja najboĺš.
+110	Praca i vučoba
+111	Huĺni
+112	Tvorčasć
+113	Prahramavannie
+114	Muĺtymiedyja
+115	Vašy prahramy z Windows
+116	My znajšli ich na vašym kampjutary. Vybierycie, jakija ŭstalavać.
+117	Prapanavanyja prahramy
+118	Vybierycie, jakija ŭstalavać.
+119	Ničoha nie vybrana.
+120	Ustalavannie prahram
+121	Sciahvannie i ŭstalavannie
+122	Usio hatova
+123	Pryjemnaha karystannia Shrimp.
+124	Chaču viedać bolš
+125	{n} z {total}
+126	Shrimp — heta Linux
+127	Linux — biaspłatnaja sistema, stvoranaja ludźmi z usiaho svietu. Na joj pracuje bolšasć siervieraŭ i telefonaŭ Android.
+128	Windows pobač
+129	Pry kožnym zapusku vy vybirajecie Shrimp abo Windows.
+130	Prahramy
+131	Fajły .exe z Windows tut nie pracujuć. Prahramy ŭstaloŭvajucca z Shrimp Apps, i dla bolšasci viadomych prahram vy znojdziecie tam adpaviednik.
+132	Parol dla zmien
+133	Kali vy ŭstaloŭvajecie prahramy abo mianiajecie važnyja nałady, sistema spytaje parol. Heta narmalna i achoŭvaje vaš kampjutar.
+134	Vašy fajły
+135	Dakumienty, fota i sciahnutaje znachodziacca ŭ prahramie Fajły, u chatniaj papcy.
+136	Tam ža vy znojdziecie dysk Windows.
+137	Panko
+138	Niešta pierastała pracavać pasla zmieny? U Panko možna viarnuć usio jak było.
+139	Cocktail
+140	Abnaŭlenni, drajviery i kodeki ŭ adnym miescy. Abnaŭlenni ŭstaloŭvajucca pry pierazapusku.
+141	Chutki pošuk
+142	Nacisnicie kłavišu Super, tuju z łahatypam Windows, kab znajsci prahramy, fajły i nałady.
+143	Daviedka
+144	Adkazy vy znojdziecie na staronkach daviedki Shrimp, u dakumientacyi GNOME i openSUSE i na forumach supolnasci.
+145	Paroli dyska nie supadajuć
+146	Uviadzicie adnolkavy parol u abodva pali. Biez jaho kampjutar nie zapuscicca, tamu zachoŭvajcie jaho ŭ nadziejnym miescy.
+147	Paroli nie supadajuć
+148	Uviadzicie adnolkavy parol u abodva pali i pasprabujcie jašče raz.
+149	Pasprabavać znoŭ
+150	Niedastatkova miesca
+151	Na dysku nie chapaje miesca dla Shrimp. Pamienšycie Windows abo vybierycie inšy dysk.
+152	Zmianić pamier
+153	Nazad
+154	Nie ŭdalosia ŭstalavać
+155	Niešta pajšło nie tak. Vašy fajły ŭ biaspiecy. Možna pasprabavać jašče raz.
+156	Vyjsci
+157	Nie ŭdałosia padklučycca
+158	Praviercie parol sietki i pasprabujcie jašče raz.
+159	Praviercie parol sietki {ssid} i pasprabujcie jašče raz.
+160	Niama zlučennia z internetam
+161	Nie ŭdałosia sciahnuć prahramy. Praviercie złučennie i pasprabujcie jašče raz.
+162	Dakumienty i tablicy
+163	Elektronnaja pošta
+164	Huĺni
+165	Hulni z Epic i GOG
+166	Malavannie
+167	Mantaž videa
+168	Hrafika
+169	Redaktar koda
+170	Asiaroddzie raspracoŭki
+171	Fiĺmy i muzyka
+172	Muzyka
+173	Ńju-Jork
+174	Čykaha
+175	Denvier
+176	Łos-Andželes
+177	Taronta
+178	Vankuvier
+179	Kanarskija astravy
+180	Sidniej
+181	Piert

@@ -1,0 +1,7 @@
+# Login screen without a logo (empty value = no logo, so no distro logo either).
+[org/gnome/login-screen]
+logo=''
+
+[org/gnome/desktop/interface]
+accent-color='blue'
+icon-theme='MoreWaita'

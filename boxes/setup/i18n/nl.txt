@@ -1,0 +1,181 @@
+1	Terug
+2	Informatie
+3	Shrimp-logo
+4	Het NVIDIA-stuurprogramma biedt volledige prestaties in games en grafische programma's. Het open stuurprogramma is eenvoudiger, maar langzamer.
+5	(Aanbevolen)
+6	Volgende
+7	Overslaan
+8	Annuleren
+9	Klaar
+10	Geavanceerd
+11	Automatisch
+12	Geen
+13	Laten we Shrimp klaarmaken op je computer.
+14	Aan de slag
+15	Kies een taal
+16	Waar ben je?
+17	We stellen de tijdzone en de datumnotatie in.
+18	Kies een toetsenbordindeling
+19	Indeling testen
+20	programmeur
+21	typemachine
+22	Schijf
+23	leeg
+24	Schijfversleuteling
+25	Uit
+26	Aan
+27	Schijfwachtwoord
+28	Herhaal het schijfwachtwoord
+29	Waar moet Shrimp worden geïnstalleerd?
+30	Naast Windows
+31	In plaats van Windows
+32	Windows wordt verwijderd. We verplaatsen de bestanden die je hebt bewaard naar het nieuwe systeem.
+33	Installeren naast Windows is niet mogelijk, omdat de Windows-schijf met BitLocker is versleuteld.
+34	Shrimp gebruikt de hele schijf {name}.
+35	Windows blijft op de andere schijf staan.
+36	Schijfverdeling
+37	De computer vraagt bij elke start om dit wachtwoord. Zonder wachtwoord kun je je gegevens niet herstellen.
+38	Een account maken
+39	Je hebt het nodig om je aan te melden.
+40	Volledige naam
+41	Gebruikersnaam
+42	Wachtwoord
+43	Wachtwoord bevestigen
+44	Klaar om te installeren
+45	Er verandert niets totdat je op ‘Installeren’ klikt.
+46	Taal
+47	Regio
+48	Toetsenbord
+49	Schijf
+50	Installatie
+51	Hele schijf
+52	Schijfverdeling
+53	Windows {win} · Shrimp {shrimp}
+54	Account
+55	Versleuteling
+56	Installeren
+57	Shrimp wordt geïnstalleerd
+58	Installeren
+59	De schijf wordt voorbereid
+60	Het systeem wordt geïnstalleerd
+61	Bestanden worden hersteld
+62	Nog ongeveer {min} min
+63	Nog heel even
+64	Installatie voltooid
+65	Start de computer opnieuw op om af te ronden.
+66	Opnieuw opstarten
+67	Hallo, {name}
+68	jij
+69	Laten we de installatie afronden. Het duurt maar even.
+70	Verbinding maken met een netwerk
+71	Wachtwoord voor netwerk {ssid}
+72	Beveiligd
+73	Open
+74	Open netwerk. Anderen kunnen zien wat je erop doet.
+75	Verborgen netwerk
+76	Voer de gegevens in van een netwerk dat niet in de lijst staat.
+77	Netwerknaam
+78	Beveiliging
+79	Verbinden
+80	IP-adres
+81	DNS-server
+82	Proxy
+83	Handmatig
+84	Kies een uiterlijk
+85	Licht
+86	Donker
+87	Je kunt dit altijd wijzigen in Instellingen.
+88	Kies een kleur
+89	Blauw
+90	Blauwgroen
+91	Groen
+92	Geel
+93	Oranje
+94	Rood
+95	Roze
+96	Paars
+97	Grijs
+98	Beeld en geluid zonder gedoe
+99	We installeren de stuurprogramma's en codecs die je nodig hebt, zodat video's en games meteen werken.
+100	Installeren
+101	Ik doe het later
+102	NVIDIA-videokaart
+103	We hebben een {name}-kaart gevonden.
+104	NVIDIA-stuurprogramma
+105	Open stuurprogramma
+106	Beste prestaties in games en grafische programma's.
+107	Eenvoudiger in gebruik, maar minder krachtig.
+108	Hoe gebruik je je computer?
+109	We installeren de programma's die je het meest nodig hebt.
+110	Werk en studie
+111	Games
+112	Creativiteit
+113	Programmeren
+114	Multimedia
+115	Je programma's uit Windows
+116	We hebben ze op je computer gevonden. Kies welke je wilt installeren.
+117	Voorgestelde programma's
+118	Kies welke je wilt installeren.
+119	Niets geselecteerd.
+120	Programma's worden geïnstalleerd
+121	Downloaden en installeren
+122	Alles is klaar
+123	Veel plezier met Shrimp.
+124	Ik wil meer weten
+125	{n} van {total}
+126	Shrimp is Linux
+127	Linux is een gratis systeem dat door mensen over de hele wereld wordt gemaakt. Het draait op de meeste servers en Android-telefoons.
+128	Naast Windows
+129	Bij elke start kies je Shrimp of Windows.
+130	Programma's
+131	Windows-.exe-bestanden werken hier niet. Je installeert programma's via Shrimp Apps, en voor de meeste bekende apps vind je daar een equivalent.
+132	Wachtwoord bij wijzigingen
+133	Als je programma's installeert of belangrijke instellingen wijzigt, vraagt het systeem om je wachtwoord. Dat is normaal en beschermt je computer.
+134	Je bestanden
+135	Documenten, foto's en downloads staan in de app Bestanden, in je persoonlijke map.
+136	Daar vind je ook de Windows-schijf.
+137	Panko
+138	Werkt er na een wijziging iets niet meer? In Panko ga je terug naar hoe het ervoor was.
+139	Cocktail
+140	Updates, stuurprogramma's en codecs op één plek. Updates worden geïnstalleerd bij het opnieuw opstarten.
+141	Snel zoeken
+142	Druk op de Super-toets, die met het Windows-logo, om programma's, bestanden en instellingen te vinden.
+143	Help
+144	Antwoorden vind je op de Shrimp-helppagina's, in de GNOME- en openSUSE-documentatie en op communityforums.
+145	De schijfwachtwoorden komen niet overeen
+146	Voer in beide velden hetzelfde wachtwoord in. Zonder wachtwoord kun je de computer niet starten, dus bewaar het op een veilige plek.
+147	De wachtwoorden komen niet overeen
+148	Voer in beide velden hetzelfde wachtwoord in en probeer het opnieuw.
+149	Opnieuw proberen
+150	Niet genoeg ruimte
+151	Er is niet genoeg ruimte op de schijf voor Shrimp. Maak Windows kleiner of kies een andere schijf.
+152	Grootte wijzigen
+153	Terug
+154	Installatie mislukt
+155	Er is iets misgegaan. Je bestanden zijn veilig. Je kunt het opnieuw proberen.
+156	Afsluiten
+157	Verbinding mislukt
+158	Controleer het netwerkwachtwoord en probeer het opnieuw.
+159	Controleer het wachtwoord voor netwerk {ssid} en probeer het opnieuw.
+160	Geen internetverbinding
+161	De programma's konden niet worden gedownload. Controleer je verbinding en probeer het opnieuw.
+162	Documenten en spreadsheets
+163	E-mail
+164	Games
+165	Games van Epic en GOG
+166	Tekenen
+167	Video bewerken
+168	Grafisch
+169	Code-editor
+170	Ontwikkelomgeving
+171	Films en muziek
+172	Muziek
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Canarische Eilanden
+180	Sydney
+181	Perth

@@ -1,0 +1,38 @@
+name: Audit zależności
+
+# Znane podatności w zależnościach Rust (RustSec) i npm. Podatność = czerwony przebieg;
+# ostrzeżenia „unmaintained” są tylko wypisywane (patrz OSTRZEŻENIA w logu).
+on:
+  push:
+    paths: ["**/Cargo.lock", "**/package-lock.json", ".github/workflows/audit.yml"]
+  pull_request:
+    paths: ["**/Cargo.lock", "**/package-lock.json", ".github/workflows/audit.yml"]
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  rust:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        dir: [boxes/setup/shell, boxes/shrimp-box]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: taiki-e/install-action@v2
+        with: { tool: cargo-audit }
+      - run: cargo audit --file "${{ matrix.dir }}/Cargo.lock"
+
+  npm:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        dir: [boxes/setup/web]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with: { node-version: 22 }
+      - run: npm audit --package-lock-only --audit-level=moderate
+        working-directory: ${{ matrix.dir }}

@@ -1,0 +1,181 @@
+1	Kembali
+2	Maklumat
+3	Logo Shrimp
+4	Pemacu NVIDIA memberi prestasi penuh dalam permainan dan program grafik. Pemacu terbuka lebih mudah tetapi lebih perlahan.
+5	(Disyorkan)
+6	Seterusnya
+7	Langkau
+8	Batal
+9	Selesai
+10	Lanjutan
+11	Automatik
+12	Tiada
+13	Mari kita sediakan Shrimp pada komputer anda.
+14	Mari mulakan
+15	Pilih bahasa
+16	Di manakah anda?
+17	Kami akan menetapkan zon waktu dan format tarikh.
+18	Pilih susun atur papan kekunci
+19	Uji susun atur
+20	pengatur cara
+21	mesin taip
+22	Pemacu
+23	kosong
+24	Penyulitan cakera
+25	Mati
+26	Hidup
+27	Kata laluan cakera
+28	Ulang kata laluan cakera
+29	Di manakah Shrimp patut dipasang?
+30	Bersebelahan Windows
+31	Menggantikan Windows
+32	Windows akan dibuang. Kami akan memindahkan fail yang anda simpan ke sistem baharu.
+33	Pemasangan bersebelahan Windows tidak boleh dilakukan kerana pemacu Windows disulitkan dengan BitLocker.
+34	Shrimp akan menggunakan seluruh pemacu {name}.
+35	Windows kekal pada pemacu yang lain.
+36	Pembahagian cakera
+37	Komputer akan meminta kata laluan ini pada setiap permulaan. Tanpanya anda tidak dapat memulihkan data anda.
+38	Cipta akaun
+39	Anda memerlukannya untuk log masuk.
+40	Nama penuh
+41	Nama pengguna
+42	Kata laluan
+43	Sahkan kata laluan
+44	Sedia untuk dipasang
+45	Tiada apa yang berubah sehingga anda klik “Pasang”.
+46	Bahasa
+47	Rantau
+48	Papan kekunci
+49	Pemacu
+50	Pemasangan
+51	Seluruh pemacu
+52	Pembahagian cakera
+53	Windows {win} · Shrimp {shrimp}
+54	Akaun
+55	Penyulitan
+56	Pasang
+57	Memasang Shrimp
+58	Memasang
+59	Menyediakan pemacu
+60	Memasang sistem
+61	Memulihkan fail
+62	Lebih kurang {min} min lagi
+63	Sebentar
+64	Pemasangan selesai
+65	Mulakan semula komputer untuk menamatkan.
+66	Mulakan semula
+67	Hai, {name}
+68	anda
+69	Mari kita siapkan persediaan. Hanya sebentar.
+70	Sambung ke rangkaian
+71	Kata laluan untuk rangkaian {ssid}
+72	Selamat
+73	Terbuka
+74	Rangkaian terbuka. Orang lain mungkin dapat melihat apa yang anda lakukan padanya.
+75	Rangkaian tersembunyi
+76	Masukkan butiran rangkaian yang tidak dipaparkan dalam senarai.
+77	Nama rangkaian
+78	Keselamatan
+79	Sambung
+80	Alamat IP
+81	Pelayan DNS
+82	Proksi
+83	Manual
+84	Pilih rupa
+85	Cerah
+86	Gelap
+87	Anda sentiasa boleh menukarnya dalam Tetapan.
+88	Pilih warna
+89	Biru
+90	Hijau kebiruan
+91	Hijau
+92	Kuning
+93	Oren
+94	Merah
+95	Merah jambu
+96	Ungu
+97	Kelabu
+98	Gambar dan bunyi tanpa masalah
+99	Kami akan memasang pemacu dan kodek yang diperlukan supaya video dan permainan terus berfungsi.
+100	Pasang
+101	Saya akan buat kemudian
+102	Kad grafik NVIDIA
+103	Kami menjumpai kad {name}.
+104	Pemacu NVIDIA
+105	Pemacu terbuka
+106	Prestasi terbaik dalam permainan dan program grafik.
+107	Lebih mudah dijalankan, tetapi kurang berkuasa.
+108	Bagaimana anda menggunakan komputer anda?
+109	Kami akan memasang program yang paling anda perlukan.
+110	Kerja dan belajar
+111	Permainan
+112	Kreativiti
+113	Pengaturcaraan
+114	Multimedia
+115	Program anda daripada Windows
+116	Kami menjumpainya pada komputer anda. Pilih yang hendak dipasang.
+117	Program yang dicadangkan
+118	Pilih yang hendak dipasang.
+119	Tiada yang dipilih.
+120	Memasang program
+121	Memuat turun dan memasang
+122	Semua sedia
+123	Selamat menggunakan Shrimp.
+124	Saya mahu tahu lebih lanjut
+125	{n} daripada {total}
+126	Shrimp ialah Linux
+127	Linux ialah sistem percuma yang dibuat oleh orang dari seluruh dunia. Ia menggerakkan kebanyakan pelayan dan telefon Android.
+128	Windows di sebelah
+129	Pada setiap permulaan anda akan memilih Shrimp atau Windows.
+130	Program
+131	Fail .exe Windows tidak berjalan di sini. Anda memasang program daripada Shrimp Apps, dan untuk kebanyakan aplikasi terkenal anda akan jumpa padanan di sana.
+132	Kata laluan untuk perubahan
+133	Apabila anda memasang program atau menukar tetapan penting, sistem akan meminta kata laluan anda. Itu biasa dan melindungi komputer anda.
+134	Fail anda
+135	Dokumen, foto dan muat turun berada dalam aplikasi Fail, di folder utama anda.
+136	Anda juga akan jumpa pemacu Windows di sana.
+137	Panko
+138	Ada sesuatu yang tidak berfungsi selepas perubahan? Dalam Panko anda boleh kembali kepada keadaan sebelumnya.
+139	Cocktail
+140	Kemas kini, pemacu dan kodek di satu tempat. Kemas kini dipasang apabila anda memulakan semula.
+141	Carian pantas
+142	Tekan kekunci Super, yang mempunyai logo Windows, untuk mencari program, fail dan tetapan.
+143	Bantuan
+144	Anda akan jumpa jawapan di halaman bantuan Shrimp, dalam dokumentasi GNOME dan openSUSE serta forum komuniti.
+145	Kata laluan cakera tidak sepadan
+146	Masukkan kata laluan yang sama dalam kedua-dua medan. Anda tidak boleh memulakan komputer tanpanya, jadi simpan di tempat selamat.
+147	Kata laluan tidak sepadan
+148	Masukkan kata laluan yang sama dalam kedua-dua medan dan cuba lagi.
+149	Cuba lagi
+150	Ruang tidak mencukupi
+151	Ruang pada pemacu tidak mencukupi untuk Shrimp. Kecilkan Windows atau pilih pemacu lain.
+152	Ubah saiz
+153	Kembali
+154	Pemasangan gagal
+155	Sesuatu telah berlaku. Fail anda selamat. Anda boleh cuba lagi.
+156	Keluar
+157	Tidak dapat menyambung
+158	Semak kata laluan rangkaian dan cuba lagi.
+159	Semak kata laluan untuk rangkaian {ssid} dan cuba lagi.
+160	Tiada sambungan internet
+161	Program tidak dapat dimuat turun. Semak sambungan anda dan cuba lagi.
+162	Dokumen dan hamparan
+163	E-mel
+164	Permainan
+165	Permainan daripada Epic dan GOG
+166	Lukisan
+167	Penyuntingan video
+168	Grafik
+169	Penyunting kod
+170	Persekitaran pembangunan
+171	Filem dan muzik
+172	Muzik
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Kepulauan Canary
+180	Sydney
+181	Perth

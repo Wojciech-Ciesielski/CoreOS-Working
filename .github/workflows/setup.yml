@@ -1,0 +1,41 @@
+name: Setup
+
+on:
+  push:
+    paths: ["boxes/setup/**", "boxes/linu-x/**", "boxes/app-style/**", "boxes/flathub/**", "boxes/i18n-core/**", "boxes/install-schema/**", ".github/workflows/setup.yml"]
+  pull_request:
+    paths: ["boxes/setup/**", "boxes/linu-x/**", "boxes/app-style/**", "boxes/flathub/**", "boxes/i18n-core/**", "boxes/install-schema/**", ".github/workflows/setup.yml"]
+  workflow_dispatch:
+
+jobs:
+  web:
+    runs-on: ubuntu-24.04
+    defaults: { run: { working-directory: boxes/setup/web } }
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with: { node-version: 22, cache: npm, cache-dependency-path: boxes/setup/web/package-lock.json }
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - name: Identyfikatory Flathub z katalogu programów
+        run: node scripts/check-flathub.mjs
+      - run: npm run build
+
+  shell:
+    runs-on: ubuntu-24.04
+    defaults: { run: { working-directory: boxes/setup/shell } }
+    steps:
+      - uses: actions/checkout@v7
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libgtk-4-dev libwebkitgtk-6.0-dev
+      - run: cargo test --locked
+      - run: cargo build --locked --release
+
+  scripts:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - run: shellcheck -S warning boxes/setup/install.sh boxes/setup/system/share/post-install.sh boxes/setup/system/libexec/shrimp-setup-apply boxes/setup/system/libexec/shrimp-usb-backup boxes/setup/tests/test-usb-backup.sh boxes/app-style/shrimp-app-style boxes/app-style/install.sh
+      - run: boxes/setup/tests/test-apply.sh
+      - run: boxes/setup/tests/test-usb-backup.sh
+      - run: python3 -c "import yaml; yaml.safe_load(open('boxes/setup/system/agama/shrimp.yaml'))"

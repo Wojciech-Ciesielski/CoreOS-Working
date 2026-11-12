@@ -1,0 +1,4 @@
+1	O tym komputerze
+3	Oprogramowanie
+4	Aktualizacje
+15	Przywracanie systemu

@@ -1,0 +1,2 @@
+1	Axustes del ordenador
+2	Shrimp arrincará en %d s

@@ -1,0 +1,24 @@
+1	Dhe-dhelergh
+6	Nessa
+7	Tremena
+8	Dilea
+9	Gwrys
+10	Avonsys
+11	Awtomatek
+12	Nagonan
+14	Dalleth
+15	Dewisewgh yeth
+42	Ger-wetha
+46	Yeth
+47	Ranndir
+48	Klavyer
+50	Staller
+56	Staller
+64	Staller gorfednys
+66	Dalleth arta
+67	Dydh da, {name}
+111	Gwariow
+143	Gweres
+149	Assaya arta
+153	Dehweles
+156	Gasa

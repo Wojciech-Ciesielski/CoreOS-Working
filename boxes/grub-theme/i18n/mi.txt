@@ -1,0 +1,2 @@
+1	Ngā tautuhinga rorohiko
+2	Ka tīmata a Shrimp i roto i te %d hēkona

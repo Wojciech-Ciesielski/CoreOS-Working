@@ -1,0 +1,41 @@
+1	Padrî
+6	Shuvant
+7	Passer
+8	Rinoncî
+9	Fwait
+10	Avancî
+11	Otomatike
+12	Nole
+14	Cmincans
+15	Tchoezixhoz ene lingaedje
+22	Lecteur
+25	Distindu
+26	Enondé
+29	Wice astaler Shrimp?
+30	Dilé Windows
+31	Al place di Windows
+42	Mot-di-pasaedje
+46	Lingaedje
+47	Redjion
+48	Tecnrece
+49	Lecteur
+50	Astalaedje
+56	Astaler
+57	Astalaedje di Shrimp
+58	Astalaedje
+63	On momint
+64	Astalaedje fini
+66	Renonder
+67	Bondjoû, {name}
+79	Raloyî
+85	Clair
+86	Brun
+89	Bleu
+91	Vert
+92	Djaene
+94	Rodje
+111	Djeus
+143	Aidance
+149	Rissayî
+153	Rivni
+156	Moussî foû

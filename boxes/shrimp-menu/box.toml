@@ -1,0 +1,6 @@
+[box]
+id = "shrimp-menu"
+version = "0.1.0"
+kind = "system"
+summary = "Menu Shrimp: logo w lewym górnym rogu (rozszerzenie shrimp-menu@shrimp)"
+depends = ["gnome-desktop", "branding"]

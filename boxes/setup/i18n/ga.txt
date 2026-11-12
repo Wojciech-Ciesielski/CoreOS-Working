@@ -1,0 +1,181 @@
+1	Ar ais
+2	Eolas
+3	Lógó Shrimp
+4	Tugann tiománaí NVIDIA lánfheidhmíocht i gcluichí agus i ríomhchláir ghrafaice. Tá an tiománaí oscailte níos simplí ach níos moille.
+5	(Molta)
+6	Ar aghaidh
+7	Scipeáil
+8	Cealaigh
+9	Déanta
+10	Casta
+11	Uathoibríoch
+12	Dada
+13	Réitímis Shrimp ar do ríomhaire.
+14	Tosaímis
+15	Roghnaigh teanga
+16	Cá bhfuil tú?
+17	Socróimid an crios ama agus formáid an dáta.
+18	Roghnaigh leagan amach méarchláir
+19	Tástáil an leagan amach
+20	ríomhchláraitheoir
+21	clóscríobhán
+22	Tiomántán
+23	folamh
+24	Criptiú diosca
+25	As
+26	Air
+27	Pasfhocal an diosca
+28	Athscríobh pasfhocal an diosca
+29	Cá gcuirfear Shrimp ar fáil?
+30	In aice le Windows
+31	In ionad Windows
+32	Bainfear Windows. Bogfaimid na comhaid a choinnigh tú chuig an gcóras nua.
+33	Ní féidir suiteáil taobh le Windows mar go bhfuil tiomántán Windows criptithe le BitLocker.
+34	Úsáidfidh Shrimp tiomántán iomlán {name}.
+35	Fanann Windows ar an tiomántán eile.
+36	Roinnt an diosca
+37	Iarrfaidh an ríomhaire an pasfhocal seo gach uair a thosaíonn sé. Gan é ní féidir leat do shonraí a aisghabháil.
+38	Cruthaigh cuntas
+39	Beidh sé de dhíth ort chun síniú isteach.
+40	Ainm iomlán
+41	Ainm úsáideora
+42	Pasfhocal
+43	Deimhnigh an pasfhocal
+44	Réidh le suiteáil
+45	Ní athraíonn aon rud go gcliceálann tú “Suiteáil”.
+46	Teanga
+47	Réigiún
+48	Méarchlár
+49	Tiomántán
+50	Suiteáil
+51	Tiomántán iomlán
+52	Roinnt an diosca
+53	Windows {win} · Shrimp {shrimp}
+54	Cuntas
+55	Criptiúchán
+56	Suiteáil
+57	Shrimp á shuiteáil
+58	Á shuiteáil
+59	An tiomántán á ullmhú
+60	An córas á shuiteáil
+61	Comhaid á n-athchóiriú
+62	Thart ar {min} nóim fágtha
+63	Nóiméad amháin
+64	Suiteáil críochnaithe
+65	Atosaigh an ríomhaire chun é a chríochnú.
+66	Atosaigh
+67	Dia duit, {name}
+68	a chara
+69	Críochnaímis an socrú. Ní thógfaidh sé ach nóiméad.
+70	Ceangail le líonra
+71	Pasfhocal don líonra {ssid}
+72	Slán
+73	Oscailte
+74	Líonra oscailte. Feicfidh daoine eile cad a dhéanann tú air.
+75	Líonra folaithe
+76	Cuir isteach sonraí líonra nach bhfuil sa liosta.
+77	Ainm an líonra
+78	Slándáil
+79	Ceangail
+80	Seoladh IP
+81	Freastalaí DNS
+82	Seachfhreastalaí
+83	De láimh
+84	Roghnaigh cuma
+85	Éadrom
+86	Dorcha
+87	Is féidir leat é seo a athrú i gcónaí sna Socruithe.
+88	Roghnaigh dath
+89	Gorm
+90	Tuaslagán
+91	Glas
+92	Buí
+93	Oráiste
+94	Dearg
+95	Bándearg
+96	Corcra
+97	Liath
+98	Pictiúr agus fuaim gan trioblóid
+99	Suiteálfaimid na tiománaithe agus na codecanna a theastaíonn uait ionas go n-oibreoidh físeáin agus cluichí láithreach.
+100	Suiteáil
+101	Déanfaidh mé níos déanaí é
+102	Cárta grafaice NVIDIA
+103	Fuaireamar cárta {name}.
+104	Tiománaí NVIDIA
+105	Tiománaí oscailte
+106	An fheidhmíocht is fearr i gcluichí agus i ríomhchláir ghrafaice.
+107	Níos simplí, ach níos lú cumhachta.
+108	Conas a úsáideann tú do ríomhaire?
+109	Suiteálfaimid na ríomhchláir is mó a theastaíonn uait.
+110	Obair agus staidéar
+111	Cluichí
+112	Cruthaitheacht
+113	Ríomhchlárú
+114	Ilmheáin
+115	Do ríomhchláir ó Windows
+116	Fuaireamar ar do ríomhaire iad. Roghnaigh cé acu le suiteáil.
+117	Ríomhchláir mholta
+118	Roghnaigh cé acu le suiteáil.
+119	Níl aon rud roghnaithe.
+120	Ríomhchláir á suiteáil
+121	Á íoslódáil agus á suiteáil
+122	Gach rud réidh
+123	Bain sult as Shrimp.
+124	Ba mhaith liom níos mó a fháil amach
+125	{n} as {total}
+126	Is Linux é Shrimp
+127	Is córas saor é Linux a rinne daoine ó gach cearn den domhan. Ritheann sé formhór na bhfreastalaithe agus na bhfón Android.
+128	Windows béal dorais
+129	Gach uair a thosaíonn sé roghnóidh tú Shrimp nó Windows.
+130	Ríomhchláir
+131	Ní ritheann comhaid .exe Windows anseo. Suiteálann tú ríomhchláir ó Shrimp Apps, agus d’fhormhór na n-aipeanna aitheanta gheobhaidh tú rogha eile ansin.
+132	Pasfhocal le haghaidh athruithe
+133	Nuair a shuiteálann tú ríomhchláir nó nuair a athraíonn tú socruithe tábhachtacha, iarrfaidh an córas do phasfhocal. Is gnáth é sin agus cosnaíonn sé do ríomhaire.
+134	Do chomhaid
+135	Tá cáipéisí, grianghraif agus íoslódálacha san aip Comhaid, i d’fhillteán baile.
+136	Gheobhaidh tú tiomántán Windows ansin freisin.
+137	Panko
+138	Ar stop rud éigin ag obair tar éis athraithe? In Panko is féidir leat dul ar ais go dtí mar a bhí roimhe.
+139	Cocktail
+140	Nuashonruithe, tiománaithe agus codecanna in aon áit amháin. Suiteáiltear nuashonruithe nuair a atosaíonn tú.
+141	Cuardach tapa
+142	Brúigh an eochair Super, an ceann le lógó Windows, chun ríomhchláir, comhaid agus socruithe a aimsiú.
+143	Cabhair
+144	Gheobhaidh tú freagraí ar leathanaigh chabhrach Shrimp, i gcáipéisíocht GNOME agus openSUSE agus ar fhóraim an phobail.
+145	Ní hionann pasfhocail an diosca
+146	Cuir isteach an pasfhocal céanna sa dá réimse. Ní féidir leat an ríomhaire a thosú gan é, mar sin coinnigh é in áit shábháilte.
+147	Ní hionann na pasfhocail
+148	Cuir isteach an pasfhocal céanna sa dá réimse agus bain triail eile as.
+149	Bain triail eile as
+150	Níl go leor spáis ann
+151	Níl go leor spáis ar an tiomántán do Shrimp. Laghdaigh Windows nó roghnaigh tiomántán eile.
+152	Athraigh an méid
+153	Téigh ar ais
+154	Theip ar an tsuiteáil
+155	Chuaigh rud éigin amú. Tá do chomhaid slán. Is féidir leat triail eile a bhaint as.
+156	Scoir
+157	Níorbh fhéidir ceangal
+158	Seiceáil pasfhocal an líonra agus bain triail eile as.
+159	Seiceáil an pasfhocal don líonra {ssid} agus bain triail eile as.
+160	Níl nasc idirlín ann
+161	Níorbh fhéidir na ríomhchláir a íoslódáil. Seiceáil do cheangal agus bain triail eile as.
+162	Cáipéisí agus scarbhileoga
+163	Ríomhphost
+164	Cluichí
+165	Cluichí ó Epic agus GOG
+166	Líníocht
+167	Eagarthóireacht físe
+168	Grafaic
+169	Eagarthóir cóid
+170	Timpeallacht forbartha
+171	Scannáin agus ceol
+172	Ceol
+173	Nua-Eabhrac
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Na hOileáin Chanáracha
+180	Sydney
+181	Perth

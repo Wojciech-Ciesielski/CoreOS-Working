@@ -1,0 +1,34 @@
+# Quick Settings: volume and microphone sliders need the PipeWire stack, the Bluetooth toggle needs bluez, battery and power state need upower. Packages that may be named differently in Leap 16.1 are installed in configure.sh.
+[box]
+id = "gnome-desktop"
+version = "0.1.0"
+kind = "system"
+summary = "GNOME: pulpit, szybkie ustawienia, polskie tłumaczenia, ustawienia domyślne Shrimp, tapety"
+
+[packages]
+collections = ["gnome_basic"]
+image = [
+    "gdm",
+    "gnome-shell",
+    "gnome-session",
+    "gnome-control-center",
+    "nautilus",
+    "gnome-console",
+    "gnome-keyring",
+    "xdg-user-dirs-gtk",
+    "xdg-desktop-portal-gnome",
+    "adwaita-icon-theme",
+    "gjs",
+    "pipewire",
+    "pipewire-pulseaudio",
+    "pipewire-alsa",
+    "wireplumber",
+    "bluez",
+    "upower",
+    "gnome-shell-lang",
+    "gnome-control-center-lang",
+    "gnome-session-lang",
+    "nautilus-lang",
+    "gtk4-lang",
+    "libadwaita-lang",
+]

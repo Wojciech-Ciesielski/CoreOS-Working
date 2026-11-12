@@ -1,0 +1,36 @@
+name: Fonts probe
+
+# Checks which Leap font packages cover the scripts of all GNOME languages (Setup, onboarding,
+# apps), so boxes/fonts/box.toml lists only names that exist. Result: artifact "fonts" (14 days), nothing is committed.
+
+on:
+  push:
+    branches: [main, "claude/**"]
+    paths: ["tools/fonts-probe.sh", ".github/workflows/fonts-probe.yml"]
+  workflow_dispatch:
+    inputs:
+      leap_version:
+        description: "openSUSE Leap version"
+        default: "16.1"
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - name: Probe font packages
+        run: |
+          mkdir -p test-results/fonts
+          sudo docker run --rm -v "$PWD:/work" -w /work docker.io/opensuse/tumbleweed:latest \
+            bash tools/fonts-probe.sh "${{ github.event.inputs.leap_version || '16.1' }}" test-results/fonts
+          sudo chown -R "$(id -u):$(id -g)" test-results/fonts
+          cat test-results/fonts/summary.txt
+      - uses: actions/upload-artifact@v7
+        with:
+          name: fonts
+          path: test-results/fonts
+          retention-days: 14

@@ -1,0 +1,9 @@
+[box]
+id = "live-session"
+version = "0.1.0"
+kind = "system"
+summary = "Sesja live: start graficzny, logowanie automatyczne użytkownika shrimp"
+depends = ["gdm"]
+
+[packages]
+image = ["sudo", "NetworkManager"]

@@ -1,0 +1,241 @@
+#!/bin/bash
+# Zawartość pendrive'a z Shrimp Install (shrimp-backup/ na nośniku) wraca na niego po instalacji.
+#   shrimp-usb-backup stash [--root /mnt]      post-install.sh (root): kopia z nośnika na dysk komputera,
+#                                              z sumami SHA-256 przed i po zapisie
+#   shrimp-usb-backup status                   JSON dla Setup (bez uprawnień): czy jest co przywracać i czy pendrive jest podłączony
+#   shrimp-usb-backup restore URZĄDZENIE       pkexec: sprawdza kopię, formatuje TEN pendrive, wgrywa pliki, sprawdza je
+#   shrimp-usb-backup to-home [--user NAZWA]   pkexec: kopia do ~/Pendrive (gdy przywrócenie nie wyjdzie albo użytkownik rezygnuje)
+#
+# Zasady: nic nie jest formatowane, dopóki kopia na dysku komputera nie przejdzie sprawdzenia sum;
+# formatowany jest tylko dysk USB o tym samym numerze seryjnym i rozmiarze co pendrive z kopii;
+# kopia na dysku komputera znika dopiero po udanym sprawdzeniu plików na pendrivie.
+# Format opisu (manifest.tsv) opisuje shrimp-install/rufus/src/shrimp/usbbackup.c.
+set -euo pipefail
+STATE=${SHRIMP_STATE:-/var/lib/shrimp-setup}
+SUMMARY=$STATE/usb-summary.json
+TAB=$'\t'
+log() { echo "shrimp-usb-backup: $*" >&2; }
+die() { log "$*"; exit 1; }
+
+safe_rel() { case "$1" in ""|/*|../*|*/../*|*/..|..) return 1;; esac; }
+
+# Czyta manifest: ustawia META_* i wypełnia tablice DIRS oraz FILES (sha<TAB>bajty<TAB>mtime<TAB>części<TAB>ścieżka).
+read_manifest() {
+  META_LABEL=""; META_FS=""; META_SCHEME="mbr"; DIRS=(); FILES=()
+  local k a b c d e
+  head -n1 "$1" | grep -qx '#shrimp-backup 1' || die "nieznany format opisu $1"
+  while IFS=$'\t' read -r k a b c d e; do
+    case "$k" in
+      label) META_LABEL=$a ;;
+      fs) META_FS=$a ;;
+      scheme) META_SCHEME=$a ;;
+      d) safe_rel "$a" || die "zła ścieżka w opisie: $a"; DIRS+=("$a") ;;
+      f) safe_rel "$e" || die "zła ścieżka w opisie: $e"
+         [[ "$a" =~ ^[0-9a-f]{64}$ ]] || die "zła suma w opisie: $e"
+         FILES+=("$a$TAB$b$TAB$c$TAB$d$TAB$e") ;;
+    esac
+  done < <(tail -n +2 "$1")
+}
+
+# Sumy plików z opisu względem katalogu $1 (części: $2=yes dla kopii z nośnika).
+verify_tree() {
+  local dir=$1 parts=$2 line sha size mtime np rel got
+  for line in "${FILES[@]}"; do
+    IFS=$'\t' read -r sha size mtime np rel <<<"$line"
+    if [ "$parts" = yes ] && [ "$np" -gt 0 ]; then
+      got=$(for ((i = 0; i < np; i++)); do cat "$dir/$rel.shrimp-part$(printf %03d "$i")"; done | sha256sum | cut -d' ' -f1)
+    else
+      [ -f "$dir/$rel" ] || return 1
+      got=$(sha256sum <"$dir/$rel" | cut -d' ' -f1)
+    fi
+    [ "$got" = "$sha" ] || { log "suma się nie zgadza: $rel"; return 1; }
+  done
+}
+
+kv() { sed -n "s/.*\(^\| \)$1=\"\([^\"]*\)\".*/\2/p"; }
+
+# Numer seryjny i rozmiar dysku (sdb): "serial<TAB>size".
+disk_identity() {
+  if [ -n "${SHRIMP_USB_IDENTITY:-}" ]; then echo "$SHRIMP_USB_IDENTITY"; return; fi
+  local l; l=$(lsblk -dnb -P -o SERIAL,SIZE "/dev/$1")
+  printf '%s\t%s\n' "$(kv SERIAL <<<"$l")" "$(kv SIZE <<<"$l")"
+}
+
+stash() {
+  local root="" src="" cand
+  while [ $# -gt 0 ]; do case "$1" in --root) root=$2; shift 2 ;; *) die "nieznany argument: $1" ;; esac; done
+  for cand in "${SHRIMP_USB_SRC:-}" /run/initramfs/live/shrimp-backup /run/media/*/*/shrimp-backup; do
+    [ -n "$cand" ] && [ -f "$cand/manifest.tsv" ] && { src=$cand; break; }
+  done
+  [ -n "$src" ] || { log "brak shrimp-backup na nośniku"; exit 3; }
+  read_manifest "$src/manifest.tsv"
+  local dest=$root$STATE/usb
+  rm -rf "$dest"; install -d -m 0700 "$dest/files"
+  STASH_OK=0; STASH_DEST=$dest
+  trap '[ "$STASH_OK" = 1 ] || rm -rf "$STASH_DEST"' EXIT
+
+  # Zrodło: sumy z opisu muszą się zgadzać, zanim cokolwiek zapiszemy.
+  verify_tree "$src/files" yes || die "kopia na nośniku jest uszkodzona, pendrive nie zostanie sformatowany"
+  local d line sha size mtime np rel bytes=0
+  for d in "${DIRS[@]}"; do install -d "$dest/files/$d"; done
+  for line in "${FILES[@]}"; do
+    IFS=$'\t' read -r sha size mtime np rel <<<"$line"
+    install -d "$(dirname "$dest/files/$rel")"
+    if [ "$np" -gt 0 ]; then
+      for ((i = 0; i < np; i++)); do cat "$src/files/$rel.shrimp-part$(printf %03d "$i")"; done >"$dest/files/$rel"
+    else
+      cp --no-preserve=all "$src/files/$rel" "$dest/files/$rel"
+    fi
+    touch -d "@$mtime" "$dest/files/$rel"
+    bytes=$((bytes + size))
+  done
+  # Po zapisie: odczyt z dysku komputera i drugie porównanie.
+  sync; echo 3 >/proc/sys/vm/drop_caches 2>/dev/null || true
+  verify_tree "$dest/files" no || die "kopia na dysku komputera nie przeszła sprawdzenia"
+
+  # Tożsamość pendrive'a: dysk, na którym leży nośnik instalacyjny.
+  local serial="" size_dev="" part disk
+  if [ -n "${SHRIMP_USB_IDENTITY:-}" ]; then
+    IFS=$'\t' read -r serial size_dev <<<"$SHRIMP_USB_IDENTITY"
+  else
+    part=$(findmnt -no SOURCE --target "$src")
+    disk=$(lsblk -no PKNAME "$part" | head -n1)
+    [ -n "$disk" ] || disk=$(basename "$part")
+    IFS=$'\t' read -r serial size_dev <<<"$(disk_identity "$disk")"
+  fi
+  [ -n "$size_dev" ] || die "nie znam rozmiaru nośnika"
+  # Manifest po sklejeniu części: wszystkie pliki są całe.
+  { echo '#shrimp-backup 1'; printf 'label\t%s\nfs\t%s\nscheme\t%s\n' "$META_LABEL" "$META_FS" "$META_SCHEME"
+    for d in "${DIRS[@]}"; do printf 'd\t%s\n' "$d"; done
+    for line in "${FILES[@]}"; do IFS=$'\t' read -r sha size mtime np rel <<<"$line"; printf 'f\t%s\t%s\t%s\t0\t%s\n' "$sha" "$size" "$mtime" "$rel"; done
+  } >"$dest/manifest.tsv"
+  printf 'serial\t%s\nsize\t%s\n' "$serial" "$size_dev" >"$dest/identity.tsv"
+  touch "$dest/pending"
+  printf '{"pending":true,"bytes":%s,"files":%s,"serial":"%s","size":%s}\n' "$bytes" "${#FILES[@]}" "$serial" "$size_dev" >"$root$SUMMARY"
+  chmod 0644 "$root$SUMMARY"
+  STASH_OK=1
+  log "kopia pendrive'a: ${#FILES[@]} plików, $bytes B, sprawdzona"
+}
+
+# Zwraca nazwę dysku (sdb) pasującego do zapisanej tożsamości albo nic.
+find_device() {
+  [ -f "$SUMMARY" ] || return 0
+  local serial size l
+  serial=$(sed -n 's/.*"serial":"\([^"]*\)".*/\1/p' "$SUMMARY"); size=$(sed -n 's/.*"size":\([0-9]*\).*/\1/p' "$SUMMARY")
+  while read -r l; do
+    [ "$(kv TYPE <<<"$l")" = disk ] && [ "$(kv TRAN <<<"$l")" = usb ] && [ "$(kv SIZE <<<"$l")" = "$size" ] || continue
+    [ -z "$serial" ] || [ "$(kv SERIAL <<<"$l")" = "$serial" ] || continue
+    kv NAME <<<"$l"; return
+  done < <(lsblk -dnb -P -o NAME,SERIAL,SIZE,TRAN,TYPE 2>/dev/null || true)
+}
+
+status() {
+  if [ ! -f "$SUMMARY" ]; then echo '{"pending":false}'; return; fi
+  local dev; dev=$(find_device)
+  local bytes files
+  bytes=$(sed -n 's/.*"bytes":\([0-9]*\).*/\1/p' "$SUMMARY"); files=$(sed -n 's/.*"files":\([0-9]*\).*/\1/p' "$SUMMARY")
+  printf '{"pending":true,"present":%s,"device":"%s","bytes":%s,"files":%s}\n' "$([ -n "$dev" ] && echo true || echo false)" "${dev:+/dev/$dev}" "${bytes:-0}" "${files:-0}"
+}
+
+finish_stash() { rm -rf "$STATE/usb" "$SUMMARY"; }
+
+fs_label() { echo "$1" | tr -cd 'A-Za-z0-9_ -' | cut -c1-11 | tr a-z A-Z; }
+
+format_device() {
+  local dev=$1 part label
+  wipefs -a "$dev" >/dev/null
+  parted -s "$dev" mklabel "$([ "$META_SCHEME" = gpt ] && echo gpt || echo msdos)" mkpart primary 1MiB 100%
+  udevadm settle; partprobe "$dev" 2>/dev/null || true; udevadm settle
+  part=$(lsblk -lnpo NAME,TYPE "$dev" | awk '$2=="part"{print $1; exit}')
+  [ -b "$part" ] || die "nie powstała partycja na $dev"
+  label=$META_LABEL
+  case "${META_FS,,}" in
+    fat32|fat|fat16|vfat|"") mkfs.vfat -F32 -n "$(fs_label "$label")" "$part" >/dev/null ;;
+    exfat) mkfs.exfat -L "$(echo "$label" | cut -c1-15)" "$part" >/dev/null ;;
+    ntfs) mkfs.ntfs -Q -L "$(echo "$label" | cut -c1-32)" "$part" >/dev/null ;;
+    ext4|ext3|ext2) mkfs.ext4 -F -L "$(echo "$label" | cut -c1-16)" "$part" >/dev/null ;;
+    *) mkfs.exfat -L "$(echo "$label" | cut -c1-15)" "$part" >/dev/null ;;
+  esac
+  echo "$part"
+}
+
+restore() {
+  local dev=${1:-}; [ -n "$dev" ] || die "użycie: restore /dev/sdX"
+  [ -f "$STATE/usb/pending" ] || die "brak kopii do przywrócenia"
+  read_manifest "$STATE/usb/manifest.tsv"
+  local mnt tmp=""
+  if [ -n "${SHRIMP_USB_TESTDIR:-}" ]; then
+    mnt=$SHRIMP_USB_TESTDIR
+  else
+    tmp=$(mktemp -d /run/shrimp-usb.XXXXXX); mnt=$tmp
+    TMP_MNT=$tmp; trap 'umount "$TMP_MNT" 2>/dev/null; rmdir "$TMP_MNT" 2>/dev/null' EXIT
+  fi
+
+  # 1. kopia musi być cała, zanim ruszymy pendrive
+  verify_tree "$STATE/usb/files" no || die "kopia na dysku komputera jest uszkodzona, pendrive nie zostanie sformatowany"
+
+  if [ -z "${SHRIMP_USB_TESTDIR:-}" ]; then
+    # 2. to ma być ten pendrive, a nie dysk systemowy
+    local name; name=$(basename "$dev")
+    [ "$(find_device)" = "$name" ] || die "$dev to nie jest pendrive z kopii"
+    local root_disk; root_disk=$(lsblk -no PKNAME "$(findmnt -no SOURCE /)" 2>/dev/null | head -n1 || true)
+    [ "$root_disk" != "$name" ] || die "$dev zawiera system"
+    local mp
+    while read -r mp; do
+      case "$mp" in /|/boot*|/home*|/usr*|/var*|/opt*|/srv*) die "$dev jest używany przez system ($mp)";; esac
+    done < <(lsblk -lno MOUNTPOINT "$dev" | grep -v '^$' || true)
+    lsblk -lnpo NAME,MOUNTPOINT "$dev" | awk 'NF==2{print $1}' | xargs -r umount
+    # 3. formatowanie
+    local part; part=$(format_device "$dev")
+    mount "$part" "$mnt"
+  fi
+
+  # 4. pliki
+  local d line sha size mtime np rel
+  for d in "${DIRS[@]}"; do mkdir -p "$mnt/$d"; done
+  for line in "${FILES[@]}"; do
+    IFS=$'\t' read -r sha size mtime np rel <<<"$line"
+    mkdir -p "$(dirname "$mnt/$rel")"
+    cp --no-preserve=all "$STATE/usb/files/$rel" "$mnt/$rel"
+    touch -d "@$mtime" "$mnt/$rel" 2>/dev/null || true
+  done
+  sync
+  # 5. sprawdzenie z urządzenia, nie z pamięci podręcznej
+  if [ -z "${SHRIMP_USB_TESTDIR:-}" ]; then
+    umount "$mnt"; echo 3 >/proc/sys/vm/drop_caches 2>/dev/null || true
+    mount "${part}" "$mnt"
+  fi
+  verify_tree "$mnt" no || die "pliki na pendrivie nie zgadzają się z kopią; kopia na dysku komputera została"
+  [ -n "${SHRIMP_USB_TESTDIR:-}" ] || umount "$mnt"
+  finish_stash
+  log "pendrive przywrócony: ${#FILES[@]} plików"
+  echo ok
+}
+
+to_home() {
+  local user="${PKEXEC_UID:+$(id -nu "$PKEXEC_UID")}"
+  while [ $# -gt 0 ]; do case "$1" in --user) user=$2; shift 2 ;; *) die "nieznany argument: $1" ;; esac; done
+  [ -n "$user" ] || die "brak użytkownika"
+  [ -f "$STATE/usb/pending" ] || die "brak kopii do przywrócenia"
+  read_manifest "$STATE/usb/manifest.tsv"
+  local home dest
+  home=$(getent passwd "$user" | cut -d: -f6); [ -n "$home" ] || die "brak konta $user"
+  dest=$home/Pendrive
+  [ ! -e "$dest" ] || dest="$home/Pendrive $(date +%Y%m%d-%H%M%S)"
+  install -d -o "$user" "$dest"
+  cp -a --no-preserve=ownership "$STATE/usb/files/." "$dest/"
+  chown -R "$user:$(id -gn "$user")" "$dest"
+  sync
+  verify_tree "$dest" no || die "kopia w $dest nie przeszła sprawdzenia, kopia na dysku komputera została"
+  finish_stash
+  echo "$dest"
+}
+
+cmd=${1:-}; shift || true
+case "$cmd" in
+  stash) stash "$@" ;;
+  status) status ;;
+  restore) restore "$@" ;;
+  to-home) to_home "$@" ;;
+  *) die "użycie: shrimp-usb-backup stash|status|restore|to-home" ;;
+esac

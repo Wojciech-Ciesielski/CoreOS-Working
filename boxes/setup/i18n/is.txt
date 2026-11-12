@@ -1,0 +1,181 @@
+1	Til baka
+2	Upplýsingar
+3	Merki Shrimp
+4	NVIDIA-rekillinn skilar fullum afköstum í leikjum og grafíkforritum. Opni rekillinn er einfaldari en hægari.
+5	(Mælt með)
+6	Áfram
+7	Sleppa
+8	Hætta við
+9	Lokið
+10	Ítarlegt
+11	Sjálfvirkt
+12	Ekkert
+13	Gerum Shrimp tilbúið á tölvunni þinni.
+14	Byrjum
+15	Veldu tungumál
+16	Hvar ertu?
+17	Við stillum tímabelti og dagsetningarsnið.
+18	Veldu lyklaborðsuppsetningu
+19	Prófaðu uppsetninguna
+20	forritari
+21	ritvél
+22	Drif
+23	autt
+24	Dulkóðun disks
+25	Slökkt
+26	Kveikt
+27	Lykilorð disks
+28	Endurtaktu lykilorð disks
+29	Hvar á að setja Shrimp upp?
+30	Við hlið Windows
+31	Í stað Windows
+32	Windows verður fjarlægt. Við færum skrárnar sem þú vistaðir yfir í nýja kerfið.
+33	Ekki er hægt að setja upp við hlið Windows því Windows-drifið er dulkóðað með BitLocker.
+34	Shrimp notar allt drifið {name}.
+35	Windows verður áfram á hinu drifinu.
+36	Skipting disks
+37	Tölvan biður um þetta lykilorð í hvert skipti sem hún ræsist. Án þess færðu ekki gögnin þín aftur.
+38	Búa til aðgang
+39	Þú þarft hann til að skrá þig inn.
+40	Fullt nafn
+41	Notandanafn
+42	Lykilorð
+43	Staðfestu lykilorð
+44	Tilbúið til uppsetningar
+45	Ekkert breytist fyrr en þú smellir á „Setja upp“.
+46	Tungumál
+47	Svæði
+48	Lyklaborð
+49	Drif
+50	Uppsetning
+51	Allt drifið
+52	Skipting disks
+53	Windows {win} · Shrimp {shrimp}
+54	Aðgangur
+55	Dulkóðun
+56	Setja upp
+57	Set upp Shrimp
+58	Set upp
+59	Undirbý drifið
+60	Set upp kerfið
+61	Endurheimti skrár
+62	Um {min} mín. eftir
+63	Augnablik
+64	Uppsetningu lokið
+65	Endurræstu tölvuna til að ljúka.
+66	Endurræsa
+67	Halló, {name}
+68	þú
+69	Klárum uppsetninguna. Það tekur bara augnablik.
+70	Tengjast neti
+71	Lykilorð fyrir netið {ssid}
+72	Varið
+73	Opið
+74	Opið net. Aðrir gætu séð hvað þú gerir á því.
+75	Falið net
+76	Sláðu inn upplýsingar um net sem sést ekki á listanum.
+77	Heiti nets
+78	Öryggi
+79	Tengjast
+80	IP-tala
+81	DNS-þjónn
+82	Milliþjónn
+83	Handvirkt
+84	Veldu útlit
+85	Ljóst
+86	Dökkt
+87	Þú getur alltaf breytt þessu í stillingum.
+88	Veldu lit
+89	Blár
+90	Blágrænn
+91	Grænn
+92	Gulur
+93	Appelsínugulur
+94	Rauður
+95	Bleikur
+96	Fjólublár
+97	Grár
+98	Mynd og hljóð án vesens
+99	Við setjum upp rekla og kóðara sem þú þarft svo myndbönd og leikir virki strax.
+100	Setja upp
+101	Geri það seinna
+102	NVIDIA-skjákort
+103	Við fundum kortið {name}.
+104	NVIDIA-rekill
+105	Opinn rekill
+106	Bestu afköst í leikjum og grafíkforritum.
+107	Einfaldari í rekstri en minna öflugur.
+108	Hvernig notarðu tölvuna?
+109	Við setjum upp forritin sem þú þarft mest.
+110	Vinna og nám
+111	Leikir
+112	Sköpun
+113	Forritun
+114	Margmiðlun
+115	Forritin þín frá Windows
+116	Við fundum þau á tölvunni þinni. Veldu hvað á að setja upp.
+117	Tillögur að forritum
+118	Veldu hvað á að setja upp.
+119	Ekkert valið.
+120	Set upp forrit
+121	Sæki og set upp
+122	Allt tilbúið
+123	Njóttu Shrimp.
+124	Ég vil vita meira
+125	{n} af {total}
+126	Shrimp er Linux
+127	Linux er frjálst kerfi sem fólk um allan heim býr til. Það knýr flesta netþjóna og Android-síma.
+128	Windows við hliðina
+129	Í hvert skipti sem tölvan ræsist velurðu Shrimp eða Windows.
+130	Forrit
+131	Windows .exe skrár keyra ekki hér. Þú setur upp forrit úr Shrimp Apps og fyrir flest þekkt forrit finnurðu staðgengil þar.
+132	Lykilorð fyrir breytingar
+133	Þegar þú setur upp forrit eða breytir mikilvægum stillingum biður kerfið um lykilorðið þitt. Það er eðlilegt og ver tölvuna.
+134	Skrárnar þínar
+135	Skjöl, myndir og niðurhal eru í Skrár forritinu, í heimamöppunni þinni.
+136	Þar finnurðu líka Windows-drifið.
+137	Panko
+138	Hætti eitthvað að virka eftir breytingu? Í Panko geturðu farið aftur í fyrra horf.
+139	Cocktail
+140	Uppfærslur, reklar og kóðarar á einum stað. Uppfærslur eru settar upp við endurræsingu.
+141	Hraðleit
+142	Ýttu á Super-takkann, þann með Windows-merkinu, til að finna forrit, skrár og stillingar.
+143	Hjálp
+144	Svör finnurðu á hjálparsíðum Shrimp, í skjölum GNOME og openSUSE og á spjallborðum samfélagsins.
+145	Lykilorð disks stemma ekki
+146	Sláðu sama lykilorð inn í báða reitina. Án þess ræsist tölvan ekki, svo geymdu það á öruggum stað.
+147	Lykilorðin stemma ekki
+148	Sláðu sama lykilorð inn í báða reitina og reyndu aftur.
+149	Reyna aftur
+150	Ekki nóg pláss
+151	Ekki er nóg pláss á drifinu fyrir Shrimp. Minnkaðu Windows eða veldu annað drif.
+152	Breyta stærð
+153	Til baka
+154	Uppsetning mistókst
+155	Eitthvað fór úrskeiðis. Skrárnar þínar eru öruggar. Þú getur reynt aftur.
+156	Hætta
+157	Tenging mistókst
+158	Athugaðu lykilorð netsins og reyndu aftur.
+159	Athugaðu lykilorðið fyrir netið {ssid} og reyndu aftur.
+160	Engin nettenging
+161	Ekki tókst að sækja forritin. Athugaðu tenginguna og reyndu aftur.
+162	Skjöl og töflureiknar
+163	Tölvupóstur
+164	Leikir
+165	Leikir frá Epic og GOG
+166	Teikning
+167	Myndvinnsla
+168	Grafík
+169	Kóðaritill
+170	Þróunarumhverfi
+171	Kvikmyndir og tónlist
+172	Tónlist
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Kanaríeyjar
+180	Sydney
+181	Perth

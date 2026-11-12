@@ -1,0 +1,4 @@
+1	Oor hierdie rekenaar
+3	Sagteware
+4	Bywerkings
+15	Stelselherstel

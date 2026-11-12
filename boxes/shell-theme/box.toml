@@ -1,0 +1,9 @@
+[box]
+id = "shell-theme"
+version = "0.1.0"
+kind = "theme"
+summary = "Motyw GNOME Shell: tło GDM i ekran blokady"
+depends = ["gnome-desktop"]
+
+[packages]
+image = ["glib2-tools", "glib2-devel"]

@@ -1,0 +1,2 @@
+1	Cài đặt máy tính
+2	Shrimp sẽ khởi động sau %d giây

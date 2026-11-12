@@ -1,0 +1,4 @@
+1	Bu kompyuter haqqında
+3	Programmalar
+4	Yañartmalar
+15	Sistemanı tiklev

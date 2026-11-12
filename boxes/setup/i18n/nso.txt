@@ -1,0 +1,41 @@
+1	Morago
+6	E latelago
+7	Tlola
+8	Khansela
+9	E phethilwe
+10	E godišitšwego
+11	Ka bohlatse
+12	Ga go le tee
+14	A re thomeng
+15	Kgetha polelo
+22	Drayive
+25	E tima
+26	E bulegile
+29	Shrimp e swanetše go dirwa kae?
+30	Kgauswi le Windows
+31	Legatong la Windows
+42	Phasewete
+46	Polelo
+47	Kgoro
+48	Boto ya dinotlelo
+49	Drayive
+50	Go kenya
+56	Kenya
+57	Go kenya Shrimp
+58	Go a kenya
+63	Nako e nnyane
+64	Go kenya go phethilwe
+66	Thoma gape
+67	Thobela, {name}
+79	Hlama kgokagano
+85	Phadimago
+86	Lefsifsi
+89	Boputswa
+91	Botala
+92	Serolwana
+94	Hubedu
+111	Dipapadi
+143	Thušo
+149	Leka gape
+153	Boela morago
+156	Tswa

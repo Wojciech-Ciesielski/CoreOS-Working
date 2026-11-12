@@ -1,0 +1,2 @@
+1	Nastavitve računalnika
+2	Shrimp se bo zagnal čez %d s

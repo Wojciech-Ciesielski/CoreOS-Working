@@ -1,0 +1,4 @@
+1	Pri ĉi tiu komputilo
+3	Programaro
+4	Ĝisdatigoj
+15	Restaŭro de sistemo

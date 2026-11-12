@@ -1,0 +1,4 @@
+1	Über diesen Computer
+3	Software
+4	Aktualisierungen
+15	Systemwiederherstellung

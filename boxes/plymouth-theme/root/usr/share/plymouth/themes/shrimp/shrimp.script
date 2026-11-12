@@ -1,0 +1,204 @@
+# Shrimp Plymouth theme.
+# Every position below is measured from mockups/boot.html rendered at 1920x1080
+# (boxes/plymouth-theme/tools/render-boot-assets.js -> tools/boot-geometry.json). The script scales the
+# whole layout by screen width and keeps its vertical centre on the screen centre.
+# Bitmaps come in 1x (1920 px reference) and @2x (for screens wider than 2400 px).
+
+Window.SetBackgroundTopColor(0, 0, 0);
+Window.SetBackgroundBottomColor(0, 0, 0);
+
+global.W = Window.GetWidth();
+global.H = Window.GetHeight();
+global.X0 = Window.GetX();
+global.Y0 = Window.GetY();
+global.S = W / 1920;
+if (W > 2400) { global.K = 2; global.SUF = "@2x"; } else { global.K = 1; global.SUF = ""; }
+
+# reference coordinates -> screen
+fun sx(x) { return X0 + Math.Int(W / 2 + (x - 960) * S); }
+fun sy(y) { return Y0 + Math.Int(H / 2 + (y - 540) * S); }
+fun sz(v) { return Math.Max(1, Math.Int(v * S + 0.5)); }
+
+fun load(name) {
+  img = Image(name + SUF + ".png");
+  return img.Scale(Math.Max(1, Math.Int(img.GetWidth() * S / K + 0.5)), Math.Max(1, Math.Int(img.GetHeight() * S / K + 0.5)));
+}
+fun load_size(name, w, h) {
+  img = Image(name + SUF + ".png");
+  return img.Scale(sz(w), sz(h));
+}
+
+global.mode = Plymouth.GetMode();
+global.is_updates = (mode == "updates" || mode == "system-upgrade" || mode == "firmware-upgrade");
+global.is_off = (mode == "shutdown" || mode == "reboot");
+
+# ---------- logo ----------
+# boot: 268.8 x 259.9 at (814.8, 358.0); updates: (814.8, 285.8); shutdown alone: (814.8, 410.1)
+global.logo = Sprite(load_size("logo", 268.8, 259.91));
+if (is_updates) global.logo_y = 285.83;
+else if (is_off) global.logo_y = 410.05;
+else global.logo_y = 358.02;
+logo.SetPosition(sx(814.84), sy(logo_y), 10);
+logo.SetOpacity(0);
+
+
+# ---------- progress bar: round caps + stretched body ----------
+global.bar_x = 796.8;
+if (is_updates) global.bar_y = 641.73; else global.bar_y = 713.92;
+global.bar_w = 326.39;
+global.bar_h = Math.Max(3, sz(8.06));
+global.bar_px = sz(bar_w);
+
+fun bar_sprites(prefix, z) {
+  cap = Image(prefix + "-cap" + SUF + ".png").Scale(bar_h, bar_h);
+  body = Image(prefix + "-body" + SUF + ".png");
+  r.l = Sprite(cap);
+  r.r = Sprite(cap);
+  r.m = Sprite();
+  r.body = body;
+  r.z = z;
+  return r;
+}
+global.track = bar_sprites("track", 10);
+global.fill = bar_sprites("fill", 11);
+
+fun bar_set(b, px) {
+  x = sx(bar_x);
+  y = sy(bar_y);
+  if (px < bar_h) px = bar_h;
+  b.l.SetPosition(x, y, b.z);
+  b.r.SetPosition(x + px - bar_h, y, b.z);
+  mid = px - bar_h;
+  if (mid > 0) {
+    b.m.SetImage(b.body.Scale(mid, bar_h));
+    b.m.SetPosition(x + Math.Int(bar_h / 2), y, b.z);
+  }
+}
+fun bar_opacity(b, o) { b.l.SetOpacity(o); b.r.SetOpacity(o); b.m.SetOpacity(o); }
+
+bar_set(track, bar_px);
+global.progress = 0;
+global.fill_px = 0;
+bar_opacity(track, 0);
+bar_opacity(fill, 0);
+global.show_bar = !is_off;
+
+# ---------- updates captions ----------
+global.title = Sprite(load("title-updates"));
+title.SetPosition(sx(809.52), sy(711.23), 10);
+title.SetOpacity(0);
+global.status = Sprite();
+global.status_font = "Inter " + Math.Max(11, sz(25.92)) + "px";
+
+fun set_status(text) {
+  img = Image.Text(text, 0.549, 0.549, 0.549, 1, status_font);
+  status.SetImage(img);
+  # second line of the caption: line-height 41.47, centred under the title
+  status.SetPosition(X0 + Math.Int((W - img.GetWidth()) / 2), sy(752.70) + Math.Int((sz(41.47) - img.GetHeight()) / 2), 10);
+}
+
+# ---------- disk password ----------
+# The logo stays exactly where it is during boot (same size, same place); the field takes
+# the place of the bar: mockup spacing (field 5.5% of width under the logo, caption 3.2% under it).
+global.entry = Sprite(load_size("entry", 441.59, 74.88));
+entry.SetPosition(sx(739.2), sy(723.50), 20);
+global.lock = Sprite(load_size("lock", 30.72, 30.72));
+lock.SetPosition(sx(764.16), sy(745.58), 21);
+global.go = Sprite(load_size("go", 53.75, 53.75));
+go.SetPosition(sx(1113.61), sy(734.06), 21);
+global.arrow = Sprite(load_size("arrow", 30.72, 30.72));
+arrow.SetPosition(sx(1125.13), sy(745.58), 22);
+global.caret = Sprite(load_size("caret", 2, 38.39));
+global.hint = Sprite(load("hint-password"));
+hint.SetPosition(sx(746.03), sy(859.81), 20);
+global.bullet_img = load_size("bullet", 15.73, 15.73);
+global.max_dots = 9;
+for (i = 0; i < max_dots; i++) {
+  global.dots[i] = Sprite(bullet_img);
+  dots[i].SetPosition(sx(814.06 + i * 29.17), sy(753.06), 22);
+  dots[i].SetOpacity(0);
+}
+
+global.asking = 0;
+global.typed = 0;
+
+fun password_opacity(o) {
+  entry.SetOpacity(o); lock.SetOpacity(o); hint.SetOpacity(o);
+  if (o == 0) { go.SetOpacity(0); arrow.SetOpacity(0); caret.SetOpacity(0); }
+  else { if (typed > 0) { go.SetOpacity(1); arrow.SetOpacity(1); } else { go.SetOpacity(0.35); arrow.SetOpacity(0.35); } }
+  if (o == 0) { for (i = 0; i < max_dots; i++) dots[i].SetOpacity(0); }
+}
+password_opacity(0);
+
+fun on_password(prompt, count) {
+  global.asking = 1;
+  global.typed = count;
+  logo.SetOpacity(1);
+  bar_opacity(track, 0);
+  bar_opacity(fill, 0);
+  title.SetOpacity(0);
+  status.SetOpacity(0);
+  password_opacity(1);
+  n = Math.Min(count, max_dots);
+  for (i = 0; i < max_dots; i++) { if (i < n) dots[i].SetOpacity(1); else dots[i].SetOpacity(0); }
+  caret.SetPosition(sx(814.06 + n * 29.17), sy(741.73), 22);
+  global.caret_t0 = global.t;
+}
+Plymouth.SetDisplayPasswordFunction(on_password);
+
+fun on_normal() {
+  if (asking) {
+    global.asking = 0;
+    password_opacity(0);
+    if (show_bar) { bar_opacity(track, 1); bar_opacity(fill, 1); }
+    if (is_updates) { title.SetOpacity(0.85); status.SetOpacity(1); }
+  }
+}
+Plymouth.SetDisplayNormalFunction(on_normal);
+
+# ---------- progress and status ----------
+fun on_progress(duration, p) {
+  global.progress = p;
+}
+Plymouth.SetBootProgressFunction(on_progress);
+
+fun on_update(text) {
+  if (is_updates) set_status(text);
+}
+Plymouth.SetUpdateStatusFunction(on_update);
+
+# ---------- motion (mockup: logo fade-in 1.1 s, bar fade-in 1.1 s after 0.2 s,
+#            caret blink 1.1 s, shutdown logo fade 4.5 s) ----------
+global.t = 0;
+global.caret_t0 = 0;
+fun ease(x) { if (x < 0) return 0; if (x > 1) return 1; return x * x * (3 - 2 * x); }
+
+fun on_refresh() {
+  global.t = t + 1 / 50;
+  if (asking) {
+    ph = (t - caret_t0) / 1.1;
+    ph = ph - Math.Int(ph);
+    if (ph < 0.5) caret.SetOpacity(1); else caret.SetOpacity(0);
+    return;
+  }
+  if (is_off) {
+    c = t / 4.5;
+    c = c - Math.Int(c);
+    if (c < 0.15) o = 1; else if (c > 0.75) o = 0; else o = 1 - ease((c - 0.15) / 0.6);
+    logo.SetOpacity(o);
+    return;
+  }
+  logo.SetOpacity(ease(t / 1.1));
+  ob = ease((t - 0.2) / 1.1);
+  bar_opacity(track, ob);
+  bar_opacity(fill, ob);
+  if (is_updates) { title.SetOpacity(0.85 * ob); status.SetOpacity(ob); }
+  target = Math.Int(bar_px * progress);
+  if (target > fill_px) {
+    global.fill_px = target;
+    bar_set(fill, fill_px);
+  }
+}
+Plymouth.SetRefreshFunction(on_refresh);
+
+if (is_updates) { set_status(""); }

@@ -1,0 +1,4 @@
+1	Bu kompyuter haqida
+3	Dasturlar
+4	Yangilanishlar
+15	Tizimni tiklash

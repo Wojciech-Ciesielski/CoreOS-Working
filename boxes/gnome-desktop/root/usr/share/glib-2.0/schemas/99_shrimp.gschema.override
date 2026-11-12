@@ -1,0 +1,58 @@
+# Shrimp defaults. Loaded after the openSUSE branding overrides.
+
+[org.gnome.desktop.background]
+picture-uri='file:///usr/share/backgrounds/shrimp/mont-blanc.jpg'
+picture-uri-dark='file:///usr/share/backgrounds/shrimp/mont-blanc.jpg'
+picture-options='zoom'
+primary-color='#000000'
+secondary-color='#000000'
+
+[org.gnome.desktop.screensaver]
+picture-uri='file:///usr/share/backgrounds/shrimp/mont-blanc.jpg'
+picture-options='zoom'
+primary-color='#000000'
+secondary-color='#000000'
+
+[org.gnome.desktop.interface]
+accent-color='blue'
+# main icon theme (installed by the icon-theme box, inherits Adwaita)
+icon-theme='MoreWaita'
+clock-format='24h'
+# top bar: weekday next to the date, battery level in percent
+clock-show-weekday=true
+show-battery-percentage=true
+
+[org.gnome.desktop.input-sources]
+sources=[('xkb', 'pl')]
+
+[org.gnome.desktop.wm.preferences]
+button-layout='appmenu:minimize,maximize,close'
+
+[org.gnome.shell]
+enabled-extensions=['shrimp-setup-guard@shrimp', 'shrimp-menu@shrimp', 'ding@rastersoft.com', 'blur-my-shell@aunetx', 'dash-to-dock@micxgx.gmail.com', 'just-perfection-desktop@just-perfection', 'light-style@gnome-shell-extensions.gcampax.github.com']
+disable-user-extensions=false
+favorite-apps=['org.mozilla.firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.shrimp.Apps.desktop', 'org.gnome.Console.desktop', 'org.gnome.Settings.desktop']
+welcome-dialog-last-shown-version='999'
+
+# Just Perfection: no Activities button in the top bar
+[org.gnome.shell.extensions.just-perfection]
+activities-button=false
+
+# Blur my Shell: the wallpaper is blurred in the Overview, the top bar stays sharp
+[org.gnome.shell.extensions.blur-my-shell.overview]
+blur=true
+
+[org.gnome.shell.extensions.blur-my-shell.panel]
+blur=false
+
+[org.gnome.shell.extensions.dash-to-dock]
+dock-position='BOTTOM'
+dock-fixed=false
+intellihide=true
+show-trash=false
+show-mounts=false
+
+[org.gnome.shell.extensions.ding]
+show-home=true
+show-trash=true
+show-volumes=false

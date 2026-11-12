@@ -1,0 +1,181 @@
+1	Rudi
+2	Taarifa
+3	Nembo ya Shrimp
+4	Kiendeshi cha NVIDIA hutoa utendaji kamili katika michezo na programu za michoro. Kiendeshi huria ni rahisi zaidi, lakini ni cha polepole.
+5	(Inapendekezwa)
+6	Endelea
+7	Ruka
+8	Ghairi
+9	Imekamilika
+10	Mipangilio ya hali ya juu
+11	Kiotomatiki
+12	Hakuna
+13	Tuiandae Shrimp kwenye kompyuta yako.
+14	Tuanze
+15	Chagua lugha
+16	Uko wapi?
+17	Tutaweka saa za eneo na muundo wa tarehe.
+18	Chagua mpangilio wa kibodi
+19	Jaribu mpangilio
+20	mtayarishaji programu
+21	taipureta
+22	Diski
+23	tupu
+24	Usimbaji fiche wa diski
+25	Imezimwa
+26	Imewashwa
+27	Nenosiri la diski
+28	Rudia nenosiri la diski
+29	Shrimp isakinishwe wapi?
+30	Pamoja na Windows
+31	Badala ya Windows
+32	Windows itaondolewa. Tutahamisha faili ulizohifadhi kwenye mfumo mpya.
+33	Kusakinisha kando ya Windows hakuwezekani kwa sababu diski ya Windows imesimbwa kwa BitLocker.
+34	Shrimp itatumia diski nzima ya {name}.
+35	Windows inabaki kwenye diski nyingine.
+36	Mgawanyo wa diski
+37	Kompyuta itauliza nenosiri hili kila inapowashwa. Bila hilo huwezi kurejesha data yako.
+38	Fungua akaunti
+39	Utalihitaji ili kuingia.
+40	Jina kamili
+41	Jina la mtumiaji
+42	Nenosiri
+43	Thibitisha nenosiri
+44	Tayari kusakinisha
+45	Hakuna kitakachobadilika hadi ubofye “Sakinisha”.
+46	Lugha
+47	Eneo
+48	Kibodi
+49	Diski
+50	Usakinishaji
+51	Diski nzima
+52	Mgawanyo wa diski
+53	Windows {win} · Shrimp {shrimp}
+54	Akaunti
+55	Usimbaji
+56	Sakinisha
+57	Inasakinisha Shrimp
+58	Inasakinisha
+59	Inaandaa diski
+60	Inasakinisha mfumo
+61	Inarejesha faili
+62	Takriban dakika {min} zimebaki
+63	Subiri kidogo
+64	Usakinishaji umekamilika
+65	Washa upya kompyuta ili kumaliza.
+66	Washa upya
+67	Habari, {name}
+68	rafiki
+69	Tumalizie usanidi. Itachukua muda mfupi tu.
+70	Unganisha kwenye mtandao
+71	Nenosiri la mtandao {ssid}
+72	Imelindwa
+73	Wazi
+74	Mtandao wazi. Wengine wanaweza kuona unachofanya juu yake.
+75	Mtandao uliofichwa
+76	Weka maelezo ya mtandao usioonyeshwa kwenye orodha.
+77	Jina la mtandao
+78	Usalama
+79	Unganisha
+80	Anwani ya IP
+81	Seva ya DNS
+82	Proksi
+83	Mwenyewe
+84	Chagua mwonekano
+85	Mwanga
+86	Giza
+87	Unaweza kubadilisha hili wakati wowote katika Mipangilio.
+88	Chagua rangi
+89	Samawati
+90	Kijani-samawati
+91	Kijani
+92	Njano
+93	Chungwa
+94	Nyekundu
+95	Waridi
+96	Zambarau
+97	Kijivu
+98	Picha na sauti bila shida
+99	Tutasakinisha viendeshi na kodeki unazohitaji ili video na michezo ifanye kazi mara moja.
+100	Sakinisha
+101	Nitafanya baadaye
+102	Kadi ya michoro ya NVIDIA
+103	Tumepata kadi ya {name}.
+104	Kiendeshi cha NVIDIA
+105	Kiendeshi huria
+106	Utendaji bora katika michezo na programu za michoro.
+107	Rahisi kutumia, lakini dhaifu zaidi.
+108	Unatumiaje kompyuta yako?
+109	Tutasakinisha programu unazohitaji zaidi.
+110	Kazi na masomo
+111	Michezo
+112	Ubunifu
+113	Kupanga programu
+114	Multimedia
+115	Programu zako kutoka Windows
+116	Tumezipata kwenye kompyuta yako. Chagua zipi za kusakinisha.
+117	Programu zinazopendekezwa
+118	Chagua zipi za kusakinisha.
+119	Hakuna kilichochaguliwa.
+120	Inasakinisha programu
+121	Inapakua na kusakinisha
+122	Kila kitu kiko tayari
+123	Furahia Shrimp.
+124	Nataka kujua zaidi
+125	{n} kati ya {total}
+126	Shrimp ni Linux
+127	Linux ni mfumo wa bure uliotengenezwa na watu kutoka kote duniani. Unaendesha seva nyingi na simu nyingi za Android.
+128	Windows jirani
+129	Kila unapowasha utachagua Shrimp au Windows.
+130	Programu
+131	Faili za .exe za Windows hazifanyi kazi hapa. Unasakinisha programu kutoka Shrimp Apps, na kwa programu nyingi maarufu utapata mbadala huko.
+132	Nenosiri kwa mabadiliko
+133	Unaposakinisha programu au kubadilisha mipangilio muhimu, mfumo utauliza nenosiri lako. Hii ni kawaida na hulinda kompyuta yako.
+134	Faili zako
+135	Hati, picha na vipakuliwa viko kwenye programu ya Faili, kwenye folda yako ya nyumbani.
+136	Utapata pia diski ya Windows huko.
+137	Panko
+138	Kuna kitu kimeacha kufanya kazi baada ya mabadiliko? Katika Panko unaweza kurudi jinsi mambo yalivyokuwa.
+139	Cocktail
+140	Masasisho, viendeshi na kodeki mahali pamoja. Masasisho husakinishwa unapowasha upya.
+141	Utafutaji wa haraka
+142	Bonyeza kitufe cha Super, kile chenye nembo ya Windows, ili kupata programu, faili na mipangilio.
+143	Msaada
+144	Utapata majibu kwenye kurasa za msaada za Shrimp, katika nyaraka za GNOME na openSUSE na kwenye mabaraza ya jumuiya.
+145	Manenosiri ya diski hayalingani
+146	Weka nenosiri lilelile katika sehemu zote mbili. Huwezi kuwasha kompyuta bila hilo, kwa hiyo lihifadhi mahali salama.
+147	Manenosiri hayalingani
+148	Weka nenosiri lilelile katika sehemu zote mbili na ujaribu tena.
+149	Jaribu tena
+150	Nafasi haitoshi
+151	Hakuna nafasi ya kutosha kwenye diski kwa Shrimp. Punguza Windows au chagua diski nyingine.
+152	Badilisha ukubwa
+153	Rudi nyuma
+154	Usakinishaji umeshindwa
+155	Hitilafu imetokea. Faili zako ziko salama. Unaweza kujaribu tena.
+156	Toka
+157	Imeshindwa kuunganisha
+158	Angalia nenosiri la mtandao na ujaribu tena.
+159	Angalia nenosiri la mtandao {ssid} na ujaribu tena.
+160	Hakuna muunganisho wa intaneti
+161	Imeshindwa kupakua programu. Angalia muunganisho wako na ujaribu tena.
+162	Hati na lahajedwali
+163	Barua pepe
+164	Michezo
+165	Michezo kutoka Epic na GOG
+166	Kuchora
+167	Kuhariri video
+168	Picha za kompyuta
+169	Kihariri cha msimbo
+170	Mazingira ya usanidi
+171	Filamu na muziki
+172	Muziki
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Visiwa vya Kanari
+180	Sydney
+181	Perth

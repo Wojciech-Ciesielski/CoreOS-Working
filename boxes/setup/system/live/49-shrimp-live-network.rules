@@ -1,0 +1,11 @@
+// Tylko nośnik Shrimp (instalowane przez install.sh --live, nie trafia do zainstalowanego systemu).
+// Krok „Połącz z internetem” w Setup łączy z Wi-Fi przez nmcli jako użytkownik live „shrimp”,
+// zanim powstanie jakiekolwiek konto, więc NetworkManager nie może pytać o hasło administratora.
+// Bez warunku subject.local/subject.active: Setup startuje z autostartu GNOME w jednostce systemd
+// użytkownika, której logind nie przypisuje do sesji graficznej, więc te pola bywają fałszywe.
+polkit.addRule(function (action, subject) {
+  if (action.id.indexOf("org.freedesktop.NetworkManager.") == 0 && subject.user == "shrimp") {
+    return polkit.Result.YES;
+  }
+  return polkit.Result.NOT_HANDLED;
+});
