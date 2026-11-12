@@ -45,6 +45,14 @@ if timeout 30 nmcli --wait 10 connection add type dummy ifname shrimpauth0 con-n
 else
   echo "===NM-AUTH no"
 fi
+# Beta 5+: the stick carries the package repository (LiveOS/shrimp-repo.squashfs, shrimp-offline-repo).
+# Then the whole installation runs without network: Agama must see the product already offline,
+# the cable stays unplugged and there is nothing to re-read.
+if mountpoint -q /run/shrimp-repo; then
+  echo "===OFFLINE-REPO yes"; grep -n 'url:' /usr/share/agama/products.d/shrimp.yaml; systemctl status shrimp-offline-repo --no-pager | tail -5
+  echo "=== REPROBE offline"
+else
+echo "===OFFLINE-REPO no"
 # 2. The cable goes in (Setup's "Connect to a network" step does this on a real laptop).
 echo ===NET-UP-PLEASE
 for i in $(seq 90); do [ "$(nmcli networking connectivity check 2>/dev/null)" = full ] && break; sleep 2; done
@@ -61,6 +69,7 @@ iss=$(api "$U/api/issues"); echo "=== issues after probe"; echo "$iss"
 if echo "$iss" | grep -q '"scope":"software"'; then reprobed=no; else reprobed=probe; fi
 case "$pr" in *"HTTP 200"*) ;; *) reprobed=no;; esac
 echo "=== REPROBE $reprobed"
+fi
 for p in /api/status /api/issues /api/config /api/system; do
   echo "=== GET $p"; api "$U$p" | head -c 12000; echo
 done
