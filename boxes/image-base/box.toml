@@ -13,6 +13,7 @@ image = [
     "kernel-firmware-all",
     "dracut",
     "dracut-kiwi-live",
+    "exfatprogs",
     "grub2",
     "grub2-x86_64-efi",
     "grub2-i386-pc",

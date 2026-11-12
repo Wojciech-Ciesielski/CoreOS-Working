@@ -1,7 +1,7 @@
 name: Test install
 
-# Full Shrimp path in QEMU: a stick made like Shrimp Install makes it (ISO files on FAT32,
-# label SHRIMP_LIVE, shrimp-transfer/shrimp.json with files), Setup on the live session,
+# Full Shrimp path in QEMU: a stick made like Shrimp Install makes it (GPT: ISO files but LiveOS on FAT32
+# SHRIMP_BOOT, LiveOS and shrimp-transfer/shrimp.json with files on exFAT SHRIMP_LIVE), Setup on the live session,
 # installation with Agama onto an empty disk (Setup's own configuration from
 # boxes/setup/web/scripts/agama-test-config.ts), then the first boot of the installed system.
 # Before that, phase 0 boots the stick with the Setup guard on and checks that a click reaches Setup.
@@ -52,17 +52,23 @@ jobs:
       - name: Make the stick (like Shrimp Install)
         run: |
           sudo apt-get update -q
-          sudo apt-get install -yq --no-install-recommends qemu-system-x86 qemu-utils ovmf dosfstools gdisk
+          sudo apt-get install -yq --no-install-recommends qemu-system-x86 qemu-utils ovmf dosfstools exfatprogs gdisk
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules && sudo udevadm trigger --name-match=kvm
+          # Layout like Shrimp Install (Beta 5+): GPT, FAT32 SHRIMP_BOOT (everything but LiveOS) + exFAT SHRIMP_LIVE.
           truncate -s 8G usb.img
-          sgdisk -n1:1M:0 -t1:0700 usb.img
+          sgdisk -n1:1M:+1G -t1:0700 -n2:0:0 -t2:0700 usb.img
           LOOP=$(sudo losetup -Pf --show usb.img)
-          sudo mkfs.vfat -F 32 -n SHRIMP_LIVE "${LOOP}p1"
-          sudo mkdir -p /mnt/usb /mnt/iso
-          sudo mount "${LOOP}p1" /mnt/usb
+          sudo mkfs.vfat -F 32 -n SHRIMP_BOOT "${LOOP}p1"
+          sudo mkfs.exfat -L SHRIMP_LIVE "${LOOP}p2"
+          sudo mkdir -p /mnt/boot /mnt/usb /mnt/iso
+          sudo mount "${LOOP}p1" /mnt/boot
+          sudo mount "${LOOP}p2" /mnt/usb
           sudo mount -o loop,ro iso/*.iso /mnt/iso
-          sudo cp -r /mnt/iso/. /mnt/usb/
+          for e in /mnt/iso/* /mnt/iso/.[!.]*; do
+            [ -e "$e" ] || continue
+            if [ "$(basename "$e")" = LiveOS ]; then sudo cp -r "$e" /mnt/usb/; else sudo cp -r "$e" /mnt/boot/; fi
+          done
           # shrimp-transfer as written by Shrimp Install (schema: boxes/install-schema)
           sudo mkdir -p /mnt/usb/shrimp-transfer/files/documents /mnt/usb/shrimp-test
           echo "Plik z Windows" | sudo tee /mnt/usb/shrimp-transfer/files/documents/z-windows.txt >/dev/null
@@ -75,19 +81,19 @@ jobs:
            "split":[],"skipped":[]}
           JSON
           sudo cp tools/install-test/* /mnt/usb/shrimp-test/
-          ls -la /mnt/usb /mnt/usb/shrimp-test
-          sudo umount /mnt/usb /mnt/iso
+          ls -la /mnt/boot /mnt/usb /mnt/usb/shrimp-test
+          sudo umount /mnt/boot /mnt/usb /mnt/iso
           sudo losetup -d "$LOOP"
           # Copy for phase 0 (Setup guard test): journal to the serial port. The stick for the install
           # (phase 1) stays exactly as Shrimp Install writes it.
           cp --sparse=always usb.img usb-guard.img
           LOOP=$(sudo losetup -Pf --show usb-guard.img)
-          sudo mount "${LOOP}p1" /mnt/usb
-          for g in $(sudo find /mnt/usb -name grub.cfg); do
+          sudo mount "${LOOP}p1" /mnt/boot
+          for g in $(sudo find /mnt/boot -name grub.cfg); do
             sudo sed -i -E '/^\s*linux(efi)?\s/ s/$/ console=tty0 console=ttyS0,115200 plymouth.ignore-serial-consoles systemd.journald.forward_to_console=1/' "$g"
             echo "$g:"; sudo grep -nE '^\s*linux(efi)?\s' "$g" | head -n 4 || true
           done
-          sudo umount /mnt/usb
+          sudo umount /mnt/boot
           sudo losetup -d "$LOOP"
 
       - name: Install and first boot

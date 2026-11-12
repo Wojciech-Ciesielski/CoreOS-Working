@@ -2,7 +2,8 @@
 """Install Shrimp in QEMU the way a user does after Shrimp Install, then boot the result.
 
 Usage: qemu-install-test.py <usb.img> <outdir>
-  usb.img  FAT32 stick made like Shrimp Install does (ISO files, label SHRIMP_LIVE,
+  usb.img  stick made like Shrimp Install does (GPT: FAT32 SHRIMP_BOOT with the ISO files but LiveOS,
+           exFAT SHRIMP_LIVE with LiveOS,
            shrimp-transfer/ with shrimp.json and files) plus shrimp-test/agama-install.sh.
 
 Phase 0 boots the stick with the Setup guard ON (no SHRIMP_TEST drive) and checks that a mouse
