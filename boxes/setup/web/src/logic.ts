@@ -134,18 +134,20 @@ export function prefill(t: Transfer, langs: Lang[], regs: Region[], kbs: Keyboar
   return { lang, region, kb, full, user };
 }
 
-/** „Proponowane programy”: maks. 5, po jednym z każdej wybranej kategorii na zmianę, bez duplikatów i bez tych z Windows. */
+/** Ile programów proponujemy naraz: wszystkie z kategorii z dokumentu (3 + 2 + 3 + 1). */
+export const MAX_PROPOSALS = 9;
+/** „Proponowane programy”: po jednym z każdej wybranej kategorii na zmianę, bez duplikatów i bez tych z Windows. */
 export function proposals(L: I18n, use: boolean[], winApps: WinApp[] | null): Pick[] {
   const out: Pick[] = [];
   const seen = new Set((winApps || []).slice(0, 5).map((a) => a.id));
   const sel = use.map((u, i) => (u ? i : -1)).filter((i) => i >= 0);
-  for (let r = 0, any = true; any && out.length < 5; r++) {
+  for (let r = 0, any = true; any && out.length < MAX_PROPOSALS; r++) {
     any = false;
     for (const i of sel) {
       const a = APPS[i][r];
       if (!a) continue;
       any = true;
-      if (!seen.has(a.id) && out.length < 5) { seen.add(a.id); out.push({ key: a.id, id: a.id, label: `${esc(a.name)} <span class="meta">${esc(L.t(a.what))}</span>` }); }
+      if (!seen.has(a.id) && out.length < MAX_PROPOSALS) { seen.add(a.id); out.push({ key: a.id, id: a.id, label: `${esc(a.name)} <span class="meta">${esc(L.t(a.what))}</span>` }); }
     }
   }
   return out;

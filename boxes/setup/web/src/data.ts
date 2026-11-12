@@ -73,8 +73,12 @@ export const IPS = ["auto", "net.manual"];
 export const DNSS = ["auto", "Cloudflare", "Google"];
 export const PROXY = ["none", "auto"];
 export const THEMES = ["look.light", "look.dark"];
-export const DRV = ["drv.install", "drv.later"];
-export const NV = ["nv.driver", "nv.open"];
+/** Krok „Licencje”: zgoda na kodeki i sterowniki własnościowe albo tylko wolne. */
+export const LIC = ["lic.yes", "lic.no"];
+/** Części tekstu licencji (klucze `<część>.h` i `<część>.p`). */
+export const LIC_TEXT = ["lic.codecs", "lic.nvidia", "lic.firmware"];
+/** Krok „Pliki z Windows”: do folderów użytkownika albo do jednego folderu. */
+export const FILES = ["files.move", "files.keep"];
 
 /** Kolory dodatkowe GNOME: klucz nazwy, wartość `accent-color`, kolor. */
 export const ACCENTS: [string, string, string][] = [
@@ -95,14 +99,16 @@ export const WINDOWS_SPARE_GB = 20;
 
 /** `what` to klucz tłumaczenia opisu. */
 export interface App { id: string; name: string; what: string }
-export const USES = ["use.work", "use.games", "use.create", "use.dev", "use.media"];
-/** Kategorie → aplikacje z Flathub (specs/setup.md › Programy). */
+/** Kategorie z dokumentu „Cała wiedza”. Pierwsza (podstawowe użytkowanie) jest obowiązkowa: to zestaw
+ *  podstawowy (Firefox i GNOME Core z Flathub), który instaluje się zawsze, więc nie ma własnych propozycji. */
+export const USES = ["use.base", "use.fun", "use.office", "use.create", "use.dev"];
+/** Kategorie → aplikacje z Flathub. */
 export const APPS: App[][] = [
-  [{ id: "org.libreoffice.LibreOffice", name: "LibreOffice", what: "app.office" }, { id: "org.mozilla.thunderbird", name: "Thunderbird", what: "app.mail" }],
-  [{ id: "com.valvesoftware.Steam", name: "Steam", what: "app.games" }, { id: "com.heroicgameslauncher.hgl", name: "Heroic", what: "app.epic" }],
-  [{ id: "org.kde.krita", name: "Krita", what: "app.draw" }, { id: "org.kde.kdenlive", name: "Kdenlive", what: "app.video" }, { id: "org.gimp.GIMP", name: "GIMP", what: "app.graphics" }],
-  [{ id: "com.visualstudio.code", name: "Visual Studio Code", what: "app.code" }, { id: "org.gnome.Builder", name: "GNOME Builder", what: "app.ide" }],
-  [{ id: "org.videolan.VLC", name: "VLC", what: "app.player" }, { id: "com.spotify.Client", name: "Spotify", what: "app.music" }],
+  [],
+  [{ id: "com.valvesoftware.Steam", name: "Steam", what: "app.games" }, { id: "com.discordapp.Discord", name: "Discord", what: "app.chat" }, { id: "com.spotify.Client", name: "Spotify", what: "app.music" }],
+  [{ id: "org.onlyoffice.desktopeditors", name: "ONLYOFFICE", what: "app.office" }, { id: "org.mozilla.thunderbird", name: "Thunderbird", what: "app.mail" }],
+  [{ id: "org.gimp.GIMP", name: "GIMP", what: "app.graphics" }, { id: "com.obsproject.Studio", name: "OBS Studio", what: "app.record" }, { id: "org.audacityteam.Audacity", name: "Audacity", what: "app.audio" }],
+  [{ id: "com.vscodium.codium", name: "VSCodium", what: "app.code" }],
 ];
 
 /** Program z Windows (lista zapisana przez Shrimp Install) i jego odpowiednik. */

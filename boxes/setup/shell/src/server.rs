@@ -83,6 +83,7 @@ fn router(state: App, ui_dir: PathBuf) -> Router {
         .route("/drivers", post(drivers))
         .route("/apps", post(apps_start).get(apps_status))
         .route("/usb", get(usb_get).post(usb_start))
+        .route("/files", get(files_get).post(files_place))
         .route("/finish", post(finish))
         .route_layer(middleware::from_fn_with_state(state.clone(), auth))
         .layer(middleware::from_fn(cors))
@@ -272,6 +273,29 @@ async fn usb_start(State(s): State<App>, Json(a): Json<UsbAction>) -> Response {
         i.usb.percent = 100.0;
     });
     Json(json!({})).into_response()
+}
+
+fn home() -> PathBuf {
+    std::env::var_os("HOME").map(PathBuf::from).unwrap_or_default()
+}
+
+/// Pliki z Windows czekające na zgodę (krok „Pliki z Windows”).
+async fn files_get() -> Json<serde_json::Value> {
+    let (files, bytes) = crate::transfer::staged(&home());
+    Json(json!({ "files": files, "bytes": bytes }))
+}
+
+#[derive(Deserialize)]
+struct FilesAction { into_folders: bool, folder: String }
+
+async fn files_place(Json(a): Json<FilesAction>) -> Response {
+    let folder = a.folder.replace(['/', '\\'], "").trim().to_string();
+    let folder = if folder.is_empty() || folder.starts_with('.') { "Windows".to_string() } else { folder };
+    match tokio::task::spawn_blocking(move || crate::transfer::place(&home(), a.into_folders, &folder)).await {
+        Ok(Ok(st)) => Json(json!({ "files": st.files })).into_response(),
+        Ok(Err(e)) => err("files", e),
+        Err(e) => err("files", e),
+    }
 }
 
 async fn finish(State(s): State<App>) -> Response {

@@ -74,5 +74,9 @@ export class ShrimpFirstBoot implements FirstBootBackend {
       if (j.state === "done" || j.state === "home" || j.state === "failed") return j.state as UsbResult;
     }
   }
+  async windowsFiles() {
+    return (await this.call<{ files: number; bytes: number }>("GET", "/files").catch(() => null)) ?? { files: 0, bytes: 0 };
+  }
+  async placeWindowsFiles(intoFolders: boolean, folder: string) { await this.call("POST", "/files", { into_folders: intoFolders, folder }); }
   async finish() { await this.call("POST", "/finish"); }
 }

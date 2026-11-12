@@ -59,6 +59,7 @@ export const demoFirstBoot: FirstBootBackend = {
     return {
       fullName: "Anna Kowalska",
       beside: true,
+      proprietary: q.get("lic") !== "0",
       wired: q.get("wired") === "1",
       nvidia: q.get("nvidia") === "0" ? null : "NVIDIA GeForce RTX 3060",
       windowsApps: mapWindowsApps(WIN_NAMES),
@@ -79,5 +80,7 @@ export const demoFirstBoot: FirstBootBackend = {
   },
   async usb() { return q.get("usb") === "0" ? { pending: false, present: false, bytes: 0, files: 0 } : { pending: true, present: q.get("usb") !== "plug", bytes: 7.4e9, files: 1280 }; },
   async restoreUsb(action) { await sleep(fast ? 50 : 3000); return q.get("fail") === "usb" ? "home" : action === "home" ? "home" : "done"; },
+  async windowsFiles() { return q.get("files") === "0" ? { files: 0, bytes: 0 } : { files: 3412, bytes: 18.6e9 }; },
+  async placeWindowsFiles() { await sleep(fast ? 50 : 800); },
   async finish() {},
 };

@@ -3,8 +3,10 @@
 //!
 //! - `--install`: podpowiedzi dla kroków 1–9 (imię, język, strefa, klawiatura, BitLocker, rozmiar plików)
 //!   trafiają do strony jako `window.SHRIMP_TRANSFER` ([`hint`]).
-//! - `--restore` (post-install.sh, root): pliki wracają do folderów nowego konta ([`restore`]),
-//!   a shrimp.json do /var/lib/shrimp-setup (lista programów dla kroku Programy).
+//! - `--restore` (post-install.sh, root): pliki czekają w katalogu domowym nowego konta, w [`STAGE`]
+//!   (układ jak docelowy), a shrimp.json trafia do /var/lib/shrimp-setup (lista programów dla kroku Programy).
+//! - Pierwsza konfiguracja, krok „Pliki z Windows” (jako użytkownik): po zgodzie pliki przechodzą do
+//!   folderów użytkownika ([`place`]), bez zgody do jednego folderu „Windows” w katalogu domowym.
 use serde::Deserialize;
 use serde_json::{json, Value};
 use std::fs;
@@ -279,12 +281,85 @@ fn copy_entry(src: &Path, name: &str, dst: &Path, a: Option<&Account>, st: &mut 
     }
 }
 
+/// Poczekalnia plików z Windows w katalogu domowym (względem niego), do kroku „Pliki z Windows”.
+pub const STAGE: &str = ".local/share/shrimp-setup/windows";
+
+/// Tworzy kolejne katalogi `rel` pod `base` i oddaje je właścicielowi konta.
+fn mkdirs_owned(base: &Path, rel: &str, a: &Account) -> io::Result<PathBuf> {
+    let mut p = base.to_path_buf();
+    for c in rel.split('/') {
+        p.push(c);
+        if !p.is_dir() {
+            fs::create_dir(&p)?;
+            chown(&p, a);
+        }
+    }
+    Ok(p)
+}
+
+/// Ile plików i bajtów czeka w poczekalni (`home`/[`STAGE`]). Brak poczekalni = (0, 0).
+pub fn staged(home: &Path) -> (u64, u64) {
+    fn walk(p: &Path, n: &mut (u64, u64)) {
+        let Ok(rd) = fs::read_dir(p) else { return };
+        for e in rd.flatten() {
+            let Ok(md) = e.metadata() else { continue };
+            if md.is_dir() {
+                walk(&e.path(), n);
+            } else {
+                n.0 += 1;
+                n.1 += md.len();
+            }
+        }
+    }
+    let mut n = (0, 0);
+    walk(&home.join(STAGE), &mut n);
+    n
+}
+
+/// Przenosi pliki z poczekalni: `into_folders` = do folderów użytkownika (Dokumenty, Obrazy… i katalog
+/// domowy, scalając; nazwy zajęte dostają „(Windows)”), inaczej całość do folderu `folder` w katalogu domowym.
+/// Ten sam system plików, więc to tylko zmiana nazw. Poczekalnia znika.
+pub fn place(home: &Path, into_folders: bool, folder: &str) -> Result<Stats, String> {
+    fn merge(src: &Path, dst: &Path, st: &mut Stats) {
+        let Ok(rd) = fs::read_dir(src) else { return };
+        if let Err(e) = fs::create_dir_all(dst) {
+            st.failed.push(format!("{}: {e}", dst.display()));
+            return;
+        }
+        for e in rd.flatten() {
+            let (from, to) = (e.path(), dst.join(e.file_name()));
+            if from.is_dir() && to.is_dir() {
+                merge(&from, &to, st);
+                continue;
+            }
+            let to = free_name(&to);
+            match fs::rename(&from, &to) {
+                Ok(()) => st.files += 1,
+                Err(e) => st.failed.push(format!("{}: {e}", from.display())),
+            }
+        }
+    }
+    let stage = home.join(STAGE);
+    if !stage.is_dir() {
+        return Ok(Stats::default());
+    }
+    let mut st = Stats::default();
+    let dst = if into_folders { home.to_path_buf() } else { free_name(&home.join(folder)) };
+    merge(&stage, &dst, &mut st);
+    if st.failed.is_empty() {
+        fs::remove_dir_all(&stage).map_err(|e| e.to_string())?;
+        Ok(st)
+    } else {
+        Err(st.failed.join("; "))
+    }
+}
+
 /// `shrimp-setup --restore [--from DIR] [--root /mnt] --user NAZWA` (post-install.sh, jako root).
 pub fn restore(from: Option<PathBuf>, root: &Path, user: &str) -> Result<Stats, String> {
     let dir = from.or_else(find_dir).ok_or("brak shrimp-transfer na nośniku")?;
     let v = load(&dir).ok_or("nie można odczytać shrimp.json")?;
     let a = account(root, user).ok_or_else(|| format!("brak konta {user} w {}", root.display()))?;
-    let home = root.join(a.home.strip_prefix("/").unwrap_or(&a.home));
+    let real_home = root.join(a.home.strip_prefix("/").unwrap_or(&a.home));
 
     let state = root.join("var/lib/shrimp-setup");
     fs::create_dir_all(&state).map_err(|e| e.to_string())?;
@@ -299,7 +374,9 @@ pub fn restore(from: Option<PathBuf>, root: &Path, user: &str) -> Result<Stats, 
         .arg(format!("LANG={lang}"))
         .arg("xdg-user-dirs-update")
         .status();
-    let dirs = fs::read_to_string(home.join(".config/user-dirs.dirs")).unwrap_or_default();
+    let dirs = fs::read_to_string(real_home.join(".config/user-dirs.dirs")).unwrap_or_default();
+    // Pliki czekają na zgodę w poczekalni; układ w niej jest taki jak w katalogu domowym.
+    let home = mkdirs_owned(&real_home, STAGE, &a).map_err(|e| e.to_string())?;
 
     let files: Vec<Entry> = serde_json::from_value(v["files"].clone()).unwrap_or_default();
     let mut st = Stats::default();
@@ -392,13 +469,37 @@ mod tests {
         fs::write(root.join("home/jan/.config/user-dirs.dirs"), "XDG_DOCUMENTS_DIR=\"$HOME/Dokumenty\"\n").unwrap();
         let st = restore(Some(tr.clone()), &root, "jan").unwrap();
         let h = root.join("home/jan");
-        assert_eq!(fs::read_to_string(h.join("Dokumenty/Umowy/najem.pdf")).unwrap(), "pdf");
-        assert_eq!(fs::read_to_string(h.join("Projekty/a.txt")).unwrap(), "a");
-        assert_eq!(fs::read_to_string(h.join("wakacje.mkv")).unwrap(), "123");
+        let w = h.join(STAGE);
+        assert_eq!(fs::read_to_string(w.join("Dokumenty/Umowy/najem.pdf")).unwrap(), "pdf");
+        assert_eq!(fs::read_to_string(w.join("Projekty/a.txt")).unwrap(), "a");
+        assert_eq!(fs::read_to_string(w.join("wakacje.mkv")).unwrap(), "123");
         assert!(root.join("var/lib/shrimp-setup/shrimp.json").is_file());
         assert_eq!(st.files, 3);
+        assert_eq!(staged(&h), (3, 7));
         assert!(restore(Some(tr), &root, "ola").is_err());
+        // Zgoda: do folderów użytkownika, z konfliktem nazw.
+        fs::create_dir_all(h.join("Dokumenty/Umowy")).unwrap();
+        fs::write(h.join("Dokumenty/Umowy/najem.pdf"), "stary").unwrap();
+        let st = place(&h, true, "Windows").unwrap();
+        assert_eq!(st.files, 3);
+        assert_eq!(fs::read_to_string(h.join("Dokumenty/Umowy/najem.pdf")).unwrap(), "stary");
+        assert_eq!(fs::read_to_string(h.join("Dokumenty/Umowy/najem (Windows).pdf")).unwrap(), "pdf");
+        assert_eq!(fs::read_to_string(h.join("wakacje.mkv")).unwrap(), "123");
+        assert!(!w.exists());
+        assert_eq!(staged(&h), (0, 0));
         fs::remove_dir_all(&t).unwrap();
+    }
+
+    #[test]
+    fn place_into_one_folder() {
+        let h = std::env::temp_dir().join(format!("shrimp-place-{}", std::process::id()));
+        fs::create_dir_all(h.join(STAGE).join("Obrazy")).unwrap();
+        fs::write(h.join(STAGE).join("Obrazy/a.jpg"), "a").unwrap();
+        fs::create_dir_all(h.join("Windows")).unwrap();
+        place(&h, false, "Windows").unwrap();
+        assert_eq!(fs::read_to_string(h.join("Windows (Windows)/Obrazy/a.jpg")).unwrap(), "a");
+        assert!(place(&h, true, "Windows").unwrap().files == 0);
+        fs::remove_dir_all(&h).unwrap();
     }
 
     /// Przykład z kontraktu Shrimp Install ↔ Setup (boxes/install-schema): to samo, co zapisuje program dla Windows.

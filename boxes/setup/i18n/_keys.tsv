@@ -221,3 +221,28 @@
 220	inet.scanning	Looking for Wi-Fi networks…
 221	inet.nodev	The computer doesn't see a Wi-Fi card (its driver or firmware did not load). Connect a network cable or use a phone over USB (tethering).
 222	inet.off	Wi-Fi is switched off or blocked. Turn it on with the key on the keyboard (airplane mode) and search again.
+223	use.base	Basic computer use (always installed)
+224	use.fun	Entertainment
+225	use.office	Office
+226	app.chat	Chat and voice
+227	app.record	Recording and streaming
+228	app.audio	Audio editing
+229	lic.title	Licenses
+230	lic.sub	Some codecs and drivers are not open source. Read what they are and decide whether to install them.
+231	lic.codecs.h	Video and audio codecs
+232	lic.codecs.p	H.264 is played with OpenH264, provided by Cisco Systems under its binary license (Cisco pays the patent fees). FFmpeg and GStreamer plugins are under the LGPL and GPL; some formats they read may be covered by patents in your country.
+233	lic.nvidia.h	NVIDIA driver
+234	lic.nvidia.p	With an NVIDIA graphics card we install the official NVIDIA driver from NVIDIA's repository. It is covered by the NVIDIA Software License: it may be used free of charge, but its source code is closed.
+235	lic.firmware.h	Device firmware
+236	lic.firmware.p	Wi-Fi, Bluetooth, sound and modem chips (Intel, Broadcom, Realtek and others) need firmware from their makers. It may be redistributed, but not changed.
+237	lic.yes	I accept
+238	lic.no	Only open drivers and codecs
+239	lic.yes.d	Videos, music and games work right away, with the best graphics performance.
+240	lic.no.d	Some videos may not play, and an NVIDIA card uses the open driver (slower in games). You can change this later in Cocktail.
+241	files.title	Your files from Windows
+242	files.sub	Shrimp Install brought {files} files ({size}).
+243	files.move	Put them in my folders
+244	files.keep	Keep them in a separate folder
+245	files.move.d	Documents go to Documents, pictures to Pictures, and so on, as in Windows.
+246	files.keep.d	Everything goes to the Windows folder in your home folder.
+247	files.folder	Windows

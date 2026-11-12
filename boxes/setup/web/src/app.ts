@@ -4,7 +4,7 @@ import logoSrc from "./assets/logo.svg?raw";
 import iconSprite from "./assets/icons.svg?raw";
 import type { I18n } from "../../../i18n-core/core";
 import {
-  HELLO, ENCS, HSEC, IPS, DNSS, PROXY, THEMES, DRV, NV, ACCENTS, PLACES, USES, ERR, SHRIMP_MIN_GB,
+  HELLO, ENCS, HSEC, IPS, DNSS, PROXY, THEMES, LIC, LIC_TEXT, FILES, ACCENTS, PLACES, USES, ERR, SHRIMP_MIN_GB,
   defaultKeymap, defaultTz, slides, type ErrKey, type Lang, type Region, type Keyboard,
 } from "./data";
 import { firstName, slug, loginFrom, isReservedUser, proposals, windowsList, tnow, esc, prefill, installLang, regionLabel, zoneName, keyboardName, type Prefill } from "./logic";
@@ -14,8 +14,11 @@ import { InstallError, OfflineError, type Backends, type Disk, type FirstBootInf
 const $ = <T extends Element = HTMLElement>(s: string, r: ParentNode = document) => r.querySelector(s) as T | null;
 const $$ = <T extends Element = HTMLElement>(s: string, r: ParentNode = document) => Array.from(r.querySelectorAll(s)) as T[];
 
-const STEPS = ["witaj", "jezyk", "region", "klawiatura", "dysk", "konto", "internet", "podsumowanie", "instalacja", "restart",
-  "czesc", "siec", "wyglad", "sterowniki", "programy", "pendrive", "gotowe"] as const;
+// Setup (offline): licencje, język, miejsce, klawiatura, sposób instalacji, konto, instalacja. Krok „internet”
+// pojawia się tylko, gdy Agama nie widzi repozytoriów. Onboarding: sieć, wygląd, pliki z Windows, programy, pendrive.
+// Licencje są zaraz po języku, żeby ich tekst był w wybranym języku.
+const STEPS = ["witaj", "jezyk", "licencja", "region", "klawiatura", "dysk", "konto", "internet", "podsumowanie", "instalacja", "restart",
+  "czesc", "siec", "wyglad", "pliki", "programy", "pendrive", "gotowe"] as const;
 type StepId = (typeof STEPS)[number];
 const idx = (id: StepId) => STEPS.indexOf(id);
 const THEME_STEP = idx("wyglad");
@@ -67,7 +70,9 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
 
   // --- dane z backendów ---
   let LANGS: Lang[] = [], REGS: Region[] = [], KBS: Keyboard[] = [], DISKS: Disk[] = [], NETS: Network[] = [];
-  let INFO: FirstBootInfo = { fullName: "", beside: false, wired: false, nvidia: null, windowsApps: null };
+  let INFO: FirstBootInfo = { fullName: "", beside: false, proprietary: true, wired: false, nvidia: null, windowsApps: null };
+  /** Pliki z Windows czekające na zgodę (krok „pliki”, pomijany, gdy nic nie czeka). */
+  let WF = { files: 0, bytes: 0 };
   /** Dane z Shrimp Install i wartości, które z nich wynikają (język, strefa, klawiatura, konto). */
   let TR: Transfer | null = null, PRE: Prefill | null = null;
   /** Pendrive z Shrimp Install: jego zawartość czeka na przywrócenie (krok „pendrive”, tylko gdy jest co przywracać). */
@@ -77,8 +82,8 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
     lang: 0, region: 0, kb: 0, place: 0, win: 0, disk: 0, enc: 0, dp: "", dp2: "", online: true,
     full: "", user: "", userEdited: false, pass: "", pass2: "", confirm: false,
     net: 0, netPass: "", hsec: 1, ssid: "", hpass: "", ip: 0, dns: 0, proxy: 0,
-    theme: "light" as "light" | "dark", accent: null as number | null, drv: 0, nv: 0,
-    use: [true, false, false, false, true], sel: {} as Record<string, boolean>, err: null as ErrKey | null,
+    theme: "light" as "light" | "dark", accent: null as number | null, lic: 0, files: 0,
+    use: [true, false, false, false, false], sel: {} as Record<string, boolean>, err: null as ErrKey | null,
   };
   let step = 0, sub = 0, boot = true, busy = false;
   /** Krok „dysk”: trwa świeży odczyt dysków z Agamy (diskSeq odrzuca odpowiedzi z wcześniejszych wejść). */
@@ -123,10 +128,11 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
         (it.m ? ` <span class="meta">${it.m}</span>` : "") + "</button>";
     }).join("") + "</div>";
   }
-  function tgl(l: string, items: string[], onFn: (j: number) => boolean) {
+  /** Lista pól wyboru; `fixed`: pozycje zawsze zaznaczone, bez możliwości odznaczenia. */
+  function tgl(l: string, items: string[], onFn: (j: number) => boolean, fixed: number[] = []) {
     return `<div class="list" data-l="${l}">` + items.map((t, j) => {
-      const on = onFn(j);
-      return `<button class="opt${on ? " on" : ""}" role="checkbox" aria-checked="${on}" data-t="${j}" type="button"><span class="t">${icon("object-select-symbolic", "mk")}${t}</span></button>`;
+      const on = onFn(j), fx = fixed.includes(j);
+      return `<button class="opt${on ? " on" : ""}" role="checkbox" aria-checked="${on}" data-t="${j}" type="button"${fx ? ' disabled aria-disabled="true"' : ""}><span class="t">${icon("object-select-symbolic", "mk")}${t}</span></button>`;
     }).join("") + "</div>";
   }
   const col = (label: string, l: string, items: Item[], c: number) => `<div class="col"><div class="cl">${label}</div>${lst(l, items, c)}</div>`;
@@ -153,7 +159,8 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
       return hasWin() ? (PLACES[S.place].d ? tr(PLACES[S.place].d) : "") : tr("disk.whole", { name: disk()?.name || "" }) + (DISKS.some((d) => d.windows) ? " " + tr("disk.whole.keep") : "");
     }
     if (id === "wyglad") return tr("look.note");
-    if (id === "sterowniki") return S.nv === 0 ? tr("nv.best") : tr("nv.simple");
+    if (id === "licencja") return tr(S.lic === 0 ? "lic.yes.d" : "lic.no.d");
+    if (id === "pliki") return tr(S.files === 0 ? "files.move.d" : "files.keep.d");
     return "";
   }
 
@@ -182,6 +189,9 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
         return logo("calc(6 * var(--u))") + head(esc(tr("net.title")), esc(tr("inet.sub"))) + body(NETS.length ? netList() : `<p class="desc" id="desc" style="margin-top:0">${esc(tr("inet.none"))}</p><p class="nstat" id="ndiag" role="status">${esc(tr("inet.scanning"))}</p>`) +
           acts(NETS.length ? esc(NEXT) : "", esc(tr("inet.rescan")), { skipAct: "rescan" }) + `<div class="mini"><button class="mlink" data-act="hid" type="button">${esc(tr("net.hiddenlink"))}</button></div>`;
       }
+      case "licencja": return logo("calc(6 * var(--u))") + head(esc(tr("lic.title")), esc(tr("lic.sub"))) +
+        body(`<div class="lic" tabindex="0" role="document" aria-label="${esc(tr("lic.title"))}">${LIC_TEXT.map((k) => `<h3>${esc(tr(k + ".h"))}</h3><p>${esc(tr(k + ".p"))}</p>`).join("")}</div>` +
+          lst("lic", LIC.map((s, j) => (j === 0 ? rec(s) : esc(tr(s)))), S.lic) + `<p class="desc" id="desc">${esc(descFor())}</p>`) + acts(esc(NEXT));
       case "jezyk": return logo("calc(6 * var(--u))") + head(esc(tr("lang.title"))) + body(lst("lang", LANGS.map((l) => esc(l.name)), S.lang, { scroll: true })) + acts(esc(NEXT));
       case "region": return logo("calc(6 * var(--u))") + head(esc(tr("region.title")), esc(tr("region.sub"))) +
         body(lst("region", REGS.map((r) => esc(regLabel(r))), S.region, { scroll: true }) + `<p class="desc" id="desc">${esc(descFor())}</p>`) + acts(esc(NEXT));
@@ -225,9 +235,11 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
           `<button class="sw" role="radio" aria-checked="${S.accent === j}" aria-label="${esc(tr(a[0]))}" data-c="${j}" style="--c:${a[2]}" type="button"></button>`).join("") +
           `</div><p class="accname" id="accn">${S.accent === null ? "" : esc(tr(ACCENTS[S.accent][0]))}</p>`) + acts(esc(NEXT));
         return logo("calc(6 * var(--u))") + head(esc(tr("look.title"))) + body(lst("theme", plain(THEMES), S.theme === "dark" ? 1 : 0) + `<p class="desc" id="desc">${esc(descFor())}</p>`) + acts(esc(NEXT));
-      case "sterowniki":
-        if (sub === 1) return logo("calc(6 * var(--u))") + head(esc(tr("nv.title")), esc(tr("nv.sub", { name: INFO.nvidia || "NVIDIA" }))) + body(lst("nv", NV.map((s, j) => (j === 0 ? rec(s) : esc(tx(s)))), S.nv) + `<p class="desc" id="desc">${esc(descFor())}</p>`) + acts(esc(NEXT));
-        return logo("calc(6 * var(--u))") + head(esc(tr("drv.title")), esc(tr("drv.sub"))) + body(lst("drv", DRV.map((s, j) => (j === 0 ? rec(s) : esc(tx(s)))), S.drv)) + acts(esc(NEXT));
+      case "pliki": {
+        const what = tr("files.sub", { files: L.num(WF.files, 0), size: L.unit(Math.round(WF.bytes / 1e8) / 10, "gigabyte") });
+        return logo("calc(6 * var(--u))") + head(esc(tr("files.title")), esc(what)) +
+          body(lst("files", FILES.map((s, j) => (j === 0 ? rec(s) : esc(tr(s)))), S.files) + `<p class="desc" id="desc">${esc(descFor())}</p>`) + acts(esc(NEXT));
+      }
       case "programy": {
         if (sub === 1) {
           const W = winApps();
@@ -239,7 +251,7 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
             body(P.length ? tgl("sel", P.map((p) => p.label), (j) => S.sel[P[j].key] !== false) : `<p class="desc">${esc(tr("prop.none"))}</p>`) + acts(P.length ? esc(tr("drv.install")) : "", esc(SKIP));
         }
         if (sub === 3) return logo("calc(9 * var(--u))") + head(esc(tr("apps.run"))) + `<div class="pbar" role="progressbar"><i id="ab"></i></div><div class="cap"><b id="aph">${esc(tr("apps.phase"))}</b><span id="aeta">${esc(tr("eta.left", { min: L.num(2, 0) }))}</span></div>` + acts(esc(NEXT), "", { hid: true });
-        return logo("calc(5 * var(--u))") + head(esc(tr("apps.title")), esc(tr("apps.sub"))) + body(tgl("use", USES.map((s) => esc(tr(s))), (j) => S.use[j])) + acts(esc(NEXT), esc(SKIP));
+        return logo("calc(5 * var(--u))") + head(esc(tr("apps.title")), esc(tr("apps.sub"))) + body(tgl("use", USES.map((s) => esc(tr(s))), (j) => S.use[j], [0])) + acts(esc(NEXT), esc(SKIP));
       }
       case "pendrive": {
         if (sub === 1) return logo("calc(9 * var(--u))") + head(esc(tr("usb.run"))) + `<div class="pbar run" role="progressbar"><i></i></div>`;
@@ -312,8 +324,7 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
     const id = cur();
     const first = be.mode === "firstboot" ? FIRST_BOOT : 0;
     $("#back")!.hidden = step <= first || ["witaj", "instalacja", "restart", "czesc"].includes(id) || (id === "programy" && sub === 3) || (id === "pendrive" && sub > 0);
-    const nv = id === "sterowniki" && sub === 1;
-    $("#infoBtn")!.hidden = !nv; $("#infoPop")!.hidden = !nv; $("#infoPop")!.classList.remove("show");
+    $("#infoBtn")!.hidden = true; $("#infoPop")!.hidden = true; $("#infoPop")!.classList.remove("show");
   }
   function go(n: number, s = 0, keep = false) {
     clearTimers(); closeErr(); boot = false;
@@ -333,6 +344,8 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
     }).catch(() => {});
     // Bez pendrive'a do przywrócenia krok „pendrive” jest pomijany w obie strony.
     if (cur() === "pendrive" && !USB.pending && s === 0) step += n >= prev ? 1 : -1;
+    // Bez plików z Windows krok „pliki” jest pomijany w obie strony.
+    if (cur() === "pliki" && !WF.files) step += n >= prev ? 1 : -1;
     if (cur() === "konto" && !keep) S.confirm = false;
     // Dyski czytamy od nowa przy wejściu w krok: pierwszy odczyt (przy starcie) bywa niepełny, bo Agama
     // jeszcze sonduje dyski (dysk bez partycji = bez Windows = bez wyboru „Obok Windows”). Do końca odczytu
@@ -359,7 +372,7 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
       locale: LANGS[S.lang].locale, timezone: REGS[S.region].tz, keymap: KBS[S.kb].keymap,
       disk: disk(), place: place(), windowsGB: beside() ? S.win : undefined,
       diskPassword: S.enc === 1 ? S.dp : undefined,
-      fullName: S.full.trim(), userName: S.user, password: S.pass,
+      fullName: S.full.trim(), userName: S.user, password: S.pass, proprietary: S.lic === 0,
     };
   }
   function setBar(bar: string, ph: string, eta: string, p: { percent: number; phase: string; etaMin?: number }) {
@@ -498,7 +511,7 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
     const o = $(`.list[data-l="${l}"] .opt[data-t="${i}"]`, pane)!;
     let on: boolean;
     if (l === "sel" || l === "win") { const P = l === "win" ? winApps() : props(); S.sel[P[i].key] = S.sel[P[i].key] === false; on = S.sel[P[i].key] !== false; }
-    else { S.use[i] = !S.use[i]; on = S.use[i]; }
+    else { if (i === 0) return; S.use[i] = !S.use[i]; on = S.use[i]; }
     o.classList.toggle("on", on); o.setAttribute("aria-checked", String(on));
   }
   pane.addEventListener("click", (e) => {
@@ -611,9 +624,12 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
       be.firstboot.setAppearance(S.theme === "dark" ? "prefer-dark" : "default", S.accent === null ? null : ACCENTS[S.accent][1]).catch(() => {});
       if (sub === 0) return go(step, 1);
     }
-    if (id === "sterowniki") {
-      if (sub === 0 && S.drv === 0 && hasNvidia()) return go(step, 1);
-      be.firstboot.setDrivers({ install: S.drv === 0, nvidia: S.drv === 0 && hasNvidia() ? (S.nv === 0 ? "nvidia" : "open") : undefined }).catch(() => {});
+    if (id === "pliki") {
+      return guarded(async () => {
+        try { await be.firstboot.placeWindowsFiles(S.files === 0, tr("files.folder")); WF = { files: 0, bytes: 0 }; }
+        catch (e) { console.log("shrimp-setup: pliki z Windows:", String((e as Error)?.message || e)); }
+        go(step + 1);
+      });
     }
     if (id === "programy") {
       if (sub === 0) return go(step, winApps().length ? 1 : 2);
@@ -758,6 +774,9 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
       [INFO, NETS] = await Promise.all([be.firstboot.info(), be.firstboot.networks().catch(() => [])]);
       S.online = INFO.wired || S.online;
       USB = await be.firstboot.usb();
+      WF = await be.firstboot.windowsFiles().catch(() => ({ files: 0, bytes: 0 }));
+      // Kodeki i sterowniki według zgody z kroku „Licencje”; instalują się przy „Zaczynajmy” (jedna migawka).
+      be.firstboot.setDrivers({ install: INFO.proprietary, nvidia: INFO.proprietary && hasNvidia() ? "nvidia" : undefined }).catch(() => {});
       if (be.mode === "demo") { S.full = "Anna Kowalska"; S.user = "anna"; S.pass = S.pass2 = "shrimp2024"; S.netPass = "dom12345"; }
     }
     const h = parseInt(q.get("step") || location.hash.slice(1), 10);

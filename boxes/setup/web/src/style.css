@@ -138,6 +138,11 @@ html[data-rtl] .eye { right: auto; left: 0; border-radius: calc(0.9 * var(--u)) 
 .accname { margin-top: calc(1.8 * var(--u)); min-height: 1.6em; font-size: max(13px, calc(1.45 * var(--u))); color: var(--s-dim); }
 
 /* podsumowanie */
+/* tekst licencji: przewijane pole nad wyborem */
+.lic { max-width: calc(46 * var(--u)); max-height: max(150px, calc(17 * var(--u))); overflow-y: auto; margin: 0 auto calc(2.2 * var(--u)); padding: calc(1.4 * var(--u)) calc(2 * var(--u)); text-align: left; font-size: max(12px, calc(1.3 * var(--u))); line-height: 1.5; color: var(--s-dim); border: 1px solid color-mix(in srgb, currentColor 18%, transparent); overscroll-behavior: contain; }
+.lic h3 { margin: calc(1 * var(--u)) 0 calc(0.3 * var(--u)); font-size: inherit; font-weight: 600; color: var(--s-fg, inherit); }
+.lic h3:first-child { margin-top: 0; }
+.lic p { margin: 0; }
 .sum { display: grid; grid-template-columns: 1fr 1fr; gap: calc(0.8 * var(--u)) calc(1.8 * var(--u)); text-align: left; font-size: max(14px, calc(1.6 * var(--u))); line-height: 1.35; }
 .sum span { text-align: right; color: var(--s-dim); }
 .sum b { font-weight: 500; }

@@ -220,3 +220,28 @@
 220	Szukam sieci Wi-Fi…
 221	Komputer nie widzi karty Wi-Fi (nie załadował się jej sterownik albo firmware). Podłącz kabel sieciowy albo telefon przez USB (modem USB).
 222	Wi-Fi jest wyłączone lub zablokowane. Włącz je klawiszem na klawiaturze (tryb samolotowy) i wyszukaj ponownie.
+223	Podstawowe użytkowanie komputera (zawsze instalowane)
+224	Rozrywka
+225	Biuro
+226	Czat i rozmowy głosowe
+227	Nagrywanie i transmisje
+228	Edycja dźwięku
+229	Licencje
+230	Część kodeków i sterowników nie jest otwartym oprogramowaniem. Przeczytaj, czym są, i zdecyduj, czy je zainstalować.
+231	Kodeki wideo i dźwięku
+232	H.264 odtwarza OpenH264 dostarczany przez Cisco Systems na jego licencji binarnej (opłaty patentowe pokrywa Cisco). FFmpeg i wtyczki GStreamer są na licencjach LGPL i GPL; niektóre odczytywane formaty mogą być objęte patentami w Twoim kraju.
+233	Sterownik NVIDIA
+234	Przy karcie graficznej NVIDIA instalujemy oficjalny sterownik z repozytorium NVIDIA. Obejmuje go licencja NVIDIA Software License: można go używać bezpłatnie, ale jego kod jest zamknięty.
+235	Oprogramowanie układowe urządzeń
+236	Układy Wi-Fi, Bluetooth, dźwięku i modemów (Intel, Broadcom, Realtek i inne) potrzebują oprogramowania od producentów. Można je rozpowszechniać, ale nie zmieniać.
+237	Akceptuję
+238	Tylko otwarte sterowniki i kodeki
+239	Filmy, muzyka i gry działają od razu, z najlepszą wydajnością grafiki.
+240	Część filmów może się nie odtwarzać, a karta NVIDIA dostaje otwarty sterownik (wolniejszy w grach). Zmienisz to później w programie Cocktail.
+241	Twoje pliki z Windows
+242	Shrimp Install przeniósł {files} plików ({size}).
+243	Umieść je w moich folderach
+244	Zostaw je w osobnym folderze
+245	Dokumenty trafią do Dokumentów, zdjęcia do Obrazów i tak dalej, jak w Windows.
+246	Wszystko trafi do folderu Windows w Twoim folderze domowym.
+247	Windows

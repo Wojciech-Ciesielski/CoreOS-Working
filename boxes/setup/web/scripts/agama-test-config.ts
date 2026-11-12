@@ -12,5 +12,6 @@ const plan = {
   fullName: "Jan Testowy",
   userName: "jan",
   password: "shrimp",
+  proprietary: true,
 };
 process.stdout.write(JSON.stringify(installConfig(plan), null, 1) + "\n");

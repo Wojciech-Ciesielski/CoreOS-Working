@@ -48,6 +48,8 @@ export interface InstallPlan {
   fullName: string;
   userName: string;
   password: string;
+  /** Zgoda na licencje kodeków i sterowników własnościowych (krok „Licencje”). */
+  proprietary: boolean;
 }
 
 export interface Progress {
@@ -104,6 +106,8 @@ export interface FirstBootInfo {
   fullName: string;
   /** Instalacja obok Windows (dodatkowe slajdy). */
   beside: boolean;
+  /** Zgoda z kroku „Licencje”: kodeki i sterowniki własnościowe instalują się same. */
+  proprietary: boolean;
   /** Komputer ma już internet po kablu: krok Sieć jest pomijany. */
   wired: boolean;
   /** Nazwa wykrytej karty NVIDIA albo null. */
@@ -138,6 +142,10 @@ export interface FirstBootBackend {
   setDrivers(c: DriverChoice): Promise<void>;
   installApps(ids: string[], onProgress: (p: Progress) => void): Promise<void>;
   usb(): Promise<UsbState>;
+  /** Pliki z Windows czekające na zgodę (przeniesione przy instalacji do poczekalni). */
+  windowsFiles(): Promise<{ files: number; bytes: number }>;
+  /** Zgoda: do folderów użytkownika; bez zgody: wszystko do jednego folderu `folder` w katalogu domowym. */
+  placeWindowsFiles(intoFolders: boolean, folder: string): Promise<void>;
   /** "restore": formatuje pendrive i wgrywa pliki; "home": zostawia je w folderze Pendrive. */
   restoreUsb(action: "restore" | "home"): Promise<UsbResult>;
   /** Zapisuje, że konfiguracja się skończyła; wykonuje odłożone zmiany systemu (sterowniki) i restart, jeśli trzeba. */

@@ -29,6 +29,7 @@ nvidia_device() {
 }
 secure_boot() { mokutil --sb-state 2>/dev/null | grep -qi "SecureBoot enabled"; }
 
+# Sterowniki i firmware urządzeń (DRIVER_PACKAGES, wolne do rozpowszechniania): zawsze, po kodekach.
 PKGS=()
 if [ "$CODECS" = yes ]; then
   read -ra PKGS <<<"$CODEC_PACKAGES $OPENH264_PACKAGES"
@@ -40,6 +41,9 @@ if [ "$CODECS" = yes ]; then
       || echo "shrimp-setup-apply: repozytorium openh264 niedostępne" >&2
   fi
 fi
+
+read -ra DRV_PKGS <<<"${DRIVER_PACKAGES:-}"
+PKGS+=("${DRV_PKGS[@]}")
 
 # Polecenia wykonywane w nowej migawce (transactional-update run), wszystko naraz.
 NV_SCRIPT=""

@@ -41,6 +41,14 @@ struct Handoff {
     full_name: String,
     #[serde(default)]
     beside: bool,
+    /// Zgoda na licencje kodeków i sterowników własnościowych (krok „Licencje” w Setup).
+    /// Brak pola (instalacje sprzed kroku): zgoda, jak dotychczasowy domyślny wybór.
+    #[serde(default = "yes")]
+    proprietary: bool,
+}
+
+fn yes() -> bool {
+    true
 }
 
 #[derive(Serialize)]
@@ -48,6 +56,7 @@ struct Handoff {
 pub struct Info {
     pub full_name: String,
     pub beside: bool,
+    pub proprietary: bool,
     pub wired: bool,
     pub nvidia: Option<String>,
     pub windows_apps: Option<Vec<String>>,
@@ -66,7 +75,7 @@ pub async fn info() -> Info {
         .map(|v| windows_apps_of(&v))
         .unwrap_or((None, None));
     let full_name = if h.full_name.is_empty() { real_name() } else { h.full_name };
-    Info { full_name, beside: h.beside, wired: wired_online().await, nvidia: nvidia_gpu(), windows_apps, store_apps }
+    Info { full_name, beside: h.beside, proprietary: h.proprietary, wired: wired_online().await, nvidia: nvidia_gpu(), windows_apps, store_apps }
 }
 
 /// `apps[].name` i `storeApps` z shrimp.json. Odpowiedniki dobiera interfejs (windows-apps.json).

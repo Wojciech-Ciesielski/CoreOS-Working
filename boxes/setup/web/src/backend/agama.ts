@@ -155,7 +155,7 @@ function handoff(plan: InstallPlan) {
   return {
     destination: "/var/lib/shrimp-setup/install.json",
     permissions: "0644",
-    content: JSON.stringify({ fullName: plan.fullName, userName: plan.userName, beside: plan.place === "beside" }),
+    content: JSON.stringify({ fullName: plan.fullName, userName: plan.userName, beside: plan.place === "beside", proprietary: plan.proprietary }),
   };
 }
 

@@ -4,7 +4,7 @@ import { GNOME_LOCALES, LANGS as KNOWN } from "../../../i18n-core/langs";
 import keys from "../../i18n/_keys.tsv?raw";
 import appSrc from "./app.ts?raw";
 import {
-  LANGS, REGIONS, KEYBOARDS, ENCS, THEMES, DRV, NV, IPS, ACCENTS, PLACES, USES, APPS, ERR, SLIDES, defaultKeymap, defaultTz,
+  LANGS, REGIONS, KEYBOARDS, ENCS, THEMES, LIC, LIC_TEXT, FILES, IPS, ACCENTS, PLACES, USES, APPS, ERR, SLIDES, defaultKeymap, defaultTz,
 } from "./data";
 import { keyboardName, regionLabel, slug, zoneName } from "./logic";
 
@@ -18,7 +18,7 @@ describe("tłumaczenia Setup", () => {
   it("każdy używany klucz istnieje", () => {
     const used = new Set<string>();
     for (const m of appSrc.matchAll(/\btr\(\s*"([\w.]+)"/g)) used.add(m[1]);
-    const data = [...ENCS, ...THEMES, ...DRV, ...NV, ...IPS, ...ACCENTS.map((a) => a[0]), ...PLACES.flatMap((p) => [p.n, p.d]), ...USES,
+    const data = [...ENCS, ...THEMES, ...LIC, ...FILES, ...LIC_TEXT.flatMap((k) => [k + ".h", k + ".p"]), "lic.yes.d", "lic.no.d", "files.move.d", "files.keep.d", ...IPS, ...ACCENTS.map((a) => a[0]), ...PLACES.flatMap((p) => [p.n, p.d]), ...USES,
       ...APPS.flat().map((a) => a.what), ...Object.values(ERR).flatMap((e) => [e.t, e.d, e.p, e.s || ""]),
       ...SLIDES.flatMap((s) => [s.t, s.d, s.extra || ""]), ...REGIONS.map((r) => (r.city ? "city." + r.city : "")), ...KEYBOARDS.map((k) => k.note || "")];
     for (const k of data) if (k && /^[a-z]+(\.[a-z0-9]+)+$|^[a-z]+$/.test(k) && !["auto", "none", "skip"].includes(k) || ["auto", "none", "skip"].includes(k)) used.add(k);

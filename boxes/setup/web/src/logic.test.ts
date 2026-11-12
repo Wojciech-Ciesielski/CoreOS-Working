@@ -31,10 +31,11 @@ describe("programy", () => {
     expect(w.map((x) => x.windows)).toEqual(["Google Chrome", "Spotify", "Zoom", "Epic Games Launcher", "Adobe Photoshop", "Adobe Lightroom"]);
     expect(mapWindowsApps(["Microsoft Office File Validation Add-In"])).toEqual([]);
   });
-  it("proponuje maks. 5 programów na zmianę z kategorii, bez tych z Windows", () => {
-    const p = proposals(pl, [true, false, false, false, true], win).map((x) => x.id);
-    expect(p).toEqual(["org.videolan.VLC", "org.mozilla.thunderbird"]);
-    expect(proposals(pl, [true, true, true, true, true], null)).toHaveLength(5);
+  it("proponuje programy na zmianę z kategorii z dokumentu, bez tych z Windows", () => {
+    const p = proposals(pl, [true, false, true, false, true], win).map((x) => x.id);
+    expect(p).toEqual(["org.onlyoffice.desktopeditors", "com.vscodium.codium", "org.mozilla.thunderbird"]);
+    expect(proposals(pl, [true, false, false, false, false], null)).toHaveLength(0);
+    expect(proposals(pl, [true, true, true, true, true], null)).toHaveLength(9);
   });
 });
 
@@ -108,7 +109,7 @@ describe("shrimp install", () => {
 const base: InstallPlan = {
   locale: "pl_PL.UTF-8", timezone: "Europe/Warsaw", keymap: "pl", place: "beside", windowsGB: 200,
   disk: { device: "/dev/nvme0n1", name: "SSD", sizeGB: 476, windows: { partition: "/dev/nvme0n1p3", minGB: 80, poolGB: 470 } },
-  fullName: "Anna Kowalska", userName: "anna", password: "x",
+  fullName: "Anna Kowalska", userName: "anna", password: "x", proprietary: true,
 };
 
 describe("agama", () => {
