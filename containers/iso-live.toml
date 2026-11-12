@@ -10,4 +10,4 @@ boxes = [
     "live-session",
 ]
 ci = "build-iso"
-ci_extra = ["tools/build-iso.sh", "tools/fetch-shrimps.sh", "tools/shrimps.ref"]
+ci_extra = ["tools/build-iso.sh", "tools/build-offline-repo.sh", "tools/fetch-shrimps.sh", "tools/shrimps.ref"]

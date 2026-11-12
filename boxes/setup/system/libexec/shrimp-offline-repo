@@ -1,0 +1,26 @@
+#!/bin/bash
+# Nośnik Shrimp: repozytorium pakietów na pendrivie (instalacja bez internetu).
+# Shrimp Install kopiuje LiveOS/ z obrazu na partycję exFAT, więc plik leży obok squashfs.img:
+#   LiveOS/shrimp-repo.squashfs → /run/shrimp-repo (tylko do odczytu).
+# Gdy jest, produkt Agamy (shrimp.yaml) instaluje z niego zamiast z download.opensuse.org.
+# Bez pliku (starszy nośnik) nic się nie zmienia: instalacja z internetu jak dotąd.
+set -euo pipefail
+MNT=/run/shrimp-repo
+PRODUCT=/usr/share/agama/products.d/shrimp.yaml
+log() { echo "shrimp-offline-repo: $*"; }
+
+img=""
+for d in /run/overlay/live /run/initramfs/live /run/media/*/SHRIMP_LIVE; do
+  [ -f "$d/LiveOS/shrimp-repo.squashfs" ] && { img=$d/LiveOS/shrimp-repo.squashfs; break; }
+done
+[ -n "$img" ] || { log "brak repozytorium na nośniku, instalacja z internetu"; exit 0; }
+
+mkdir -p "$MNT"
+mountpoint -q "$MNT" || mount -t squashfs -o loop,ro "$img" "$MNT"
+md=$(find "$MNT" -maxdepth 3 -path '*/repodata/repomd.xml' -print -quit)
+[ -n "$md" ] || { log "$img bez repodata/repomd.xml"; exit 0; }
+repo=$(dirname "$(dirname "$md")")
+# Jedyne repozytorium instalacji w produkcie: lokalne (internet nie jest potrzebny ani sprawdzany).
+sed -i -E "s#^( *- url: )https?://download\.opensuse\.org/.*#\1dir://$repo#" "$PRODUCT"
+grep -q "dir://$repo" "$PRODUCT" || { log "nie udało się ustawić repozytorium w $PRODUCT"; exit 1; }
+log "instalacja offline z $img ($repo)"

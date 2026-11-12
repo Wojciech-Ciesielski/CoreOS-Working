@@ -151,6 +151,12 @@ if [ -f "$MAN/desktop.packages" ]; then
     fi
   fi
 fi
+# Pakiety produktu spoza oficjalnego repozytorium Leap offline (shrimp.yaml): okno Setup w pierwszej
+# konfiguracji (WebKitGTK 6), exFAT dla kopii pendrive'a, reguły kontrolerów i GameMode dla Steam.
+for p in libwebkitgtk-6_0-4 exfatprogs steam-devices gamemode; do
+  chroot "$T" rpm -q "$p" >/dev/null 2>&1 && continue
+  chroot "$T" "${ZYP[@]}" install --no-recommends "$p" >/dev/null 2>&1 || log "pakiet niedostępny: $p"
+done
 # Sterowniki i firmware urządzeń (Wi-Fi, Bluetooth, dźwięk) już przy instalacji: po instalacji offline
 # pierwsza konfiguracja potrzebuje Wi-Fi, zanim cokolwiek pobierze. shrimp-setup-apply sprawdzi je ponownie.
 DRV=/usr/share/shrimp/linux/drivers.conf
