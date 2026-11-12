@@ -190,6 +190,10 @@ def pause(sec):
     time.sleep(sec)
 
 
+# Terminal do poleceń diagnostycznych: Cherry, a w starszym ISO (bez Cherry) GNOME Console.
+TERMINAL = "sh -c 'command -v cherry >/dev/null && exec cherry || exec kgx'"
+
+
 def run_dialog(command):
     keys("alt", "f2")
     pause(2)
@@ -247,7 +251,7 @@ try:
     pause(3)
 
     # Terminal with diagnostics; everything is copied to the serial port.
-    run_dialog("cherry")
+    run_dialog(TERMINAL)
     pause(8)
     stage("terminal", keep_duplicates=True)
     type_text("sudo -v\n")

@@ -203,6 +203,10 @@ def pause(sec):
     time.sleep(sec)
 
 
+# Terminal do poleceń diagnostycznych: Cherry, a w starszym ISO (bez Cherry) GNOME Console.
+TERMINAL = "sh -c 'command -v cherry >/dev/null && exec cherry || exec kgx'"
+
+
 def run_dialog(command):
     keys("alt", "f2")
     pause(2)
@@ -263,7 +267,7 @@ try:
     # Setup window up: drive Agama from a terminal (same token and config as Setup).
     run_dialog("pkill -f shrimp-setup")
     pause(5)
-    run_dialog("cherry")
+    run_dialog(TERMINAL)
     pause(10)
     # Where the stick is mounted is part of what we check: log it, fall back to mounting by label.
     type_text("echo shrimp | sudo -S true; findmnt -l | sudo tee /dev/ttyS0; "
@@ -298,7 +302,7 @@ try:
         wait_stages(t() + 300, 10, "firstboot")
         stage("firstboot", keep_duplicates=True)
         # What the installed system got: files from Windows, Setup state, autostart, journal.
-        run_dialog("cherry")
+        run_dialog(TERMINAL)
         pause(10)
         type_text("echo shrimp | sudo -S true; { echo ===DIAG; ls -la ~ ~/Dokumenty ~/Documents; ls -laR ~/.local/share/shrimp-setup/windows | head -n 20; "
                   "sudo ls -la /var/lib/shrimp-setup; sudo cat /var/lib/shrimp-setup/install.json; "
