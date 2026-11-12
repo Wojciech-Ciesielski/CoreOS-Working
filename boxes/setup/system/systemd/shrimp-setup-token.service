@@ -1,0 +1,13 @@
+# Nośnik Shrimp: kopia tokenu Agamy czytelna dla użytkownika live (okno shrimp-setup --install).
+[Unit]
+Description=Shrimp Setup: token Agamy dla sesji live
+After=agama-web-server.service
+Requires=agama-web-server.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/bash -c 'for i in $(seq 360); do [ -s /run/agama/token ] && break; sleep 0.5; done; install -d -m 0755 /run/shrimp-setup && install -m 0640 -o root -g users /run/agama/token /run/shrimp-setup/token'
+
+[Install]
+WantedBy=multi-user.target

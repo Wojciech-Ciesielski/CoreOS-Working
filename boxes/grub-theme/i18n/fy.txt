@@ -1,0 +1,2 @@
+1	Kompjûterynstellings
+2	Shrimp start oer %d s

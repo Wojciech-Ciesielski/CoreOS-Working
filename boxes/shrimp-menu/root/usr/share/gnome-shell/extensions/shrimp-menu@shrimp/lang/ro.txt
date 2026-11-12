@@ -1,0 +1,4 @@
+1	Despre acest calculator
+3	Programe
+4	Actualizări
+15	Restaurare sistem

@@ -1,0 +1,2 @@
+1	Nastavenia počítača
+2	Shrimp sa spustí o %d s

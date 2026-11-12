@@ -1,0 +1,11 @@
+[Unit]
+Description=Shrimp: motyw aplikacji GTK3 według trybu jasnego/ciemnego
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/shrimp-app-style --watch
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target

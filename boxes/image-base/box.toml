@@ -1,0 +1,33 @@
+[box]
+id = "image-base"
+version = "0.1.0"
+kind = "image"
+summary = "Szkielet obrazu live: config.kiwi (KIWI, Leap 16.1), jądro, rozruch, system bazowy"
+
+[packages]
+image = [
+    "distribution-release",
+    "systemd",
+    "udev",
+    "kernel-default",
+    "kernel-firmware-all",
+    "dracut",
+    "dracut-kiwi-live",
+    "grub2",
+    "grub2-x86_64-efi",
+    "grub2-i386-pc",
+    "shim",
+    "glibc-locale",
+    "timezone",
+    "sudo",
+    "zypper",
+    "NetworkManager",
+    "btrfsprogs",
+    "snapper",
+    "transactional-update",
+    "curl",
+    "unzip",
+]
+
+[image]
+kiwi_template = "config.kiwi"

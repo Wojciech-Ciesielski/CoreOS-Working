@@ -1,0 +1,25 @@
+# Wspólne dla skryptów build/*.sh (uruchamiane w chroot obrazu przez boxes/linu-x/configure.sh).
+. /usr/share/shrimp/linux/drivers.conf
+warn() { echo "WARNING: Linu(x): $*" >&2; }
+note() { echo "Linu(x): $*" >&2; }
+ZYP=(zypper --non-interactive --gpg-auto-import-keys)
+
+# Repozytorium Leap w chroot: KIWI zostawia w obrazie repozytoria z imageinclude="true";
+# gdy ich nie ma, boxes/linu-x/configure.sh zapisuje adres (SHRIMP_REPO) w build/repo.url i dodajemy go na czas budowy.
+ensure_repos() {
+  if ! "${ZYP[@]}" lr 2>/dev/null | grep -q '|'; then
+    local url; url="$(cat /usr/share/shrimp/linux/build/repo.url 2>/dev/null || true)"
+    [ -n "$url" ] || { warn "brak repozytoriów w obrazie i brak repo.url"; return 1; }
+    "${ZYP[@]}" addrepo --refresh "$url" shrimp-build-oss
+    touch /tmp/shrimp-build-oss
+  fi
+  "${ZYP[@]}" refresh >/dev/null || warn "zypper refresh zgłosił błąd"
+}
+# Instaluje każdy pakiet osobno; brak jednego nie przerywa budowy, ale jest widoczny w logu.
+install_each() {
+  local p
+  for p in "$@"; do
+    "${ZYP[@]}" install --no-recommends --auto-agree-with-licenses "$p" >/dev/null 2>&1 \
+      && note "zainstalowano $p" || warn "nie udało się zainstalować $p"
+  done
+}

@@ -1,0 +1,29 @@
+// Pierwsza konfiguracja Shrimp działa w sesji z logowaniem automatycznym, więc bez pytania o hasło:
+// - pomocnik shrimp-setup-apply, tylko dopóki istnieje znacznik pierwszego uruchomienia,
+// - pomocnik shrimp-usb-backup, tylko dopóki czeka kopia zawartości pendrive'a,
+// - instalacja aplikacji z Flathub dla administratorów (grupa wheel) w lokalnej, aktywnej sesji.
+polkit.addRule(function (action, subject) {
+  if (!subject.local || !subject.active || !subject.isInGroup("wheel")) return polkit.Result.NOT_HANDLED;
+  if (action.id == "org.shrimp.setup.apply") {
+    try {
+      polkit.spawn(["/usr/bin/test", "-e", "/var/lib/shrimp-setup/first-boot"]);
+      return polkit.Result.YES;
+    } catch (e) {
+      return polkit.Result.NOT_HANDLED;
+    }
+  }
+  if (action.id == "org.shrimp.setup.usb") {
+    try {
+      polkit.spawn(["/usr/bin/test", "-e", "/var/lib/shrimp-setup/usb/pending"]);
+      return polkit.Result.YES;
+    } catch (e) {
+      return polkit.Result.NOT_HANDLED;
+    }
+  }
+  if (action.id == "org.freedesktop.Flatpak.app-install" ||
+      action.id == "org.freedesktop.Flatpak.runtime-install" ||
+      action.id == "org.freedesktop.Flatpak.modify-repo") {
+    return polkit.Result.YES;
+  }
+  return polkit.Result.NOT_HANDLED;
+});

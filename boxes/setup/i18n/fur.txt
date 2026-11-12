@@ -1,0 +1,181 @@
+1	Indaûr
+2	Informazions
+3	Logo di Shrimp
+4	Il driver NVIDIA al da lis prestazions completis tai zûcs e tai programs grafics. Il driver viert al è plui sempliç, ma plui lent.
+5	(Conseât)
+6	Indevant
+7	Salte
+8	Anule
+9	Fat
+10	Avanzât
+11	Automatic
+12	Nissun
+13	Prontìn Shrimp sul to computer.
+14	Scomencìn
+15	Sielç une lenghe
+16	Dulà sêstu?
+17	O configurarìn il fûs orari e il formât de date.
+18	Sielç une disposizion de tastiere
+19	Prove la disposizion
+20	programadôr
+21	machine di scrivi
+22	Unitât
+23	vueit
+24	Cifradure dal disc
+25	Distudât
+26	Impiât
+27	Password dal disc
+28	Ripet la password dal disc
+29	Dulà instalâ Shrimp?
+30	Dongje di Windows
+31	Al puest di Windows
+32	Windows al vignarà gjavât. O spostarìn i files che tu âs tignût tal gnûf sisteme.
+33	Nol è pussibil instalâ dongje di Windows parcè che la unitât di Windows e je cifrade cun BitLocker.
+34	Shrimp al doprarà dute la unitât {name}.
+35	Windows al reste su chê altre unitât.
+36	Division dal disc
+37	Il computer al domandarà cheste password a ogni inviament. Cence di jê no tu puedis recuperâ i tiei dâts.
+38	Cree un account
+39	Ti coventarà par jentrâ.
+40	Non complet
+41	Non utent
+42	Peraule di ordin
+43	Conferme la password
+44	Pront par instalâ
+45	Nol cambie nuie fin che no tu fasis clic su «Instale».
+46	Lenghe
+47	Regjon
+48	Tastiere
+49	Unitât
+50	Instalazion
+51	Dute la unitât
+52	Division dal disc
+53	Windows {win} · Shrimp {shrimp}
+54	Account
+55	Cifradure
+56	Instale
+57	O instali Shrimp
+58	O instali
+59	Preparazion de unitât
+60	Instalazion dal sisteme
+61	Ripristinament dai files
+62	A mancjin cirche {min} min
+63	Un moment
+64	Instalazion completade
+65	Torne invie il computer par finî.
+66	Torne a inviâ
+67	Mandi, {name}
+68	amì
+69	Finìn la configurazion. E durarà dome un moment.
+70	Conetiti a une rêt
+71	Password pe rêt {ssid}
+72	Protezude
+73	Vierte
+74	Rêt vierte. Altris a puedin viodi ce che tu fasis.
+75	Rêt platade
+76	Inserìs i dâts di une rêt che no je te liste.
+77	Non de rêt
+78	Sigurece
+79	Conet
+80	Direzion IP
+81	Servidôr DNS
+82	Proxy
+83	Manuâl
+84	Sielç un aspiet
+85	Clâr
+86	Scûr
+87	Tu puedis simpri cambiâlu tes Impostazions.
+88	Sielç un colôr
+89	Blu
+90	Vert-blu
+91	Vert
+92	Zâl
+93	Naranç
+94	Ros
+95	Rose
+96	Viole
+97	Grîs
+98	Imagjin e sun cence fastidis
+99	O instalarìn i driver e i codecs che ti coventin par che i video e i zûcs a funzionin subit.
+100	Instale
+101	Lu fasarai plui indenant
+102	Schede grafiche NVIDIA
+103	O vin cjatât une schede {name}.
+104	Driver NVIDIA
+105	Driver viert
+106	Lis miôr prestazions tai zûcs e tai programs grafics.
+107	Plui sempliç, ma mancul potent.
+108	Cemût doprâstu il computer?
+109	O instalarìn i programs che ti coventin di plui.
+110	Lavôr e studi
+111	Zucs
+112	Creativitât
+113	Programazion
+114	Multimedia
+115	I tiei programs di Windows
+116	Ju vin cjatâts sul to computer. Sielç cuai instalâ.
+117	Programs conseâts
+118	Sielç cuai instalâ.
+119	Nissune selezion.
+120	Instalazion dai programs
+121	Discjariament e instalazion
+122	Dut pront
+123	Gjolt Shrimp.
+124	O vuei savê di plui
+125	{n} di {total}
+126	Shrimp al è Linux
+127	Linux al è un sisteme libar fat di int di dut il mont. Al fâs lâ la plui part dai servidôrs e dai telefonins Android.
+128	Windows li dongje
+129	A ogni inviament tu sielzarâs Shrimp o Windows.
+130	Programs
+131	I files .exe di Windows no funzionin achì. I programs si instalin di Shrimp Apps, e pe plui part des aplicazions cognossudis tu cjatarâs li un ecuivalent.
+132	Password pai cambiaments
+133	Cuant che tu instalis programs o tu cambiis impostazions impuartantis, il sisteme ti domandarà la password. Al è normâl e al protêç il computer.
+134	I tiei files
+135	Documents, fotos e discjariaments a son te aplicazion Files, te tô cartele personâl.
+136	Li tu cjatarâs ancje la unitât di Windows.
+137	Panko
+138	Alc al à smetût di funzionâ dopo di un cambiament? In Panko tu puedis tornâ a cemût che e jere prime.
+139	Cocktail
+140	Inzornaments, driver e codecs intun puest sôl. I inzornaments si instalin cuant che tu tornis a inviâ.
+141	Ricercje svelte
+142	Frache il tast Super, chel cul logo di Windows, par cjatâ programs, files e impostazions.
+143	Jutori
+144	Tu cjatarâs rispuestis tes pagjinis di jutori di Shrimp, te documentazion di GNOME e openSUSE e tai forums de comunitât.
+145	Lis passwords dal disc no corispuindin
+146	Inserìs la stesse password in ducj i doi i cjamps. Cence di jê no tu puedis inviâ il computer, duncje tegnile intun puest sigûr.
+147	Lis passwords no corispuindin
+148	Inserìs la stesse password in ducj i doi i cjamps e torne prove.
+149	Prove di gnûf
+150	Nol è vonde spazi
+151	Nol è vonde spazi su la unitât par Shrimp. Fâs plui piçul Windows o sielç une altre unitât.
+152	Cambie la dimension
+153	Torne indaûr
+154	Instalazion falide
+155	Alc al è lât strucj. I tiei files a son al sigûr. Tu puedis tornâ a provâ.
+156	Jes
+157	Impussibil coneti
+158	Controle la password de rêt e torne prove.
+159	Controle la password pe rêt {ssid} e torne prove.
+160	Nissune conession a internet
+161	Impussibil discjariâ i programs. Controle la conession e torne prove.
+162	Documents e sfueis di calcul
+163	Pueste eletroniche
+164	Zûcs
+165	Zûcs di Epic e GOG
+166	Dissen
+167	Modifiche video
+168	Grafiche
+169	Editôr di codiç
+170	Ambient di disvilup
+171	Films e musiche
+172	Musiche
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Isulis Canariis
+180	Sydney
+181	Perth

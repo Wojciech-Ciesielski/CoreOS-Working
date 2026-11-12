@@ -1,0 +1,8 @@
+[Unit]
+Description=Shrimp: jeden wygląd aplikacji z Flathub (GTK3, Qt, Electron jak libadwaita)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/shrimp-app-style

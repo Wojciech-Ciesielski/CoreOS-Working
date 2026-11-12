@@ -1,0 +1,4 @@
+1	Om den här datorn
+3	Programvara
+4	Uppdateringar
+15	Systemåterställning

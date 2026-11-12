@@ -1,0 +1,2 @@
+1	Definições do computador
+2	O Shrimp arranca dentro de %d s

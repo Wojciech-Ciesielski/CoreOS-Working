@@ -1,0 +1,4 @@
+1	Um þessa tölvu
+3	Hugbúnaður
+4	Uppfærslur
+15	Kerfisendurheimt

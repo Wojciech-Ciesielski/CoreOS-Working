@@ -1,0 +1,4 @@
+1	Giới thiệu máy tính này
+3	Phần mềm
+4	Cập nhật
+15	Khôi phục hệ thống

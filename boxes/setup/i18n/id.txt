@@ -1,0 +1,181 @@
+1	Kembali
+2	Informasi
+3	Logo Shrimp
+4	Driver NVIDIA memberi performa penuh di gim dan program grafis. Driver terbuka lebih sederhana tetapi lebih lambat.
+5	(Disarankan)
+6	Berikutnya
+7	Lewati
+8	Batal
+9	Selesai
+10	Lanjutan
+11	Otomatis
+12	Tidak ada
+13	Mari siapkan Shrimp di komputer Anda.
+14	Mulai
+15	Pilih bahasa
+16	Di mana Anda berada?
+17	Kami akan mengatur zona waktu dan format tanggal.
+18	Pilih tata letak papan ketik
+19	Coba tata letaknya
+20	pemrogram
+21	mesin tik
+22	Drive
+23	kosong
+24	Enkripsi disk
+25	Mati
+26	Aktif
+27	Kata sandi disk
+28	Ulangi kata sandi disk
+29	Di mana Shrimp akan dipasang?
+30	Berdampingan dengan Windows
+31	Menggantikan Windows
+32	Windows akan dihapus. Berkas yang Anda simpan akan kami pindahkan ke sistem baru.
+33	Pemasangan berdampingan dengan Windows tidak bisa dilakukan karena drive Windows dienkripsi dengan BitLocker.
+34	Shrimp akan memakai seluruh drive {name}.
+35	Windows tetap berada di drive lain.
+36	Pembagian disk
+37	Komputer akan meminta kata sandi ini setiap kali dinyalakan. Tanpa kata sandi ini data Anda tidak dapat dipulihkan.
+38	Buat akun
+39	Anda memerlukannya untuk masuk.
+40	Nama lengkap
+41	Nama pengguna
+42	Kata sandi
+43	Konfirmasi kata sandi
+44	Siap dipasang
+45	Tidak ada yang berubah sampai Anda mengeklik “Pasang”.
+46	Bahasa
+47	Wilayah
+48	Papan ketik
+49	Drive
+50	Pemasangan
+51	Seluruh drive
+52	Pembagian disk
+53	Windows {win} · Shrimp {shrimp}
+54	Akun
+55	Enkripsi
+56	Pasang
+57	Memasang Shrimp
+58	Memasang
+59	Menyiapkan drive
+60	Memasang sistem
+61	Memulihkan berkas
+62	Sekitar {min} menit lagi
+63	Sebentar
+64	Pemasangan selesai
+65	Mulai ulang komputer untuk menyelesaikan.
+66	Mulai ulang
+67	Halo, {name}
+68	Anda
+69	Mari selesaikan pengaturan. Hanya sebentar.
+70	Hubungkan ke jaringan
+71	Kata sandi untuk jaringan {ssid}
+72	Aman
+73	Terbuka
+74	Jaringan terbuka. Orang lain mungkin dapat melihat aktivitas Anda di dalamnya.
+75	Jaringan tersembunyi
+76	Masukkan detail jaringan yang tidak ditampilkan dalam daftar.
+77	Nama jaringan
+78	Keamanan
+79	Hubungkan
+80	Alamat IP
+81	Server DNS
+82	Proksi
+83	Manual
+84	Pilih tampilan
+85	Terang
+86	Gelap
+87	Anda selalu dapat mengubahnya di Pengaturan.
+88	Pilih warna
+89	Biru
+90	Teal
+91	Hijau
+92	Kuning
+93	Oranye
+94	Merah
+95	Merah muda
+96	Ungu
+97	Abu-abu
+98	Gambar dan suara tanpa repot
+99	Kami akan memasang driver dan codec yang Anda perlukan agar video dan gim langsung berjalan.
+100	Pasang
+101	Nanti saja
+102	Kartu grafis NVIDIA
+103	Kami menemukan kartu {name}.
+104	Driver NVIDIA
+105	Driver terbuka
+106	Performa terbaik di gim dan program grafis.
+107	Lebih mudah dijalankan, tetapi kurang bertenaga.
+108	Bagaimana Anda memakai komputer?
+109	Kami akan memasang program yang paling Anda perlukan.
+110	Kerja dan belajar
+111	Gim
+112	Kreativitas
+113	Pemrograman
+114	Multimedia
+115	Program Anda dari Windows
+116	Kami menemukannya di komputer Anda. Pilih yang ingin dipasang.
+117	Program yang disarankan
+118	Pilih yang ingin dipasang.
+119	Belum ada yang dipilih.
+120	Memasang program
+121	Mengunduh dan memasang
+122	Semua siap
+123	Selamat menggunakan Shrimp.
+124	Saya ingin tahu lebih banyak
+125	{n} dari {total}
+126	Shrimp adalah Linux
+127	Linux adalah sistem bebas yang dibuat oleh orang-orang dari seluruh dunia. Linux menjalankan sebagian besar server dan ponsel Android.
+128	Windows di sebelahnya
+129	Setiap kali dinyalakan, Anda memilih Shrimp atau Windows.
+130	Program
+131	Berkas .exe Windows tidak berjalan di sini. Anda memasang program dari Shrimp Apps, dan untuk sebagian besar program terkenal ada padanannya di sana.
+132	Kata sandi untuk perubahan
+133	Saat Anda memasang program atau mengubah pengaturan penting, sistem akan meminta kata sandi Anda. Itu normal dan melindungi komputer Anda.
+134	Berkas Anda
+135	Dokumen, foto, dan unduhan ada di aplikasi Berkas, di folder home Anda.
+136	Di sana Anda juga menemukan drive Windows.
+137	Panko
+138	Ada yang berhenti berfungsi setelah perubahan? Di Panko Anda dapat kembali ke keadaan sebelumnya.
+139	Cocktail
+140	Pembaruan, driver, dan codec di satu tempat. Pembaruan dipasang saat Anda memulai ulang.
+141	Pencarian cepat
+142	Tekan tombol Super, yang berlogo Windows, untuk menemukan program, berkas, dan pengaturan.
+143	Bantuan
+144	Anda akan menemukan jawabannya di halaman bantuan Shrimp, dokumentasi GNOME dan openSUSE, serta forum komunitas.
+145	Kata sandi disk tidak cocok
+146	Masukkan kata sandi yang sama di kedua kolom. Tanpa kata sandi ini komputer tidak dapat dinyalakan, jadi simpan di tempat aman.
+147	Kata sandi tidak cocok
+148	Masukkan kata sandi yang sama di kedua kolom dan coba lagi.
+149	Coba lagi
+150	Ruang tidak cukup
+151	Ruang di drive tidak cukup untuk Shrimp. Perkecil Windows atau pilih drive lain.
+152	Ubah ukuran
+153	Kembali
+154	Pemasangan gagal
+155	Terjadi kesalahan. Berkas Anda aman. Anda dapat mencoba lagi.
+156	Keluar
+157	Tidak dapat terhubung
+158	Periksa kata sandi jaringan dan coba lagi.
+159	Periksa kata sandi untuk jaringan {ssid} dan coba lagi.
+160	Tidak ada koneksi internet
+161	Program tidak dapat diunduh. Periksa koneksi Anda dan coba lagi.
+162	Dokumen dan lembar kerja
+163	Email
+164	Gim
+165	Gim dari Epic dan GOG
+166	Menggambar
+167	Penyuntingan video
+168	Grafis
+169	Penyunting kode
+170	Lingkungan pengembangan
+171	Film dan musik
+172	Musik
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Kepulauan Canary
+180	Sydney
+181	Perth

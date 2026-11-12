@@ -1,0 +1,4 @@
+1	Par šo datoru
+3	Programmatūra
+4	Atjauninājumi
+15	Sistēmas atjaunošana

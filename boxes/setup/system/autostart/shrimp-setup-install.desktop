@@ -1,0 +1,9 @@
+# Tylko na nośniku live (użytkownik shrimp): Setup na pełnym ekranie zaraz po starcie sesji.
+[Desktop Entry]
+Type=Application
+Name=Shrimp Setup
+Comment=Instalacja Shrimp
+Exec=/usr/bin/shrimp-setup --install
+TryExec=/usr/bin/shrimp-setup
+NoDisplay=true
+X-GNOME-Autostart-Phase=Applications

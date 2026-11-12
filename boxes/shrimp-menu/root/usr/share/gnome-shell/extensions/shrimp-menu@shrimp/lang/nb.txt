@@ -1,0 +1,4 @@
+1	Om denne datamaskinen
+3	Programvare
+4	Oppdateringer
+15	Systemgjenoppretting

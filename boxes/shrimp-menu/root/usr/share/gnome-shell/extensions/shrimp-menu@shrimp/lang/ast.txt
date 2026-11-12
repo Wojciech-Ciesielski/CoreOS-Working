@@ -1,0 +1,4 @@
+1	Tocante a esti ordenador
+3	Software
+4	Anovamientos
+15	Restauración del sistema

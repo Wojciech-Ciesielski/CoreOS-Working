@@ -1,0 +1,4 @@
+1	O tomto počítači
+3	Softvér
+4	Aktualizácie
+15	Obnovenie systému

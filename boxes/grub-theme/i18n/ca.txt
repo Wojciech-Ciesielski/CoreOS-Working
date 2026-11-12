@@ -1,0 +1,2 @@
+1	Configuració de l'ordinador
+2	Shrimp s'iniciarà d'aquí a %d s

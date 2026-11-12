@@ -1,0 +1,50 @@
+
+/* ===== Shrimp additions (boxes/shell-theme, doklejane przez jego configure.sh) ===== */
+
+/* GDM (specs/gdm.md): blurred Mont Blanc with a rgba(35,35,35,.55) veil instead of flat #232323.
+   GNOME 48 paints the greeter on .login-dialog (full screen); #lockDialogGroup alone stayed flat.
+   The image is pre-rendered (blur ~4% of width, veil baked in) because St cannot blur CSS backgrounds. */
+#lockDialogGroup,
+.login-dialog {
+  background-color: #232323;
+  background-image: url("resource:///org/gnome/shell/theme/shrimp-gdm-background.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Lock screen clock (DESIGN.md §3: "Zegar ekranu blokady" 11% of width (min 64), 700,
+   tracking -0.03em, tabular digits, fg). St has no viewport units, so the size is the
+   1920 px reference: 11% = 211 px. Date = subtitle size (1.6% = 31 px, 400),
+   hint = description size (1.4% = 27 px, 400). Both in fg: the dim grey does not reach
+   4.5:1 over the blurred snow of Mont Blanc (DESIGN.md §12). */
+.unlock-dialog-clock {
+  spacing: 24px;
+}
+.unlock-dialog-clock-time {
+  font-family: "Inter", sans-serif;
+  font-size: 211px;
+  font-weight: 700;
+  letter-spacing: -6px;
+  /* St adds the tracking after the last digit too; pad the other side so the time stays centred */
+  padding-left: 6px;
+  font-feature-settings: "tnum";
+  color: #ffffff;
+}
+.unlock-dialog-clock-date {
+  font-family: "Inter", sans-serif;
+  font-size: 31px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.unlock-dialog-clock-hint {
+  font-family: "Inter", sans-serif;
+  font-size: 27px;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+/* Veil over the natively blurred wallpaper, same tone as GDM (specs/gdm.md), so white
+   text keeps 4.5:1 over the bright snow at the bottom of Mont Blanc. */
+.unlock-dialog {
+  background-color: rgba(35, 35, 35, 0.35);
+}

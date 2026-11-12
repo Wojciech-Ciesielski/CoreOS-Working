@@ -1,0 +1,2 @@
+1	Paramètres de l'ordenador
+2	Shrimp aviarà dins %d s

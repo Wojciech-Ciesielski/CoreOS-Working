@@ -1,0 +1,181 @@
+1	Terug
+2	Inligting
+3	Shrimp-logo
+4	Die NVIDIA-drywer gee volle werkverrigting in speletjies en grafiese programme. Die oop drywer is eenvoudiger, maar stadiger.
+5	(Aanbeveel)
+6	Volgende
+7	Slaan oor
+8	Kanselleer
+9	Klaar
+10	Gevorderd
+11	Outomaties
+12	Geen
+13	Kom ons maak Shrimp gereed op jou rekenaar.
+14	Kom ons begin
+15	Kies 'n taal
+16	Waar is jy?
+17	Ons stel die tydsone en datumformaat in.
+18	Kies 'n sleutelborduitleg
+19	Toets die uitleg
+20	programmeerder
+21	tikmasjien
+22	Skyf
+23	leeg
+24	Skyfenkripsie
+25	Af
+26	Aan
+27	Skyfwagwoord
+28	Herhaal die skyfwagwoord
+29	Waar moet Shrimp geïnstalleer word?
+30	Langs Windows
+31	In plaas van Windows
+32	Windows sal verwyder word. Ons skuif die lêers wat jy gehou het na die nuwe stelsel.
+33	Installering langs Windows is nie moontlik nie, want die Windows-skyf is met BitLocker geënkripteer.
+34	Shrimp sal die hele {name}-skyf gebruik.
+35	Windows bly op die ander skyf.
+36	Skyfverdeling
+37	Die rekenaar sal by elke opstart vir hierdie wagwoord vra. Daarsonder kan jy nie jou data herwin nie.
+38	Skep 'n rekening
+39	Jy sal dit nodig hê om aan te meld.
+40	Volle naam
+41	Gebruikernaam
+42	Wagwoord
+43	Bevestig wagwoord
+44	Gereed om te installeer
+45	Niks verander totdat jy op “Installeer” klik nie.
+46	Taal
+47	Streek
+48	Sleutelbord
+49	Skyf
+50	Installasie
+51	Hele skyf
+52	Skyfverdeling
+53	Windows {win} · Shrimp {shrimp}
+54	Rekening
+55	Enkripsie
+56	Installeer
+57	Installeer tans Shrimp
+58	Installeer tans
+59	Berei die skyf voor
+60	Installeer die stelsel
+61	Herstel lêers
+62	Ongeveer {min} min oor
+63	Net 'n oomblik
+64	Installasie voltooi
+65	Herbegin die rekenaar om klaar te maak.
+66	Herbegin
+67	Hallo, {name}
+68	daar
+69	Kom ons voltooi die opstelling. Dit neem net 'n oomblik.
+70	Koppel aan 'n netwerk
+71	Wagwoord vir netwerk {ssid}
+72	Beveilig
+73	Oop
+74	Oop netwerk. Ander kan dalk sien wat jy daarop doen.
+75	Versteekte netwerk
+76	Voer die besonderhede in van 'n netwerk wat nie in die lys verskyn nie.
+77	Netwerknaam
+78	Sekuriteit
+79	Koppel
+80	IP-adres
+81	DNS-bediener
+82	Instaanbediener
+83	Handmatig
+84	Kies 'n voorkoms
+85	Lig
+86	Donker
+87	Jy kan dit altyd in Instellings verander.
+88	Kies 'n kleur
+89	Blou
+90	Blougroen
+91	Groen
+92	Geel
+93	Oranje
+94	Rooi
+95	Pienk
+96	Pers
+97	Grys
+98	Beeld en klank sonder moeite
+99	Ons installeer die drywers en kodeks wat jy nodig het sodat video's en speletjies dadelik werk.
+100	Installeer
+101	Ek doen dit later
+102	NVIDIA-grafiese kaart
+103	Ons het 'n {name}-kaart gevind.
+104	NVIDIA-drywer
+105	Oop drywer
+106	Beste werkverrigting in speletjies en grafiese programme.
+107	Eenvoudiger om te gebruik, maar minder kragtig.
+108	Hoe gebruik jy jou rekenaar?
+109	Ons installeer die programme wat jy die meeste nodig het.
+110	Werk en studie
+111	Speletjies
+112	Kreatiwiteit
+113	Programmering
+114	Multimedia
+115	Jou programme van Windows
+116	Ons het hulle op jou rekenaar gevind. Kies watter om te installeer.
+117	Voorgestelde programme
+118	Kies watter om te installeer.
+119	Niks gekies nie.
+120	Installeer programme
+121	Laai af en installeer
+122	Alles gereed
+123	Geniet Shrimp.
+124	Ek wil meer weet
+125	{n} van {total}
+126	Shrimp is Linux
+127	Linux is 'n gratis stelsel wat deur mense van regoor die wêreld gemaak word. Dit dryf die meeste bedieners en Android-fone aan.
+128	Windows langsaan
+129	By elke opstart kies jy Shrimp of Windows.
+130	Programme
+131	Windows .exe-lêers werk nie hier nie. Jy installeer programme uit Shrimp Apps, en vir die meeste bekende programme vind jy daar 'n ekwivalent.
+132	Wagwoord vir veranderinge
+133	Wanneer jy programme installeer of belangrike instellings verander, sal die stelsel vir jou wagwoord vra. Dis normaal en beskerm jou rekenaar.
+134	Jou lêers
+135	Dokumente, foto's en aflaaie is in die Lêers-toep, in jou tuisvouer.
+136	Jy sal die Windows-skyf ook daar vind.
+137	Panko
+138	Het iets ná 'n verandering opgehou werk? In Panko kan jy teruggaan na hoe dinge voorheen was.
+139	Cocktail
+140	Bywerkings, drywers en kodeks op een plek. Bywerkings word geïnstalleer wanneer jy herbegin.
+141	Vinnige soektog
+142	Druk die Super-sleutel, die een met die Windows-logo, om programme, lêers en instellings te vind.
+143	Hulp
+144	Jy vind antwoorde op die Shrimp-hulpblaaie, in die GNOME- en openSUSE-dokumentasie en op gemeenskapsforums.
+145	Die skyfwagwoorde stem nie ooreen nie
+146	Voer dieselfde wagwoord in albei velde in. Jy kan nie die rekenaar sonder dit begin nie, so hou dit op 'n veilige plek.
+147	Die wagwoorde stem nie ooreen nie
+148	Voer dieselfde wagwoord in albei velde in en probeer weer.
+149	Probeer weer
+150	Nie genoeg spasie nie
+151	Daar is nie genoeg spasie op die skyf vir Shrimp nie. Maak Windows kleiner of kies 'n ander skyf.
+152	Verander die grootte
+153	Gaan terug
+154	Installasie het misluk
+155	Iets het verkeerd geloop. Jou lêers is veilig. Jy kan weer probeer.
+156	Verlaat
+157	Kon nie koppel nie
+158	Kontroleer die netwerkwagwoord en probeer weer.
+159	Kontroleer die wagwoord vir netwerk {ssid} en probeer weer.
+160	Geen internetverbinding nie
+161	Kon nie die programme aflaai nie. Kontroleer jou verbinding en probeer weer.
+162	Dokumente en sigblaaie
+163	E-pos
+164	Speletjies
+165	Speletjies van Epic en GOG
+166	Teken
+167	Video-redigering
+168	Grafika
+169	Kode-redigeerder
+170	Ontwikkelingsomgewing
+171	Flieks en musiek
+172	Musiek
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Kanariese Eilande
+180	Sydney
+181	Perth

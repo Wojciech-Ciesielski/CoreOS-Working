@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Shrimp Setup
+Comment=Pierwsza konfiguracja Shrimp
+Exec=/usr/bin/shrimp-setup --first-boot
+TryExec=/usr/bin/shrimp-setup
+NoDisplay=true
+X-GNOME-Autostart-Phase=Applications
+X-GNOME-AutoRestart=false

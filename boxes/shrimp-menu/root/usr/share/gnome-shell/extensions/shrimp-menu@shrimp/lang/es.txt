@@ -1,0 +1,4 @@
+1	Acerca de este equipo
+3	Software
+4	Actualizaciones
+15	Restaurar sistema

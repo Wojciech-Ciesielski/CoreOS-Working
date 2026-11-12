@@ -1,0 +1,4 @@
+1	Om denne computer
+3	Software
+4	Opdateringer
+15	Systemgendannelse

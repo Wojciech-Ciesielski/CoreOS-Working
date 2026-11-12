@@ -1,0 +1,4 @@
+1	Sobre este computador
+3	Programas
+4	Atualizações
+15	Restauração do sistema

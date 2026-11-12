@@ -1,0 +1,181 @@
+1	Werom
+2	Ynformaasje
+3	Shrimp-logo
+4	It NVIDIA-stjoerprogramma jout folsleine prestaasjes yn spultsjes en grafyske programma's. It iepen stjoerprogramma is ienfâldiger, mar stadiger.
+5	(Oanrekommandearre)
+6	Folgjende
+7	Oerslaan
+8	Annulearje
+9	Klear
+10	Avansearre
+11	Automatysk
+12	Gjin
+13	Litte wy Shrimp ree meitsje op dyn kompjûter.
+14	Litte wy begjinne
+15	Kies in taal
+16	Wêr bist?
+17	Wy stelle de tiidsône en de datumnotaasje yn.
+18	Kies in toetseboerdyndieling
+19	Test de yndieling
+20	programmeur
+21	typmasine
+22	Skiif
+23	leech
+24	Skiifensjifering
+25	Út
+26	Oan
+27	Skiifwachtwurd
+28	Werhelje it skiifwachtwurd
+29	Wêr moat Shrimp ynstallearre wurde?
+30	Njonken Windows
+31	Yn plak fan Windows
+32	Windows wurdt fuorthelle. Wy ferpleatse de bestannen dy't jo hâlden hawwe nei it nije systeem.
+33	Ynstallearje neist Windows kin net, omdat it Windows-stasjon mei BitLocker fersifere is.
+34	Shrimp brûkt it hiele stasjon {name}.
+35	Windows bliuwt op it oare stasjon.
+36	Skiif diele
+37	De kompjûter freget by elke start om dit wachtwurd. Sûnder kinne jo jo gegevens net weromhelje.
+38	Meitsje in account oan
+39	Jo hawwe it nedich om oan te melden.
+40	Folsleine namme
+41	Brûkersnamme
+42	Wachtwurd
+43	Befêstigje wachtwurd
+44	Klear om te ynstallearjen
+45	Der feroaret neat oant jo op ‘Ynstallearje’ klikke.
+46	Taal
+47	Regio
+48	Toetseboerd
+49	Skiif
+50	Ynstallaasje
+51	Hiele stasjon
+52	Skiif diele
+53	Windows {win} · Shrimp {shrimp}
+54	Account
+55	Fersifering
+56	Ynstallearje
+57	Shrimp wurdt ynstallearre
+58	Ynstallearje
+59	Stasjon tariede
+60	Systeem ynstallearje
+61	Bestannen weromsette
+62	Noch sa'n {min} min
+63	Efkes wachtsje
+64	Ynstallaasje foltôge
+65	Start de kompjûter opnij op om klear te meitsjen.
+66	Opnij starte
+67	Hallo, {name}
+68	dêr
+69	Lit ús de ynstallaasje ôfmeitsje. It duorret mar efkes.
+70	Ferbine mei in netwurk
+71	Wachtwurd foar netwurk {ssid}
+72	Befeilige
+73	Iepen
+74	Iepen netwurk. Oaren kinne sjen wat jo der dogge.
+75	Ferburgen netwurk
+76	Fier de gegevens yn fan in netwurk dat net yn de list stiet.
+77	Netwurknamme
+78	Befeiliging
+79	Ferbine
+80	IP-adres
+81	DNS-server
+82	Proxy
+83	Hânmjittich
+84	Kies in uterlik
+85	Ljocht
+86	Tsjuster
+87	Jo kinne dit altyd wizigje yn Ynstellingen.
+88	Kies in kleur
+89	Blau
+90	Blaugrien
+91	Grien
+92	Giel
+93	Oranje
+94	Read
+95	Roze
+96	Pears
+97	Grau
+98	Byld en lûd sûnder gedoch
+99	Wy ynstallearje de stjoerprogramma's en codecs dy't jo nedich hawwe, sadat fideo's en spultsjes daliks wurkje.
+100	Ynstallearje
+101	Ik doch it letter
+102	NVIDIA-fideokaart
+103	Wy hawwe in {name}-kaart fûn.
+104	NVIDIA-stjoerprogramma
+105	Iepen stjoerprogramma
+106	Bêste prestaasjes yn spultsjes en grafyske programma's.
+107	Ienfâldiger, mar minder krêftich.
+108	Hoe brûke jo jo kompjûter?
+109	Wy ynstallearje de programma's dy't jo it meast nedich hawwe.
+110	Wurk en stúdzje
+111	Spultsjes
+112	Kreativiteit
+113	Programmearje
+114	Multymedia
+115	Jo programma's út Windows
+116	Wy hawwe se op jo kompjûter fûn. Kies hokker't jo ynstallearje wolle.
+117	Foarstelde programma's
+118	Kies hokker't jo ynstallearje wolle.
+119	Neat selektearre.
+120	Programma's ynstallearje
+121	Downloade en ynstallearje
+122	Alles is ree
+123	In protte wille mei Shrimp.
+124	Ik wol mear witte
+125	{n} fan {total}
+126	Shrimp is Linux
+127	Linux is in frij systeem makke troch minsken fan oer de hiele wrâld. It draait op de measte servers en Android-tillefoans.
+128	Windows dernêst
+129	By elke start kieze jo Shrimp of Windows.
+130	Programma's
+131	Windows-bestannen (.exe) wurkje hjir net. Programma's ynstallearje jo fan Shrimp Apps, en foar de measte bekende apps fine jo dêr in alternatyf.
+132	Wachtwurd foar wizigingen
+133	As jo programma's ynstallearje of wichtige ynstellingen wizigje, freget it systeem om jo wachtwurd. Dat is normaal en beskermet jo kompjûter.
+134	Jo bestannen
+135	Dokuminten, foto's en downloads stean yn de app Bestannen, yn jo thúsmap.
+136	Dêr fine jo ek it Windows-stasjon.
+137	Panko
+138	Docht der wat net mear nei in wiziging? Yn Panko kinne jo werom nei hoe't it earder wie.
+139	Cocktail
+140	Fernijingen, stjoerprogramma's en codecs op ien plak. Fernijingen wurde ynstallearre as jo opnij starte.
+141	Fluch sykje
+142	Druk op de Super-toets, dy mei it Windows-logo, om programma's, bestannen en ynstellingen te finen.
+143	Help
+144	Antwurden fine jo op de helpsiden fan Shrimp, yn de dokumintaasje fan GNOME en openSUSE en op mienskipsfora.
+145	De skiifwachtwurden komme net oerien
+146	Fier yn beide fjilden itselde wachtwurd yn. Sûnder kinne jo de kompjûter net starte, dus bewarje it op in feilich plak.
+147	De wachtwurden komme net oerien
+148	Fier yn beide fjilden itselde wachtwurd yn en besykje it opnij.
+149	Besykje it opnij
+150	Net genôch romte
+151	Der is net genôch romte op it stasjon foar Shrimp. Meitsje Windows lytser of kies in oar stasjon.
+152	Grutte wizigje
+153	Werom gean
+154	Ynstallaasje mislearre
+155	Der gie wat mis. Jo bestannen binne feilich. Jo kinne it opnij besykje.
+156	Ofslute
+157	Ferbining mislearre
+158	Kontrolearje it netwurkwachtwurd en besykje it opnij.
+159	Kontrolearje it wachtwurd foar netwurk {ssid} en besykje it opnij.
+160	Gjin ynternetferbining
+161	De programma's koenen net downloade wurde. Kontrolearje jo ferbining en besykje it opnij.
+162	Dokuminten en rekkenblêden
+163	E-mail
+164	Spultsjes
+165	Spultsjes fan Epic en GOG
+166	Tekenje
+167	Fideobewurking
+168	Grafysk
+169	Koade-editor
+170	Untwikkelomjouwing
+171	Films en muzyk
+172	Muzyk
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Kanaryske Eilannen
+180	Sydney
+181	Perth

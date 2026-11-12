@@ -1,0 +1,4 @@
+1	A prepaus d'aqueste ordenador
+3	Logicials
+4	Mesas a jorn
+15	Restauracion del sistèma

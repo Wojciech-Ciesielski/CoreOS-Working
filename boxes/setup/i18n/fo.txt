@@ -1,0 +1,181 @@
+1	Aftur
+2	Upplýsingar
+3	Shrimp-logo
+4	NVIDIA-drivarin gevur fullan førleika í spølum og grafiskum forritum. Opni drivarin er einfaldari, men seinni.
+5	(Mælt verður við)
+6	Næsta
+7	Hoppa um
+8	Ógilda
+9	Liðugt
+10	Víðkað
+11	Sjálvvirkandi
+12	Eingin
+13	Latum okkum gera Shrimp klárt á tínari telduni.
+14	Byrjað verður
+15	Vel mál
+16	Hvar ert tú?
+17	Vit seta tíðarøkið og dagfestingarsniðið.
+18	Vel knappaborðsuppsetan
+19	Royn lyklaborðsuppsetingina
+20	forritari
+21	skrivimaskina
+22	Drivi
+23	tómt
+24	Diskakrypting
+25	Av
+26	Á
+27	Diskaloyniorð
+28	Endurtak loyniorðið til diskin
+29	Hvar skal Shrimp installerast?
+30	Við síðuna av Windows
+31	Í staðin fyri Windows
+32	Windows verður strikað. Vit flyta fílurnar, sum tú goymdi, yvir í nýggja kervið.
+33	Tað ber ikki til at innleggja við síðuna av Windows, tí Windows-drivið er bronglað við BitLocker.
+34	Shrimp fer at nýta alt drivið {name}.
+35	Windows verður verandi á hinum drivinum.
+36	Býtt diskur
+37	Telda biður um hetta loyniorðið hvørja ferð hon byrjar. Uttan tað fært tú ikki dátur tínar aftur.
+38	Stovna eina kontu
+39	Tú fer at hava tað fyri at rita inn.
+40	Fult navn
+41	Brúkaranavn
+42	Loyniorð
+43	Vátta loyniorð
+44	Klárt at installera
+45	Einki broytist, fyrr enn tú trýstir á “Innlegg”.
+46	Mál
+47	Øki
+48	Knappaborð
+49	Drivi
+50	Installatión
+51	Alt drivið
+52	Býtt diskur
+53	Windows {win} · Shrimp {shrimp}
+54	Konta
+55	Brongling
+56	Installera
+57	Installerar Shrimp
+58	Installerar
+59	Fyrireiki drivið
+60	Innleggi kervið
+61	Endurskapi fílur
+62	Umleið {min} min eftir
+63	Ein løta
+64	Installatiónin er liðug
+65	Byrja telduna av nýggjum fyri at gera liðugt.
+66	Byrja av nýggjum
+67	Halló, {name}
+68	tú
+69	Lat okkum gera uppsetingina lidna. Tað tekur bara eina løtu.
+70	Tengi til eitt net
+71	Loyniorð til netið {ssid}
+72	Tryggjað
+73	Opið
+74	Opið net. Onnur kunnu síggja, hvat tú gert á tí.
+75	Fjalt net
+76	Skriva upplýsingarnar um eitt net, sum ikki sæst á listanum.
+77	Navn á neti
+78	Trygd
+79	Tengi
+80	IP-adressa
+81	DNS-ambætari
+82	Proxy
+83	Manuelt
+84	Vel útsjónd
+85	Ljóst
+86	Myrkt
+87	Tú kanst altíð broyta hetta í Stillingum.
+88	Vel ein lit
+89	Blátt
+90	Grønblátt
+91	Grønt
+92	Gult
+93	Appilsingult
+94	Reytt
+95	Ljósareytt
+96	Fjólublátt
+97	Grátt
+98	Mynd og ljóð uttan trupulleikar
+99	Vit innleggja teir drivarar og kodekkir, tú hevur brúk fyri, so sjónfílur og spøl virka beinanvegin.
+100	Installera
+101	Eg geri tað seinni
+102	NVIDIA-grafikkort
+103	Vit funnu eitt {name}-kort.
+104	NVIDIA-drivari
+105	Opin drivari
+106	Besti førleiki í spølum og grafiskum forritum.
+107	Einfaldari, men minni kraftmikil.
+108	Hvussu nýtir tú teldu tína?
+109	Vit innleggja tey forrit, tú hevur mest brúk fyri.
+110	Arbeiði og lestur
+111	Dentlar
+112	Skapan
+113	Forritan
+114	Fjølmiðlar
+115	Tíni forrit úr Windows
+116	Vit funnu tey á teldu tíni. Vel, hvørji skulu innleggjast.
+117	Uppskotin forrit
+118	Vel, hvørji skulu innleggjast.
+119	Einki valt.
+120	Innleggi forrit
+121	Taki niður og innleggi
+122	Alt er klárt
+123	Góða fyrimuning við Shrimp.
+124	Eg vil vita meira
+125	{n} av {total}
+126	Shrimp er Linux
+127	Linux er eitt frítt kervi, gjørt av fólki úr øllum heiminum. Tað koyrir flestu ambætarar og Android-telefonir.
+128	Windows við síðuna av
+129	Hvørja ferð telda byrjar, velur tú Shrimp ella Windows.
+130	Forrit
+131	Windows-fílur (.exe) virka ikki her. Forrit innleggur tú úr Shrimp Apps, og fyri flestu kend forrit finnur tú eitt líknandi har.
+132	Loyniorð til broytingar
+133	Tá ið tú innleggur forrit ella broytir týdningarmiklar stillingar, biður kervið um loyniorð títt. Tað er vanligt og verjir telduna.
+134	Tínar fílur
+135	Skjøl, myndir og niðurtøkur eru í forritinum Fílur, í heimamappu tíni.
+136	Har finnur tú eisini Windows-drivið.
+137	Panko
+138	Steðgaði okkurt at virka eftir eina broyting? Í Panko kanst tú fara aftur til, hvussu tað var áðrenn.
+139	Cocktail
+140	Dagføringar, drivarar og kodekkir á einum stað. Dagføringar verða innlagdar, tá ið tú endurbyrjar.
+141	Skjót leiting
+142	Trýst á Super-knøttin, tann við Windows-logoinum, fyri at finna forrit, fílur og stillingar.
+143	Hjálp
+144	Svar finnur tú á hjálparsíðunum hjá Shrimp, í skjalfestingini hjá GNOME og openSUSE og á felagsskapspallum.
+145	Diskaloyniorðini samsvara ikki
+146	Skriva sama loyniorð í báðar teigarnar. Tú kanst ikki byrja telduna uttan tað, so goym tað á tryggum stað.
+147	Loyniorðini samsvara ikki
+148	Skriva sama loyniorð í báðar teigarnar og royn aftur.
+149	Royn aftur
+150	Ikki nóg nógv pláss
+151	Ikki nóg mikið av plássi á drivinum til Shrimp. Ger Windows minni ella vel eitt annað drev.
+152	Broyt stødd
+153	Far aftur
+154	Installatiónin miseydnaðist
+155	Okkurt fór skeivt. Fílur tínar eru tryggar. Tú kanst royna aftur.
+156	Gevst
+157	Kundi ikki sambinda
+158	Kanna loyniorðið til netið og royn aftur.
+159	Kanna loyniorðið til netið {ssid} og royn aftur.
+160	Eingin alnetsamband
+161	Kundi ikki taka forritini niður. Kanna sambandið og royn aftur.
+162	Skjøl og rokniark
+163	Teldupostur
+164	Spøl
+165	Spøl frá Epic og GOG
+166	Tekning
+167	Sjónfílu-viðgerð
+168	Grafikkur
+169	Koturitil
+170	Menningarumhvørvi
+171	Filmar og tónleikur
+172	Tónleikur
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Kanaríoyggjar
+180	Sydney
+181	Perth

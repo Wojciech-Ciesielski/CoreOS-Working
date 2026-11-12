@@ -1,0 +1,2 @@
+1	Arvuti seaded
+2	Shrimp käivitub %d s pärast

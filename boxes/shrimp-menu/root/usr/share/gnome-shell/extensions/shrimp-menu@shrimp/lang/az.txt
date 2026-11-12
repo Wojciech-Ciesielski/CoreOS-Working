@@ -1,0 +1,4 @@
+1	Bu kompüter haqqında
+3	Proqramlar
+4	Yeniləmələr
+15	Sistemin bərpası

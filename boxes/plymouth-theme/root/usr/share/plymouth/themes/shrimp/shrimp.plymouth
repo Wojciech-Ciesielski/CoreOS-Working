@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Shrimp
+Description=Shrimp: logo i pasek startu na czarnym tle
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/shrimp
+ScriptFile=/usr/share/plymouth/themes/shrimp/shrimp.script

@@ -1,0 +1,29 @@
+#!/bin/sh
+# Shrimp Linu(x): bramka dla nouveau (modprobe.d: install nouveau /usr/libexec/shrimp-gpu-gate).
+# Karta NVIDIA od Turinga (identyfikator PCI >= 0x1e00) i zainstalowany oficjalny sterownik:
+# nouveau się nie ładuje, kartę obsługuje nvidia. Starsze karty: zwykłe ładowanie nouveau.
+# Parametr jądra shrimp.nouveau=1 zawsze ładuje nouveau (awaryjnie, gdy nvidia zawiedzie).
+# Tylko wbudowane polecenia sh, bo działa też w initrd.
+force=0
+read -r cmdline < /proc/cmdline
+case " $cmdline " in *" shrimp.nouveau=1 "*) force=1 ;; esac
+
+if [ "$force" = 0 ]; then
+  for d in /sys/bus/pci/devices/*; do
+    [ -r "$d/vendor" ] || continue
+    read -r vendor < "$d/vendor"
+    [ "$vendor" = 0x10de ] || continue
+    read -r class < "$d/class"
+    case "$class" in 0x03*) ;; *) continue ;; esac
+    read -r device < "$d/device"
+    if [ $((device)) -ge $((0x1e00)) ]; then
+      # Turing+: nvidia (moduł z /lib/modules systemu; w initrd go nie ma, więc tam po prostu
+      # nie ładujemy nouveau, obraz do startu GNOME daje simpledrm/efifb)
+      exit 0
+    fi
+  done
+fi
+for m in /usr/sbin/modprobe /sbin/modprobe /usr/bin/modprobe; do
+  [ -x "$m" ] && exec "$m" --ignore-install nouveau "$@"
+done
+exit 1

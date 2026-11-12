@@ -1,0 +1,181 @@
+1	Enrere
+2	Informació
+3	Logotip de Shrimp
+4	El controlador de NVIDIA ofereix tot el rendiment en jocs i programes gràfics. El controlador obert és més senzill però més lent.
+5	(Recomanat)
+6	Següent
+7	Omet
+8	Cancel·la
+9	Fet
+10	Avançat
+11	Automàtic
+12	Cap
+13	Preparem Shrimp al teu ordinador.
+14	Comencem
+15	Tria un idioma
+16	On ets?
+17	Establirem el fus horari i el format de data.
+18	Tria una disposició de teclat
+19	Prova la disposició
+20	programador
+21	màquina d'escriure
+22	Unitat
+23	buida
+24	Xifrat del disc
+25	Desactivat
+26	Activat
+27	Contrasenya del disc
+28	Repeteix la contrasenya del disc
+29	On s'ha d'instal·lar Shrimp?
+30	Al costat de Windows
+31	En lloc de Windows
+32	S'eliminarà Windows. Mourem els fitxers que hagis conservat al sistema nou.
+33	No es pot instal·lar al costat de Windows perquè la unitat de Windows està xifrada amb BitLocker.
+34	Shrimp farà servir tota la unitat {name}.
+35	Windows es queda a l'altra unitat.
+36	Divisió del disc
+37	L'ordinador demanarà esta contrasenya a cada arrencada. Sense ella no podràs recuperar les teves dades.
+38	Crea un compte
+39	La necessitaràs per iniciar la sessió.
+40	Nom complet
+41	Nom d'usuari
+42	Contrasenya
+43	Confirma la contrasenya
+44	A punt per instal·lar
+45	No canviarà res fins que facis clic a «Instal·la».
+46	Idioma
+47	Regió
+48	Teclat
+49	Unitat
+50	Instal·lació
+51	Tota la unitat
+52	Divisió del disc
+53	Windows {win} · Shrimp {shrimp}
+54	Compte
+55	Xifrat
+56	Instal·la
+57	S'està instal·lant Shrimp
+58	S'està instal·lant
+59	S'està preparant la unitat
+60	S'està instal·lant el sistema
+61	S'estan restaurant els fitxers
+62	Queden uns {min} min
+63	Un moment
+64	Instal·lació completada
+65	Reinicia l'ordinador per acabar.
+66	Reinicia
+67	Hola, {name}
+68	tu
+69	Acabem la configuració. Només trigarà un moment.
+70	Connecta't a una xarxa
+71	Contrasenya de la xarxa {ssid}
+72	Segura
+73	Oberta
+74	Xarxa oberta. Altres persones poden veure què hi fas.
+75	Xarxa oculta
+76	Introdueix les dades d'una xarxa que no apareix a la llista.
+77	Nom de la xarxa
+78	Seguretat
+79	Connecta
+80	Adreça IP
+81	Servidor DNS
+82	Servidor intermediari
+83	Manual
+84	Tria un aspecte
+85	Clar
+86	Fosc
+87	Sempre ho pots canviar a Configuració.
+88	Tria un color
+89	Blau
+90	Turquesa
+91	Verd
+92	Groc
+93	Taronja
+94	Vermell
+95	Rosa
+96	Porpra
+97	Gris
+98	Imatge i so sense complicacions
+99	Instal·larem els controladors i còdecs necessaris perquè els vídeos i els jocs funcionin de seguida.
+100	Instal·la
+101	Ho faré més tard
+102	Targeta gràfica NVIDIA
+103	Hem trobat una targeta {name}.
+104	Controlador de NVIDIA
+105	Controlador obert
+106	El millor rendiment en jocs i programes gràfics.
+107	Més senzill d'usar, però menys potent.
+108	Com fas servir l'ordinador?
+109	Instal·larem els programes que més necessites.
+110	Feina i estudis
+111	Jocs
+112	Creativitat
+113	Programació
+114	Multimèdia
+115	Els teus programes de Windows
+116	Els hem trobat al teu ordinador. Tria quins vols instal·lar.
+117	Programes suggerits
+118	Tria quins vols instal·lar.
+119	No hi ha res seleccionat.
+120	S'estan instal·lant programes
+121	S'està baixant i instal·lant
+122	Tot a punt
+123	Gaudeix de Shrimp.
+124	Vull saber-ne més
+125	{n} de {total}
+126	Shrimp és Linux
+127	Linux és un sistema lliure fet per persones de tot el món. Fa funcionar la majoria de servidors i telèfons Android.
+128	Windows al costat
+129	A cada arrencada triaràs Shrimp o Windows.
+130	Programes
+131	Els fitxers .exe de Windows no s'executen aquí. Els programes s'instal·len des de Shrimp Apps, i per a la majoria d'aplicacions conegudes hi trobaràs un equivalent.
+132	Contrasenya per als canvis
+133	Quan instal·lis programes o canviïs opcions importants, el sistema et demanarà la contrasenya. És normal i protegeix l'ordinador.
+134	Els teus fitxers
+135	Els documents, les fotos i les baixades són a l'aplicació Fitxers, a la teva carpeta personal.
+136	Allà també trobaràs la unitat de Windows.
+137	Panko
+138	Alguna cosa ha deixat de funcionar després d'un canvi? A Panko pots tornar a com estava abans.
+139	Cocktail
+140	Actualitzacions, controladors i còdecs en un sol lloc. Les actualitzacions s'instal·len en reiniciar.
+141	Cerca ràpida
+142	Prem la tecla Súper, la del logotip de Windows, per trobar programes, fitxers i opcions.
+143	Ajuda
+144	Trobaràs respostes a les pàgines d'ajuda de Shrimp, a la documentació de GNOME i openSUSE i als fòrums de la comunitat.
+145	Les contrasenyes del disc no coincideixen
+146	Escriu la mateixa contrasenya als dos camps. Sense ella l'ordinador no arrenca, així que guarda-la en un lloc segur.
+147	Les contrasenyes no coincideixen
+148	Escriu la mateixa contrasenya als dos camps i torna-ho a provar.
+149	Torna-ho a provar
+150	No hi ha prou espai
+151	No hi ha prou espai a la unitat per a Shrimp. Fes Windows més petit o tria una altra unitat.
+152	Canvia la mida
+153	Enrere
+154	La instal·lació ha fallat
+155	Alguna cosa ha anat malament. Els teus fitxers estan segurs. Ho pots tornar a provar.
+156	Surt
+157	No s'ha pogut connectar
+158	Comprova la contrasenya de la xarxa i torna-ho a provar.
+159	Comprova la contrasenya de la xarxa {ssid} i torna-ho a provar.
+160	No hi ha connexió a Internet
+161	No s'han pogut baixar els programes. Comprova la connexió i torna-ho a provar.
+162	Documents i fulls de càlcul
+163	Correu electrònic
+164	Jocs
+165	Jocs d'Epic i GOG
+166	Dibuix
+167	Edició de vídeo
+168	Gràfics
+169	Editor de codi
+170	Entorn de desenvolupament
+171	Pel·lícules i música
+172	Música
+173	Nova York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Illes Canàries
+180	Sydney
+181	Perth

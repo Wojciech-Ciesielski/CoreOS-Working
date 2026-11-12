@@ -1,0 +1,181 @@
+1	Atrás
+2	Información
+3	Logotipu de Shrimp
+4	El controlador de NVIDIA da'l rendimientu completu en xuegos y programes gráficos. El controlador abiertu ye más cenciellu, pero más lentu.
+5	(Aconséyase)
+6	Siguiente
+7	Saltar
+8	Encaboxar
+9	Fecho
+10	Avanzao
+11	Automáticu
+12	Dengún
+13	Preparemos Shrimp nel to ordenador.
+14	Entamemos
+15	Escueye una llingua
+16	¿Ú tas?
+17	Configuraremos el fusu horariu y el formatu de la data.
+18	Escueye una distribución de tecláu
+19	Prueba la distribución
+20	programador
+21	máquina d'escribir
+22	Unidá
+23	baleru
+24	Cifráu del discu
+25	Apagáu
+26	Prendíu
+27	Contraseña del discu
+28	Repite la contraseña del discu
+29	¿Ú s'instala Shrimp?
+30	Al par de Windows
+31	N'arróu de Windows
+32	Va desaniciase Windows. Vamos mover los ficheros que guardasti al sistema nuevu.
+33	Nun ye posible instalar xunto a Windows porque la unidá de Windows ta cifrada con BitLocker.
+34	Shrimp va usar tola unidá {name}.
+35	Windows queda na otra unidá.
+36	División del discu
+37	L'ordenador va pidir esta contraseña en cada arranque. Ensin ella nun pues recuperar los tos datos.
+38	Crea una cuenta
+39	Vas precisala p'aniciar sesión.
+40	Nome completu
+41	Nome d'usuariu
+42	Contraseña
+43	Confirma la contraseña
+44	Preste pa instalar
+45	Nun cambia nada hasta que calques «Instalar».
+46	Llingua
+47	Rexón
+48	Tecláu
+49	Unidá
+50	Instalación
+51	Unidá entera
+52	División del discu
+53	Windows {win} · Shrimp {shrimp}
+54	Cuenta
+55	Cifráu
+56	Instalar
+57	Instalando Shrimp
+58	Instalando
+59	Preparando la unidá
+60	Instalando'l sistema
+61	Restaurando ficheros
+62	Queden unos {min} min
+63	Un momentu
+64	Instalación completada
+65	Reanicia l'ordenador pa acabar.
+66	Reaniciar
+67	Hola, {name}
+68	tú
+69	Vamos acabar la configuración. Namás va tardar un momentu.
+70	Conéctate a una rede
+71	Contraseña de la rede {ssid}
+72	Segura
+73	Abierta
+74	Rede abierta. Otres persones puen ver lo que faes nella.
+75	Rede anubrida
+76	Introduz los datos d'una rede que nun apaez na llista.
+77	Nome de la rede
+78	Seguranza
+79	Conectar
+80	Direición IP
+81	Sirvidor DNS
+82	Proxy
+83	Manual
+84	Escueyi una aparencia
+85	Claru
+86	Escuru
+87	Siempres pues camudalo na Configuración.
+88	Escueyi un color
+89	Azul
+90	Verde azulao
+91	Verde
+92	Mariellu
+93	Naranxa
+94	Colloráu
+95	Rosa
+96	Moráu
+97	Gris
+98	Imaxe y soníu ensin problemes
+99	Vamos instalar los controladores y códecs que precises pa que los vídeos y los xuegos funcionen darréu.
+100	Instalar
+101	Fadréilo dempués
+102	Tarxeta gráfica NVIDIA
+103	Atopamos una tarxeta {name}.
+104	Controlador de NVIDIA
+105	Controlador abiertu
+106	El meyor rendimientu en xuegos y programes gráficos.
+107	Más cenciellu d'usar, pero menos potente.
+108	¿Cómo uses l'ordenador?
+109	Vamos instalar los programes que más precises.
+110	Trabayu y estudiu
+111	Xuegos
+112	Creatividá
+113	Programación
+114	Multimedia
+115	Los tos programes de Windows
+116	Atopámoslos nel to ordenador. Escueyi cuálos instalar.
+117	Programes suxeríos
+118	Escueyi cuálos instalar.
+119	Nun hai nada esbilláu.
+120	Instalando programes
+121	Baxando ya instalando
+122	Too preste
+123	Esfruta de Shrimp.
+124	Quiero saber más
+125	{n} de {total}
+126	Shrimp ye Linux
+127	Linux ye un sistema llibre fechu por persones de tol mundu. Fai funcionar la mayoría de sirvidores y teléfonos Android.
+128	Windows al llau
+129	En cada arranque vas escoyer Shrimp o Windows.
+130	Programes
+131	Los ficheros .exe de Windows nun funcionen equí. Los programes instálense dende Shrimp Apps, y pa la mayoría d'aplicaciones conocíes vas atopar ellí un equivalente.
+132	Contraseña pa los cambeos
+133	Cuando instales programes o camudes axustes importantes, el sistema va pidite la contraseña. Ye normal y protexe l'ordenador.
+134	Los tos ficheros
+135	Los documentos, les fotos y les descargues tán na aplicación Ficheros, na to carpeta personal.
+136	Ellí vas atopar tamién la unidá de Windows.
+137	Panko
+138	¿Dexó de funcionar daqué dempués d'un cambéu? En Panko pues volver a cómo taben les coses enantes.
+139	Cocktail
+140	Anovamientos, controladores y códecs nun sitiu. Los anovamientos instálense al reaniciar.
+141	Busca rápida
+142	Primi la tecla Súper, la del logotipu de Windows, p'atopar programes, ficheros y axustes.
+143	Ayuda
+144	Vas atopar rempuestes nes páxines d'ayuda de Shrimp, na documentación de GNOME y openSUSE y nos foros de la comunidá.
+145	Les contraseñes del discu nun concuerden
+146	Introduz la mesma contraseña nos dos campos. Ensin ella nun pues aniciar l'ordenador, asina que guárdala nun sitiu seguru.
+147	Les contraseñes nun concuerden
+148	Introduz la mesma contraseña nos dos campos y volvi tentalo.
+149	Intentar otra vegada
+150	Nun hai espaciu abondu
+151	Nun hai espaciu abondo na unidá pa Shrimp. Fai Windows más pequeñu o escueyi otra unidá.
+152	Camudar el tamañu
+153	Volver
+154	Falló la instalación
+155	Daqué salió mal. Los tos ficheros tán a salvo. Pues volver tentalo.
+156	Colar
+157	Nun se pudo coneutar
+158	Comprueba la contraseña de la rede y volvi tentalo.
+159	Comprueba la contraseña de la rede {ssid} y volvi tentalo.
+160	Ensin conexón a internet
+161	Nun se pudieron baxar los programes. Comprueba la conexón y volvi tentalo.
+162	Documentos y fueyes de cálculu
+163	Corréu
+164	Xuegos
+165	Xuegos d'Epic y GOG
+166	Dibuxu
+167	Edición de vídeo
+168	Gráficos
+169	Editor de códigu
+170	Entornu de desendolcu
+171	Películes y música
+172	Música
+173	Nueva York
+174	Chicago
+175	Denver
+176	Los Ángeles
+177	Toronto
+178	Vancouver
+179	Islles Canaries
+180	Sydney
+181	Perth

@@ -1,0 +1,9 @@
+# id	klucz	angielski (wzorzec); format jak i18n/*/_keys.tsv.
+# Tutaj są tylko teksty, których GNOME nie ma we własnych tłumaczeniach. Pozostałe pozycje menu
+# biorą tekst z GNOME (we wszystkich jego językach): Ustawienia, Uśpij, Uruchom ponownie…,
+# Wyłącz…, Zablokuj ekran, Wyloguj… z gnome-shell, a narzędzia systemowe z nazw programów.
+# Wycofane id (nie używać ponownie): 2, 5–14.
+1	menu.about	About This Computer
+3	menu.software	Software
+4	menu.updates	Updates
+15	menu.restore	System Restore

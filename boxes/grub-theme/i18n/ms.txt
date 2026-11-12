@@ -1,0 +1,2 @@
+1	Tetapan komputer
+2	Shrimp akan bermula dalam %d s

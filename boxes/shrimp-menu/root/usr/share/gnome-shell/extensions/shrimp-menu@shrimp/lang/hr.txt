@@ -1,0 +1,4 @@
+1	O ovom računalu
+3	Softver
+4	Ažuriranja
+15	Vraćanje sustava

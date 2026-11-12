@@ -1,0 +1,2 @@
+1	Kompiuterio nustatymai
+2	„Shrimp“ paleisis po %d s

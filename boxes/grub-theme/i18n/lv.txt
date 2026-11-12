@@ -1,0 +1,2 @@
+1	Datora iestatījumi
+2	Shrimp startēs pēc %d s

@@ -1,0 +1,181 @@
+1	Reen
+2	Informoj
+3	Emblemo de Shrimp
+4	La pelilo de NVIDIA donas plenan rendimenton en ludoj kaj grafikaj programoj. La malferma pelilo estas pli simpla, sed pli malrapida.
+5	(Rekomendata)
+6	Sekva
+7	Preterlasi
+8	Nuligi
+9	Farite
+10	Altnivela
+11	Aŭtomata
+12	Neniu
+13	Ni pretigu Shrimp en via komputilo.
+14	Ni komencu
+15	Elektu lingvon
+16	Kie vi estas?
+17	Ni agordos la horzonon kaj la datformon.
+18	Elektu klavararanĝon
+19	Provu la aranĝon
+20	programisto
+21	skribmaŝino
+22	Disko
+23	malplena
+24	Ĉifrado de disko
+25	Malŝaltita
+26	Ŝaltita
+27	Pasvorto de disko
+28	Ripetu la diskan pasvorton
+29	Kie instali Shrimp?
+30	Apud Windows
+31	Anstataŭ Windows
+32	Windows estos forigita. Ni movos la dosierojn, kiujn vi konservis, al la nova sistemo.
+33	Instali apud Windows ne eblas, ĉar la Windows-disko estas ĉifrita per BitLocker.
+34	Shrimp uzos la tutan diskon {name}.
+35	Windows restas sur la alia disko.
+36	Dividi la diskon
+37	La komputilo petos ĉi tiun pasvorton ĉe ĉiu starto. Sen ĝi vi ne povas reakiri viajn datumojn.
+38	Kreu konton
+39	Vi bezonos ĝin por ensaluti.
+40	Plena nomo
+41	Uzantnomo
+42	Pasvorto
+43	Konfirmu pasvorton
+44	Preta por instalo
+45	Nenio ŝanĝiĝas ĝis vi alklakos «Instali».
+46	Lingvo
+47	Regiono
+48	Klavaro
+49	Disko
+50	Instalado
+51	Tuta disko
+52	Dividi la diskon
+53	Windows {win} · Shrimp {shrimp}
+54	Konto
+55	Ĉifrado
+56	Instali
+57	Instalado de Shrimp
+58	Instalado
+59	Preparado de la disko
+60	Instalado de la sistemo
+61	Restarigo de dosieroj
+62	Restas ĉirkaŭ {min} min
+63	Momenton
+64	Instalado finita
+65	Restartigu la komputilon por fini.
+66	Restartigi
+67	Saluton, {name}
+68	amiko
+69	Ni finu la agordon. Ĝi daŭros nur momenton.
+70	Konektiĝu al reto
+71	Pasvorto por la reto {ssid}
+72	Sekurigita
+73	Malferma
+74	Malferma reto. Aliaj povas vidi, kion vi faras en ĝi.
+75	Kaŝita reto
+76	Enigu la detalojn de reto, kiu ne aperas en la listo.
+77	Reta nomo
+78	Sekureco
+79	Konekti
+80	IP-adreso
+81	DNS-servilo
+82	Prokurilo
+83	Permana
+84	Elektu aspekton
+85	Hela
+86	Malhela
+87	Vi ĉiam povas ŝanĝi tion en Agordoj.
+88	Elektu koloron
+89	Blua
+90	Verdblua
+91	Verda
+92	Flava
+93	Oranĝa
+94	Ruĝa
+95	Rozkolora
+96	Purpura
+97	Griza
+98	Bildo kaj sono sen problemoj
+99	Ni instalos la pelilojn kaj kodekojn, kiujn vi bezonas, por ke filmetoj kaj ludoj funkciu tuj.
+100	Instali
+101	Mi faros tion poste
+102	Grafika karto NVIDIA
+103	Ni trovis karton {name}.
+104	Pelilo de NVIDIA
+105	Malferma pelilo
+106	Plej bona rendimento en ludoj kaj grafikaj programoj.
+107	Pli simpla, sed malpli potenca.
+108	Kiel vi uzas vian komputilon?
+109	Ni instalos la programojn, kiujn vi plej bezonas.
+110	Laboro kaj studado
+111	Ludoj
+112	Kreemo
+113	Programado
+114	Plurmedio
+115	Viaj programoj el Windows
+116	Ni trovis ilin en via komputilo. Elektu, kiujn instali.
+117	Proponataj programoj
+118	Elektu, kiujn instali.
+119	Nenio elektita.
+120	Instalado de programoj
+121	Elŝutado kaj instalado
+122	Ĉio preta
+123	Ĝuu Shrimp.
+124	Mi volas scii pli
+125	{n} el {total}
+126	Shrimp estas Linukso
+127	Linukso estas libera sistemo farita de homoj el la tuta mondo. Ĝi funkciigas plejparton de serviloj kaj Android-telefonoj.
+128	Windows apude
+129	Ĉe ĉiu starto vi elektos Shrimp aŭ Windows.
+130	Programoj
+131	Windows-dosieroj .exe ne funkcias ĉi tie. Programojn vi instalas el Shrimp Apps, kaj por plejparto de konataj aplikaĵoj vi trovos tie ekvivalenton.
+132	Pasvorto por ŝanĝoj
+133	Kiam vi instalas programojn aŭ ŝanĝas gravajn agordojn, la sistemo petos vian pasvorton. Tio estas normala kaj protektas vian komputilon.
+134	Viaj dosieroj
+135	Dokumentoj, fotoj kaj elŝutaĵoj troviĝas en la aplikaĵo Dosieroj, en via hejma dosierujo.
+136	Tie vi trovos ankaŭ la Windows-diskon.
+137	Panko
+138	Ĉu io ĉesis funkcii post ŝanĝo? En Panko vi povas reveni al la stato de antaŭe.
+139	Cocktail
+140	Ĝisdatigoj, peliloj kaj kodekoj en unu loko. Ĝisdatigoj instaliĝas, kiam vi restartigas.
+141	Rapida serĉo
+142	Premu la klavon Super, tiun kun la emblemo de Windows, por trovi programojn, dosierojn kaj agordojn.
+143	Helpo
+144	Respondojn vi trovos en la helpaj paĝoj de Shrimp, en la dokumentaro de GNOME kaj openSUSE kaj en komunumaj forumoj.
+145	La diskaj pasvortoj ne kongruas
+146	Enigu la saman pasvorton en ambaŭ kampoj. Sen ĝi vi ne povas starti la komputilon, do konservu ĝin en sekura loko.
+147	La pasvortoj ne kongruas
+148	Enigu la saman pasvorton en ambaŭ kampoj kaj reprovu.
+149	Provu denove
+150	Ne sufiĉas spaco
+151	Ne estas sufiĉe da spaco sur la disko por Shrimp. Malgrandigu Windows aŭ elektu alian diskon.
+152	Ŝanĝi la grandon
+153	Reen
+154	Instalado malsukcesis
+155	Io misfunkciis. Viaj dosieroj estas sekuraj. Vi povas reprovi.
+156	Eliri
+157	Ne eblis konektiĝi
+158	Kontrolu la retan pasvorton kaj reprovu.
+159	Kontrolu la pasvorton por la reto {ssid} kaj reprovu.
+160	Neniu interreta konekto
+161	Ne eblis elŝuti la programojn. Kontrolu vian konekton kaj reprovu.
+162	Dokumentoj kaj kalkultabeloj
+163	Retpoŝto
+164	Ludoj
+165	Ludoj de Epic kaj GOG
+166	Desegnado
+167	Videoredaktado
+168	Grafiko
+169	Kodredaktilo
+170	Programmedio
+171	Filmoj kaj muziko
+172	Muziko
+173	Novjorko
+174	Ĉikago
+175	Denvero
+176	Los-Anĝeleso
+177	Toronto
+178	Vankuvero
+179	Kanarioj
+180	Sidnejo
+181	Perto

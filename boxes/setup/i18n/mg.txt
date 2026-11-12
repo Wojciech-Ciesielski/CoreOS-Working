@@ -1,0 +1,41 @@
+1	Miverina
+6	Manaraka
+7	Avela
+8	Foano
+9	Vita
+10	Mandroso
+11	Mandeha ho azy
+12	Tsy misy
+14	Andao hanomboka
+15	Fidio ny fiteny
+22	Kapila
+25	Tsy mandeha
+26	Mandeha
+29	Aiza no hapetraka ny Shrimp?
+30	Eo akaikin'ny Windows
+31	Handrisana ny Windows
+42	Teny miafina
+46	Fiteny
+47	Faritra
+48	Fanikiana
+49	Kapila
+50	Fametrahana
+56	Apetraho
+57	Mametraka ny Shrimp
+58	Mametraka
+63	Miandrasa kely
+64	Vita ny fametrahana
+66	Averina atomboka
+67	Salama, {name}
+79	Mifandray
+85	Mazava
+86	Maizina
+89	Manga
+91	Maitso
+92	Mavo
+94	Mena
+111	Lalao
+143	Fanampiana
+149	Andramo indray
+153	Miverina
+156	Hiala

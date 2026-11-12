@@ -1,0 +1,4 @@
+1	Informazions su chest computer
+3	Software
+4	Inzornaments
+15	Ripristin dal sisteme

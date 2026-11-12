@@ -1,0 +1,2 @@
+1	Roghainnean a' choimpiutair
+2	Thèid Shrimp a thòiseachadh an ceann %d s

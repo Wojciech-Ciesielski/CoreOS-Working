@@ -1,0 +1,181 @@
+1	Nazad
+2	Informacije
+3	Shrimp logo
+4	NVIDIA drajver daje punu snagu u igrama i grafičkim programima. Otvoreni drajver je jednostavniji, ali sporiji.
+5	(Preporučeno)
+6	Dalje
+7	Preskoči
+8	Otkaži
+9	Gotovo
+10	Napredno
+11	Automatski
+12	Ništa
+13	Pripremimo Shrimp na vašem računaru.
+14	Počnimo
+15	Odaberite jezik
+16	Gdje se nalazite?
+17	Postavit ćemo vremensku zonu i format datuma.
+18	Odaberite raspored tastature
+19	Isprobajte raspored
+20	programer
+21	pisaća mašina
+22	Disk
+23	prazno
+24	Šifriranje diska
+25	Isključeno
+26	Uključeno
+27	Lozinka diska
+28	Ponovite lozinku diska
+29	Gdje instalirati Shrimp?
+30	Pored Windowsa
+31	Umjesto Windowsa
+32	Windows će biti uklonjen. Fajlove koje ste zadržali prebacit ćemo na novi sistem.
+33	Instalacija pored Windowsa nije moguća jer je Windows disk šifriran BitLockerom.
+34	Shrimp će koristiti cijeli disk {name}.
+35	Windows ostaje na drugom disku.
+36	Podjela diska
+37	Računar će tražiti ovu lozinku pri svakom pokretanju. Bez nje ne možete vratiti svoje podatke.
+38	Napravite račun
+39	Trebat će vam za prijavu.
+40	Puno ime
+41	Korisničko ime
+42	Lozinka
+43	Potvrdite lozinku
+44	Spremno za instalaciju
+45	Ništa se neće promijeniti dok ne kliknete „Instaliraj”.
+46	Jezik
+47	Regija
+48	Tastatura
+49	Disk
+50	Instalacija
+51	Cijeli disk
+52	Podjela diska
+53	Windows {win} · Shrimp {shrimp}
+54	Račun
+55	Šifriranje
+56	Instaliraj
+57	Instaliranje sistema Shrimp
+58	Instaliranje
+59	Priprema diska
+60	Instaliranje sistema
+61	Vraćanje fajlova
+62	Preostalo oko {min} min
+63	Samo trenutak
+64	Instalacija je završena
+65	Ponovo pokrenite računar da završite.
+66	Ponovo pokreni
+67	Zdravo, {name}
+68	prijatelju
+69	Završimo postavljanje. Trajat će samo trenutak.
+70	Povežite se na mrežu
+71	Lozinka za mrežu {ssid}
+72	Zaštićeno
+73	Otvoreno
+74	Otvorena mreža. Drugi mogu vidjeti šta radite na njoj.
+75	Skrivena mreža
+76	Unesite podatke mreže koja nije prikazana na listi.
+77	Naziv mreže
+78	Sigurnost
+79	Poveži
+80	IP adresa
+81	DNS server
+82	Proxy
+83	Ručno
+84	Odaberite izgled
+85	Svijetla
+86	Tamna
+87	Ovo uvijek možete promijeniti u Postavkama.
+88	Odaberite boju
+89	Plava
+90	Tirkizna
+91	Zelena
+92	Žuta
+93	Narandžasta
+94	Crvena
+95	Roza
+96	Ljubičasta
+97	Siva
+98	Slika i zvuk bez muke
+99	Instalirat ćemo potrebne drajvere i kodeke kako bi videi i igre odmah radili.
+100	Instaliraj
+101	Uradit ću to kasnije
+102	NVIDIA grafička kartica
+103	Pronašli smo karticu {name}.
+104	NVIDIA drajver
+105	Otvoreni drajver
+106	Najbolje performanse u igrama i grafičkim programima.
+107	Jednostavniji za rad, ali slabiji.
+108	Kako koristite računar?
+109	Instalirat ćemo programe koji su vam najpotrebniji.
+110	Posao i učenje
+111	Igre
+112	Kreativnost
+113	Programiranje
+114	Multimedija
+115	Vaši programi iz Windowsa
+116	Pronašli smo ih na vašem računaru. Odaberite koje ćete instalirati.
+117	Predloženi programi
+118	Odaberite koje ćete instalirati.
+119	Ništa nije odabrano.
+120	Instaliranje programa
+121	Preuzimanje i instaliranje
+122	Sve je spremno
+123	Uživajte u sistemu Shrimp.
+124	Želim saznati više
+125	{n} od {total}
+126	Shrimp je Linux
+127	Linux je besplatan sistem koji prave ljudi iz cijelog svijeta. Na njemu radi većina servera i Android telefona.
+128	Windows pored
+129	Pri svakom pokretanju birate Shrimp ili Windows.
+130	Programi
+131	Windows .exe fajlovi ovdje ne rade. Programe instalirate iz Shrimp Apps, a za većinu poznatih aplikacija tamo ćete naći zamjenu.
+132	Lozinka za promjene
+133	Kada instalirate programe ili mijenjate važne postavke, sistem će tražiti vašu lozinku. To je normalno i štiti vaš računar.
+134	Vaši fajlovi
+135	Dokumenti, slike i preuzimanja nalaze se u aplikaciji Fajlovi, u vašem početnom folderu.
+136	Tamo ćete naći i Windows disk.
+137	Panko
+138	Nešto je prestalo raditi nakon promjene? U Panku se možete vratiti na stanje od prije.
+139	Cocktail
+140	Ažuriranja, drajveri i kodeci na jednom mjestu. Ažuriranja se instaliraju pri ponovnom pokretanju.
+141	Brza pretraga
+142	Pritisnite tipku Super, onu s Windows logom, da pronađete programe, fajlove i postavke.
+143	Pomoć
+144	Odgovore ćete naći na Shrimp stranicama pomoći, u GNOME i openSUSE dokumentaciji i na forumima zajednice.
+145	Lozinke diska se ne podudaraju
+146	Unesite istu lozinku u oba polja. Bez nje ne možete pokrenuti računar, pa je čuvajte na sigurnom mjestu.
+147	Lozinke se ne podudaraju
+148	Unesite istu lozinku u oba polja i pokušajte ponovo.
+149	Pokušaj ponovo
+150	Nema dovoljno prostora
+151	Na disku nema dovoljno prostora za Shrimp. Smanjite Windows ili odaberite drugi disk.
+152	Promijeni veličinu
+153	Nazad
+154	Instalacija nije uspjela
+155	Nešto nije uspjelo. Vaši fajlovi su sigurni. Možete pokušati ponovo.
+156	Izađi
+157	Povezivanje nije uspjelo
+158	Provjerite lozinku mreže i pokušajte ponovo.
+159	Provjerite lozinku za mrežu {ssid} i pokušajte ponovo.
+160	Nema internetske veze
+161	Preuzimanje programa nije uspjelo. Provjerite vezu i pokušajte ponovo.
+162	Dokumenti i tabele
+163	E-pošta
+164	Igre
+165	Igre s Epica i GOG-a
+166	Crtanje
+167	Montaža videa
+168	Grafika
+169	Uređivač koda
+170	Razvojno okruženje
+171	Filmovi i muzika
+172	Muzika
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Kanarska ostrva
+180	Sydney
+181	Perth

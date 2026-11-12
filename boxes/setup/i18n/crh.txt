@@ -1,0 +1,181 @@
+1	Keri
+2	Malümat
+3	Shrimp logotipi
+4	NVIDIA drayveri oyunlarda ve grafik programlarında tam quvet bere. Açıq drayver daa sade, amma daa yavaş.
+5	(Tevsiye etile)
+6	Soñraki
+7	Keçmek
+8	Ret etmek
+9	Azır
+10	İlerletilgen
+11	Avtomatik
+12	Yoq
+13	Shrimp-ni kompyuteriñizde azırlayıq.
+14	Başlayıq
+15	Til saylañız
+16	Qaydasıñız?
+17	Saat quşağını ve tarih formatını sazlarmız.
+18	Klaviatura tertibini saylañız
+19	Tertipni sınap baqıñız
+20	programmacı
+21	yazı maşinası
+22	Disk
+23	boş
+24	Disk şifrelemesi
+25	Söndürilgen
+26	Açıq
+27	Disk parolı
+28	Disk parolını tekrarlañız
+29	Shrimp ner'ge qurulsın?
+30	Windows yanına
+31	Windows yerine
+32	Windows silinecek. Saqlağan fayllarıñıznı yañı sistemağa avuştırırmız.
+33	Windows yanına qurmaq mümkün degil, çünki Windows diski BitLocker ile şifrelengen.
+34	Shrimp bütün {name} diskini qullanacaq.
+35	Windows diger diskte qala.
+36	Diskni bölmek
+37	Kompyuter er açılğanda bu parolnı soraycaq. Onsız malümatlarıñıznı keri ala bilmezsiñiz.
+38	Esap yaratıñız
+39	Kirmek içün kerek olacaq.
+40	Tolu adı
+41	Qullanıcı adı
+42	Parol
+43	Parolnı tasdıqlañız
+44	Qurmağa azır
+45	«Qur» basmağanıñızğa qadar iç bir şey deñişmez.
+46	Til
+47	Region
+48	Klaviatura
+49	Disk
+50	Qurmaq
+51	Bütün disk
+52	Diskni bölmek
+53	Windows {win} · Shrimp {shrimp}
+54	Esap
+55	Şifreleme
+56	Qur
+57	Shrimp quruluv
+58	Quruluv
+59	Disk azırlana
+60	Sistema qurula
+61	Fayllar keri ketirile
+62	Taqriben {min} daq qaldı
+63	Bir daqqa
+64	Quruluv tamamlandı
+65	Bitirmek içün kompyuterni yañıdan başlatıñız.
+66	Yañıdan başla
+67	Selâm, {name}
+68	dostum
+69	Sazlamanı bitireyik. Tek bir an alır.
+70	Şebekege bağlanıñız
+71	{ssid} şebekesiniñ parolı
+72	Qorçalanğan
+73	Açıq
+74	Açıq şebeke. Başqaları siz onda ne yapqanıñıznı köre bilir.
+75	Gizli şebeke
+76	Cedvelde körünmegen şebekeniñ malümatlarını kiritiñiz.
+77	Şebeke adı
+78	Telükesizlik
+79	Bağlan
+80	IP adresi
+81	DNS serveri
+82	Proksi
+83	Qolda
+84	Körüniş saylañız
+85	Açıq
+86	Qaranlıq
+87	Bunı er vaqıt Sazlamalarda deñiştire bilesiñiz.
+88	Renk saylañız
+89	Mavı
+90	Deñiz yeşili
+91	Yeşil
+92	Sarı
+93	Portaqal
+94	Qırmızı
+95	Pembe
+96	Mor
+97	Boz
+98	Problemasız resim ve ses
+99	Videolar ve oyunlar derhal çalışsın dep kerekli drayverlerni ve kodeklerni quracaqmız.
+100	Qur
+101	Soñra yaparım
+102	NVIDIA grafik kartası
+103	Bir {name} kartası taptıq.
+104	NVIDIA drayveri
+105	Açıq drayver
+106	Oyunlarda ve grafik programlarında eñ yahşı quvet.
+107	Daa sade, amma daa az quvetli.
+108	Kompyuteriñizni nasıl qullanasıñız?
+109	Eñ çoq kerek olğan programmalarnı quracaqmız.
+110	İş ve oquv
+111	Oyunlar
+112	Yaratıcılıq
+113	Programmalaştıruv
+114	Multimedia
+115	Windows-tan programmalarıñız
+116	Olarnı kompyuteriñizde taptıq. Qaysılarını qurmaq kerekligini saylañız.
+117	Tevsiye etilgen programmalar
+118	Qaysılarını qurmaq kerekligini saylañız.
+119	İç bir şey saylanmadı.
+120	Programmalar qurula
+121	Yüklene ve qurula
+122	Episi azır
+123	Shrimp-ten zevq alıñız.
+124	Daa çoq bilmege isteyim
+125	{total} içinden {n}
+126	Shrimp — bu Linux
+127	Linux bütün dünyadan insanlar tarafından yapılğan serbest bir sistema. Serverlerniñ ve Android telefonlarınıñ çoqusı onıñle çalışa.
+128	Yanında Windows
+129	Er açılğanda Shrimp ya da Windows saylaycaqsıñız.
+130	Programmalar
+131	Windows .exe fayllari mında çalışmay. Programmalarnı Shrimp Apps-tan qurasıñız, belli ilovelerniñ çoqusı içün anda bir alternativ tapacaqsıñız.
+132	Deñişiklikler içün parol
+133	Programma qurğanda ya da müim sazlamalarnı deñiştirgende sistema parolıñıznı soraycaq. Bu normal ve kompyuteriñizni qorçalay.
+134	Fayllarıñız
+135	Vesiqalar, fotoresimler ve yüklemeler Fayllar ilovesinde, ev papkañızda.
+136	Anda Windows diskini de tapacaqsıñız.
+137	Panko
+138	Bir deñişiklikten soñ bir şey çalışmay qaldımı? Panko-da evelki alına qaytıp olasıñız.
+139	Cocktail
+140	Yañartmalar, drayverler ve kodekler bir yerde. Yañartmalar yañıdan başlatqanda qurula.
+141	Tez qıdıruv
+142	Programmalarnı, fayllarnı ve sazlamalarnı tapmaq içün Super tuşuna, Windows logotipli olğanına basıñız.
+143	Yardım
+144	Cevaplarnı Shrimp yardım saifelerinde, GNOME ve openSUSE vesiqalarında ve cemiyet forumlarında tapacaqsıñız.
+145	Disk parolları kelişmey
+146	Eki saağa da aynı parolnı kiritiñiz. Onsız kompyuterni başlatıp olamazsıñız, onıñ içün telükesiz bir yerde saqlañız.
+147	Parollar kelişmey
+148	Eki saağa da aynı parolnı kiritiñiz ve kene deneñiz.
+149	Tekrar deneñiz
+150	Yer yetmey
+151	Diskte Shrimp içün yeterli yer yoq. Windows-nı kiçireytiñiz ya da diger diskni saylañız.
+152	Ölçüni deñiştir
+153	Keri
+154	Qurulmadı
+155	Bir şey yañlış ketti. Fayllarıñız telükesiz. Kene denep olasıñız.
+156	Çıqmaq
+157	Bağlanıp olamadı
+158	Şebeke parolını teşkeriñiz ve kene deneñiz.
+159	{ssid} şebekesiniñ parolını teşkeriñiz ve kene deneñiz.
+160	İnternet bağlantısı yoq
+161	Programmalar yüklenip olamadı. Bağlantıñıznı teşkeriñiz ve kene deneñiz.
+162	Vesiqalar ve cedveller
+163	E-poçta
+164	Oyunlar
+165	Epic ve GOG oyunları
+166	Resim
+167	Video tarir etüv
+168	Grafika
+169	Kod muarriri
+170	İnkişaf muiti
+171	Filmler ve muzıka
+172	Muzıka
+173	Nyu-York
+174	Çikago
+175	Denver
+176	Los-Anceles
+177	Toronto
+178	Vankuver
+179	Kanar adaları
+180	Sidney
+181	Pert

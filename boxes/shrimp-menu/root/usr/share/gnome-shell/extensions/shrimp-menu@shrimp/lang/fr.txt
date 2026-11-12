@@ -1,0 +1,4 @@
+1	À propos de cet ordinateur
+3	Logiciels
+4	Mises à jour
+15	Restauration du système

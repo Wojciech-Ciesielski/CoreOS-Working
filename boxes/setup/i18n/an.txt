@@ -1,0 +1,181 @@
+1	Enta zaga
+2	Información
+3	Logotipo de Shrimp
+4	O controlador de NVIDIA da o rendimiento completo en chuegos y programas graficos. O controlador ubierto ye mas simple, pero mas lento.
+5	(Recomendau)
+6	Siguient
+7	Blincar
+8	Cancelar
+9	Feito
+10	Abanzau
+11	Automatico
+12	Garra
+13	Imos a preparar Shrimp en o tuyo ordinador.
+14	Empecemos
+15	Tría una luenga
+16	¿An yes?
+17	Configuraremos o fuso horario y o formato d'a calendata.
+18	Tría una distribución de teclau
+19	Preba a distribución
+20	programador
+21	maquina d'escribir
+22	Unidat
+23	vuedo
+24	Cifrau d'o disco
+25	Desactivau
+26	Activau
+27	Clau d'o disco
+28	Repite a clau d'o disco
+29	Án se deve instalar Shrimp?
+30	Cheunto a Windows
+31	En cambio de Windows
+32	Se borrará Windows. Moveremos os fichers que has alzau ta o sistema nuevo.
+33	No se puede instalar chunto a Windows porque a unidat de Windows ye cifrada con BitLocker.
+34	Shrimp fará servir tota a unidat {name}.
+35	Windows se queda en l'atra unidat.
+36	División d'o disco
+37	L'ordinador te demandará esta clau cada vegada que se encienda. Sin ella no podrás recuperar os tuyos datos.
+38	Creya una cuenta
+39	La te caldrá ta encetar sesión.
+40	Nombre completo
+41	Nombre d'usuario
+42	Clau
+43	Confirma a clau
+44	Presto ta instalar
+45	No cambia cosa dica que faigas clic en «Instalar».
+46	Luenga
+47	Rechión
+48	Teclau
+49	Unidat
+50	Instalación
+51	Unidat entera
+52	División d'o disco
+53	Windows {win} · Shrimp {shrimp}
+54	Cuenta
+55	Cifrau
+56	Instalar
+57	Instalando Shrimp
+58	Instalando
+59	Preparando a unidat
+60	Instalando o sistema
+61	Restaurando os fichers
+62	Quedan bells {min} min
+63	Un momento
+64	Instalación completada
+65	Reinicia l'ordinador ta rematar.
+66	Reiniciar
+67	Hola, {name}
+68	tú
+69	Imos a rematar a configuración. Nomás tardará un inte.
+70	Connecta-te a una ret
+71	Clau d'a ret {ssid}
+72	Segura
+73	Ubierta
+74	Ret ubierta. Atras personas pueden veyer lo que fas en ella.
+75	Ret amagada
+76	Escribe os datos d'una ret que no amaneixe en a lista.
+77	Nombre d'a ret
+78	Seguranza
+79	Connectar
+80	Adreza IP
+81	Servidor DNS
+82	Proxy
+83	Manual
+84	Tría una aparencia
+85	Claro
+86	Escuro
+87	Siempre puetz cambiar-lo en a Configuración.
+88	Tría una color
+89	Azul
+90	Verde azulenco
+91	Verde
+92	Amariello
+93	Narancha
+94	Royo
+95	Rosa
+96	Morada
+97	Grisa
+98	Imachen y son sin problemas
+99	Instalaremos os controladors y códecs que te calen ta que os videos y os chuegos funcionen de camín.
+100	Instalar
+101	Ya lo feré mas tarde
+102	Tarcheta grafica NVIDIA
+103	Hemos trobau una tarcheta {name}.
+104	Controlador de NVIDIA
+105	Controlador ubierto
+106	O millor rendimiento en chuegos y programas graficos.
+107	Mas simple, pero menos potent.
+108	¿Cómo fas servir l'ordinador?
+109	Instalaremos os programas que mas te calen.
+110	Treballo y estudio
+111	Chuegos
+112	Creatividat
+113	Programación
+114	Multimedia
+115	Os tuyos programas de Windows
+116	Los hemos trobau en o tuyo ordinador. Tría quáls instalar.
+117	Programas sucheritos
+118	Tría quáls instalar.
+119	No i hai cosa triada.
+120	Instalando programas
+121	Descargando y instalando
+122	Tot presto
+123	Disfruta de Shrimp.
+124	Quiero saber-ne mas
+125	{n} de {total}
+126	Shrimp ye Linux
+127	Linux ye un sistema libre feito por personas de tot o mundo. Fa funcionar a mayoría de servidors y telefonos Android.
+128	Windows a o canto
+129	Cada vegada que s'encienda triarás Shrimp u Windows.
+130	Programas
+131	Os fichers .exe de Windows no funcionan aquí. Os programas s'instalan dende Shrimp Apps, y ta la mayoría d'aplicacions conoixidas i trobarás un equivalent.
+132	Clau ta os cambios
+133	Quan instales programas u cambies achustes importants, o sistema te demandará a clau. Ye normal y protiche l'ordinador.
+134	Os tuyos fichers
+135	Os documentos, fotos y descargas son en l'aplicación Fichers, en a tuya carpeta personal.
+136	Allí trobarás tamién a unidat de Windows.
+137	Panko
+138	¿Ha deixau de funcionar bella cosa dimpués d'un cambio? En Panko puetz tornar a como yeran as cosas antes.
+139	Cocktail
+140	Actualizacions, controladors y códecs en un solo puesto. As actualizacions s'instalan quan reinicias.
+141	Busca rapida
+142	Preta a tecla Super, a d'o logotipo de Windows, ta trobar programas, fichers y achustes.
+143	Aduya
+144	Trobarás respuestas en as pachinas d'aduya de Shrimp, en a documentación de GNOME y openSUSE y en os foros d'a comunidat.
+145	As claus d'o disco no coinciden
+146	Escribe a mesma clau en os dos campos. Sin ella no puetz encender l'ordinador, asinas que alza-la en un puesto seguro.
+147	As claus no coinciden
+148	Escribe a mesma clau en os dos campos y torna a prebar-lo.
+149	Tornar a prebar
+150	No i hai prou espacio
+151	No i hai prou espacio en a unidat ta Shrimp. Fe Windows mas chicot u tría atra unidat.
+152	Cambiar a grandaria
+153	Tornar
+154	A instalación ha fallau
+155	Bella cosa ha ido mal. Os tuyos fichers son a salvo. Puetz tornar a prebar-lo.
+156	Salir
+157	No s'ha puesto connectar
+158	Comprueba a clau d'a ret y torna a prebar-lo.
+159	Comprueba a clau d'a ret {ssid} y torna a prebar-lo.
+160	Sin connexión a internet
+161	No s'han puesto descargar os programas. Comprueba a connexión y torna a prebar-lo.
+162	Documentos y fuellas de calculo
+163	Correu
+164	Chuegos
+165	Chuegos d'Epic y GOG
+166	Dibuixo
+167	Edición de video
+168	Graficos
+169	Editor de codigo
+170	Entorno de desembolique
+171	Cine y musica
+172	Musica
+173	Nueva York
+174	Chicago
+175	Denver
+176	Los Anchels
+177	Toronto
+178	Vancouver
+179	Islas Canarias
+180	Sidney
+181	Perth

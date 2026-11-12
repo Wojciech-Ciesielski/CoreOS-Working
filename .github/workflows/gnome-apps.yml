@@ -1,0 +1,38 @@
+name: GNOME apps inventory
+
+# Lists what the Leap GNOME patterns would install (the installed system uses the
+# "gnome" pattern through Agama, the live ISO only "gnome_basic") and which of those
+# packages are desktop applications, so Shrimp can replace system apps with its own
+# alternatives and Flatpaks. Result: artifact "gnome-apps" (14 days), nothing is committed.
+
+on:
+  push:
+    branches: [main, "claude/**"]
+    paths: ["tools/gnome-apps-inventory.sh", ".github/workflows/gnome-apps.yml"]
+  workflow_dispatch:
+    inputs:
+      leap_version:
+        description: "openSUSE Leap version"
+        default: "16.1"
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - name: Resolve patterns
+        run: |
+          mkdir -p test-results/gnome-apps
+          sudo docker run --rm -v "$PWD:/work" -w /work docker.io/opensuse/tumbleweed:latest \
+            bash tools/gnome-apps-inventory.sh "${{ github.event.inputs.leap_version || '16.1' }}" test-results/gnome-apps
+          sudo chown -R "$(id -u):$(id -g)" test-results/gnome-apps
+          cat test-results/gnome-apps/summary.txt
+      - uses: actions/upload-artifact@v7
+        with:
+          name: gnome-apps
+          path: test-results/gnome-apps
+          retention-days: 14

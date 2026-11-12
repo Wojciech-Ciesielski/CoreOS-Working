@@ -1,0 +1,181 @@
+1	Vegere
+2	Agahî
+3	Logoya Shrimp
+4	Ajokara NVIDIA di lîstik û bernameyên grafîkî de performansa tevahî dide. Ajokara vekirî hêsantir e, lê hêdîtir e.
+5	(Tê pêşniyarkirin)
+6	Pêş
+7	Derbaz bike
+8	Betal bike
+9	Qediya
+10	Pêşketî
+11	Bixweber
+12	Ne yek
+13	Werin em Shrimp li ser komputera te amade bikin.
+14	Dest pê bikin
+15	Zimanek hilbijêre
+16	Tu li ku yî?
+17	Em ê herêma demê û şêweya dîrokê saz bikin.
+18	Plana klavyeyê hilbijêre
+19	Rêzkirinê biceribîne
+20	bernamenûs
+21	makîneya nivîsandinê
+22	Ajovan
+23	vala
+24	Şîfrekirina dîskê
+25	Girtî
+26	Vekirî
+27	Şîfreya dîskê
+28	Şîfreya dîskê dubare bike
+29	Shrimp li ku were sazkirin?
+30	Li kêleka Windowsê
+31	Li şûna Windowsê
+32	Windows dê were rakirin. Em ê pelên ku te hiştine bibin pergala nû.
+33	Sazkirin li kêleka Windows ne gengaz e, ji ber ku ajoka Windows bi BitLocker hatiye şîfrekirin.
+34	Shrimp dê tevahiya ajoka {name} bi kar bîne.
+35	Windows li ser ajoka din dimîne.
+36	Dabeşkirina dîskê
+37	Komputer dê her carê ku dest pê dike vê şîfreyê bixwaze. Bêyî wê tu nikarî daneyên xwe vegerînî.
+38	Hesabek biafirîne
+39	Ji bo têketinê dê pêwîstiya te pê hebe.
+40	Navê temam
+41	Navê bikarhêner
+42	Şîfre
+43	Şîfreyê bipejirîne
+44	Ji bo sazkirinê amade ye
+45	Heta ku tu li “Saz bike” nexî tiştek nayê guhertin.
+46	Ziman
+47	Herêm
+48	Klavye
+49	Ajovan
+50	Sazkirin
+51	Tevahiya ajokê
+52	Dabeşkirina dîskê
+53	Windows {win} · Shrimp {shrimp}
+54	Hesab
+55	Şîfrekirin
+56	Saz bike
+57	Shrimp tê sazkirin
+58	Tê sazkirin
+59	Ajok tê amadekirin
+60	Pergal tê sazkirin
+61	Pel têne vegerandin
+62	Nêzîkî {min} deq mane
+63	Tenê gavek
+64	Sazkirin qediya
+65	Ji bo qedandinê komputerê ji nû ve bide destpêkirin.
+66	Ji nû ve bide destpêkirin
+67	Silav, {name}
+68	heval
+69	Werin em sazkirinê biqedînin. Tenê kêliyekê digire.
+70	Bi torê ve girêbide
+71	Şîfreya tora {ssid}
+72	Ewle
+73	Vekirî
+74	Tora vekirî. Kesên din dikarin bibînin ku tu li ser wê çi dikî.
+75	Tora veşartî
+76	Agahiyên torek ku di lîsteyê de xuya nake binivîse.
+77	Navê torê
+78	Ewlehî
+79	Girêbide
+80	Navnîşana IP
+81	Pêşkêşkara DNS
+82	Proxy
+83	Bi destan
+84	Xuyangekê hilbijêre
+85	Ronî
+86	Tarî
+87	Tu her dem dikarî vê di Mîhengan de biguherînî.
+88	Rengekî hilbijêre
+89	Şîn
+90	Şîn-kesk
+91	Kesk
+92	Zer
+93	Porteqalî
+94	Sor
+95	Pembe
+96	Mor
+97	Gewr
+98	Wêne û deng bê pirsgirêk
+99	Em ê ajokar û kodekên ku pêwîstiya te pê heye saz bikin da ku vîdyo û lîstik yekser bixebitin.
+100	Saz bike
+101	Ez ê paşê bikim
+102	Karta grafîkê ya NVIDIA
+103	Me kartek {name} dît.
+104	Ajokara NVIDIA
+105	Ajokara vekirî
+106	Performansa herî baş di lîstik û bernameyên grafîkî de.
+107	Hêsantir, lê kêmtir bihêz.
+108	Tu komputera xwe çawa bi kar tînî?
+109	Em ê bernameyên ku herî zêde pêwîstiya te pê heye saz bikin.
+110	Kar û xwendin
+111	Lîstik
+112	Afirînerî
+113	Bernamesazî
+114	Multîmedya
+115	Bernameyên te yên ji Windows
+116	Me ew li ser komputera te dîtin. Hilbijêre kîjan werin sazkirin.
+117	Bernameyên pêşniyarkirî
+118	Hilbijêre kîjan werin sazkirin.
+119	Tiştek nehatiye hilbijartin.
+120	Bername têne sazkirin
+121	Tê daxistin û sazkirin
+122	Her tişt amade ye
+123	Ji Shrimpê kêf bike.
+124	Ez dixwazim zêdetir bizanim
+125	{n} ji {total}
+126	Shrimp Linux e
+127	Linux pergalek azad e ku ji aliyê mirovên ji hemû cîhanê ve hatiye çêkirin. Piraniya pêşkêşkar û telefonên Android pê dixebitin.
+128	Windows li kêlekê
+129	Her carê ku dest pê dike tu dê Shrimp an Windows hilbijêrî.
+130	Bername
+131	Pelên .exe yên Windows li vir naxebitin. Tu bernameyan ji Shrimp Apps saz dikî, û ji bo piraniya sepanên naskirî tu dê li wir hevtayek bibînî.
+132	Şîfre ji bo guhertinan
+133	Dema ku tu bernameyan saz dikî an mîhengên girîng diguherînî, pergal dê şîfreya te bixwaze. Ev asayî ye û komputera te diparêze.
+134	Pelên te
+135	Belge, wêne û daxistin di sepana Pel de ne, di peldanka te ya malê de.
+136	Tu dê ajoka Windows jî li wir bibînî.
+137	Panko
+138	Piştî guhertinekê tiştek ji xebatê ket? Di Panko de tu dikarî vegerî rewşa berê.
+139	Cocktail
+140	Rojanekirin, ajokar û kodek li cihekî. Rojanekirin dema ku tu ji nû ve dest pê dikî têne sazkirin.
+141	Lêgerîna bilez
+142	Bişkoka Super bitikîne, ya bi logoya Windows, da ku bername, pel û mîhengan bibînî.
+143	Alîkarî
+144	Tu dê bersivan li ser rûpelên alîkariyê yên Shrimp, di belgekirina GNOME û openSUSE de û li ser forûmên civakê bibînî.
+145	Şîfreyên dîskê hevûdu nagirin
+146	Di her du qadan de heman şîfreyê binivîse. Bêyî wê tu nikarî komputerê bidî destpêkirin, ji ber vê yekê wê li cihekî ewle biparêze.
+147	Şîfre hevûdu nagirin
+148	Di her du qadan de heman şîfreyê binivîse û dîsa biceribîne.
+149	Dîsa biceribîne
+150	Cîh têr nake
+151	Li ser ajokê ji bo Shrimp cîh têrê nake. Windows biçûk bike an ajokek din hilbijêre.
+152	Mezinahiyê biguherîne
+153	Vegere
+154	Sazkirin têk çû
+155	Tiştek çewt çû. Pelên te ewle ne. Tu dikarî dîsa biceribînî.
+156	Derkeve
+157	Girêdan nebû
+158	Şîfreya torê kontrol bike û dîsa biceribîne.
+159	Şîfreya tora {ssid} kontrol bike û dîsa biceribîne.
+160	Girêdana înternetê tune ye
+161	Bername nehatin daxistin. Girêdana xwe kontrol bike û dîsa biceribîne.
+162	Belge û tabloyên hesabê
+163	E-name
+164	Lîstik
+165	Lîstikên ji Epic û GOG
+166	Xêzkirin
+167	Sererastkirina vîdyoyê
+168	Grafîk
+169	Edîtora kodê
+170	Jîngeha pêşvebirinê
+171	Fîlm û muzîk
+172	Muzîk
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Giravên Kanarya
+180	Sydney
+181	Perth

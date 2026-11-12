@@ -1,0 +1,181 @@
+1	Takaisin
+2	Tiedot
+3	Shrimp-logo
+4	NVIDIA-ajuri antaa täyden suorituskyvyn peleissä ja grafiikkaohjelmissa. Avoin ajuri on yksinkertaisempi mutta hitaampi.
+5	(Suositus)
+6	Seuraava
+7	Ohita
+8	Peruuta
+9	Valmis
+10	Lisäasetukset
+11	Automaattinen
+12	Ei mitään
+13	Valmistellaan Shrimp tietokoneellesi.
+14	Aloitetaan
+15	Valitse kieli
+16	Missä olet?
+17	Asetamme aikavyöhykkeen ja päivämäärämuodon.
+18	Valitse näppäimistöasettelu
+19	Kokeile asettelua
+20	ohjelmoija
+21	kirjoituskone
+22	Asema
+23	tyhjä
+24	Levyn salaus
+25	Pois
+26	Päällä
+27	Levyn salasana
+28	Toista levyn salasana
+29	Mihin Shrimp asennetaan?
+30	Windowsin rinnalle
+31	Windowsin tilalle
+32	Windows poistetaan. Siirrämme säilyttämäsi tiedostot uuteen järjestelmään.
+33	Asennus Windowsin rinnalle ei onnistu, koska Windows-asema on salattu BitLockerilla.
+34	Shrimp käyttää koko aseman {name}.
+35	Windows jää toiselle asemalle.
+36	Levyn jako
+37	Tietokone kysyy tätä salasanaa joka käynnistyksessä. Ilman sitä et voi palauttaa tietojasi.
+38	Luo tili
+39	Tarvitset sitä kirjautumiseen.
+40	Koko nimi
+41	Käyttäjätunnus
+42	Salasana
+43	Vahvista salasana
+44	Valmis asennettavaksi
+45	Mikään ei muutu, ennen kuin napsautat “Asenna”.
+46	Kieli
+47	Alue
+48	Näppäimistö
+49	Asema
+50	Asennus
+51	Koko asema
+52	Levyn jako
+53	Windows {win} · Shrimp {shrimp}
+54	Tili
+55	Salaus
+56	Asenna
+57	Asennetaan Shrimpiä
+58	Asennetaan
+59	Valmistellaan asemaa
+60	Asennetaan järjestelmää
+61	Palautetaan tiedostoja
+62	Noin {min} min jäljellä
+63	Hetki vain
+64	Asennus on valmis
+65	Käynnistä tietokone uudelleen viimeistelläksesi.
+66	Käynnistä uudelleen
+67	Hei, {name}
+68	sinä
+69	Viimeistellään asetukset. Se vie vain hetken.
+70	Yhdistä verkkoon
+71	Verkon {ssid} salasana
+72	Suojattu
+73	Avoin
+74	Avoin verkko. Muut voivat nähdä, mitä teet sen kautta.
+75	Piilotettu verkko
+76	Anna luettelossa näkymättömän verkon tiedot.
+77	Verkon nimi
+78	Suojaus
+79	Yhdistä
+80	IP-osoite
+81	DNS-palvelin
+82	Välityspalvelin
+83	Manuaalinen
+84	Valitse ulkoasu
+85	Vaalea
+86	Tumma
+87	Voit muuttaa tätä aina Asetuksista.
+88	Valitse väri
+89	Sininen
+90	Turkoosi
+91	Vihreä
+92	Keltainen
+93	Oranssi
+94	Punainen
+95	Pinkki
+96	Violetti
+97	Harmaa
+98	Kuva ja ääni vaivattomasti
+99	Asennamme tarvitsemasi ajurit ja koodekit, jotta videot ja pelit toimivat heti.
+100	Asenna
+101	Teen sen myöhemmin
+102	NVIDIA-näytönohjain
+103	Löysimme {name}-kortin.
+104	NVIDIA-ajuri
+105	Avoin ajuri
+106	Paras suorituskyky peleissä ja grafiikkaohjelmissa.
+107	Yksinkertaisempi ylläpitää mutta tehottomampi.
+108	Miten käytät tietokonettasi?
+109	Asennamme eniten tarvitsemasi ohjelmat.
+110	Työ ja opiskelu
+111	Pelit
+112	Luovuus
+113	Ohjelmointi
+114	Multimedia
+115	Windows-ohjelmasi
+116	Löysimme ne tietokoneeltasi. Valitse, mitkä asennetaan.
+117	Ehdotetut ohjelmat
+118	Valitse, mitkä asennetaan.
+119	Ei valintoja.
+120	Asennetaan ohjelmia
+121	Ladataan ja asennetaan
+122	Kaikki valmista
+123	Nauti Shrimpistä.
+124	Haluan tietää lisää
+125	{n} / {total}
+126	Shrimp on Linux
+127	Linux on vapaa järjestelmä, jonka ovat tehneet ihmiset eri puolilta maailmaa. Sillä toimivat useimmat palvelimet ja Android-puhelimet.
+128	Windows vierellä
+129	Joka käynnistyksessä valitset Shrimpin tai Windowsin.
+130	Ohjelmat
+131	Windowsin .exe-tiedostot eivät toimi täällä. Asennat ohjelmat Shrimp Appsista, ja useimmille tunnetuille ohjelmille löytyy vastine sieltä.
+132	Muutosten salasana
+133	Kun asennat ohjelmia tai muutat tärkeitä asetuksia, järjestelmä kysyy salasanaasi. Se on normaalia ja suojaa tietokonettasi.
+134	Tiedostosi
+135	Asiakirjat, valokuvat ja lataukset ovat Tiedostot-sovelluksessa, kotikansiossasi.
+136	Sieltä löydät myös Windows-aseman.
+137	Panko
+138	Lakkasiko jokin toimimasta muutoksen jälkeen? Pankossa voit palata aiempaan tilaan.
+139	Cocktail
+140	Päivitykset, ajurit ja koodekit yhdessä paikassa. Päivitykset asennetaan, kun käynnistät uudelleen.
+141	Pikahaku
+142	Paina Super-näppäintä, jossa on Windows-logo, löytääksesi ohjelmia, tiedostoja ja asetuksia.
+143	Ohje
+144	Vastauksia löydät Shrimpin ohjesivuilta, GNOMEn ja openSUSEn dokumentaatiosta sekä yhteisön keskustelupalstoilta.
+145	Levyn salasanat eivät täsmää
+146	Anna sama salasana molempiin kenttiin. Tietokonetta ei voi käynnistää ilman sitä, joten säilytä se turvassa.
+147	Salasanat eivät täsmää
+148	Anna sama salasana molempiin kenttiin ja yritä uudelleen.
+149	Yritä uudelleen
+150	Ei tarpeeksi tilaa
+151	Asemalla ei ole tarpeeksi tilaa Shrimpille. Pienennä Windowsia tai valitse toinen asema.
+152	Muuta kokoa
+153	Takaisin
+154	Asennus epäonnistui
+155	Jokin meni pieleen. Tiedostosi ovat turvassa. Voit yrittää uudelleen.
+156	Lopeta
+157	Yhteyden muodostus epäonnistui
+158	Tarkista verkon salasana ja yritä uudelleen.
+159	Tarkista verkon {ssid} salasana ja yritä uudelleen.
+160	Ei internetyhteyttä
+161	Ohjelmien lataus epäonnistui. Tarkista yhteys ja yritä uudelleen.
+162	Asiakirjat ja taulukot
+163	Sähköposti
+164	Pelit
+165	Pelit Epicistä ja GOG:sta
+166	Piirtäminen
+167	Videoiden muokkaus
+168	Grafiikka
+169	Koodieditori
+170	Kehitysympäristö
+171	Elokuvat ja musiikki
+172	Musiikki
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Kanariansaaret
+180	Sydney
+181	Perth

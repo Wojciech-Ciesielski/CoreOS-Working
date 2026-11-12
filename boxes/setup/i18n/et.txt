@@ -1,0 +1,181 @@
+1	Tagasi
+2	Teave
+3	Shrimpi logo
+4	NVIDIA draiver annab mängudes ja graafikaprogrammides täieliku jõudluse. Avatud draiver on lihtsam, kuid aeglasem.
+5	(Soovitatav)
+6	Edasi
+7	Jäta vahele
+8	Tühista
+9	Valmis
+10	Täpsemalt
+11	Automaatne
+12	Puudub
+13	Seadistame Shrimpi sinu arvutis.
+14	Alustame
+15	Vali keel
+16	Kus sa oled?
+17	Määrame ajavööndi ja kuupäevavormingu.
+18	Vali klaviatuuripaigutus
+19	Proovi paigutust
+20	programmeerija
+21	kirjutusmasin
+22	Draiv
+23	tühi
+24	Ketta krüpteerimine
+25	Väljas
+26	Sees
+27	Ketta parool
+28	Korda ketta parooli
+29	Kuhu Shrimp paigaldada?
+30	Windowsi kõrvale
+31	Windowsi asemele
+32	Windows eemaldatakse. Teisaldame säilitatud failid uude süsteemi.
+33	Windowsi kõrvale ei saa paigaldada, sest Windowsi draiv on BitLockeriga krüpteeritud.
+34	Shrimp kasutab kogu draivi {name}.
+35	Windows jääb teisele draivile.
+36	Ketta jaotus
+37	Arvuti küsib seda parooli igal käivitamisel. Ilma selleta ei saa andmeid taastada.
+38	Loo konto
+39	Seda on sisselogimiseks vaja.
+40	Täisnimi
+41	Kasutajanimi
+42	Parool
+43	Kinnita parool
+44	Paigaldamiseks valmis
+45	Midagi ei muutu enne, kui klõpsad nupul „Paigalda”.
+46	Keel
+47	Piirkond
+48	Klaviatuur
+49	Draiv
+50	Paigaldus
+51	Kogu draiv
+52	Ketta jaotus
+53	Windows {win} · Shrimp {shrimp}
+54	Konto
+55	Krüpteerimine
+56	Paigalda
+57	Shrimpi paigaldamine
+58	Paigaldamine
+59	Draivi ettevalmistamine
+60	Süsteemi paigaldamine
+61	Failide taastamine
+62	Jäänud umbes {min} min
+63	Üks hetk
+64	Paigaldus lõpetatud
+65	Lõpetamiseks taaskäivita arvuti.
+66	Taaskäivita
+67	Tere, {name}
+68	sina
+69	Lõpetame seadistuse. See võtab vaid hetke.
+70	Ühendu võrguga
+71	Võrgu {ssid} parool
+72	Turvaline
+73	Avatud
+74	Avatud võrk. Teised võivad näha, mida seal teed.
+75	Peidetud võrk
+76	Sisesta loendis mittenäidatava võrgu andmed.
+77	Võrgu nimi
+78	Turvalisus
+79	Ühenda
+80	IP-aadress
+81	DNS-server
+82	Puhverserver
+83	Käsitsi
+84	Vali ilme
+85	Hele
+86	Tume
+87	Seda saad alati seadetes muuta.
+88	Vali värv
+89	Sinine
+90	Sinakasroheline
+91	Roheline
+92	Kollane
+93	Oranž
+94	Punane
+95	Roosa
+96	Lilla
+97	Hall
+98	Pilt ja heli vaevata
+99	Paigaldame vajalikud draiverid ja koodekid, et videod ja mängud töötaksid kohe.
+100	Paigalda
+101	Teen hiljem
+102	NVIDIA graafikakaart
+103	Leidsime kaardi {name}.
+104	NVIDIA draiver
+105	Avatud draiver
+106	Parim jõudlus mängudes ja graafikaprogrammides.
+107	Lihtsam kasutada, kuid vähem võimas.
+108	Kuidas sa arvutit kasutad?
+109	Paigaldame programmid, mida sul kõige rohkem vaja on.
+110	Töö ja õpe
+111	Mängud
+112	Loovus
+113	Programmeerimine
+114	Multimeedia
+115	Sinu programmid Windowsist
+116	Leidsime need sinu arvutist. Vali, millised paigaldada.
+117	Soovitatud programmid
+118	Vali, millised paigaldada.
+119	Midagi pole valitud.
+120	Programmide paigaldamine
+121	Allalaadimine ja paigaldamine
+122	Kõik valmis
+123	Head Shrimpi kasutamist.
+124	Tahan rohkem teada
+125	{n} / {total}
+126	Shrimp on Linux
+127	Linux on tasuta süsteem, mille on loonud inimesed üle maailma. See käitab enamikku servereid ja Androidi telefone.
+128	Windows kõrval
+129	Igal käivitamisel valid Shrimpi või Windowsi.
+130	Programmid
+131	Windowsi .exe-faile siin ei käivitata. Programme paigaldad Shrimp Appsist ja enamikule tuntud rakendustele leiad sealt vaste.
+132	Muudatuste parool
+133	Kui paigaldad programme või muudad olulisi seadeid, küsib süsteem sinu parooli. See on tavaline ja kaitseb arvutit.
+134	Sinu failid
+135	Dokumendid, fotod ja allalaadimised asuvad rakenduses Failid, sinu kodukaustas.
+136	Sealt leiad ka Windowsi draivi.
+137	Panko
+138	Kas midagi lakkas pärast muudatust töötamast? Panko abil saad naasta varasema seisu juurde.
+139	Cocktail
+140	Uuendused, draiverid ja koodekid ühes kohas. Uuendused paigaldatakse taaskäivitamisel.
+141	Kiirotsing
+142	Vajuta Super-klahvi, Windowsi logoga klahvi, et leida programme, faile ja seadeid.
+143	Abi
+144	Vastused leiad Shrimpi abilehtedelt, GNOME'i ja openSUSE dokumentatsioonist ning kogukonna foorumitest.
+145	Ketta paroolid ei ühti
+146	Sisesta mõlemasse välja sama parool. Ilma selleta arvuti ei käivitu, nii et hoia seda turvalises kohas.
+147	Paroolid ei ühti
+148	Sisesta mõlemasse välja sama parool ja proovi uuesti.
+149	Proovi uuesti
+150	Ruumi pole piisavalt
+151	Draivil pole Shrimpi jaoks piisavalt ruumi. Tee Windows väiksemaks või vali teine draiv.
+152	Muuda suurust
+153	Tagasi
+154	Paigaldus ebaõnnestus
+155	Midagi läks valesti. Sinu failid on turvalised. Võid uuesti proovida.
+156	Välju
+157	Ühendamine ebaõnnestus
+158	Kontrolli võrgu parooli ja proovi uuesti.
+159	Kontrolli võrgu {ssid} parooli ja proovi uuesti.
+160	Internetiühendus puudub
+161	Programmide allalaadimine ebaõnnestus. Kontrolli ühendust ja proovi uuesti.
+162	Dokumendid ja arvutustabelid
+163	E-post
+164	Mängud
+165	Epicu ja GOG-i mängud
+166	Joonistamine
+167	Videotöötlus
+168	Graafika
+169	Koodiredaktor
+170	Arenduskeskkond
+171	Filmid ja muusika
+172	Muusika
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Kanaari saared
+180	Sydney
+181	Perth

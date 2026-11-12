@@ -1,0 +1,4 @@
+1	Tietoja tästä tietokoneesta
+3	Ohjelmistot
+4	Päivitykset
+15	Järjestelmän palautus

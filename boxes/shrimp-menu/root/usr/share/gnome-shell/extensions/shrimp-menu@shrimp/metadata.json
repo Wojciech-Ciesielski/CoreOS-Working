@@ -1,0 +1,8 @@
+{
+  "uuid": "shrimp-menu@shrimp",
+  "name": "Shrimp Menu",
+  "description": "Shrimp system menu in the top bar: about this computer, settings, software and updates, system tools, sleep, restart, power off, lock and log out.",
+  "shell-version": ["48", "49"],
+  "url": "https://github.com/Wojciech-Ciesielski/CoreOS-Working",
+  "version": 1
+}

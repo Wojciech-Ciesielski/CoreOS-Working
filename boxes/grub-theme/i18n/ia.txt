@@ -1,0 +1,2 @@
+1	Configurationes del computator
+2	Shrimp comenciara in %d s

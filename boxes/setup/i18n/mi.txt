@@ -1,0 +1,181 @@
+1	Hoki ki muri
+2	Pārongo
+3	Waitohu Shrimp
+4	Ka tuku te taraiwa NVIDIA i te tino mahinga i ngā kēmu me ngā hōtaka whakairoiro. He māmā ake te taraiwa tuwhera, engari he pōturi ake.
+5	(E tūtohutia ana)
+6	Panuku
+7	Peke
+8	Whakakore
+9	Kua oti
+10	Matatau
+11	Aunoa
+12	Kore
+13	Me whakarite i a Shrimp ki tō rorohiko.
+14	Me tīmata
+15	Kōwhiria he reo
+16	Kei hea koe?
+17	Ka whakaritea e mātou te rohe wā me te hōputu rā.
+18	Kōwhiria te whakatakotoranga papapātuhi
+19	Whakamātauria te tahora
+20	kaiwaehere
+21	pūpatopato
+22	Puku taraiwa
+23	kau
+24	Whakamuna kōpae
+25	Whakaweto
+26	Whakahohe
+27	Kupuhipa kōpae
+28	Tuhia anō te kupuhipa kōpae
+29	Ki hea tāutaina ai a Shrimp?
+30	Ki te taha o Windows
+31	Hei whakakapi i a Windows
+32	Ka tangohia a Windows. Ka nekehia e mātou ngā kōnae i puritia e koe ki te pūnaha hōu.
+33	Kāore e taea te tāuta i te taha o Windows nā te mea kua whakamunatia te puku Windows ki a BitLocker.
+34	Ka whakamahia e Shrimp te katoa o te puku {name}.
+35	Ka noho tonu a Windows ki tērā atu puku.
+36	Wehewehe kōpae
+37	Ka tono te rorohiko i tēnei kupuhipa i ia tīmatanga. Ki te kore, kāore e taea e koe te whakahoki mai i ō raraunga.
+38	Waihangatia he kaute
+39	Ka hiahiatia kia takiuru ai.
+40	Ingoa katoa
+41	Ingoa kaiwhakamahi
+42	Kupuhipa
+43	Whakaūngia te kupuhipa
+44	Kua rite mō te tāuta
+45	Kāore he mea e huri kia pāwhiri rā anō koe i “Tāuta”.
+46	Reo
+47	Rohe
+48	Papapātuhi
+49	Puku taraiwa
+50	Tāuta
+51	Te puku katoa
+52	Wehewehe kōpae
+53	Windows {win} · Shrimp {shrimp}
+54	Pūkete
+55	Whakamuna
+56	Tāuta
+57	E tāuta ana a Shrimp
+58	E tāuta ana
+59	E whakareri ana i te puku
+60	E tāuta ana i te pūnaha
+61	E whakahoki ana i ngā kōnae
+62	Tata ki te {min} meneti e toe ana
+63	He wā poto noa
+64	Kua oti te tāuta
+65	Whakaarahia anō te rorohiko kia oti.
+66	Whakaara anō
+67	Kia ora, {name}
+68	e hoa
+69	Me whakaoti tātou i te whakaritenga. He wā poto noa iho.
+70	Honoa ki tētahi whatunga
+71	Kupuhipa mō te whatunga {ssid}
+72	Haumaru
+73	Tuwhera
+74	Whatunga tuwhera. Ka kite pea ētahi atu i āu mahi ki runga.
+75	Whatunga huna
+76	Tāurua ngā taipitopito o tētahi whatunga kāore i te rārangi.
+77	Ingoa whatunga
+78	Haumarutanga
+79	Hono
+80	Wāhitau IP
+81	Tūmau DNS
+82	Takawaenga
+83	Ā-ringa
+84	Kōwhiria he āhua
+85	Marama
+86	Pouri
+87	Ka taea tonu e koe te huri i tēnei ki ngā Tautuhinga.
+88	Kōwhiria he tae
+89	Kahurangi
+90	Kākāriki-kahurangi
+91	Kākāriki
+92	Kōwhai
+93	Karaka
+94	Whero
+95	Mawhero
+96	Waiporoporo
+97	Hina
+98	Whakaahua me te oro kore raruraru
+99	Ka tāuta mātou i ngā taraiwa me ngā kōdeke e hiahiatia ana kia mahi tonu ai ngā ataata me ngā kēmu.
+100	Tāuta
+101	Māku e mahi i muri
+102	Kāri whakairoiro NVIDIA
+103	I kitea e mātou he kāri {name}.
+104	Taraiwa NVIDIA
+105	Taraiwa tuwhera
+106	Te mahinga pai rawa i ngā kēmu me ngā hōtaka whakairoiro.
+107	He māmā ake, engari he iti ake te kaha.
+108	Me pēhea tō whakamahi i tō rorohiko?
+109	Ka tāuta mātou i ngā hōtaka e tino hiahiatia ana e koe.
+110	Mahi me te ako
+111	Kēmu
+112	Auahatanga
+113	Waehere
+114	Rongorau
+115	Ō hōtaka mai i Windows
+116	I kitea e mātou ki tō rorohiko. Kōwhiria ko ēhea hei tāuta.
+117	Ngā hōtaka e tūtohutia ana
+118	Kōwhiria ko ēhea hei tāuta.
+119	Kāore he mea kua tīpakohia.
+120	E tāuta ana i ngā hōtaka
+121	E tikiake ana, e tāuta ana
+122	Kua rite katoa
+123	Kia pai tō whakamahi i a Shrimp.
+124	Kei te pīrangi au ki te mōhio atu anō
+125	{n} o {total}
+126	Ko Shrimp he Linux
+127	He pūnaha kore utu a Linux i hangaia e te tangata o te ao katoa. Ka whakahaere i te nuinga o ngā tūmau me ngā waea Android.
+128	Ko Windows kei te taha
+129	I ia tīmatanga ka kōwhiri koe i a Shrimp, i a Windows rānei.
+130	Ngā hōtaka
+131	Kāore ngā kōnae .exe a Windows e mahi i konei. Ka tāuta koe i ngā hōtaka mai i Shrimp Apps, ā, mō te nuinga o ngā taupānga rongonui ka kitea he rite ki reira.
+132	Kupuhipa mō ngā panoni
+133	Ka tāuta koe i ngā hōtaka, ka huri rānei i ngā tautuhinga hira, ka tono te pūnaha i tō kupuhipa. He māori tēnei, ā, ka tiaki i tō rorohiko.
+134	Ō kōnae
+135	Kei te taupānga Kōnae ngā tuhinga, ngā whakaahua me ngā tikiake, i tō kōpaki kāinga.
+136	Ka kitea hoki te puku Windows ki reira.
+137	Panko
+138	I mutu te mahi o tētahi mea i muri i tētahi panoni? I Panko ka taea e koe te hoki ki te āhua o mua.
+139	Cocktail
+140	Ngā whakahōu, ngā taraiwa me ngā kōdeke i te wāhi kotahi. Ka tāutahia ngā whakahōu ina tīmata anō koe.
+141	Rapu tere
+142	Pēhia te pātuhi Super, te mea whai waitohu Windows, kia kitea ai ngā hōtaka, ngā kōnae me ngā tautuhinga.
+143	Āwhina
+144	Ka kitea ngā whakautu ki ngā whārangi āwhina o Shrimp, ki ngā tuhinga a GNOME me openSUSE, ki ngā wānanga hapori hoki.
+145	Kāore ngā kupuhipa kōpae e rite
+146	Tāuruhia te kupuhipa ōrite ki ngā āpure e rua. Kāore e taea te tīmata i te rorohiko ki te kore, nō reira puritia ki tētahi wāhi haumaru.
+147	Kāore ngā kupuhipa e rite
+148	Tāuruhia te kupuhipa ōrite ki ngā āpure e rua, ka ngana anō.
+149	Whakamātauria anō
+150	Kāore i nui te mokowā
+151	Kāore i te rahi te wāhi ki te puku mō Shrimp. Whakaitia a Windows, kōwhiria rānei tētahi atu puku.
+152	Huri i te rahi
+153	Hoki atu
+154	I rahua te tāuta
+155	I hē tētahi mea. Kei te haumaru ō kōnae. Ka taea e koe te ngana anō.
+156	Puta
+157	Kāore i taea te tūhono
+158	Tirohia te kupuhipa whatunga ka ngana anō.
+159	Tirohia te kupuhipa mō te whatunga {ssid} ka ngana anō.
+160	Kāore he hononga ipurangi
+161	Kāore i taea te tikiake i ngā hōtaka. Tirohia tō hononga ka ngana anō.
+162	Ngā tuhinga me ngā ripanga
+163	Īmēra
+164	Ngā kēmu
+165	Ngā kēmu mai i Epic me GOG
+166	Tuhi whakaahua
+167	Whakatika ataata
+168	Whakairoiro
+169	Ētita waehere
+170	Taiao whakawhanake
+171	Ngā kiriata me te puoro
+172	Puoro
+173	Niu Ioka
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Ngā Moutere Kanari
+180	Poihākena
+181	Perth

@@ -1,0 +1,181 @@
+1	Atzera
+2	Informazioa
+3	Shrimp logotipoa
+4	NVIDIA kontrolatzaileak errendimendu osoa ematen du jokoetan eta grafiko-programetan. Kontrolatzaile irekia errazagoa da, baina motelagoa.
+5	(Gomendatua)
+6	Hurrengoa
+7	Saltatu
+8	Utzi
+9	Eginda
+10	Aurreratua
+11	Automatikoa
+12	Bat ere ez
+13	Prestatu dezagun Shrimp zure ordenagailuan.
+14	Has gaitezen
+15	Aukeratu hizkuntza
+16	Non zaude?
+17	Ordu-zona eta data-formatua ezarriko ditugu.
+18	Aukeratu teklatu-diseinua
+19	Probatu diseinua
+20	programatzailea
+21	idazmakina
+22	Unitatea
+23	hutsik
+24	Diskoaren zifratzea
+25	Desaktibatuta
+26	Aktibatuta
+27	Diskoaren pasahitza
+28	Errepikatu diskoaren pasahitza
+29	Non instalatu Shrimp?
+30	Windowsen ondoan
+31	Windowsen ordez
+32	Windows kenduko da. Gorde dituzun fitxategiak sistema berrira eramango ditugu.
+33	Ezin da Windowsen ondoan instalatu, Windows unitatea BitLocker bidez zifratuta dagoelako.
+34	Shrimp-ek {name} unitate osoa erabiliko du.
+35	Windows beste unitatean geratuko da.
+36	Diskoaren banaketa
+37	Ordenagailuak pasahitz hau eskatuko du abiarazte bakoitzean. Hau gabe ezin izango dituzu datuak berreskuratu.
+38	Sortu kontu bat
+39	Saioa hasteko beharko duzu.
+40	Izen osoa
+41	Erabiltzaile-izena
+42	Pasahitza
+43	Berretsi pasahitza
+44	Instalatzeko prest
+45	Ez da ezer aldatuko “Instalatu” sakatu arte.
+46	Hizkuntza
+47	Eskualdea
+48	Teklatua
+49	Unitatea
+50	Instalazioa
+51	Unitate osoa
+52	Diskoaren banaketa
+53	Windows {win} · Shrimp {shrimp}
+54	Kontua
+55	Zifratzea
+56	Instalatu
+57	Shrimp instalatzen
+58	Instalatzen
+59	Unitatea prestatzen
+60	Sistema instalatzen
+61	Fitxategiak berreskuratzen
+62	{min} min inguru falta dira
+63	Une bat
+64	Instalazioa amaitu da
+65	Berrabiarazi ordenagailua amaitzeko.
+66	Berrabiarazi
+67	Kaixo, {name}
+68	hor
+69	Amaitu dezagun konfigurazioa. Une bat baino ez da.
+70	Konektatu sare batera
+71	{ssid} sarearen pasahitza
+72	Babestua
+73	Irekia
+74	Sare irekia. Besteek ikus dezakete sarean egiten duzuna.
+75	Sare ezkutua
+76	Idatzi zerrendan agertzen ez den sare baten xehetasunak.
+77	Sarearen izena
+78	Segurtasuna
+79	Konektatu
+80	IP helbidea
+81	DNS zerbitzaria
+82	Proxya
+83	Eskuz
+84	Aukeratu itxura
+85	Argia
+86	Iluna
+87	Hau beti alda dezakezu ezarpenetan.
+88	Aukeratu kolorea
+89	Urdina
+90	Berde urdinxka
+91	Berdea
+92	Horia
+93	Laranja
+94	Gorria
+95	Arrosa
+96	Morea
+97	Grisa
+98	Irudia eta soinua arazorik gabe
+99	Behar dituzun kontrolatzaileak eta kodekak instalatuko ditugu, bideoak eta jokoak berehala ibil daitezen.
+100	Instalatu
+101	Gero egingo dut
+102	NVIDIA txartel grafikoa
+103	{name} txartela aurkitu dugu.
+104	NVIDIA kontrolatzailea
+105	Kontrolatzaile irekia
+106	Errendimendu onena jokoetan eta grafiko-programetan.
+107	Erabiltzeko errazagoa, baina ahalmen gutxiagokoa.
+108	Nola erabiltzen duzu ordenagailua?
+109	Gehien behar dituzun programak instalatuko ditugu.
+110	Lana eta ikasketak
+111	Jokoak
+112	Sormena
+113	Programazioa
+114	Multimedia
+115	Windowseko zure programak
+116	Zure ordenagailuan aurkitu ditugu. Aukeratu zein instalatu.
+117	Iradokitako programak
+118	Aukeratu zein instalatu.
+119	Ez da ezer hautatu.
+120	Programak instalatzen
+121	Deskargatzen eta instalatzen
+122	Dena prest
+123	Gozatu Shrimp-ekin.
+124	Gehiago jakin nahi dut
+125	{total}tik {n}
+126	Shrimp Linux da
+127	Linux munduko jendeak egindako sistema librea da. Zerbitzari gehienak eta Android telefonoak mugitzen ditu.
+128	Windows ondoan
+129	Abiarazte bakoitzean Shrimp edo Windows aukeratuko duzu.
+130	Programak
+131	Windowseko .exe fitxategiak ez dabiltza hemen. Programak Shrimp Apps-etik instalatzen dira, eta aplikazio ezagun gehienen baliokidea aurkituko duzu.
+132	Aldaketen pasahitza
+133	Programak instalatzean edo ezarpen garrantzitsuak aldatzean, sistemak zure pasahitza eskatuko du. Normala da eta ordenagailua babesten du.
+134	Zure fitxategiak
+135	Dokumentuak, argazkiak eta deskargak Fitxategiak aplikazioan daude, zure karpeta pertsonalean.
+136	Han Windows unitatea ere aurkituko duzu.
+137	Panko
+138	Aldaketa baten ostean zerbait ez dabil? Panko-n lehengo egoerara itzul zaitezke.
+139	Cocktail
+140	Eguneratzeak, kontrolatzaileak eta kodekak leku batean. Eguneratzeak berrabiaraztean instalatzen dira.
+141	Bilaketa azkarra
+142	Sakatu Super tekla, Windows logoa duena, programak, fitxategiak eta ezarpenak aurkitzeko.
+143	Laguntza
+144	Erantzunak Shrimp-en laguntza-orrietan, GNOME eta openSUSEren dokumentazioan eta komunitateko foroetan aurkituko dituzu.
+145	Diskoaren pasahitzak ez datoz bat
+146	Idatzi pasahitz bera bi eremuetan. Hau gabe ordenagailua ezin da abiarazi, beraz gorde toki seguruan.
+147	Pasahitzak ez datoz bat
+148	Idatzi pasahitz bera bi eremuetan eta saiatu berriro.
+149	Saiatu berriro
+150	Ez dago leku nahikorik
+151	Unitatean ez dago Shrimp-entzako leku nahikorik. Txikitu Windows edo aukeratu beste unitate bat.
+152	Aldatu tamaina
+153	Atzera
+154	Instalazioak huts egin du
+155	Zerbait gaizki atera da. Zure fitxategiak seguru daude. Berriro saia zaitezke.
+156	Irten
+157	Ezin izan da konektatu
+158	Egiaztatu sarearen pasahitza eta saiatu berriro.
+159	Egiaztatu {ssid} sarearen pasahitza eta saiatu berriro.
+160	Ez dago Interneteko konexiorik
+161	Ezin izan dira programak deskargatu. Egiaztatu konexioa eta saiatu berriro.
+162	Dokumentuak eta kalkulu-orriak
+163	Posta elektronikoa
+164	Jokoak
+165	Epic eta GOGeko jokoak
+166	Marrazketa
+167	Bideo-edizioa
+168	Grafikoak
+169	Kode-editorea
+170	Garapen-ingurunea
+171	Filmak eta musika
+172	Musika
+173	New York
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Kanariak
+180	Sydney
+181	Perth

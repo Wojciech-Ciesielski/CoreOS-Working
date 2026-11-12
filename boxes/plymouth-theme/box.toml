@@ -1,0 +1,15 @@
+[box]
+id = "plymouth-theme"
+version = "0.1.0"
+kind = "theme"
+summary = "Ekran startu Plymouth (motyw shrimp)"
+
+[packages]
+image = [
+    "plymouth",
+    "plymouth-dracut",
+    "plymouth-plugin-script",
+    "plymouth-plugin-label",
+    "rsvg-convert",
+    "adwaita-icon-theme",
+]

@@ -1,0 +1,2 @@
+1	Nałady kamp'jutara
+2	Shrimp zapuscicca praz %d s

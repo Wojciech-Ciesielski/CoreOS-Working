@@ -1,0 +1,12 @@
+[box]
+id = "grub-theme"
+version = "0.1.0"
+kind = "theme"
+summary = "Menu GRUB nośnika i systemu: motyw, czcionki Inter, języki GNOME, Secure Boot"
+depends = ["fonts"]
+
+[packages]
+image = ["grub2", "rsvg-convert", "adwaita-icon-theme"]
+
+[image]
+kiwi_files = ["edit_boot_config.sh"]

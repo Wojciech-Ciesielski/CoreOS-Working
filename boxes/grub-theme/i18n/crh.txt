@@ -1,0 +1,2 @@
+1	Kompyuter ayarları
+2	Shrimp %d

@@ -1,0 +1,2 @@
+1	Kompyuter sozlamalari
+2	Shrimp %d soniyadan keyin ishga tushadi

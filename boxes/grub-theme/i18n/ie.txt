@@ -1,0 +1,2 @@
+1	Parametres del computator
+2	Shrimp va comenzar in %d s

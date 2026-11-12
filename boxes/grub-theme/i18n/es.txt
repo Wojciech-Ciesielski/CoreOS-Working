@@ -1,0 +1,2 @@
+1	Configuración del equipo
+2	Shrimp se iniciará en %d s

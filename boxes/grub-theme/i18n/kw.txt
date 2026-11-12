@@ -1,0 +1,2 @@
+1	Settyansow an gonssyer
+2	Shrimp a dhallethas yn %d s

@@ -1,0 +1,2 @@
+1	Gosodiadau'r cyfrifiadur
+2	Bydd Shrimp yn cychwyn ymhen %d eiliad

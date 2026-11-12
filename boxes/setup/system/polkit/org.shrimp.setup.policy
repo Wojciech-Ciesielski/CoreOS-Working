@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
+<policyconfig>
+  <vendor>Shrimp</vendor>
+  <action id="org.shrimp.setup.apply">
+    <description>Finish the first setup of Shrimp</description>
+    <description xml:lang="pl">Dokończ pierwszą konfigurację Shrimp</description>
+    <message xml:lang="pl">Dokończenie konfiguracji wymaga uprawnień administratora.</message>
+    <defaults>
+      <allow_any>no</allow_any>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>auth_admin</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/libexec/shrimp-setup-apply</annotate>
+  </action>
+  <action id="org.shrimp.setup.usb">
+    <description>Restore the contents of the installation USB drive</description>
+    <description xml:lang="pl">Przywróć zawartość pendrive'a użytego do instalacji</description>
+    <message xml:lang="pl">Przywrócenie pendrive'a wymaga uprawnień administratora.</message>
+    <defaults>
+      <allow_any>no</allow_any>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>auth_admin</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/libexec/shrimp-usb-backup</annotate>
+  </action>
+</policyconfig>

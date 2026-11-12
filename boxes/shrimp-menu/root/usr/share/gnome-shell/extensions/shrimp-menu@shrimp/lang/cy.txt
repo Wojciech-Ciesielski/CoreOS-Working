@@ -1,0 +1,4 @@
+1	Ynghylch y cyfrifiadur hwn
+3	Meddalwedd
+4	Diweddariadau
+15	Adfer y system

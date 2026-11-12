@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Shrimp Beta: live ISO on openSUSE Leap 16.1 + GNOME. Szablon boxa image-base: shrimp-box
+     (boxes/shrimp-box) wstawia pakiety wszystkich boxów kontenera iso-live w miejsce znacznika w <packages type="image">.
+     Build: tools/build-iso.sh (local, needs Docker) or the "Build ISO" GitHub workflow. -->
+<image schemaversion="8.5" name="Shrimp" displayname="Shrimp">
+    <description type="system">
+        <author>Shrimp</author>
+        <contact>wciesielski.personal@icloud.com</contact>
+        <specification>Shrimp Beta live system (openSUSE Leap 16.1, GNOME)</specification>
+    </description>
+    <preferences>
+        <version>0.1.0</version>
+        <packagemanager>zypper</packagemanager>
+        <locale>pl_PL</locale>
+        <keytable>pl</keytable>
+        <timezone>Europe/Warsaw</timezone>
+        <rpm-excludedocs>true</rpm-excludedocs>
+        <rpm-check-signatures>false</rpm-check-signatures>
+        <bootsplash-theme>shrimp</bootsplash-theme>
+        <bootloader-theme>shrimp</bootloader-theme>
+        <type image="iso" primary="true" flags="overlay"
+              hybridpersistent="true" hybridpersistent_filesystem="ext4"
+              firmware="uefi" mediacheck="false"
+              kernelcmdline="splash quiet loglevel=3 rd.udev.log_level=3 udev.log_level=3 systemd.show_status=false rd.systemd.show_status=false vt.global_cursor_default=0 multipath=off"
+              editbootconfig="edit_boot_config.sh"
+              volid="SHRIMP_LIVE" publisher="Shrimp" application_id="Shrimp">
+            <bootloader name="grub2" output_console="gfxterm" input_console="console" video_mode="1920x1080" timeout="1" timeout_style="hidden"/>
+        </type>
+    </preferences>
+    <users>
+        <user password="shrimp" pwdformat="plain" home="/root" name="root" groups="root"/>
+        <user password="shrimp" pwdformat="plain" home="/home/shrimp" name="shrimp" realname="Shrimp" groups="users,wheel"/>
+    </users>
+    <!-- tools/build-iso.sh and the workflow pass the real Leap 16.1 URL with set-repo -->
+    <repository type="rpm-md" alias="leap-oss" imageinclude="true">
+        <source path="https://download.opensuse.org/distribution/leap/16.1/repo/oss/x86_64/"/>
+    </repository>
+    <!-- Pakiety obrazu składa shrimp-box z [packages] image każdego boxa kontenera (boxes/*/box.toml). -->
+    <packages type="image">
+@SHRIMP_PACKAGES@
+    </packages>
+    <packages type="bootstrap">
+        <package name="filesystem"/>
+        <package name="glibc-locale-base"/>
+        <package name="ca-certificates"/>
+        <package name="ca-certificates-mozilla"/>
+        <package name="cracklib-dict-full"/>
+    </packages>
+</image>

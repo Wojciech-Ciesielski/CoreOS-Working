@@ -1,0 +1,181 @@
+1	Air ais
+2	Fiosrachadh
+3	Suaicheantas Shrimp
+4	Bheir draibhear NVIDIA làn-dèanadas ann an geamannan is prògraman grafaigeachd. Tha an draibhear fosgailte nas sìmplidhe ach nas slaodaiche.
+5	(Molta)
+6	Air adhart
+7	Leum thairis
+8	Sguir dheth
+9	Deiseil
+10	Adhartach
+11	Fèin-obrachail
+12	Chan eil gin
+13	Ullaichidh sinn Shrimp air a’ choimpiutair agad.
+14	Tòisichidh sinn
+15	Tagh cànan
+16	Càit a bheil thu?
+17	Suidhichidh sinn an roinn-tìde agus fòrmat a’ chinn-latha.
+18	Tagh co-dhealbhachadh a’ chlàr-iuchrach
+19	Feuch an co-dhealbhachd
+20	prògramaiche
+21	clò-sgrìobhadair
+22	Draibh
+23	falamh
+24	Crioptachadh na diosga
+25	Dheth
+26	Air
+27	Facal-faire na diosga
+28	Sgrìobh facal-faire an diosga a-rithist
+29	Càit an stàlaichear Shrimp?
+30	Ri taobh Windows
+31	An àite Windows
+32	Thèid Windows a thoirt air falbh. Gluaisidh sinn na faidhlichean a ghlèidh thu dhan t-siostam ùr.
+33	Chan urrainnear stàladh ri taobh Windows a chionn ’s gu bheil draibh Windows crioptaichte le BitLocker.
+34	Cleachdaidh Shrimp an draibh {name} gu lèir.
+35	Fanaidh Windows air an draibh eile.
+36	Roinn an diosga
+37	Iarraidh an coimpiutair am facal-faire seo gach turas a thòisicheas e. Às aonais chan urrainn dhut an dàta agad fhaighinn air ais.
+38	Cruthaich cunntas
+39	Bidh feum agad air airson clàradh a-steach.
+40	An t-ainm slàn
+41	Ainm-cleachdaiche
+42	Facal-faire
+43	Dearbh am facal-faire
+44	Deiseil airson stàladh
+45	Chan atharraich dad gus am briog thu air “Stàlaich”.
+46	Cànan
+47	Roinn
+48	Clàr-iuchrach
+49	Draibh
+50	Stàladh
+51	An draibh gu lèir
+52	Roinn an diosga
+53	Windows {win} · Shrimp {shrimp}
+54	Cunntas
+55	Crioptachadh
+56	Stàlaich
+57	A’ stàladh Shrimp
+58	A’ stàladh
+59	Ag ullachadh an draibh
+60	A’ stàladh an t-siostaim
+61	Ag aiseag fhaidhlichean
+62	Mu {min} mion air fhàgail
+63	Dìreach mionaid
+64	Stàladh coileanta
+65	Ath-thòisich an coimpiutair gus crìoch a chur air.
+66	Ath-thòisich
+67	Halò, {name}
+68	a charaid
+69	Crìochnaicheamaid an rèiteachadh. Cha toir e ach mionaid.
+70	Ceangail ri lìonra
+71	Facal-faire airson an lìonraidh {ssid}
+72	Tèarainte
+73	Fosgailte
+74	Lìonra fosgailte. Chì càch na nì thu air.
+75	Lìonra falaichte
+76	Cuir a-steach mion-fhiosrachadh lìonraidh nach eil san liosta.
+77	Ainm an lìonraidh
+78	Tèarainteachd
+79	Ceangail
+80	Seòladh IP
+81	Frithealaiche DNS
+82	Progsaidh
+83	A làimh
+84	Tagh coltas
+85	Soilleir
+86	Dorcha
+87	’S urrainn dhut seo atharrachadh uair sam bith anns na Roghainnean.
+88	Tagh dath
+89	Gorm
+90	Uaine-ghorm
+91	Uaine
+92	Buidhe
+93	Orains
+94	Dearg
+95	Pinc
+96	Purpaidh
+97	Liath
+98	Dealbh is fuaim gun dragh
+99	Stàlaichidh sinn na draibhearan is codecs a dh’fheumas tu ach an obraich videothan is geamannan sa bhad.
+100	Stàlaich
+101	Nì mi e nas fhaide air adhart
+102	Cairt grafaigeachd NVIDIA
+103	Lorg sinn cairt {name}.
+104	Draibhear NVIDIA
+105	Draibhear fosgailte
+106	An dèanadas as fheàrr ann an geamannan is prògraman grafaigeachd.
+107	Nas sìmplidhe, ach nas lugha de chumhachd.
+108	Ciamar a chleachdas tu an coimpiutair agad?
+109	Stàlaichidh sinn na prògraman as motha a dh’fheumas tu.
+110	Obair is ionnsachadh
+111	Geamannan
+112	Cruthachalachd
+113	Prògramadh
+114	Ioma-mheadhan
+115	Na prògraman agad o Windows
+116	Lorg sinn iad air a’ choimpiutair agad. Tagh an fheadhainn a thèid a stàladh.
+117	Prògraman a mholamaid
+118	Tagh an fheadhainn a thèid a stàladh.
+119	Cha deach dad a thaghadh.
+120	A’ stàladh phrògraman
+121	A’ luchdadh a-nuas ’s a’ stàladh
+122	Gach nì deiseil
+123	Tlachd leat Shrimp.
+124	Tha mi airson barrachd fhaighinn a-mach
+125	{n} à {total}
+126	’S e Linux a th’ ann an Shrimp
+127	’S e siostam saor a th’ ann an Linux a rinn daoine o fheadh an t-saoghail. Ruithidh e a’ mhòr-chuid de fhrithealaichean is fònaichean Android.
+128	Windows an ath dhoras
+129	Gach turas a thòisicheas e taghaidh tu Shrimp no Windows.
+130	Prògraman
+131	Cha ruith faidhlichean .exe Windows an-seo. Stàlaichidh tu prògraman o Shrimp Apps, agus airson a’ mhòr-chuid de dh’aplacaidean aithnichte lorgaidh tu roghainn eile an sin.
+132	Facal-faire airson atharraichean
+133	Nuair a stàlaicheas tu prògraman no a dh’atharraicheas tu roghainnean cudromach, iarraidh an siostam am facal-faire agad. Tha sin àbhaisteach is dìonaidh e an coimpiutair agad.
+134	Na faidhlichean agad
+135	Tha sgrìobhainnean, dealbhan is luchdaidhean a-nuas san aplacaid Faidhlichean, sa phasgan dachaigh agad.
+136	Lorgaidh tu draibh Windows an sin cuideachd.
+137	Panko
+138	An do sguir rudeigin ag obair an dèidh atharrachaidh? Ann am Panko ’s urrainn dhut tilleadh gu mar a bha cùisean roimhe.
+139	Cocktail
+140	Ùrachaidhean, draibhearan is codecs ann an aon àite. Thèid ùrachaidhean a stàladh nuair a thòisicheas tu às ùr.
+141	Lorg luath
+142	Brùth an iuchair Super, an tè le suaicheantas Windows, airson prògraman, faidhlichean is roghainnean a lorg.
+143	Taic
+144	Lorgaidh tu freagairtean air duilleagan cobhrach Shrimp, ann an docamaideadh GNOME is openSUSE agus air fòraman na coimhearsnachd.
+145	Chan eil faclan-faire na diosga co-ionnan
+146	Cuir a-steach an aon fhacal-faire san dà raon. Chan urrainn dhut an coimpiutair a thòiseachadh às aonais, mar sin cùm e an àiteigin sàbhailte.
+147	Chan eil na faclan-faire co-ionnan
+148	Cuir a-steach an aon fhacal-faire san dà raon agus feuch ris a-rithist.
+149	Feuch a-rithist
+150	Chan eil àite gu leòr ann
+151	Chan eil àite gu leòr air an draibh airson Shrimp. Dèan Windows nas lugha no tagh draibh eile.
+152	Atharraich am meud
+153	Air ais
+154	Dh’fhàillig an stàladh
+155	Chaidh rudeigin ceàrr. Tha na faidhlichean agad sàbhailte. ’S urrainn dhut feuchainn ris a-rithist.
+156	Fàg
+157	Cha b’ urrainn dhuinn ceangal
+158	Thoir sùil air facal-faire an lìonraidh agus feuch ris a-rithist.
+159	Thoir sùil air an fhacal-fhaire airson an lìonraidh {ssid} agus feuch ris a-rithist.
+160	Chan eil ceangal eadar-lìn ann
+161	Cha b’ urrainn dhuinn na prògraman a luchdadh a-nuas. Thoir sùil air a’ cheangal agad agus feuch ris a-rithist.
+162	Sgrìobhainnean is cliath-dhuilleagan
+163	Post-d
+164	Geamannan
+165	Geamannan o Epic is GOG
+166	Tarraing
+167	Deasachadh video
+168	Grafaigeachd
+169	Deasaiche còd
+170	Àrainneachd leasachaidh
+171	Filmichean is ceòl
+172	Ceòl
+173	Nuadh-Eabhraig
+174	Chicago
+175	Denver
+176	Los Angeles
+177	Toronto
+178	Vancouver
+179	Na h-Eileanan Canàrach
+180	Sydney
+181	Perth

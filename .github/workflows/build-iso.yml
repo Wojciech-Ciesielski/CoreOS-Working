@@ -1,0 +1,47 @@
+name: Build ISO
+
+on:
+  push:
+    branches: [main, "claude/**"]
+    paths: ["boxes/branding/**", "boxes/icon-theme/**", "boxes/fonts/**", "boxes/plymouth-theme/**", "boxes/grub-theme/**", "boxes/gnome-desktop/**", "boxes/shell-theme/**", "boxes/shell-extensions/**", "boxes/shrimp-menu/**", "boxes/app-style/**", "boxes/flathub/**", "boxes/linu-x/**", "boxes/gdm/**", "boxes/shrimp-apps/**", "boxes/shrimp-i18n/**", "boxes/i18n-core/**", "boxes/web-apps/**", "boxes/help-links/**", "boxes/cocktail/**", "boxes/panko/**", "boxes/cherry/**", "boxes/image-base/**", "boxes/setup/**", "boxes/install-schema/**", "boxes/live-session/**", "boxes/shrimp-box/**", "containers/iso-live.toml", "containers/desktop.toml", "tools/build-iso.sh", "tools/fetch-shrimps.sh", "tools/shrimps.ref", ".github/workflows/build-iso.yml"]
+  workflow_call:
+  workflow_dispatch:
+    inputs:
+      leap_version:
+        description: "openSUSE Leap version"
+        default: "16.1"
+
+jobs:
+  iso:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost
+          sudo docker image prune -af || true
+          df -h /
+
+      - name: Build live ISO (KIWI)
+        run: sudo tools/build-iso.sh "${{ github.event.inputs.leap_version || '16.1' }}"
+
+      - name: Upload ISO
+        uses: actions/upload-artifact@v7
+        with:
+          name: shrimp-live-iso
+          path: |
+            out/*.iso
+            out/build-info.txt
+            out/build-warnings.txt
+          compression-level: 0
+          retention-days: 14
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: kiwi-log
+          path: out/kiwi.log
+          retention-days: 14

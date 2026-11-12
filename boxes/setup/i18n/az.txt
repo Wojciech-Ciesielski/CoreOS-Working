@@ -1,0 +1,181 @@
+1	Geri
+2	Məlumat
+3	Shrimp loqosu
+4	NVIDIA sürücüsü oyunlarda və qrafik proqramlarında tam performans verir. Açıq sürücü daha sadədir, amma daha yavaşdır.
+5	(Tövsiyə olunur)
+6	İrəli
+7	Keç
+8	Ləğv et
+9	Hazırdır
+10	Əlavə
+11	Avtomatik
+12	Heç biri
+13	Gəlin Shrimp-i kompüterinizdə hazırlayaq.
+14	Başlayaq
+15	Dil seçin
+16	Haradasınız?
+17	Saat qurşağını və tarix formatını təyin edəcəyik.
+18	Klaviatura düzümünü seçin
+19	Düzümü yoxlayın
+20	proqramçı
+21	yazı makinası
+22	Sürücü
+23	boş
+24	Diskin şifrələnməsi
+25	Söndürülü
+26	Aktiv
+27	Disk parolu
+28	Disk parolunu təkrarlayın
+29	Shrimp harada quraşdırılsın?
+30	Windows ilə yanaşı
+31	Windows əvəzinə
+32	Windows silinəcək. Saxladığınız faylları yeni sistemə köçürəcəyik.
+33	Windows diski BitLocker ilə şifrləndiyi üçün Windows-un yanında quraşdırmaq mümkün deyil.
+34	Shrimp bütün {name} diskindən istifadə edəcək.
+35	Windows digər diskdə qalır.
+36	Diskin bölünməsi
+37	Kompüter hər başlanğıcda bu parolu soruşacaq. Onsuz məlumatlarınızı bərpa edə bilməzsiniz.
+38	Hesab yaradın
+39	Daxil olmaq üçün ona ehtiyacınız olacaq.
+40	Tam ad
+41	İstifadəçi adı
+42	Parol
+43	Parolu təsdiqləyin
+44	Quraşdırmağa hazırdır
+45	“Quraşdır” düyməsini basana qədər heç nə dəyişməyəcək.
+46	Dil
+47	Region
+48	Klaviatura
+49	Sürücü
+50	Quraşdırma
+51	Bütün disk
+52	Diskin bölünməsi
+53	Windows {win} · Shrimp {shrimp}
+54	Hesab
+55	Şifrələmə
+56	Quraşdır
+57	Shrimp quraşdırılır
+58	Quraşdırılır
+59	Disk hazırlanır
+60	Sistem quraşdırılır
+61	Fayllar bərpa olunur
+62	Təxminən {min} dəq qalıb
+63	Bir az gözləyin
+64	Quraşdırma tamamlandı
+65	Bitirmək üçün kompüteri yenidən başladın.
+66	Yenidən başlat
+67	Salam, {name}
+68	dostum
+69	Gəlin quraşdırmanı bitirək. Bu cəmi bir an çəkəcək.
+70	Şəbəkəyə qoşulun
+71	{ssid} şəbəkəsinin parolu
+72	Qorunan
+73	Açıq
+74	Açıq şəbəkə. Başqaları onda nə etdiyinizi görə bilər.
+75	Gizli şəbəkə
+76	Siyahıda görünməyən şəbəkənin məlumatlarını daxil edin.
+77	Şəbəkə adı
+78	Təhlükəsizlik
+79	Qoşul
+80	IP ünvanı
+81	DNS server
+82	Proksi
+83	Əl ilə
+84	Görünüş seçin
+85	Açıq
+86	Tünd
+87	Bunu həmişə Parametrlərdə dəyişə bilərsiniz.
+88	Rəng seçin
+89	Mavi
+90	Firuzəyi
+91	Yaşıl
+92	Sarı
+93	Narıncı
+94	Qırmızı
+95	Çəhrayı
+96	Bənövşəyi
+97	Boz
+98	Problemsiz görüntü və səs
+99	Videolar və oyunlar dərhal işləsin deyə lazım olan sürücüləri və kodekləri quraşdıracağıq.
+100	Quraşdır
+101	Sonra edəcəyəm
+102	NVIDIA video kartı
+103	{name} kartı tapdıq.
+104	NVIDIA sürücüsü
+105	Açıq sürücü
+106	Oyunlarda və qrafik proqramlarında ən yaxşı performans.
+107	İşlətmək daha sadədir, amma daha zəifdir.
+108	Kompüterdən necə istifadə edirsiniz?
+109	Ən çox ehtiyacınız olan proqramları quraşdıracağıq.
+110	İş və təhsil
+111	Oyunlar
+112	Yaradıcılıq
+113	Proqramlaşdırma
+114	Multimedia
+115	Windows-dan proqramlarınız
+116	Onları kompüterinizdə tapdıq. Hansıları quraşdırmaq istədiyinizi seçin.
+117	Təklif olunan proqramlar
+118	Hansıları quraşdırmaq istədiyinizi seçin.
+119	Heç nə seçilməyib.
+120	Proqramlar quraşdırılır
+121	Endirilir və quraşdırılır
+122	Hər şey hazırdır
+123	Shrimp-dən zövq alın.
+124	Daha çox bilmək istəyirəm
+125	{n} / {total}
+126	Shrimp Linux-dur
+127	Linux bütün dünyadan insanların yaratdığı pulsuz sistemdir. Serverlərin və Android telefonların əksəriyyəti onunla işləyir.
+128	Windows yanınızda
+129	Hər başlanğıcda Shrimp və ya Windows seçəcəksiniz.
+130	Proqramlar
+131	Windows .exe faylları burada işləmir. Proqramları Shrimp Apps-dan quraşdırırsınız və əksər tanınmış proqramların orada qarşılığını tapacaqsınız.
+132	Dəyişikliklər üçün parol
+133	Proqram quraşdıranda və ya vacib parametrləri dəyişəndə sistem parolunuzu soruşacaq. Bu normaldır və kompüterinizi qoruyur.
+134	Fayllarınız
+135	Sənədlər, şəkillər və endirilənlər Fayllar tətbiqində, ev qovluğunuzdadır.
+136	Windows diskini də orada tapacaqsınız.
+137	Panko
+138	Dəyişiklikdən sonra nəsə işləməyi dayandırıb? Panko-da hər şeyi əvvəlki vəziyyətinə qaytara bilərsiniz.
+139	Cocktail
+140	Yeniləmələr, sürücülər və kodeklər bir yerdə. Yeniləmələr yenidən başladanda quraşdırılır.
+141	Sürətli axtarış
+142	Proqramları, faylları və parametrləri tapmaq üçün Super düyməsini, Windows loqolu düyməni basın.
+143	Kömək
+144	Cavabları Shrimp kömək səhifələrində, GNOME və openSUSE sənədlərində və icma forumlarında tapacaqsınız.
+145	Disk parolları uyğun gəlmir
+146	Hər iki sahəyə eyni parolu daxil edin. Onsuz kompüteri işə sala bilməzsiniz, ona görə onu təhlükəsiz yerdə saxlayın.
+147	Parollar uyğun gəlmir
+148	Hər iki sahəyə eyni parolu daxil edin və yenidən cəhd edin.
+149	Yenidən cəhd edin
+150	Kifayət qədər yer yoxdur
+151	Diskdə Shrimp üçün kifayət qədər yer yoxdur. Windows-u kiçildin və ya başqa disk seçin.
+152	Ölçünü dəyişin
+153	Geri qayıt
+154	Quraşdırma uğursuz oldu
+155	Nəsə səhv getdi. Fayllarınız təhlükəsizdir. Yenidən cəhd edə bilərsiniz.
+156	Çıx
+157	Qoşulmaq mümkün olmadı
+158	Şəbəkə parolunu yoxlayın və yenidən cəhd edin.
+159	{ssid} şəbəkəsinin parolunu yoxlayın və yenidən cəhd edin.
+160	İnternet bağlantısı yoxdur
+161	Proqramları endirmək mümkün olmadı. Bağlantınızı yoxlayın və yenidən cəhd edin.
+162	Sənədlər və cədvəllər
+163	E-poçt
+164	Oyunlar
+165	Epic və GOG oyunları
+166	Rəsm
+167	Video montajı
+168	Qrafika
+169	Kod redaktoru
+170	İnkişaf mühiti
+171	Filmlər və musiqi
+172	Musiqi
+173	Nyu-York
+174	Çikaqo
+175	Denver
+176	Los-Anceles
+177	Toronto
+178	Vankuver
+179	Kanar adaları
+180	Sidney
+181	Pert

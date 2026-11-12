@@ -1,0 +1,4 @@
+1	A számítógép névjegye
+3	Szoftverek
+4	Frissítések
+15	Rendszer-visszaállítás

@@ -1,0 +1,8 @@
+[box]
+id = "icon-theme"
+version = "0.1.0"
+kind = "theme"
+summary = "Motyw ikon MoreWaita (z GitHuba przy budowie obrazu)"
+
+[packages]
+image = ["adwaita-icon-theme", "unzip", "curl"]

@@ -1,0 +1,2 @@
+1	Tietokoneen asetukset
+2	Shrimp käynnistyy %d s kuluttua

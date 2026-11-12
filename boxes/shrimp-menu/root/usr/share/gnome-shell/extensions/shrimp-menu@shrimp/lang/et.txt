@@ -1,0 +1,4 @@
+1	Selle arvuti teave
+3	Tarkvara
+4	Uuendused
+15	Süsteemi taastamine

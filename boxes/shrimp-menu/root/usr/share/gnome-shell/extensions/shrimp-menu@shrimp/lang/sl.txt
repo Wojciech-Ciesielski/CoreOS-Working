@@ -1,0 +1,4 @@
+1	O tem računalniku
+3	Programska oprema
+4	Posodobitve
+15	Obnovitev sistema

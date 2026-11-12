@@ -1,0 +1,4 @@
+1	Pri ti-ci computator
+3	Programmes
+4	Actualisationes
+15	Restauration del sistema

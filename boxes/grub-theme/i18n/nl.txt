@@ -1,0 +1,2 @@
+1	Computerinstellingen
+2	Shrimp start over %d s

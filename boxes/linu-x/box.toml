@@ -1,0 +1,10 @@
+# Pakiety sterownika i kodeków: root/usr/share/shrimp/linux/drivers.conf (wspólne z Setup).
+[box]
+id = "linu-x"
+version = "0.1.0"
+kind = "system"
+summary = "Linu(x): sterownik NVIDIA, kodeki przez PipeWire, wygląd libadwaita dla Qt/Electron (box app-style)"
+depends = ["app-style"]
+
+[packages]
+image = ["pipewire", "wireplumber", "pipewire-pulseaudio", "pipewire-alsa"]

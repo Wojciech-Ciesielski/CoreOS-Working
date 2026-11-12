@@ -1,0 +1,5 @@
+[box]
+id = "branding"
+version = "0.1.0"
+kind = "theme"
+summary = "Nazwa Shrimp w os-release i logo"
