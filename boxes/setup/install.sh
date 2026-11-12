@@ -37,6 +37,9 @@ if [ "$LIVE" = --live ]; then
   install -Dm644 "$HERE/system/autostart/shrimp-setup-launcher.desktop" "$D/usr/share/applications/org.shrimp.Setup.desktop"
   install -Dm644 "$HERE/system/systemd/agama-web-server.service.d/50-shrimp.conf" "$D/usr/lib/systemd/system/agama-web-server.service.d/50-shrimp.conf"
   install -Dm644 "$HERE/system/systemd/shrimp-setup-token.service" "$D/usr/lib/systemd/system/shrimp-setup-token.service"
+  # Instalacja bez internetu: repozytorium pakietów z nośnika (LiveOS/shrimp-repo.squashfs).
+  install -Dm755 "$HERE/system/libexec/shrimp-offline-repo" "$D/usr/libexec/shrimp-offline-repo"
+  install -Dm644 "$HERE/system/systemd/shrimp-offline-repo.service" "$D/usr/lib/systemd/system/shrimp-offline-repo.service"
   # Spokojny start nośnika: czarne tło z logo, w sesji live tylko strażnik Setup (bez DING i doku).
   # Nazwa 99_shrimp_live sortuje się po 99_shrimp, więc ten plik wygrywa z ustawieniami zainstalowanego systemu.
   install -Dm644 "$HERE/system/live/shrimp-live-background.svg" "$D/usr/share/shrimp-setup/live/shrimp-live-background.svg"

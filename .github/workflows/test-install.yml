@@ -56,7 +56,7 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules && sudo udevadm trigger --name-match=kvm
           # Layout like Shrimp Install (Beta 5+): GPT, FAT32 SHRIMP_BOOT (everything but LiveOS) + exFAT SHRIMP_LIVE.
-          truncate -s 8G usb.img
+          truncate -s 12G usb.img
           sgdisk -n1:1M:+1G -t1:0700 -n2:0:0 -t2:0700 usb.img
           LOOP=$(sudo losetup -Pf --show usb.img)
           sudo mkfs.vfat -F 32 -n SHRIMP_BOOT "${LOOP}p1"

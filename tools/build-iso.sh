@@ -29,7 +29,7 @@ mkdir -p out
     ok=0
     for i in 1 2 3; do
       zypper -n in --no-recommends python3-kiwi kiwi-systemdeps-iso-media kiwi-systemdeps-bootloaders kiwi-systemdeps-filesystems binutils findutils gawk sed coreutils \
-        nodejs-default npm-default tar gzip rustup gcc && { ok=1; break; }
+        nodejs-default npm-default tar gzip rustup gcc createrepo_c squashfs xorriso && { ok=1; break; }
       sed -i -E 's#https?://(download|cdn)\.opensuse\.org#https://downloadcontent.opensuse.org#' /etc/zypp/repos.d/*.repo
       zypper -n clean -a; sleep 20; zypper -n --gpg-auto-import-keys ref -f
     done
@@ -50,8 +50,15 @@ mkdir -p out
       f=\$(find out/build/build/image-root/usr/share/icons/Adwaita -name \"\$n.svg\" -print -quit)
       [ -n \"\$f\" ] && echo \"ICON-SVG \$n \$(base64 -w0 \"\$f\")\" || true
     done
+    # pakiety sesji live (dla repozytorium offline: extra/)
+    chroot out/build/build/image-root rpm -qa --qf '%{NAME}\\n' | sort -u > out/live-packages.txt
     grep -h 'GRUB fonts\|WARNING\|extension installed\|optional package installed\|config.sh\|Linu(x)' out/kiwi.log | tail -40 || true
     rm -rf out/build out/desc
+    # Instalacja bez internetu: repozytorium pakietów w ISO (LiveOS/shrimp-repo.squashfs).
+    # SHRIMP_OFFLINE_REPO=0 pomija ten krok (szybsza budowa do testów samego nośnika).
+    if [ \"${SHRIMP_OFFLINE_REPO:-1}\" != 0 ]; then
+      tools/build-offline-repo.sh '$VERSION' \$(ls out/*.iso | head -n1) out/live-packages.txt '$REPO'
+    fi
   "
 ls -lh out/*.iso
 

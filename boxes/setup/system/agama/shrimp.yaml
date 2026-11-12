@@ -26,17 +26,13 @@ software:
     - sudo-policy-wheel-auth-self
     - flatpak
     - gdm
-    # okno Setup (shrimp-setup: GTK4 + WebKitGTK 6) w pierwszej konfiguracji
-    - libwebkitgtk-6_0-4
     # przywracanie pendrive'a z Shrimp Install (shrimp-usb-backup): partycjonowanie i systemy plików
     - parted
     - dosfstools
-    - exfatprogs
     - ntfsprogs
-    # Steam z Flathub (com.valvesoftware.Steam): reguły udev dla kontrolerów i GameMode
-    # (te same pakiety ma box shrimp-apps w [packages] image dla sesji live)
-    - steam-devices
-    - gamemode
+    # Pakietów spoza oficjalnego repozytorium Leap offline (libwebkitgtk-6_0-4 dla okna Setup, exfatprogs,
+    # steam-devices i gamemode dla Steam) tu nie ma: Agama przerwałaby instalację offline. Dokłada je
+    # post-install.sh (PRODUCT_EXTRA) z extra/ na nośniku albo z internetu.
     # Pakiet Shrimp z tym Setup, motywami i skryptem wyglądu (repozytorium Shrimp: do ustalenia
     # razem z budową ISO; dopóki go nie ma, ISO wgrywa pliki do obrazu docelowego w post-install.sh).
     # - shrimp-setup

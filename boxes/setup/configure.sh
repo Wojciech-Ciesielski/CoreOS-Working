@@ -5,7 +5,7 @@ if [[ " $BOX_ARGS " == *" --live "* ]]; then
   # shrimp-setup-token.service hands its token to the live user, the window starts from
   # /etc/xdg/autostart/shrimp-setup-install.desktop.
   [ -f /etc/xdg/autostart/shrimp-setup-install.desktop ] || die "Setup autostart missing"
-  systemctl enable agama.service agama-web-server.service shrimp-setup-token.service
+  systemctl enable agama.service agama-web-server.service shrimp-setup-token.service shrimp-offline-repo.service
   # Ustawienia live (czarne tło z logo, tylko strażnik Setup): 99_shrimp_live.gschema.override.
   [ -f /usr/share/glib-2.0/schemas/99_shrimp_live.gschema.override ] || die "live schema override missing"
   glib-compile-schemas /usr/share/glib-2.0/schemas

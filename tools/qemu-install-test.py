@@ -361,10 +361,15 @@ finally:
         print("::endgroup::", flush=True)
     print(f"done, Agama {result}, Setup guard {guard}, logs in {OUT}", flush=True)
 offline = "yes" if serial_has("live", "===OFFLINE-ISSUE yes") else "no"
-reprobe = "ok" if serial_has("live", "=== REPROBE probe") else "FAILED"
+offline_repo = serial_has("live", "===OFFLINE-REPO yes")
+reprobe = "ok" if serial_has("live", "=== REPROBE probe") or offline_repo else "FAILED"
 nm_auth = "ok" if serial_has("live", "===NM-AUTH ok") else "FAILED"
 print(f"live user can add a network connection without a password: {nm_auth}", flush=True)
 print(f"offline repositories issue seen: {offline}; after network + probe: {reprobe}", flush=True)
+print(f"package repository on the stick (install without network): {'yes' if offline_repo else 'no'}", flush=True)
+if offline_repo and offline == "yes":
+    print("::error::The stick has the package repository, but Agama without network still does not see the product", flush=True)
+    sys.exit(1)
 if nm_auth != "ok":
     print("::error::On the live medium, connecting to a network asks for a password (polkit, NetworkManager)", flush=True)
     sys.exit(1)
