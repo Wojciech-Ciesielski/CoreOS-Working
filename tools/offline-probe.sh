@@ -34,7 +34,7 @@ if [ -n "$r" ]; then
   case $pk in *.zst) zstd -dc $pk ;; *.gz) zcat $pk ;; *) cat $pk ;; esac > $M/primary.xml
   echo "packages: $(grep -c '<package ' $M/primary.xml)"
   grep -o '<name>[^<]*</name>' $M/primary.xml | sed 's/<[^>]*>//g' | sort -u > "$OUT/offline-names.txt"
-  for n in kernel-firmware-all gnome-shell gdm flatpak NetworkManager exfatprogs ntfsprogs steam-devices gamemode libwebkitgtk-6_0-4 gnome-shell-lang glibc-locale ffmpeg-7 gstreamer-plugins-bad sof-firmware fwupd ModemManager b43-fwcutter python3-nautilus inter-fonts google-noto-sans-cjk-fonts; do
+  for n in Leap_immutable-release openSUSE-repos-Leap sudo-policy-wheel-auth-self parted dosfstools os-prober patterns-base-immutable_base patterns-gnome-gnome kernel-default grub2-x86_64-efi shim snapper libgtk-4-1 bubblewrap xdg-dbus-proxy gstreamer-plugin-pipewire alsa-firmware usb_modeswitch bluez transactional-update; do
     grep -qx "$n" "$OUT/offline-names.txt" && echo "HAS $n" || echo "MISSING $n"
   done
   grep -c -- '-lang$' "$OUT/offline-names.txt"
