@@ -23,7 +23,32 @@ restore_resolv() {
   if [ -n "$RESOLV_LINK" ]; then ln -s "$RESOLV_LINK" "$RESOLV"
   elif [ -e "$RESOLV.shrimp-orig" ]; then mv "$RESOLV.shrimp-orig" "$RESOLV"; fi
 }
-trap restore_resolv EXIT
+# Instalacja offline (shrimp-offline-repo): repozytorium z pendrive'a widoczne też w chroot, żeby zypper
+# niżej doinstalował pakiety pulpitu bez internetu. Bez sieci zypper pomija repozytoria zdalne
+# (--no-remote), zamiast kończyć się błędem odświeżania. Na końcu wpis lokalnego repozytorium znika
+# z systemu (po restarcie pendrive'a nie ma), aktualizacje idą z repozytoriów openSUSE.
+OFFLINE_URL=$(sed -n 's#^ *- url: \(dir:///run/shrimp-repo.*\)#\1#p' /usr/share/agama/products.d/shrimp.yaml 2>/dev/null | head -n1)
+ZYP=(zypper -n --gpg-auto-import-keys)
+if [ -n "$OFFLINE_URL" ] && mountpoint -q /run/shrimp-repo; then
+  mkdir -p "$T/run/shrimp-repo"
+  mount --bind /run/shrimp-repo "$T/run/shrimp-repo"
+  chroot "$T" zypper -n lr -u 2>/dev/null | grep -qF "$OFFLINE_URL" \
+    || chroot "$T" zypper -n ar -f "$OFFLINE_URL" shrimp-offline >/dev/null 2>&1 || log "nie można dodać repozytorium z nośnika"
+  # Pakiety pulpitu spoza oficjalnego repozytorium offline (extra/, bez podpisu metadanych: tylko tutaj).
+  if [ -f /run/shrimp-repo/extra/repodata/repomd.xml ]; then
+    chroot "$T" zypper -n ar -f -G dir:///run/shrimp-repo/extra shrimp-offline-extra >/dev/null 2>&1 || log "nie można dodać extra/"
+  fi
+  curl -fsI -m 8 https://download.opensuse.org/ >/dev/null 2>&1 || ZYP+=(--no-remote)
+  log "instalacja offline: $OFFLINE_URL"
+fi
+cleanup() {
+  if [ -n "$OFFLINE_URL" ]; then
+    grep -lF "dir:///run/shrimp-repo" "$T"/etc/zypp/repos.d/*.repo 2>/dev/null | xargs -r rm -f
+    umount "$T/run/shrimp-repo" 2>/dev/null || true
+  fi
+  restore_resolv
+}
+trap cleanup EXIT
 
 USER_NAME=$(sed -n 's/.*"userName":"\([^"]*\)".*/\1/p' "$STATE/install.json")
 [ -n "$USER_NAME" ] || { log "brak userName w install.json"; exit 1; }
@@ -119,17 +144,27 @@ if [ -f "$MAN/desktop.packages" ]; then
   if [ -n "$MISSING" ]; then
     log "doinstalowuję pakiety pulpitu:$MISSING"
     # najpierw razem; jeśli któregoś nie ma w repozytorium, po jednym, żeby reszta weszła
-    if ! chroot "$T" zypper -n --gpg-auto-import-keys install --no-recommends $MISSING >/dev/null 2>&1; then
+    if ! chroot "$T" "${ZYP[@]}" install --no-recommends $MISSING >/dev/null 2>&1; then
       for p in $MISSING; do
-        chroot "$T" zypper -n --gpg-auto-import-keys install --no-recommends "$p" >/dev/null 2>&1 || log "pakiet niedostępny: $p"
+        chroot "$T" "${ZYP[@]}" install --no-recommends "$p" >/dev/null 2>&1 || log "pakiet niedostępny: $p"
       done
     fi
   fi
 fi
+# Sterowniki i firmware urządzeń (Wi-Fi, Bluetooth, dźwięk) już przy instalacji: po instalacji offline
+# pierwsza konfiguracja potrzebuje Wi-Fi, zanim cokolwiek pobierze. shrimp-setup-apply sprawdzi je ponownie.
+DRV=/usr/share/shrimp/linux/drivers.conf
+if [ -f "$DRV" ]; then
+  DRIVER_PACKAGES=$(. "$DRV"; echo "${DRIVER_PACKAGES:-}")
+  for p in $DRIVER_PACKAGES; do
+    chroot "$T" rpm -q --whatprovides "$p" >/dev/null 2>&1 && continue
+    chroot "$T" "${ZYP[@]}" install --no-recommends "$p" >/dev/null 2>&1 || log "sterownik niedostępny: $p"
+  done
+fi
 # Wyszukiwanie plików (localsearch-extractor) potrzebuje libz.so.1, którego Leap 16.1 sam nie dokłada.
 if [ -x "$T/usr/libexec/localsearch-extractor-3" ] && ! chroot "$T" ldconfig -p | grep -q 'libz\.so\.1 '; then
   for p in libz1 libz-ng-compat1 zlib-ng-compat; do
-    chroot "$T" zypper -n --gpg-auto-import-keys install --no-recommends "$p" >/dev/null 2>&1 && { log "doinstalowano $p (libz.so.1)"; break; }
+    chroot "$T" "${ZYP[@]}" install --no-recommends "$p" >/dev/null 2>&1 && { log "doinstalowano $p (libz.so.1)"; break; }
   done
 fi
 # Pliki boxów pulpitu: nakładki root/ i wszystko, co położyły ich install.sh (programy, usługi, polkit).
@@ -166,7 +201,7 @@ chroot "$T" fc-cache -f >/dev/null 2>&1 || true
 chroot "$T" dconf update >/dev/null 2>&1 || true
 # DING (ikony na pulpicie) wymaga GLibUnix 2.0 z GLib 2.86; bez niego proces DING pada w pętli.
 if ! ls "$T"/usr/lib64/girepository-1.0/GLibUnix-2.0.typelib >/dev/null 2>&1; then
-  chroot "$T" zypper -n --gpg-auto-import-keys install --no-recommends 'typelib(GLibUnix)' >/dev/null 2>&1 \
+  chroot "$T" "${ZYP[@]}" install --no-recommends 'typelib(GLibUnix)' >/dev/null 2>&1 \
     && log "doinstalowano typelib GLibUnix (DING)" || log "brak typelib GLibUnix: DING może nie działać"
 fi
 # Menu GRUB Shrimp: motyw w /boot (jak na nośniku), GRUB_THEME i nowy grub.cfg.

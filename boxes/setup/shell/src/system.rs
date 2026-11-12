@@ -152,6 +152,11 @@ pub struct Network {
     pub strength: u8,
 }
 
+/// Repozytorium pakietów z nośnika jest zamontowane (instalacja offline).
+pub fn offline_repo() -> bool {
+    std::fs::read_to_string("/usr/share/agama/products.d/shrimp.yaml").is_ok_and(|s| s.contains("url: dir:///run/shrimp-repo"))
+}
+
 /// Internet jest, gdy NetworkManager tak mówi. Bez sprawdzania łączności w NetworkManagerze
 /// („unknown”) wystarcza stan „connected” (jest trasa domyślna).
 pub async fn online() -> bool {

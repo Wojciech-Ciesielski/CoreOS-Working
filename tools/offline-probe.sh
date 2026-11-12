@@ -6,7 +6,7 @@ set -uo pipefail
 V=${1:-16.1}; OUT=${2:-out/offline}
 mkdir -p "$OUT"; OUT=$(cd "$OUT" && pwd)
 exec > >(tee "$OUT/probe.txt") 2>&1
-zypper -n in --no-recommends xorriso gawk >/dev/null
+zypper -n in --no-recommends xorriso gawk zstd >/dev/null
 ISO=/var/tmp/leap-offline.iso
 curl -fsSL -o "$ISO" "https://download.opensuse.org/distribution/leap/$V/offline/Leap-$V-offline-installer-x86_64.install.iso"
 ls -l "$ISO"

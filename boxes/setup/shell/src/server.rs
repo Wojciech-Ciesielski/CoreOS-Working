@@ -124,7 +124,9 @@ fn err(kind: &str, msg: impl ToString) -> Response {
 async fn info() -> Json<system::Info> { Json(system::info().await) }
 async fn networks() -> Json<Vec<system::Network>> { Json(system::networks().await) }
 async fn wifi_diag() -> Json<system::WifiDiag> { Json(system::wifi_diag().await) }
-async fn online() -> Json<serde_json::Value> { Json(json!({ "online": system::online().await })) }
+/// Na nośniku z repozytorium pakietów (shrimp-offline-repo) system instaluje się bez internetu,
+/// więc krok „Połącz z internetem” jest zbędny.
+async fn online() -> Json<serde_json::Value> { Json(json!({ "online": system::offline_repo() || system::online().await })) }
 
 async fn connect(Json(c): Json<system::Connect>) -> Response {
     match system::connect(&c).await {
