@@ -106,8 +106,8 @@ jobs:
           [ "$(ls iso/*.iso | wc -l)" = 1 ] || { echo "::error::oczekiwano jednego pliku ISO"; exit 1; }
           iso=$(ls iso/*.iso); name=$(basename "$iso")
           size=$(stat -c %s "$iso"); sha=$(sha256sum "$iso" | cut -d' ' -f1)
-          # Shrimp Install zapisuje nośnik FAT32: żaden plik nie może mieć 4 GiB.
-          if [ "$size" -ge $((4*1024*1024*1024)) ]; then echo "::error::ISO ma $size B (limit FAT32 4 GiB)"; exit 1; fi
+          # Shrimp Install (Beta 5+) kładzie LiveOS na exFAT, więc obraz może mieć więcej niż 4 GiB;
+          # na FAT32 trafia tylko rozruch (EFI, boot/), a to sprawdza program przed zapisem.
           echo "ISO_NAME=$name" >> "$GITHUB_ENV"; echo "ISO_SHA=$sha" >> "$GITHUB_ENV"; echo "ISO_SIZE=$size" >> "$GITHUB_ENV"
           mkdir -p assets
           mv "$iso" "assets/$name"
