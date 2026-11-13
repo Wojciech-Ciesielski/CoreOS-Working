@@ -18,24 +18,32 @@ log() { echo "offline-repo: $*"; }
 base="https://download.opensuse.org/distribution/leap/$V/offline"
 name="Leap-$V-offline-installer-x86_64.install.iso"
 LEAP="$W/$name"
-for i in 1 2 3; do curl -fsSL --retry 3 -o "$LEAP" "$base/$name" && break; sleep 20; done
-# suma od openSUSE (sha256 albo sha512, zależnie od wydania)
-ok=0
-for alg in sha256 sha512; do
-  if sum=$(curl -fsSL "$base/$name.$alg" 2>/dev/null | awk '{print $1; exit}') && [ -n "$sum" ]; then
-    echo "$sum  $LEAP" | "${alg}sum" -c - && ok=1 || { log "zła suma $alg"; exit 1; }
-    break
-  fi
+# Pamięć podręczna (actions/cache w Build ISO): rozpakowane install/ z poprzedniej budowy, jeśli suma obrazu
+# openSUSE się nie zmieniła. Oszczędza pobranie 4,5 GB i rozpakowanie przy każdej budowie.
+CACHE=${SHRIMP_CACHE:-cache}/leap-$V
+INST=$CACHE/install
+sum="" alg=""
+for a in sha256 sha512; do
+  if s=$(curl -fsSL "$base/$name.$a" 2>/dev/null | awk '{print $1; exit}') && [ -n "$s" ]; then sum=$s; alg=$a; break; fi
 done
-[ $ok = 1 ] || log "UWAGA: brak sumy kontrolnej obrazu $name"
-xorriso -osirrox on -indev "$LEAP" -extract /install "$W/stage/install" >/dev/null 2>&1
-chmod -R u+w "$W/stage/install"
-rm -f "$LEAP"
-[ -f "$W/stage/install/repodata/repomd.xml.asc" ] || { log "brak podpisanego repodata w $name"; exit 1; }
-log "install/: $(find "$W/stage/install" -name '*.rpm' | wc -l) pakietów, $(du -sh "$W/stage/install" | cut -f1)"
+if [ -n "$sum" ] && [ "$(cat "$CACHE/iso.sum" 2>/dev/null)" = "$sum" ] && [ -f "$INST/repodata/repomd.xml.asc" ]; then
+  log "install/ z pamięci podręcznej ($name, $alg ${sum:0:12}…)"
+else
+  rm -rf "$CACHE"; mkdir -p "$CACHE"
+  for _ in 1 2 3; do curl -fsSL --retry 3 -o "$LEAP" "$base/$name" && break; sleep 20; done
+  if [ -n "$sum" ]; then echo "$sum  $LEAP" | "${alg}sum" -c - || { log "zła suma $alg"; exit 1; }
+  else log "UWAGA: brak sumy kontrolnej obrazu $name"; fi
+  xorriso -osirrox on -indev "$LEAP" -extract /install "$INST" >/dev/null 2>&1
+  chmod -R u+w,a+rX "$INST"
+  rm -f "$LEAP"
+  [ -f "$INST/repodata/repomd.xml.asc" ] || { log "brak podpisanego repodata w $name"; exit 1; }
+  [ -n "$sum" ] && echo "$sum" > "$CACHE/iso.sum"
+fi
+chmod -R a+rX "$CACHE"
+log "install/: $(find "$INST" -name '*.rpm' | wc -l) pakietów, $(du -sh "$INST" | cut -f1)"
 
 # Pakiety live spoza install/ (nazwy; wersje z repozytorium Leap, z którego zbudowano obraz).
-find "$W/stage/install" -name '*.rpm' ! -name '*.src.rpm' -print0 | xargs -0 rpm -qp --nosignature --qf '%{NAME}\n' 2>/dev/null | sort -u > "$W/have.txt"
+find "$INST" -name '*.rpm' ! -name '*.src.rpm' -print0 | xargs -0 rpm -qp --nosignature --qf '%{NAME}\n' 2>/dev/null | sort -u > "$W/have.txt"
 grep -v '^gpg-pubkey$' "$LIVE_PKGS" | sort -u | comm -23 - "$W/have.txt" > "$W/missing.txt"
 log "extra/: $(wc -l < "$W/missing.txt") pakietów spoza install/"
 R="$W/root"; mkdir -p "$R"
@@ -65,7 +73,8 @@ rm -rf "$R"
 # Paczki RPM są już skompresowane: squashfs bez ponownej kompresji danych (szybciej, ten sam rozmiar).
 SQ=out/shrimp-repo.squashfs
 rm -f "$SQ"
-mksquashfs "$W/stage" "$SQ" -noappend -no-xattrs -all-root -noD -quiet
+# Dwa źródła: install/ prosto z pamięci podręcznej (bez kopiowania 3,5 GB) i extra/ z tej budowy.
+mksquashfs "$INST" "$W/stage/extra" "$SQ" -noappend -no-xattrs -all-root -noD -quiet
 rm -rf "$W"
 log "squashfs: $(du -h "$SQ" | cut -f1)"
 
