@@ -111,8 +111,8 @@ for k in $(seq 20); do
   case "$r" in *busy*) [ "$IDLE_STUCK" = 1 ] && break; echo "=== busy, waiting ($k)"; sleep 3; idle;; *) break;; esac
 done
 stage=unknown
-case "$r" in *"HTTP 200"*) n=360;; *) stage=refused; n=0;; esac   # Agama refused: don't wait 90 min
-for i in $(seq $n); do   # up to 90 min
+case "$r" in *"HTTP 200"*) n=560;; *) stage=refused; n=0;; esac   # Agama refused: don't wait 90 min
+for i in $(seq $n); do   # up to 140 min (offline install from the stick: ~85 min in QEMU)
   sleep 15
   s=$(api "$U/api/status")
   echo "[$((i*15))s] $s" | tr -d '\n' | head -c 1500; echo

@@ -277,7 +277,7 @@ try:
               "f=/tmp/stick/shrimp-test/agama-install.sh; }; echo \"script: $f\" | sudo tee /dev/ttyS0; bash \"$f\"\n")
     pause(20)
     stage("terminal", keep_duplicates=True)
-    deadline = t() + 100 * 60
+    deadline = t() + 150 * 60  # offline: ~3900 steps of package installation from the stick took ~85 min in QEMU
     started = t()
     net_up = False
     while t() < deadline and qemu.poll() is None and not serial_has("live", "===AGAMA-DONE"):
