@@ -41,7 +41,25 @@ if [ -n "$OFFLINE_URL" ] && mountpoint -q /run/shrimp-repo; then
   curl -fsI -m 8 https://download.opensuse.org/ >/dev/null 2>&1 || ZYP+=(--no-remote)
   log "instalacja offline: $OFFLINE_URL"
 fi
+# Procesy, które zypper/rpm zostawiają w chroot (gpg-agent, keyboxd, dirmngr po imporcie kluczy repozytorium
+# z nośnika), trzymają otwarte wyjście skryptu: Agama czekała wtedy w nieskończoność na „Running user script”
+# mimo „gotowe” w dzienniku (test QEMU, instalacja offline). Kończymy wszystko, co działa w $T.
+kill_chroot_procs() {
+  chroot "$T" gpgconf --kill all >/dev/null 2>&1 || true
+  local p r
+  for p in /proc/[0-9]*; do
+    r=$(readlink "$p/root" 2>/dev/null) || continue
+    [ "$r" = "$T" ] && kill "${p#/proc/}" 2>/dev/null
+  done
+  sleep 1
+  for p in /proc/[0-9]*; do
+    r=$(readlink "$p/root" 2>/dev/null) || continue
+    [ "$r" = "$T" ] && kill -9 "${p#/proc/}" 2>/dev/null
+  done
+  return 0
+}
 cleanup() {
+  kill_chroot_procs
   if [ -n "$OFFLINE_URL" ]; then
     grep -lF "dir:///run/shrimp-repo" "$T"/etc/zypp/repos.d/*.repo 2>/dev/null | xargs -r rm -f
     umount "$T/run/shrimp-repo" 2>/dev/null || true
