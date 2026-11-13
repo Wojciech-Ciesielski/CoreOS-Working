@@ -10,7 +10,9 @@ name: Release
 # Ustawienia repozytorium (Settings → Secrets and variables → Actions):
 #   sekrety:  R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY (token R2 z zapisem do bucketu),
 #             SHRIMP_MANIFEST_KEY (opcjonalnie: klucz podpisu manifestu)
-#   zmienne:  R2_BUCKET (nazwa bucketu), R2_PUBLIC_URL (publiczny adres bucketu, bez / na końcu)
+#   zmienne:  R2_BUCKET (nazwa bucketu), R2_PUBLIC_URL (publiczny adres plików, bez / na końcu)
+# Pliki z R2 podaje strona: https://shrimp-organization.dev/download/<plik> (Site-Working, boxes/site/_worker.js,
+# powiązanie R2 SHRIMP_ISO w projekcie Pages). Gdy R2_PUBLIC_URL to sama domena strony, workflow dopisuje /download.
 on:
   workflow_dispatch:
     inputs:
@@ -84,7 +86,9 @@ jobs:
             echo "::error::Tag $TAG już istnieje"; exit 1
           fi
           echo "R2_ENDPOINT=https://$R2_ACCOUNT_ID.r2.cloudflarestorage.com" >> "$GITHUB_ENV"
-          echo "R2_PUBLIC_URL=${R2_PUBLIC_URL%/}" >> "$GITHUB_ENV"
+          pub="${R2_PUBLIC_URL%/}"
+          case "$pub" in https://shrimp-organization.dev|https://www.shrimp-organization.dev) pub="https://shrimp-organization.dev/download";; esac
+          echo "R2_PUBLIC_URL=$pub" >> "$GITHUB_ENV"
 
       - name: ISO z tego przebiegu
         if: ${{ !inputs.reuse }}

@@ -32,10 +32,10 @@ ZYP=(zypper -n --gpg-auto-import-keys)
 if [ -n "$OFFLINE_URL" ] && mountpoint -q /run/shrimp-repo; then
   mkdir -p "$T/run/shrimp-repo"
   mount --bind /run/shrimp-repo "$T/run/shrimp-repo"
-  chroot "$T" zypper -n lr -u 2>/dev/null | grep -qF "$OFFLINE_URL" \
+  chroot "$T" zypper -n lr -u 2>/dev/null | grep -qE "dir:/+${OFFLINE_URL#dir:///}" \
     || chroot "$T" zypper -n ar -f "$OFFLINE_URL" shrimp-offline >/dev/null 2>&1 || log "nie można dodać repozytorium z nośnika"
   # Pakiety pulpitu spoza oficjalnego repozytorium offline (extra/, bez podpisu metadanych: tylko tutaj).
-  if [ -f /run/shrimp-repo/extra/repodata/repomd.xml ] && ! chroot "$T" zypper -n lr -u 2>/dev/null | grep -qF "dir:///run/shrimp-repo/extra"; then
+  if [ -f /run/shrimp-repo/extra/repodata/repomd.xml ] && ! chroot "$T" zypper -n lr -u 2>/dev/null | grep -qE "dir:/+run/shrimp-repo/extra"; then
     chroot "$T" zypper -n ar -f -G dir:///run/shrimp-repo/extra shrimp-offline-extra >/dev/null 2>&1 || log "nie można dodać extra/"
   fi
   curl -fsI -m 8 https://download.opensuse.org/ >/dev/null 2>&1 || ZYP+=(--no-remote)
@@ -61,10 +61,14 @@ kill_chroot_procs() {
 cleanup() {
   kill_chroot_procs
   if [ -n "$OFFLINE_URL" ]; then
-    grep -lF "dir:///run/shrimp-repo" "$T"/etc/zypp/repos.d/*.repo 2>/dev/null | xargs -r rm -f
+    # zypper zapisuje adres jako dir:/run/… (jeden ukośnik); grep bez trafienia nie może przerwać sprzątania.
+    grep -lE "dir:/+run/shrimp-repo" "$T"/etc/zypp/repos.d/*.repo 2>/dev/null | xargs -r rm -f || true
     umount "$T/run/shrimp-repo" 2>/dev/null || true
   fi
-  restore_resolv
+  restore_resolv || true
+  # Kod wyjścia skryptu ustala główna część, nie sprzątanie: przy set -e błąd tutaj dawał kod 1 po „gotowe”
+  # i Agama zatrzymywała się na „Running user script” (test instalacji 43387303797).
+  return 0
 }
 trap cleanup EXIT
 
