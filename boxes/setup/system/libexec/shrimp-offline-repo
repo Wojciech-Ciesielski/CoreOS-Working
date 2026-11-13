@@ -13,7 +13,23 @@ img=""
 for d in /run/overlay/live /run/initramfs/live /run/media/*/SHRIMP_LIVE; do
   [ -f "$d/LiveOS/shrimp-repo.squashfs" ] && { img=$d/LiveOS/shrimp-repo.squashfs; break; }
 done
-[ -n "$img" ] || { log "brak repozytorium na nośniku, instalacja z internetu"; exit 0; }
+# Na prawdziwym sprzęcie partycja exFAT bywa podpięta gdzie indziej (albo wcale): szukamy jej po etykiecie
+# wśród wszystkich punktów montowania, a w ostateczności podpinamy ją sami tylko do odczytu.
+if [ -z "$img" ]; then
+  for t in $(findmnt -rn -o TARGET 2>/dev/null); do
+    [ -f "$t/LiveOS/shrimp-repo.squashfs" ] && { img=$t/LiveOS/shrimp-repo.squashfs; break; }
+  done
+fi
+if [ -z "$img" ]; then
+  for i in $(seq 10); do dev=$(blkid -L SHRIMP_LIVE 2>/dev/null || true); [ -n "$dev" ] && break; sleep 1; done
+  if [ -n "${dev:-}" ]; then
+    mkdir -p /run/shrimp-live
+    mountpoint -q /run/shrimp-live || mount -o ro "$dev" /run/shrimp-live 2>/dev/null || mount -t exfat -o ro "$dev" /run/shrimp-live || true
+    [ -f /run/shrimp-live/LiveOS/shrimp-repo.squashfs ] && img=/run/shrimp-live/LiveOS/shrimp-repo.squashfs
+  fi
+  log "szukanie po etykiecie SHRIMP_LIVE: urządzenie '${dev:-brak}', obraz '${img:-brak}'"
+fi
+[ -n "$img" ] || { log "brak repozytorium na nośniku, instalacja z internetu"; lsblk -f 2>&1 | sed 's/^/shrimp-offline-repo: /'; findmnt -rn 2>&1 | grep -i live | sed 's/^/shrimp-offline-repo: /'; exit 0; }
 
 mkdir -p "$MNT"
 mountpoint -q "$MNT" || mount -t squashfs -o loop,ro "$img" "$MNT"
