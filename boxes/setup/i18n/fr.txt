@@ -204,3 +204,28 @@
 245	Les documents vont dans Documents, les photos dans Images, et ainsi de suite, comme sous Windows.
 246	Tout va dans le dossier Windows de votre dossier personnel.
 247	Windows
+252	Shrimp n’a pas trouvé les fichiers du système sur cette clé et doit les télécharger. Choisissez votre réseau Wi-Fi.
+253	Choisissez votre navigateur
+254	Il ouvre les pages web et les liens. Vous pourrez en ajouter d’autres dans Shrimp Apps.
+255	Depuis Windows
+256	Votre navigateur sous Windows : {name}.
+257	Programmes
+258	Shrimp Install n’a pas apporté de liste de programmes de Windows. Tout le reste est dans Shrimp Apps.
+259	L’essentiel de Shrimp
+260	Météo, Cartes, Agenda, LibreOffice, Steam et plus
+261	À la place de {name}
+262	Aucune alternative trouvée
+263	Ces programmes Windows n’ont pas encore de version pour Shrimp. Cherchez-les plus tard dans Shrimp Apps : de nouvelles applications arrivent sans cesse.
+264	et {n} de plus
+265	Installer
+266	En attente
+267	Installation…
+268	Installé
+269	Non installé, réessayez dans Shrimp Apps
+270	S’installera une fois en ligne
+271	Taille du texte
+272	Éclairage nocturne
+273	Couleurs plus chaudes le soir
+274	Mises à jour automatiques
+275	Installées en arrière-plan, actives après un redémarrage
+276	{files} fichiers, {size}

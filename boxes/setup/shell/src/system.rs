@@ -61,6 +61,8 @@ pub struct Info {
     pub nvidia: Option<String>,
     pub windows_apps: Option<Vec<String>>,
     pub store_apps: Option<Vec<String>>,
+    /// Domyślna przeglądarka Windows (ProgId z shrimp.json, np. „ChromeHTML”), jeśli Shrimp Install ją zapisał.
+    pub default_browser: Option<String>,
 }
 
 pub async fn info() -> Info {
@@ -69,13 +71,13 @@ pub async fn info() -> Info {
         .and_then(|s| serde_json::from_str(&s).ok())
         .unwrap_or_default();
     // Lista programów z Shrimp Install (post-install.sh kopiuje shrimp.json z nośnika).
-    let (windows_apps, store_apps) = std::fs::read_to_string(format!("{STATE_DIR}/shrimp.json"))
+    let shrimp_json = std::fs::read_to_string(format!("{STATE_DIR}/shrimp.json"))
         .ok()
-        .and_then(|s| serde_json::from_str::<serde_json::Value>(&s).ok())
-        .map(|v| windows_apps_of(&v))
-        .unwrap_or((None, None));
+        .and_then(|s| serde_json::from_str::<serde_json::Value>(&s).ok());
+    let (windows_apps, store_apps) = shrimp_json.as_ref().map(windows_apps_of).unwrap_or((None, None));
+    let default_browser = shrimp_json.as_ref().and_then(|v| v["defaultBrowser"].as_str()).filter(|s| !s.is_empty()).map(str::to_string);
     let full_name = if h.full_name.is_empty() { real_name() } else { h.full_name };
-    Info { full_name, beside: h.beside, proprietary: h.proprietary, wired: wired_online().await, nvidia: nvidia_gpu(), windows_apps, store_apps }
+    Info { full_name, beside: h.beside, proprietary: h.proprietary, wired: wired_online().await, nvidia: nvidia_gpu(), windows_apps, store_apps, default_browser }
 }
 
 /// `apps[].name` i `storeApps` z shrimp.json. Odpowiedniki dobiera interfejs (windows-apps.json).
@@ -418,6 +420,114 @@ pub async fn appearance(scheme: &str, accent: Option<&str>) -> Result<(), CmdErr
     Ok(())
 }
 
+// ---------- przeglądarka, dock, preferencje ----------
+
+/// Typy, które otwiera domyślna przeglądarka (Ustawienia › Aplikacje domyślne › Sieć).
+const BROWSER_TYPES: [&str; 6] =
+    ["x-scheme-handler/http", "x-scheme-handler/https", "text/html", "application/xhtml+xml", "x-scheme-handler/about", "x-scheme-handler/unknown"];
+
+/// Identyfikator Flatpaka jak z Flathub (org.mozilla.firefox, com.google.Chrome).
+pub fn valid_app_id(id: &str) -> bool {
+    id.split('.').count() >= 3 && id.chars().all(|c| c.is_ascii_alphanumeric() || "._-".contains(c))
+}
+
+/// `mimeapps.list` z wpisami `[Default Applications]` ustawionymi na `desktop` dla `types`; reszta pliku bez zmian.
+pub fn mimeapps_with(text: &str, types: &[&str], desktop: &str) -> String {
+    let mut out: Vec<String> = Vec::new();
+    let mut in_default = false;
+    let mut seen_default = false;
+    let mut pending: Vec<&str> = types.to_vec();
+    let flush = |out: &mut Vec<String>, pending: &mut Vec<&str>| {
+        for t in pending.drain(..) {
+            out.push(format!("{t}={desktop}"));
+        }
+    };
+    for line in text.lines() {
+        let trimmed = line.trim();
+        if trimmed.starts_with('[') {
+            if in_default {
+                flush(&mut out, &mut pending);
+            }
+            in_default = trimmed == "[Default Applications]";
+            seen_default |= in_default;
+            out.push(line.to_string());
+            continue;
+        }
+        if in_default {
+            if let Some((k, _)) = trimmed.split_once('=') {
+                if let Some(i) = pending.iter().position(|t| *t == k.trim()) {
+                    out.push(format!("{}={desktop}", pending.remove(i)));
+                    continue;
+                }
+                if types.contains(&k.trim()) {
+                    continue;
+                }
+            }
+        }
+        out.push(line.to_string());
+    }
+    if in_default {
+        flush(&mut out, &mut pending);
+    }
+    if !seen_default {
+        if out.last().is_some_and(|l| !l.is_empty()) {
+            out.push(String::new());
+        }
+        out.push("[Default Applications]".into());
+        flush(&mut out, &mut pending);
+    }
+    out.join("\n") + "\n"
+}
+
+/// Domyślna przeglądarka użytkownika (~/.config/mimeapps.list). Działa też, zanim Flatpak się zainstaluje:
+/// wpis zaczyna działać, gdy pojawi się plik .desktop.
+pub async fn set_browser(id: &str) -> Result<(), CmdError> {
+    if !valid_app_id(id) {
+        return Err(CmdError(format!("zła przeglądarka: {id}")));
+    }
+    let home = std::env::var_os("HOME").map(std::path::PathBuf::from).ok_or(CmdError("brak HOME".into()))?;
+    let path = home.join(".config/mimeapps.list");
+    let old = std::fs::read_to_string(&path).unwrap_or_default();
+    let new = mimeapps_with(&old, &BROWSER_TYPES, &format!("{id}.desktop"));
+    std::fs::create_dir_all(path.parent().unwrap()).map_err(|e| CmdError(e.to_string()))?;
+    std::fs::write(&path, new).map_err(|e| CmdError(e.to_string()))?;
+    set_dock(id).await
+}
+
+/// Dock na start (lista właściciela, 2026-11-13): przeglądarka, Steam, Pliki, sklep, Kalkulator, Kalendarz,
+/// LibreOffice, Ustawienia. Pliki = Filer, a bez niego Nautilus.
+pub fn dock(browser: &str, filer: bool) -> Vec<String> {
+    let files = if filer { "org.shrimp.Filer" } else { "org.gnome.Nautilus" };
+    [browser, "com.valvesoftware.Steam", files, "org.shrimp.Apps", "org.gnome.Calculator", "org.gnome.Calendar", "org.libreoffice.LibreOffice", "org.gnome.Settings"]
+        .iter()
+        .map(|id| format!("{id}.desktop"))
+        .collect()
+}
+
+async fn set_dock(browser: &str) -> Result<(), CmdError> {
+    let filer = Path::new("/usr/share/applications/org.shrimp.Filer.desktop").exists();
+    let list = dock(browser, filer).iter().map(|d| format!("'{d}'")).collect::<Vec<_>>().join(", ");
+    run("gsettings", &["set", "org.gnome.shell", "favorite-apps", &format!("[{list}]")]).await.map(|_| ())
+}
+
+#[derive(Deserialize, Default, Clone, Copy)]
+#[serde(rename_all = "camelCase")]
+pub struct Prefs {
+    /// Rozmiar tekstu: 0.8–1.6 (GNOME: text-scaling-factor).
+    pub text_scale: f64,
+    pub night_light: bool,
+    /// Automatyczne aktualizacje w tle (Cocktail), stosowane po ponownym uruchomieniu.
+    pub auto_updates: bool,
+}
+
+pub async fn prefs(p: &Prefs) -> Result<(), CmdError> {
+    let scale = if p.text_scale.is_finite() { p.text_scale.clamp(0.8, 1.6) } else { 1.0 };
+    run("gsettings", &["set", "org.gnome.desktop.interface", "text-scaling-factor", &format!("{scale:.2}")]).await?;
+    let on = if p.night_light { "true" } else { "false" };
+    let _ = run("gsettings", &["set", "org.gnome.settings-daemon.plugins.color", "night-light-schedule-automatic", "true"]).await;
+    run("gsettings", &["set", "org.gnome.settings-daemon.plugins.color", "night-light-enabled", on]).await.map(|_| ())
+}
+
 // ---------- aplikacje ----------
 
 /// Dodatki, bez których aplikacja z Flathub nie działa albo kapryśnie się instaluje. Steam potrzebuje
@@ -497,11 +607,12 @@ pub async fn install_base_apps() -> Result<(), CmdError> {
 
 /// Kodeki i sterowniki (jedna migawka transactional-update) oraz zdjęcie znacznika pierwszego
 /// uruchomienia. Zwraca true, jeśli trzeba uruchomić komputer ponownie.
-pub async fn apply(codecs: bool, nvidia: &str, later_apps: &[String]) -> Result<bool, CmdError> {
+pub async fn apply(codecs: bool, nvidia: &str, later_apps: &[String], auto_updates: bool) -> Result<bool, CmdError> {
     let apps = later_apps.join(" ");
     let out = run(
         "pkexec",
-        &[APPLY_HELPER, "--codecs", if codecs { "yes" } else { "no" }, "--nvidia", nvidia, "--apps", &apps],
+        &[APPLY_HELPER, "--codecs", if codecs { "yes" } else { "no" }, "--nvidia", nvidia, "--apps", &apps,
+          "--auto-updates", if auto_updates { "yes" } else { "no" }],
     )
     .await?;
     Ok(out.lines().any(|l| l.trim() == "reboot"))
@@ -519,6 +630,26 @@ mod tests {
     fn steam_gets_32bit_gl() {
         assert!(app_dependencies("com.valvesoftware.Steam").iter().any(|d| d.contains("GL32")));
         assert!(app_dependencies("org.mozilla.firefox").is_empty());
+    }
+
+    #[test]
+    fn default_browser_in_mimeapps() {
+        let t = ["x-scheme-handler/http", "x-scheme-handler/https"];
+        assert_eq!(mimeapps_with("", &t, "a.desktop"), "[Default Applications]\nx-scheme-handler/http=a.desktop\nx-scheme-handler/https=a.desktop\n");
+        let old = "[Added Associations]\ntext/plain=x.desktop\n[Default Applications]\nx-scheme-handler/http=old.desktop\nimage/png=v.desktop\n";
+        let new = mimeapps_with(old, &t, "b.desktop");
+        assert!(new.contains("x-scheme-handler/http=b.desktop") && new.contains("x-scheme-handler/https=b.desktop"));
+        assert!(new.contains("image/png=v.desktop") && new.contains("text/plain=x.desktop") && !new.contains("old.desktop"));
+        assert_eq!(new.matches("[Default Applications]").count(), 1);
+    }
+
+    #[test]
+    fn dock_order() {
+        let d = dock("com.brave.Browser", true);
+        assert_eq!(d[0], "com.brave.Browser.desktop");
+        assert!(d.contains(&"org.shrimp.Filer.desktop".to_string()) && !d.iter().any(|x| x.contains("Cherry") || x.contains("Panko")));
+        assert!(dock("org.mozilla.firefox", false).contains(&"org.gnome.Nautilus.desktop".to_string()));
+        assert!(valid_app_id("org.mozilla.firefox") && !valid_app_id("x; rm") && !valid_app_id("firefox"));
     }
 
     #[test]

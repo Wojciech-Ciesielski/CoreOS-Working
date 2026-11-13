@@ -204,3 +204,28 @@
 245	Los documentos van a Documentos, las fotos a Imágenes, etc., como en Windows.
 246	Todo va a la carpeta Windows de tu carpeta personal.
 247	Windows
+252	Shrimp no encontró los archivos del sistema en esta memoria, así que tiene que descargarlos. Elige tu red Wi-Fi.
+253	Elige tu navegador
+254	Abre páginas web y enlaces. Puedes añadir otros más tarde en Shrimp Apps.
+255	De Windows
+256	Tu navegador en Windows: {name}.
+257	Programas
+258	Shrimp Install no trajo una lista de programas de Windows. Todo lo demás está en Shrimp Apps.
+259	Lo esencial de Shrimp
+260	Tiempo, Mapas, Calendario, LibreOffice, Steam y más
+261	En lugar de {name}
+262	No se encontró alternativa
+263	Estos programas de Windows aún no tienen versión para Shrimp. Búscalos más tarde en Shrimp Apps: llegan aplicaciones nuevas constantemente.
+264	y {n} más
+265	Instalar
+266	En espera
+267	Instalando…
+268	Instalado
+269	No se instaló, inténtalo en Shrimp Apps
+270	Se instalará cuando tengas conexión
+271	Tamaño del texto
+272	Luz nocturna
+273	Colores más cálidos por la noche
+274	Actualizaciones automáticas
+275	Se instalan en segundo plano y se activan tras reiniciar
+276	{files} archivos, {size}

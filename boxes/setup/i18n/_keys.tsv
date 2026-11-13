@@ -250,3 +250,28 @@
 249	net.none	No Wi-Fi networks found. You can continue without a network and connect later from the top bar.
 250	net.nonet	Continue without a network
 251	apps.later	The programs will install by themselves once you connect to the internet.
+252	inet.sub2	Shrimp didn't find the system files on this stick, so it has to download them. Choose your Wi-Fi network.
+253	browser.title	Choose your browser
+254	browser.sub	It opens web pages and links. You can add others later in Shrimp Apps.
+255	browser.windows	From Windows
+256	browser.windows.note	Your browser on Windows: {name}.
+257	prog.title	Programs
+258	prog.nowin	Shrimp Install didn't bring a list of programs from Windows. Everything else is in Shrimp Apps.
+259	prog.base	Shrimp essentials
+260	prog.base.d	Weather, Maps, Calendar, LibreOffice, Steam and more
+261	prog.instead	Instead of {name}
+262	prog.none.title	No alternative found
+263	prog.none.sub	These programs from Windows have no version for Shrimp yet. Look for them later in Shrimp Apps: new apps arrive all the time.
+264	prog.more	and {n} more
+265	prog.install	Install
+266	item.wait	Waiting
+267	item.run	Installing…
+268	item.done	Installed
+269	item.fail	Didn't install, try again in Shrimp Apps
+270	item.later	Installs once you're online
+271	look.text	Text size
+272	look.night	Night light
+273	look.night.d	Warmer colors in the evening
+274	look.auto	Automatic updates
+275	look.auto.d	Installed in the background, active after a restart
+276	files.count	{files} files, {size}

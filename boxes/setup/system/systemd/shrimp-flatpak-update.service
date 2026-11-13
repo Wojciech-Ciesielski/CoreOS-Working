@@ -1,0 +1,13 @@
+# Aktualizacja programów z Flathub w tle (shrimp-auto-updates on). Działające programy
+# przejdą na nową wersję przy następnym uruchomieniu.
+[Unit]
+Description=Shrimp: aktualizacja programów z Flathub
+After=network-online.target
+Wants=network-online.target
+ConditionACPower=true
+
+[Service]
+Type=oneshot
+Nice=19
+IOSchedulingClass=idle
+ExecStart=/usr/bin/flatpak update --system --noninteractive -y

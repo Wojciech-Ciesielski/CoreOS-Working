@@ -1,0 +1,27 @@
+#!/bin/bash
+# Automatyczne aktualizacje w tle (domyślnie włączone; przełącznik w Setup i w Cocktailu).
+#   shrimp-auto-updates on|off|status
+# System: transactional-update.timer buduje nową migawkę w tle, ale NIE restartuje komputera
+# (REBOOT_METHOD=none) — zmiany wchodzą przy następnym uruchomieniu. Programy z Flathub:
+# shrimp-flatpak-update.timer (flatpak update raz dziennie). Wymaga roota przy on/off.
+set -uo pipefail
+CONF=${SHRIMP_TU_CONF:-/etc/transactional-update.conf}
+UNITS=(transactional-update.timer shrimp-flatpak-update.timer)
+case "${1:-}" in
+  on)
+    touch "$CONF"
+    if grep -q '^REBOOT_METHOD=' "$CONF"; then sed -i 's/^REBOOT_METHOD=.*/REBOOT_METHOD=none/' "$CONF"
+    else echo 'REBOOT_METHOD=none' >> "$CONF"; fi
+    # Bez rebootmgr: nic nie restartuje komputera samo.
+    systemctl disable --now rebootmgr.service >/dev/null 2>&1 || true
+    for u in "${UNITS[@]}"; do systemctl enable --now "$u" >&2 || echo "shrimp-auto-updates: $u niedostępny" >&2; done
+    ;;
+  off)
+    for u in "${UNITS[@]}"; do systemctl disable --now "$u" >/dev/null 2>&1 || true; done
+    ;;
+  status)
+    systemctl is-enabled --quiet transactional-update.timer 2>/dev/null && echo on || echo off
+    ;;
+  *) echo "użycie: shrimp-auto-updates on|off|status" >&2; exit 2 ;;
+esac
+exit 0

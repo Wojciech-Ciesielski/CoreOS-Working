@@ -1,0 +1,54 @@
+// Linu(x): mniej pytań o hasło. Administrator (grupa wheel, czyli konto utworzone przy instalacji)
+// w lokalnej, aktywnej sesji robi codzienne rzeczy bez hasła, jak administrator w Windows:
+// aktualizacje i programy (Cocktail, Shrimp Apps, Flatpak), migawki Panko, dysk z Windows,
+// data i strefa czasowa, język, nazwa komputera, sieć, drukarki.
+// Hasło zostaje dla rzeczy, które trudno cofnąć albo które dotyczą innych osób: przywracanie migawki,
+// formatowanie dysków, konta użytkowników, sudo w terminalu.
+var SHRIMP_NO_PASSWORD = [
+  "org.shrimp.cocktail.manage",
+  "org.shrimp.panko.snapshots",
+  "org.shrimp.panko.settings",
+  "org.freedesktop.Flatpak.app-install",
+  "org.freedesktop.Flatpak.runtime-install",
+  "org.freedesktop.Flatpak.app-update",
+  "org.freedesktop.Flatpak.runtime-update",
+  "org.freedesktop.Flatpak.app-uninstall",
+  "org.freedesktop.Flatpak.runtime-uninstall",
+  "org.freedesktop.Flatpak.appstream-update",
+  "org.freedesktop.Flatpak.metadata-update",
+  "org.freedesktop.Flatpak.modify-repo",
+  "org.freedesktop.fwupd.update-internal",
+  "org.freedesktop.fwupd.update-hotplug",
+  "org.freedesktop.fwupd.downgrade-internal",
+  "org.freedesktop.udisks2.filesystem-mount-system",
+  "org.freedesktop.udisks2.encrypted-unlock-system",
+  "org.freedesktop.udisks2.eject-media-system",
+  "org.freedesktop.udisks2.power-off-drive-system",
+  "org.freedesktop.timedate1.set-time",
+  "org.freedesktop.timedate1.set-timezone",
+  "org.freedesktop.timedate1.set-ntp",
+  "org.freedesktop.timedate1.set-local-rtc",
+  "org.freedesktop.locale1.set-locale",
+  "org.freedesktop.locale1.set-keyboard",
+  "org.freedesktop.hostname1.set-hostname",
+  "org.freedesktop.hostname1.set-static-hostname",
+  "org.freedesktop.hostname1.set-machine-info",
+  "org.freedesktop.NetworkManager.settings.modify.system",
+  "org.freedesktop.NetworkManager.settings.modify.hostname",
+  "org.freedesktop.NetworkManager.network-control",
+  "org.freedesktop.NetworkManager.enable-disable-wifi",
+  "org.freedesktop.login1.reboot-multiple-sessions",
+  "org.freedesktop.login1.power-off-multiple-sessions",
+  "org.freedesktop.login1.suspend-multiple-sessions",
+  "org.freedesktop.login1.hibernate-multiple-sessions",
+  "org.freedesktop.bolt.enroll",
+  "org.freedesktop.bolt.authorize",
+];
+
+polkit.addRule(function (action, subject) {
+  if (!subject.local || !subject.active || !subject.isInGroup("wheel")) return polkit.Result.NOT_HANDLED;
+  if (SHRIMP_NO_PASSWORD.indexOf(action.id) >= 0) return polkit.Result.YES;
+  // Drukarki (GNOME Ustawienia: dodawanie i ustawienia drukarek przez CUPS).
+  if (action.id.indexOf("org.opensuse.cupspkhelper.mechanism.") == 0) return polkit.Result.YES;
+  return polkit.Result.NOT_HANDLED;
+});

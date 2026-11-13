@@ -1,7 +1,7 @@
 {
   "uuid": "shrimp-setup-guard@shrimp",
   "name": "Shrimp Setup Guard",
-  "description": "Keeps Shrimp Setup on screen during installation and first configuration: black cover until Setup is drawn, no shell shortcuts until Setup is done.",
+  "description": "Keeps Shrimp Setup on screen during installation and first configuration: black cover until Setup is drawn, no shell shortcuts, Overview or gestures until Setup is done, Setup restarted if it closes during the first configuration.",
   "shell-version": ["48", "49"],
   "url": "https://github.com/Wojciech-Ciesielski/CoreOS-Working",
   "version": 1

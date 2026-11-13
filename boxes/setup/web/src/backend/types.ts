@@ -58,7 +58,11 @@ export interface Progress {
   phase: string;
   /** Pozostały czas w minutach, jeśli da się go oszacować. */
   etaMin?: number;
+  /** Instalacja programów: stan każdego programu po kolei („base” = zestaw podstawowy). */
+  items?: AppItem[];
 }
+
+export interface AppItem { id: string; state: "wait" | "run" | "done" | "fail" | "later" }
 
 export class InstallError extends Error {
   constructor(public key: "space" | "install" | "stall" | "agama" | "offline", msg?: string) { super(msg || key); }
@@ -112,9 +116,21 @@ export interface FirstBootInfo {
   wired: boolean;
   /** Nazwa wykrytej karty NVIDIA albo null. */
   nvidia: string | null;
-  /** Lista z Shrimp Install, jeśli istnieje (maks. 5 pozycji pokazujemy). */
+  /** Odpowiedniki programów z Windows (z Shrimp Install), jeśli lista istnieje. */
   windowsApps: WinApp[] | null;
+  /** Programy z Windows bez odpowiednika dla Shrimp (krok „Programy”, sekcja „Nie znaleźliśmy odpowiednika”). */
+  noAlternative: string[];
+  /** Nazwy programów z Windows (wykrywanie przeglądarek: Opera, Vivaldi…). */
+  windowsNames: string[];
+  /** Domyślna przeglądarka Windows (ProgId, np. ChromeHTML) albo null. */
+  defaultBrowser: string | null;
 }
+
+/** Ustawienia z kroku „Wygląd”: rozmiar tekstu, światło nocne, aktualizacje w tle. */
+export interface Prefs { textScale: number; nightLight: boolean; autoUpdates: boolean }
+
+/** Pliki z Windows w poczekalni, z podziałem na foldery (Dokumenty, Obrazy…). */
+export interface WindowsFiles { files: number; bytes: number; folders?: { name: string; files: number; bytes: number }[] }
 
 export interface DriverChoice {
   /** Kodeki i sterowniki („Zainstaluj (Zalecane)”). */
@@ -140,10 +156,14 @@ export interface FirstBootBackend {
   /** Układ klawiatury w bieżącej sesji GNOME (Agama ustawia go tylko dla instalowanego systemu i konsoli). */
   setInputSource(keymap: string): Promise<void>;
   setDrivers(c: DriverChoice): Promise<void>;
-  installApps(ids: string[], onProgress: (p: Progress) => void): Promise<void>;
+  /** Przeglądarka z kroku „Przeglądarka”: domyślna dla stron i pierwsza w doku. */
+  setBrowser(id: string): Promise<void>;
+  setPrefs(p: Prefs): Promise<void>;
+  /** Przeglądarka, zestaw podstawowy i wybrane programy z Windows, w tej kolejności. */
+  installApps(ids: string[], browser: string | null, onProgress: (p: Progress) => void): Promise<void>;
   usb(): Promise<UsbState>;
   /** Pliki z Windows czekające na zgodę (przeniesione przy instalacji do poczekalni). */
-  windowsFiles(): Promise<{ files: number; bytes: number }>;
+  windowsFiles(): Promise<WindowsFiles>;
   /** Zgoda: do folderów użytkownika; bez zgody: wszystko do jednego folderu `folder` w katalogu domowym. */
   placeWindowsFiles(intoFolders: boolean, folder: string): Promise<void>;
   /** "restore": formatuje pendrive i wgrywa pliki; "home": zostawia je w folderze Pendrive. */

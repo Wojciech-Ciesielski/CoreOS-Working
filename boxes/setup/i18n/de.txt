@@ -204,3 +204,28 @@
 245	Dokumente kommen in Dokumente, Bilder in Bilder und so weiter, wie in Windows.
 246	Alles kommt in den Ordner Windows in deinem persönlichen Ordner.
 247	Windows
+252	Shrimp hat die Systemdateien auf diesem Stick nicht gefunden und muss sie herunterladen. Wähle dein WLAN.
+253	Wähle deinen Browser
+254	Er öffnet Webseiten und Links. Weitere kannst du später in Shrimp Apps hinzufügen.
+255	Aus Windows
+256	Dein Browser unter Windows: {name}.
+257	Programme
+258	Shrimp Install hat keine Programmliste aus Windows mitgebracht. Alles andere findest du in Shrimp Apps.
+259	Shrimp-Grundausstattung
+260	Wetter, Karten, Kalender, LibreOffice, Steam und mehr
+261	Statt {name}
+262	Keine Alternative gefunden
+263	Diese Windows-Programme gibt es noch nicht für Shrimp. Schau später in Shrimp Apps nach: Es kommen ständig neue dazu.
+264	und {n} weitere
+265	Installieren
+266	Wartet
+267	Wird installiert …
+268	Installiert
+269	Nicht installiert, versuche es in Shrimp Apps
+270	Wird installiert, sobald du online bist
+271	Textgröße
+272	Nachtlicht
+273	Wärmere Farben am Abend
+274	Automatische Updates
+275	Im Hintergrund installiert, aktiv nach einem Neustart
+276	{files} Dateien, {size}

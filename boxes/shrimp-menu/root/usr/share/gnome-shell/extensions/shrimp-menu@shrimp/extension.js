@@ -1,7 +1,13 @@
 // Shrimp Menu: the Shrimp logo on the left of the top bar opens the system menu
-// (about this computer, settings, Shrimp Apps, Cocktail updates, Panko system restore, system tools,
-// sleep, restart, power off, lock, log out). Texts: GNOME's own translations where GNOME has the
-// words, otherwise lang/_keys.tsv + lang/<tag>.txt (same format as i18n/).
+// (about this computer, settings, Shrimp Apps, Cocktail updates, Panko system restore, system tools).
+// Sleep, restart, power off, lock and log out stay only in GNOME's own system menu (top right): two
+// menus with the same buttons were confusing (owner's review, 2026-11-13). Texts: GNOME's own
+// translations where GNOME has the words, otherwise lang/_keys.tsv + lang/<tag>.txt (same format as i18n/).
+//
+// The extension also keeps two small desktop rules of Shrimp:
+//  - the app grid (Overview) is sorted alphabetically, folders first, and stays that way;
+//  - an installer downloaded from the internet (.exe, .msi, .rpm, .deb, .AppImage, .dmg) gets a short
+//    note that Shrimp Apps is the better place for programs (`shrimp-apps --hint download FILE`).
 import GObject from 'gi://GObject';
 import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
@@ -13,6 +19,7 @@ import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
+import * as AppDisplay from 'resource:///org/gnome/shell/ui/appDisplay.js';
 
 const decoder = new TextDecoder();
 
@@ -168,35 +175,142 @@ class ShrimpMenuButton extends PanelMenu.Button {
         if (!this._appItem(t['menu.updates'], ['org.shrimp.Cocktail.desktop']) && store)
             this._item(t['menu.updates'], () => store.activate());
         this._appItem(t['menu.restore'], ['org.shrimp.Panko.desktop']);
-        this._separator();
 
+        // System tools. No Extensions app: Shrimp does not offer extensions to the user.
         const tools = [
             ['org.gnome.SystemMonitor.desktop', 'gnome-system-monitor.desktop'],
             ['org.gnome.DiskUtility.desktop', 'gnome-disks.desktop'],
             ['org.shrimp.Cherry.desktop', 'org.gnome.Console.desktop', 'org.gnome.Terminal.desktop'],
-            ['org.gnome.Extensions.desktop', 'com.mattjakeman.ExtensionManager.desktop'],
-        ];
-        if (tools.map(ids => this._appItem(null, ids)).some(Boolean))
+        ].filter(ids => findApp(ids));
+        if (tools.length)
             this._separator();
-
-        this._item(shell('Suspend'), () => spawn(['systemctl', 'suspend']));
-        this._item(shell('Restart…'), () => spawn(['gnome-session-quit', '--reboot']));
-        this._item(shell('Power Off…'), () => spawn(['gnome-session-quit', '--power-off']));
-        this._separator();
-
-        this._item(Gettext.dpgettext('gnome-shell', 'action', 'Lock Screen'), () => spawn(['loginctl', 'lock-session']));
-        this._item(shell('Log Out…'), () => spawn(['gnome-session-quit', '--logout']));
+        tools.forEach(ids => this._appItem(null, ids));
     }
 });
+
+// --- app grid: alphabetical, folders first ---
+// GNOME keeps a manual order in org.gnome.shell app-picker-layout; with an empty layout every icon has no
+// saved position and the grid is ordered by AppDisplay._compareItems. We compare folders before apps,
+// then by name in the user's language, and clear the layout again whenever GNOME saves one (drag & drop).
+class AlphabeticalGrid {
+    enable() {
+        const proto = AppDisplay.AppDisplay?.prototype;
+        if (!proto || typeof proto._compareItems !== 'function') {
+            console.warn('Shrimp Menu: AppDisplay._compareItems not found, app grid order unchanged');
+            return;
+        }
+        this._proto = proto;
+        this._orig = proto._compareItems;
+        const collator = new Intl.Collator(undefined, {sensitivity: 'base', numeric: true});
+        proto._compareItems = function (a, b) {
+            const fa = a instanceof AppDisplay.FolderIcon, fb = b instanceof AppDisplay.FolderIcon;
+            if (fa !== fb)
+                return fa ? -1 : 1;
+            return collator.compare(a.name ?? '', b.name ?? '');
+        };
+        this._settings = new Gio.Settings({schema_id: 'org.gnome.shell'});
+        this._changed = this._settings.connect('changed::app-picker-layout', () => this._resort());
+        this._resort();
+    }
+
+    _resort() {
+        if (this._settings.get_value('app-picker-layout').n_children() > 0)
+            this._settings.set_value('app-picker-layout', new GLib.Variant('aa{sv}', []));
+        // Redisplay after GNOME has finished its own handling of the layout change.
+        if (this._idle)
+            return;
+        this._idle = GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
+            this._idle = 0;
+            try {
+                Main.overview._overview?._controls?._appDisplay?._redisplay();
+            } catch (e) {
+                console.warn(`Shrimp Menu: app grid: ${e.message}`);
+            }
+            return GLib.SOURCE_REMOVE;
+        });
+    }
+
+    disable() {
+        if (this._idle)
+            GLib.source_remove(this._idle);
+        this._idle = 0;
+        if (this._settings && this._changed)
+            this._settings.disconnect(this._changed);
+        this._settings = null;
+        if (this._proto)
+            this._proto._compareItems = this._orig;
+        this._proto = null;
+    }
+}
+
+// --- installers downloaded from the internet ---
+// Shrimp installs programs from Shrimp Apps (Flatpak). A Windows or other-distribution installer in
+// Downloads will not work; Shrimp Apps shows a short note with a search for the program in the store.
+const INSTALLER = /\.(exe|msi|msix|appx|rpm|deb|appimage|dmg|pkg|snap)$/i;
+const PARTIAL = /\.(part|crdownload|download|tmp)$/i;
+
+class DownloadsWatcher {
+    enable() {
+        const dir = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_DOWNLOAD);
+        if (!dir || !GLib.find_program_in_path('shrimp-apps'))
+            return;
+        this._seen = new Set();
+        this._timeouts = new Set();
+        try {
+            this._monitor = Gio.File.new_for_path(dir).monitor_directory(Gio.FileMonitorFlags.WATCH_MOVES, null);
+        } catch (e) {
+            console.warn(`Shrimp Menu: downloads: ${e.message}`);
+            return;
+        }
+        this._monitor.connect('changed', (_m, file, other, event) => {
+            // Browsers write NAME.part / NAME.crdownload and rename it at the end.
+            let f = null;
+            if (event === Gio.FileMonitorEvent.RENAMED || event === Gio.FileMonitorEvent.MOVED_IN)
+                f = other ?? file;
+            else if (event === Gio.FileMonitorEvent.CHANGES_DONE_HINT || event === Gio.FileMonitorEvent.CREATED)
+                f = file;
+            const path = f?.get_path();
+            const name = f?.get_basename() ?? '';
+            if (!path || PARTIAL.test(name) || !INSTALLER.test(name) || this._seen.has(path))
+                return;
+            this._seen.add(path);
+            // One note per file, a moment after the download ends (the browser may still rename it).
+            const id = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, 1, () => {
+                this._timeouts.delete(id);
+                if (GLib.file_test(path, GLib.FileTest.EXISTS))
+                    spawn(['shrimp-apps', '--hint', 'download', path]);
+                return GLib.SOURCE_REMOVE;
+            });
+            this._timeouts.add(id);
+        });
+    }
+
+    disable() {
+        for (const id of this._timeouts ?? [])
+            GLib.source_remove(id);
+        this._timeouts = null;
+        this._monitor?.cancel();
+        this._monitor = null;
+        this._seen = null;
+    }
+}
 
 export default class ShrimpMenuExtension extends Extension {
     enable() {
         this._button = new ShrimpMenuButton(this.path);
         // Index 0 on the left; Activities is hidden by Just Perfection (the dock has the app grid).
         Main.panel.addToStatusArea(this.uuid, this._button, 0, 'left');
+        this._grid = new AlphabeticalGrid();
+        this._grid.enable();
+        this._downloads = new DownloadsWatcher();
+        this._downloads.enable();
     }
 
     disable() {
+        this._downloads?.disable();
+        this._downloads = null;
+        this._grid?.disable();
+        this._grid = null;
         this._button?.destroy();
         this._button = null;
     }

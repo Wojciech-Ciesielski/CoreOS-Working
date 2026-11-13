@@ -97,18 +97,18 @@ export const PLACES = [
 export const SHRIMP_MIN_GB = 40;
 export const WINDOWS_SPARE_GB = 20;
 
-/** `what` to klucz tłumaczenia opisu. */
-export interface App { id: string; name: string; what: string }
-/** Kategorie z dokumentu „Cała wiedza”. Pierwsza (podstawowe użytkowanie) jest obowiązkowa: to zestaw
- *  podstawowy (Firefox i GNOME Core z Flathub), który instaluje się zawsze, więc nie ma własnych propozycji. */
-export const USES = ["use.base", "use.fun", "use.office", "use.create", "use.dev"];
-/** Kategorie → aplikacje z Flathub. */
-export const APPS: App[][] = [
-  [],
-  [{ id: "com.valvesoftware.Steam", name: "Steam", what: "app.games" }, { id: "com.discordapp.Discord", name: "Discord", what: "app.chat" }, { id: "com.spotify.Client", name: "Spotify", what: "app.music" }],
-  [{ id: "org.onlyoffice.desktopeditors", name: "ONLYOFFICE", what: "app.office" }, { id: "org.mozilla.thunderbird", name: "Thunderbird", what: "app.mail" }],
-  [{ id: "org.gimp.GIMP", name: "GIMP", what: "app.graphics" }, { id: "com.obsproject.Studio", name: "OBS Studio", what: "app.record" }, { id: "org.audacityteam.Audacity", name: "Audacity", what: "app.audio" }],
-  [{ id: "com.vscodium.codium", name: "VSCodium", what: "app.code" }],
+/** Przeglądarki do wyboru w kroku „Przeglądarka” (Flathub). `prog`: ProgId domyślnej przeglądarki w Windows
+ *  (HKCU …\\UrlAssociations\\https\\UserChoice, zapisuje Shrimp Install), `re`: nazwa z listy programów Windows.
+ *  `extra`: pokazujemy tylko, gdy była w Windows (Opera, Vivaldi). */
+export interface Browser { id: string; name: string; prog: RegExp; re: RegExp; extra?: boolean }
+export const BROWSERS: Browser[] = [
+  { id: "org.mozilla.firefox", name: "Firefox", prog: /^FirefoxURL/i, re: /^Mozilla Firefox/i },
+  { id: "com.google.Chrome", name: "Google Chrome", prog: /^ChromeHTML/i, re: /^Google Chrome$/i },
+  { id: "org.chromium.Chromium", name: "Chromium", prog: /^ChromiumHTM/i, re: /^Chromium\b/i },
+  { id: "com.brave.Browser", name: "Brave", prog: /^BraveHTML/i, re: /^Brave\b/i },
+  { id: "com.microsoft.Edge", name: "Microsoft Edge", prog: /^MSEdgeHTM/i, re: /^Microsoft Edge(?!.*WebView)/i },
+  { id: "com.opera.Opera", name: "Opera", prog: /^Opera/i, re: /^Opera\b/i, extra: true },
+  { id: "com.vivaldi.Vivaldi", name: "Vivaldi", prog: /^VivaldiHTM/i, re: /^Vivaldi(?![A-Za-z0-9])/i, extra: true },
 ];
 
 /** Program z Windows (lista zapisana przez Shrimp Install) i jego odpowiednik. */

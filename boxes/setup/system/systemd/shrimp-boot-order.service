@@ -1,0 +1,11 @@
+# Shrimp pierwszy w kolejności rozruchu UEFI także po aktualizacjach Windows (shrimp-boot-order).
+[Unit]
+Description=Shrimp: pierwszy w kolejności rozruchu UEFI
+ConditionPathExists=/sys/firmware/efi
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/shrimp-boot-order
+
+[Install]
+WantedBy=multi-user.target

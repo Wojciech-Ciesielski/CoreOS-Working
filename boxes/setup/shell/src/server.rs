@@ -30,6 +30,28 @@ struct Job {
     phase: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     eta_min: Option<u64>,
+    /// Programy po kolei (onboarding pokazuje każdy w osobnym wierszu): "wait", "run", "done", "fail", "later".
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    items: Vec<JobItem>,
+}
+
+#[derive(Clone, Serialize)]
+struct JobItem {
+    id: String,
+    state: &'static str,
+}
+
+impl Job {
+    fn mark(&mut self, id: &str, state: &'static str) {
+        if let Some(i) = self.items.iter_mut().find(|i| i.id == id) {
+            i.state = state;
+        }
+    }
+    fn mark_rest(&mut self, state: &'static str) {
+        for i in self.items.iter_mut().filter(|i| i.state == "wait" || i.state == "run") {
+            i.state = state;
+        }
+    }
 }
 
 #[derive(Default)]
@@ -40,6 +62,8 @@ struct Inner {
     usb: Job,
     /// Programy wybrane bez internetu: shrimp-setup-apply zapisuje je na później (shrimp-setup-later).
     later_apps: Vec<String>,
+    /// Automatyczne aktualizacje w tle (Cocktail), domyślnie włączone.
+    auto_updates: bool,
 }
 
 #[derive(Clone)]
@@ -60,7 +84,7 @@ pub fn spawn(ui_dir: PathBuf) -> std::io::Result<(u16, String)> {
     let port = std_listener.local_addr()?.port();
     let state = App {
         key: Arc::new(key.clone()),
-        inner: Arc::new(Mutex::new(Inner { codecs: false, nvidia: "none".into(), apps: Job { state: "idle", ..Default::default() }, usb: Job { state: "idle", ..Default::default() }, later_apps: Vec::new() })),
+        inner: Arc::new(Mutex::new(Inner { codecs: false, nvidia: "none".into(), apps: Job { state: "idle", ..Default::default() }, usb: Job { state: "idle", ..Default::default() }, later_apps: Vec::new(), auto_updates: true })),
     };
     std::thread::spawn(move || {
         let rt = tokio::runtime::Runtime::new().expect("tokio");
@@ -83,6 +107,8 @@ fn router(state: App, ui_dir: PathBuf) -> Router {
         .route("/appearance", post(appearance))
         .route("/keymap", post(keymap))
         .route("/drivers", post(drivers))
+        .route("/browser", post(browser))
+        .route("/prefs", post(prefs))
         .route("/apps", post(apps_start).get(apps_status))
         .route("/usb", get(usb_get).post(usb_start))
         .route("/files", get(files_get).post(files_place))
@@ -179,15 +205,37 @@ async fn drivers(State(s): State<App>, Json(d): Json<Drivers>) -> Json<serde_jso
 }
 
 #[derive(Deserialize)]
-struct Apps { ids: Vec<String> }
+struct Apps {
+    ids: Vec<String>,
+    /// Przeglądarka z kroku „Przeglądarka”: instaluje się pierwsza.
+    #[serde(default)]
+    browser: Option<String>,
+}
+
+/// Wiersz zestawu podstawowego (aplikacje GNOME, LibreOffice, Steam) na liście postępu.
+const BASE: &str = "base";
 
 async fn apps_start(State(s): State<App>, Json(a): Json<Apps>) -> Response {
+    // Kolejność: przeglądarka, zestaw podstawowy, programy z Windows. Bez powtórzeń, tylko poprawne identyfikatory.
+    let mut order: Vec<String> = Vec::new();
+    for id in a.browser.iter().chain(a.ids.iter()) {
+        if system::valid_app_id(id) && !order.contains(id) {
+            order.push(id.clone());
+        }
+    }
+    let browser = a.browser.clone().filter(|b| system::valid_app_id(b));
     {
         let mut i = s.inner.lock().await;
         if i.apps.state == "running" {
             return Json(json!({})).into_response();
         }
-        i.apps = Job { state: "running", percent: 0.0, phase: "apps.phase".into(), eta_min: None };
+        let mut items: Vec<JobItem> = Vec::new();
+        if let Some(b) = &browser {
+            items.push(JobItem { id: b.clone(), state: "wait" });
+        }
+        items.push(JobItem { id: BASE.into(), state: "wait" });
+        items.extend(order.iter().filter(|id| Some(*id) != browser.as_ref()).map(|id| JobItem { id: id.clone(), state: "wait" }));
+        i.apps = Job { state: "running", percent: 0.0, phase: "apps.phase".into(), eta_min: None, items };
     }
     let inner = s.inner.clone();
     tokio::spawn(async move {
@@ -198,45 +246,82 @@ async fn apps_start(State(s): State<App>, Json(a): Json<Apps>) -> Response {
             async move {
                 let mut i = inner.lock().await;
                 i.later_apps = ids;
-                i.apps = Job { state: "later", percent: 100.0, phase: "apps.later".into(), eta_min: None };
+                i.apps.mark_rest("later");
+                i.apps.state = "later";
+                i.apps.percent = 100.0;
+                i.apps.phase = "apps.later".into();
+                i.apps.eta_min = None;
             }
         };
         if !system::online().await {
-            later(&a.ids).await;
+            later(&order).await;
             return;
         }
-        // Najpierw zestaw podstawowy ze sklepu Shrimp; niepowodzenie nie zatrzymuje wyboru użytkownika.
-        if let Err(e) = system::install_base_apps().await {
-            eprintln!("shrimp-setup: zestaw podstawowy: {}", e.0);
-            if !system::online().await {
-                later(&a.ids).await;
-                return;
-            }
-        }
-        let total = a.ids.len().max(1);
+        let total = order.len() + 1;
         let t0 = Instant::now();
+        let mut done = 0usize;
         let mut failed = 0;
-        for (n, id) in a.ids.iter().enumerate() {
-            if let Err(e) = system::install_app(id).await {
-                eprintln!("shrimp-setup: {id}: {}", e.0);
-                if !system::online().await {
-                    later(&a.ids[n..]).await;
-                    return;
-                }
-                // Jeden program, którego nie ma we Flathub (albo nie da się go zainstalować), nie zatrzymuje reszty.
-                failed += 1;
-            }
-            let done = n + 1;
-            let per = t0.elapsed().as_secs_f64() / done as f64;
+        let step = |inner: Arc<Mutex<Inner>>, done: usize| async move {
+            let per = t0.elapsed().as_secs_f64() / done.max(1) as f64;
             let mut i = inner.lock().await;
             i.apps.percent = done as f64 / total as f64 * 100.0;
             i.apps.eta_min = Some(((per * (total - done) as f64) / 60.0).ceil() as u64);
+        };
+        // 1. przeglądarka (od razu jest czym przeglądać internet), 2. zestaw podstawowy, 3. reszta.
+        let mut queue: Vec<String> = Vec::new();
+        if let Some(b) = &browser {
+            queue.push(b.clone());
+        }
+        queue.push(BASE.into());
+        queue.extend(order.iter().filter(|id| Some(*id) != browser.as_ref()).cloned());
+        for (n, id) in queue.iter().enumerate() {
+            inner.lock().await.apps.mark(id, "run");
+            let r = if id == BASE { system::install_base_apps().await } else { system::install_app(id).await };
+            match r {
+                Ok(()) => inner.lock().await.apps.mark(id, "done"),
+                Err(e) => {
+                    eprintln!("shrimp-setup: {id}: {}", e.0);
+                    if !system::online().await {
+                        let rest: Vec<String> = queue[n..].iter().filter(|x| *x != BASE).cloned().collect();
+                        later(&rest).await;
+                        return;
+                    }
+                    // Jeden program, którego nie ma we Flathub (albo nie da się go zainstalować), nie zatrzymuje reszty.
+                    // Zestaw podstawowy zgłasza błąd, gdy choć jedna aplikacja nie weszła: reszta i tak jest.
+                    if id != BASE {
+                        failed += 1;
+                    }
+                    inner.lock().await.apps.mark(id, if id == BASE { "done" } else { "fail" });
+                }
+            }
+            done += 1;
+            step(inner.clone(), done).await;
         }
         let mut i = inner.lock().await;
-        i.apps.state = if failed > 0 && failed == a.ids.len() { "failed" } else { "done" };
+        i.apps.state = if failed > 0 && failed == order.len() { "failed" } else { "done" };
         i.apps.percent = 100.0;
     });
     Json(json!({})).into_response()
+}
+
+#[derive(Deserialize)]
+struct Browser { id: String }
+
+/// Przeglądarka z kroku „Przeglądarka”: domyślna dla stron i pierwsza w doku (instaluje się z programami).
+async fn browser(Json(b): Json<Browser>) -> Response {
+    match system::set_browser(&b.id).await {
+        Ok(()) => Json(json!({})).into_response(),
+        Err(e) => err("system", e.0),
+    }
+}
+
+/// Rozmiar tekstu i tryb nocny od razu; automatyczne aktualizacje przy „Zaczynajmy” (shrimp-setup-apply).
+async fn prefs(State(s): State<App>, Json(p): Json<system::Prefs>) -> Response {
+    s.inner.lock().await.auto_updates = p.auto_updates;
+    match system::prefs(&p).await {
+        Ok(()) => Json(json!({})).into_response(),
+        Err(e) => err("system", e.0),
+    }
 }
 
 async fn apps_status(State(s): State<App>) -> Json<Job> { Json(s.inner.lock().await.apps.clone()) }
@@ -267,7 +352,7 @@ async fn usb_start(State(s): State<App>, Json(a): Json<UsbAction>) -> Response {
         if i.usb.state == "running" {
             return Json(json!({})).into_response();
         }
-        i.usb = Job { state: "running", percent: 0.0, phase: "usb.phase".into(), eta_min: None };
+        i.usb = Job { state: "running", percent: 0.0, phase: "usb.phase".into(), ..Default::default() };
     }
     let inner = s.inner.clone();
     tokio::spawn(async move {
@@ -295,8 +380,13 @@ fn home() -> PathBuf {
 
 /// Pliki z Windows czekające na zgodę (krok „Pliki z Windows”).
 async fn files_get() -> Json<serde_json::Value> {
-    let (files, bytes) = crate::transfer::staged(&home());
-    Json(json!({ "files": files, "bytes": bytes }))
+    let h = home();
+    let (files, bytes) = crate::transfer::staged(&h);
+    let folders: Vec<serde_json::Value> = crate::transfer::staged_folders(&h)
+        .into_iter()
+        .map(|(name, files, bytes)| json!({ "name": name, "files": files, "bytes": bytes }))
+        .collect();
+    Json(json!({ "files": files, "bytes": bytes, "folders": folders }))
 }
 
 #[derive(Deserialize)]
@@ -313,8 +403,8 @@ async fn files_place(Json(a): Json<FilesAction>) -> Response {
 }
 
 async fn finish(State(s): State<App>) -> Response {
-    let (codecs, nvidia, later) = { let i = s.inner.lock().await; (i.codecs, i.nvidia.clone(), i.later_apps.clone()) };
-    match system::apply(codecs, &nvidia, &later).await {
+    let (codecs, nvidia, later, auto) = { let i = s.inner.lock().await; (i.codecs, i.nvidia.clone(), i.later_apps.clone(), i.auto_updates) };
+    match system::apply(codecs, &nvidia, &later, auto).await {
         Ok(reboot) => {
             if reboot { system::reboot().await; }
             QUIT.store(true, std::sync::atomic::Ordering::SeqCst);

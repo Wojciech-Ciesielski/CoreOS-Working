@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { slug, firstName, proposals, windowsList, mapWindowsApps, klidToXkb, prefill, loginFrom, isReservedUser, installLang } from "./logic";
+import { slug, firstName, browserChoices, windowsBrowser, noAlternative, windowsList, mapWindowsApps, klidToXkb, prefill, loginFrom, isReservedUser, installLang } from "./logic";
 import example from "../../../install-schema/shrimp.example.json";
 import type { Transfer } from "./backend/types";
 import { LANGS, REGIONS, KEYBOARDS, WIN_CATALOG } from "./data";
@@ -31,11 +31,21 @@ describe("programy", () => {
     expect(w.map((x) => x.windows)).toEqual(["Google Chrome", "Spotify", "Zoom", "Epic Games Launcher", "Adobe Photoshop", "Adobe Lightroom"]);
     expect(mapWindowsApps(["Microsoft Office File Validation Add-In"])).toEqual([]);
   });
-  it("proponuje programy na zmianę z kategorii z dokumentu, bez tych z Windows", () => {
-    const p = proposals(pl, [true, false, true, false, true], win).map((x) => x.id);
-    expect(p).toEqual(["org.onlyoffice.desktopeditors", "com.vscodium.codium", "org.mozilla.thunderbird"]);
-    expect(proposals(pl, [true, false, false, false, false], null)).toHaveLength(0);
-    expect(proposals(pl, [true, true, true, true, true], null)).toHaveLength(9);
+  it("przeglądarki mają własny krok, a nie listę programów z Windows", () => {
+    const w = mapWindowsApps(["Google Chrome", "Spotify"]);
+    expect(windowsList(w).map((x) => x.id)).toEqual(["com.spotify.Client"]);
+  });
+  it("przeglądarka z Windows: domyślna z ProgId, potem zainstalowana; Opera tylko, gdy była", () => {
+    const names = ["Opera Stable 114.0", "Microsoft Edge", "Google Chrome"];
+    const list = browserChoices(names, null);
+    expect(list.map((b) => b.name)).toEqual(["Firefox", "Google Chrome", "Chromium", "Brave", "Microsoft Edge", "Opera"]);
+    expect(list[windowsBrowser(list, names, "MSEdgeHTM")].name).toBe("Microsoft Edge");
+    expect(list[windowsBrowser(list, names, null)].name).toBe("Google Chrome");
+    expect(windowsBrowser(browserChoices([], null), ["Microsoft Edge"], null)).toBe(-1);
+    expect(browserChoices([], "FirefoxURL-308046B0AF4A39CB")).toHaveLength(5);
+  });
+  it("programy bez odpowiednika", () => {
+    expect(noAlternative(["TeamViewer 15", "Spotify", "Microsoft Visio - pl-pl", "TeamViewer"])).toEqual(["Microsoft Visio", "TeamViewer"]);
   });
 });
 

@@ -249,3 +249,28 @@
 249	Nie widzę sieci Wi-Fi. Możesz przejść dalej bez sieci i połączyć się później z górnego paska.
 250	Dalej bez sieci
 251	Programy zainstalują się same, gdy połączysz się z internetem.
+252	Shrimp nie znalazł plików systemu na tym nośniku, więc musi je pobrać. Wybierz swoją sieć Wi-Fi.
+253	Wybierz przeglądarkę
+254	Otwiera strony i linki. Inne dodasz później w Shrimp Apps.
+255	Z Windowsa
+256	Twoja przeglądarka w Windowsie: {name}.
+257	Programy
+258	Shrimp Install nie przyniósł listy programów z Windowsa. Resztę znajdziesz w Shrimp Apps.
+259	Podstawowe programy Shrimp
+260	Pogoda, Mapy, Kalendarz, LibreOffice, Steam i inne
+261	Zamiast: {name}
+262	Nie znaleźliśmy odpowiednika
+263	Te programy z Windowsa nie mają jeszcze wersji dla Shrimp. Poszukaj ich później w Shrimp Apps: nowe programy dochodzą cały czas.
+264	i jeszcze {n}
+265	Zainstaluj
+266	Czeka
+267	Instaluję…
+268	Zainstalowano
+269	Nie udało się, spróbuj w Shrimp Apps
+270	Zainstaluje się po połączeniu z siecią
+271	Rozmiar tekstu
+272	Światło nocne
+273	Cieplejsze kolory wieczorem
+274	Aktualizacje automatyczne
+275	Instalowane w tle, działają po ponownym uruchomieniu
+276	plików: {files}, {size}
