@@ -17,9 +17,11 @@ done
 
 mkdir -p "$MNT"
 mountpoint -q "$MNT" || mount -t squashfs -o loop,ro "$img" "$MNT"
-md=$(find "$MNT" -maxdepth 3 -path '*/repodata/repomd.xml' -print -quit)
-[ -n "$md" ] || { log "$img bez repodata/repomd.xml"; exit 0; }
-repo=$(dirname "$(dirname "$md")")
+# install/: podpisane repozytorium openSUSE (z niego Agama). extra/ (bez podpisu) jest tylko dla
+# post-install.sh: wskazane Agamie kończyło się pytaniem o niepodpisane repozytorium i zawieszeniem
+# na „Refreshing metadata” (test QEMU: find wybrał extra/ zamiast install/).
+repo=$MNT/install
+[ -f "$repo/repodata/repomd.xml" ] || { log "$img bez install/repodata/repomd.xml"; exit 0; }
 # Klucze, którymi openSUSE podpisało to repozytorium, jako zaufane (Agama importuje klucze z
 # /usr/lib/rpm/gnupg/keys/). Bez tego libzypp pyta o zaufanie do klucza, nikt nie odpowiada
 # i Agama stoi na „Refreshing metadata from the repositories” (test QEMU bez sieci).
