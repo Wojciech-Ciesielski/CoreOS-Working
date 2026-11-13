@@ -24,6 +24,23 @@ jobs:
           sudo docker image prune -af || true
           df -h /
 
+      # Repozytorium Leap do instalacji offline (4,5 GB do pobrania, 3,5 GB po rozpakowaniu) zmienia się tylko,
+      # gdy openSUSE wyda nowy obraz „offline installer”: klucz to jego suma, więc stara kopia nie wraca.
+      - name: Leap offline image checksum
+        id: leap
+        run: |
+          V="${{ github.event.inputs.leap_version || '16.1' }}"
+          base="https://download.opensuse.org/distribution/leap/$V/offline/Leap-$V-offline-installer-x86_64.install.iso"
+          sum=$(curl -fsSL "$base.sha256" 2>/dev/null | awk '{print $1; exit}' || true)
+          echo "version=$V" >> "$GITHUB_OUTPUT"
+          echo "sum=${sum:-none}" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Leap offline repository
+        uses: actions/cache@v4
+        with:
+          path: cache/leap-${{ steps.leap.outputs.version }}
+          key: leap-offline-${{ steps.leap.outputs.version }}-${{ steps.leap.outputs.sum }}
+
       - name: Build live ISO (KIWI)
         run: sudo tools/build-iso.sh "${{ github.event.inputs.leap_version || '16.1' }}"
 
