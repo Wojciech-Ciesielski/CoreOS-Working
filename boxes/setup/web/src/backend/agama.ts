@@ -18,7 +18,7 @@ async function call<T>(method: string, path: string, body?: unknown): Promise<T>
     headers: body === undefined ? {} : { "Content-Type": "application/json" },
     body: body === undefined ? undefined : JSON.stringify(body),
   });
-  if (!r.ok) throw new Error(`${method} ${path}: ${r.status}`);
+  if (!r.ok) throw new Error(`${method} ${path}: ${r.status} ${(await r.text().catch(() => "")).slice(0, 300)}`);
   const t = await r.text();
   return (t ? JSON.parse(t) : null) as T;
 }
@@ -216,8 +216,10 @@ export class AgamaBackend implements InstallBackend {
   }
 
   /** Czeka, aż Agama przeliczy propozycję po zmianie konfiguracji. Agama 24 zaraz po PUT /api/config
-   *  ma puste „progresses”, ale zadania (storage_config, software_config…) dalej są w „tasks”. */
-  private async settle(tries = 240) {
+   *  ma puste „progresses”, ale zadania (storage_config, software_config…) dalej są w „tasks”.
+   *  Do 15 minut: przy instalacji offline (repozytorium z pendrive'a) samo „Refreshing metadata” trwało
+   *  w QEMU ponad 2 minuty, a POST install w trakcie kończył się HTTP 500 „system is busy: [Software]”. */
+  private async settle(tries = 1800) {
     for (let i = 0; i < tries; i++) {
       const st = await get<AStatus>("/api/status");
       if (!st.progresses.length && !(st.tasks || []).length) return;
@@ -257,7 +259,16 @@ export class AgamaBackend implements InstallBackend {
   async install(plan: InstallPlan, onProgress: (p: Progress) => void) {
     await call("PUT", "/api/config", installConfig(plan));
     await this.settle();
-    await call("POST", "/api/action", { install: null });
+    // Agama zajęta (propozycja oprogramowania jeszcze się liczy): czekamy i próbujemy ponownie.
+    for (let i = 0; ; i++) {
+      try { await call("POST", "/api/action", { install: null }); break; }
+      catch (e) {
+        if (i >= 20 || !/busy/i.test(String(e))) throw e;
+        console.log("shrimp-setup: Agama zajęta, ponawiam start instalacji:", String(e));
+        await sleep(3000);
+        await this.settle();
+      }
+    }
     await this.watch(onProgress);
   }
 

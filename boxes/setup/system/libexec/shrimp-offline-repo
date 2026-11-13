@@ -17,10 +17,32 @@ done
 
 mkdir -p "$MNT"
 mountpoint -q "$MNT" || mount -t squashfs -o loop,ro "$img" "$MNT"
-md=$(find "$MNT" -maxdepth 3 -path '*/repodata/repomd.xml' -print -quit)
-[ -n "$md" ] || { log "$img bez repodata/repomd.xml"; exit 0; }
-repo=$(dirname "$(dirname "$md")")
+# install/: podpisane repozytorium openSUSE (z niego Agama). extra/ (bez podpisu) jest tylko dla
+# post-install.sh: wskazane Agamie kończyło się pytaniem o niepodpisane repozytorium i zawieszeniem
+# na „Refreshing metadata” (test QEMU: find wybrał extra/ zamiast install/).
+repo=$MNT/install
+[ -f "$repo/repodata/repomd.xml" ] || { log "$img bez install/repodata/repomd.xml"; exit 0; }
+# Klucze, którymi openSUSE podpisało to repozytorium, jako zaufane (Agama importuje klucze z
+# /usr/lib/rpm/gnupg/keys/). Bez tego libzypp pyta o zaufanie do klucza, nikt nie odpowiada
+# i Agama stoi na „Refreshing metadata from the repositories” (test QEMU bez sieci).
+for k in "$repo"/gpg-pubkey-*.asc; do
+  [ -f "$k" ] || continue
+  install -Dm644 "$k" "/usr/lib/rpm/gnupg/keys/$(basename "$k")"
+  rpm --import "$k" 2>/dev/null || true
+done
+# Klucz openSUSE z repodata install/ i jednorazowy klucz budowy, którym podpisane jest extra/.
+for k in "$repo/repodata/repomd.xml.key:install" "$MNT/extra/repodata/repomd.xml.key:extra"; do
+  f=${k%:*}
+  [ -f "$f" ] || continue
+  install -Dm644 "$f" "/usr/lib/rpm/gnupg/keys/gpg-pubkey-shrimp-offline-${k##*:}.asc"
+  rpm --import "$f" 2>/dev/null || true
+done
 # Jedyne repozytorium instalacji w produkcie: lokalne (internet nie jest potrzebny ani sprawdzany).
-sed -i -E "s#^( *- url: )https?://download\.opensuse\.org/.*#\1dir://$repo#" "$PRODUCT"
+# extra/ (pakiety spoza repozytorium Leap, np. exfatprogs dla partycji exFAT pendrive'a) jako drugie.
+if [ -f "$MNT/extra/repodata/repomd.xml.asc" ]; then
+  sed -i -E "s#^( *)- url: https?://download\.opensuse\.org/.*#\1- url: dir://$repo\n\1- url: dir://$MNT/extra#" "$PRODUCT"
+else
+  sed -i -E "s#^( *- url: )https?://download\.opensuse\.org/.*#\1dir://$repo#" "$PRODUCT"
+fi
 grep -q "dir://$repo" "$PRODUCT" || { log "nie udało się ustawić repozytorium w $PRODUCT"; exit 1; }
 log "instalacja offline z $img ($repo)"
