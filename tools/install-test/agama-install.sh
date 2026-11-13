@@ -13,12 +13,29 @@ api() { curl -sS -m 60 -H "Authorization: Bearer $T" -H 'Content-Type: applicati
 U=http://127.0.0.1
 # Same as Setup's settle(): no progresses and no tasks, up to 15 min (offline, the software proposal
 # took over 2 min in QEMU and POST install meanwhile got HTTP 500 "system is busy").
+IDLE_STUCK=0
 idle() {
   local i s
+  [ "$IDLE_STUCK" = 1 ] && return
+  { set +x; } 2>/dev/null
   for i in $(seq 1800); do
-    s=$(api "$U/api/status" 2>/dev/null); echo "$s" | grep -q '"tasks":\[\],"progresses":\[\]' && break; sleep 0.5
+    s=$(api "$U/api/status" 2>/dev/null); echo "$s" | grep -q '"tasks":\[\],"progresses":\[\]' && break
+    [ "$i" = 240 ] && diag "busy for 2 min"
+    sleep 0.5
   done
-  echo "=== settled after $((i/2)) s"
+  echo "=== settled after $((i/2)) s: $(echo "$s" | head -c 600)"
+  [ "$i" = 1800 ] && { IDLE_STUCK=1; diag "still busy after 15 min"; }
+  set -x
+}
+# What Agama waits for when it stays busy: open questions (e.g. trust a GPG key) and its journal.
+diag() {
+  echo "===DIAG-AGAMA $1"
+  for p in /api/questions /api/v2/questions /api/questions/pending; do echo "--- GET $p"; api "$U$p" | head -c 3000; echo; done
+  S journalctl -b --no-pager -o short-monotonic -u agama -u agama-web-server -u shrimp-offline-repo \
+    | grep -v -E 'GET /api/status|response for' | tail -n 120
+  ls -l /usr/lib/rpm/gnupg/keys/ 2>&1 | tail -20
+  S tail -n 80 /var/log/zypper.log /var/log/YaST2/y2log 2>/dev/null | tail -n 120
+  echo "===DIAG-AGAMA-END"
 }
 echo ===AGAMA-START
 ls -l "$HERE" /run/initramfs/live /run/initramfs/live/shrimp-transfer 2>&1 | head -40
@@ -91,7 +108,7 @@ echo "=== issues after config"; api "$U/api/issues"
 echo "=== POST install"
 for k in $(seq 20); do
   r=$(api -X POST --data '{"install":null}' "$U/api/action"); echo "$r"
-  case "$r" in *busy*) echo "=== busy, waiting ($k)"; sleep 3; idle;; *) break;; esac
+  case "$r" in *busy*) [ "$IDLE_STUCK" = 1 ] && break; echo "=== busy, waiting ($k)"; sleep 3; idle;; *) break;; esac
 done
 stage=unknown
 case "$r" in *"HTTP 200"*) n=360;; *) stage=refused; n=0;; esac   # Agama refused: don't wait 90 min

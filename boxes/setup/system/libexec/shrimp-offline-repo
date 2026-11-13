@@ -20,6 +20,18 @@ mountpoint -q "$MNT" || mount -t squashfs -o loop,ro "$img" "$MNT"
 md=$(find "$MNT" -maxdepth 3 -path '*/repodata/repomd.xml' -print -quit)
 [ -n "$md" ] || { log "$img bez repodata/repomd.xml"; exit 0; }
 repo=$(dirname "$(dirname "$md")")
+# Klucze, którymi openSUSE podpisało to repozytorium, jako zaufane (Agama importuje klucze z
+# /usr/lib/rpm/gnupg/keys/). Bez tego libzypp pyta o zaufanie do klucza, nikt nie odpowiada
+# i Agama stoi na „Refreshing metadata from the repositories” (test QEMU bez sieci).
+for k in "$repo"/gpg-pubkey-*.asc; do
+  [ -f "$k" ] || continue
+  install -Dm644 "$k" "/usr/lib/rpm/gnupg/keys/$(basename "$k")"
+  rpm --import "$k" 2>/dev/null || true
+done
+if [ -f "$repo/repodata/repomd.xml.key" ]; then
+  install -Dm644 "$repo/repodata/repomd.xml.key" /usr/lib/rpm/gnupg/keys/gpg-pubkey-shrimp-offline-repomd.asc
+  rpm --import "$repo/repodata/repomd.xml.key" 2>/dev/null || true
+fi
 # Jedyne repozytorium instalacji w produkcie: lokalne (internet nie jest potrzebny ani sprawdzany).
 sed -i -E "s#^( *- url: )https?://download\.opensuse\.org/.*#\1dir://$repo#" "$PRODUCT"
 grep -q "dir://$repo" "$PRODUCT" || { log "nie udało się ustawić repozytorium w $PRODUCT"; exit 1; }
