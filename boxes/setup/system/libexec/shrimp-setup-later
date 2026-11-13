@@ -1,0 +1,14 @@
+#!/bin/bash
+# shrimp-setup-later.timer: pierwsza konfiguracja skończyła się bez internetu, więc kodek H.264, sterownik NVIDIA
+# i wybrane programy czekają w /var/lib/shrimp-setup/later. Gdy jest sieć, shrimp-setup-apply --later je instaluje
+# (pakiety w nowej migawce, aktywne po następnym uruchomieniu) i daje znać zalogowanym użytkownikom.
+set -uo pipefail
+out=$(/usr/libexec/shrimp-setup-apply --later) || exit 0
+[ -f /var/lib/shrimp-setup/later ] && exit 0
+msg="Shrimp doinstalował programy i sterowniki, które czekały na internet."
+[ "$out" = reboot ] && msg="$msg Zmiany w systemie zadziałają po ponownym uruchomieniu komputera."
+for u in $(loginctl list-users --no-legend 2>/dev/null | awk '$1 >= 1000 { print $1 }'); do
+  runuser -u "$(id -nu "$u")" -- env DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$u/bus" \
+    notify-send -a Shrimp -i system-software-install "Shrimp" "$msg" 2>/dev/null || true
+done
+exit 0

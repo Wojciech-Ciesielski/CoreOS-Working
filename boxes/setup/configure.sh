@@ -1,5 +1,7 @@
 # Fragment config.sh boxa setup (chroot obrazu; składa go shrimp-box). BOX_ARGS = argumenty z kontenera.
 [ -x /usr/bin/shrimp-setup ] || die "shrimp-setup missing (box setup was not installed)"
+# Karta Wi-Fi, która nie wstała po restarcie z Windows (MT7921): na nośniku i w zainstalowanym systemie.
+systemctl enable shrimp-wifi-revive.service
 if [[ " $BOX_ARGS " == *" --live "* ]]; then
   # Shrimp Setup on the live medium: Agama (installer back end) serves the Setup UI,
   # shrimp-setup-token.service hands its token to the live user, the window starts from

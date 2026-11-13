@@ -28,7 +28,7 @@ function caller(base: string, key: string) {
   };
 }
 
-interface Job { state: "running" | "done" | "failed" | "offline"; percent: number; phase: string; etaMin?: number }
+interface Job { state: "running" | "done" | "failed" | "offline" | "later"; percent: number; phase: string; etaMin?: number }
 
 export class ShrimpFirstBoot implements FirstBootBackend {
   private call: <T>(method: string, path: string, body?: unknown) => Promise<T>;
@@ -56,6 +56,8 @@ export class ShrimpFirstBoot implements FirstBootBackend {
     for (;;) {
       await sleep(700);
       const j = await this.call<Job>("GET", "/apps");
+      // Bez internetu backend zapisuje wybór na później (shrimp-setup-later): krok kończy się normalnie.
+      if (j.state === "later") { onProgress({ percent: 100, phase: "apps.later" }); return; }
       if (j.state === "offline") throw new OfflineError();
       if (j.state === "failed") throw new OfflineError(j.phase);
       onProgress({ percent: j.percent, phase: j.state === "done" ? "done" : j.phase, etaMin: j.etaMin });

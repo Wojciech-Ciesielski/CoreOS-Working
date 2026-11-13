@@ -1,0 +1,11 @@
+# Co 10 minut (i 2 minuty po starcie): czy jest internet dla odłożonej instalacji. Bez pliku later
+# usługa nic nie robi (ConditionPathExists w shrimp-setup-later.service).
+[Unit]
+Description=Shrimp: czekanie na sieć dla odłożonej instalacji
+
+[Timer]
+OnBootSec=2min
+OnCalendar=*:0/10
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,10 @@
+# To, co pierwsza konfiguracja bez internetu odłożyła na później (shrimp-setup-later).
+[Unit]
+Description=Shrimp: doinstalowanie po połączeniu z siecią
+ConditionPathExists=/var/lib/shrimp-setup/later
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/shrimp-setup-later

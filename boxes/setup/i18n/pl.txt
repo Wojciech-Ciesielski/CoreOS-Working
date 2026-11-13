@@ -204,7 +204,7 @@
 204	Wybierz inną nazwę użytkownika, np. z cyfrą na końcu.
 205	Nie widzę dysku dla Shrimp
 206	Setup nie widzi wewnętrznego dysku tego komputera. W niektórych laptopach ukrywa go tryb Intel RST (VMD) w ustawieniach firmware. Sprawdź dysk i spróbuj ponownie.
-207	Shrimp pobiera system z internetu podczas instalacji. Wybierz swoją sieć Wi-Fi.
+207	Na tym pendrivie nie ma repozytorium pakietów (mógł go utworzyć starszy Shrimp Install), więc Shrimp musi pobrać system z internetu. Wybierz sieć Wi-Fi albo utwórz pendrive ponownie w Shrimp Install.
 208	Nie widzę sieci Wi-Fi. Podłącz kabel sieciowy albo podejdź bliżej routera i wyszukaj ponownie.
 209	Wyszukaj ponownie
 210	Shrimp potrzebuje internetu do instalacji. Połącz się z siecią i spróbuj ponownie.
@@ -245,3 +245,7 @@
 245	Dokumenty trafią do Dokumentów, zdjęcia do Obrazów i tak dalej, jak w Windows.
 246	Wszystko trafi do folderu Windows w Twoim folderze domowym.
 247	Windows
+248	Opcjonalnie. Bez sieci też dokończysz konfigurację, a resztę Shrimp doinstaluje sam, gdy się połączysz.
+249	Nie widzę sieci Wi-Fi. Możesz przejść dalej bez sieci i połączyć się później z górnego paska.
+250	Dalej bez sieci
+251	Programy zainstalują się same, gdy połączysz się z internetem.

@@ -90,6 +90,16 @@ if ! chroot "$T" rpm -q shrimp-setup >/dev/null 2>&1; then
   install -Dm644 /usr/lib/systemd/system/shrimp-nvidia-flatpak.service "$T/usr/lib/systemd/system/shrimp-nvidia-flatpak.service"
   chroot "$T" systemctl enable shrimp-nvidia-flatpak.service || true
 fi
+# Doinstalowanie po pierwszej konfiguracji bez sieci (NVIDIA, H.264, programy) i karta Wi-Fi, która nie
+# wstała po restarcie z Windows: też w zainstalowanym systemie.
+for f in /usr/libexec/shrimp-setup-later /usr/libexec/shrimp-wifi-revive; do
+  [ -f "$f" ] && install -Dm755 "$f" "$T$f"
+done
+for f in /usr/lib/systemd/system/shrimp-setup-later.service /usr/lib/systemd/system/shrimp-setup-later.timer \
+         /usr/lib/systemd/system/shrimp-wifi-revive.service /usr/lib/modprobe.d/50-shrimp-wifi.conf; do
+  [ -f "$f" ] && install -Dm644 "$f" "$T$f"
+done
+chroot "$T" systemctl enable shrimp-setup-later.timer shrimp-wifi-revive.service >/dev/null 2>&1 || log "nie można włączyć shrimp-setup-later/shrimp-wifi-revive"
 # Administratorzy (wheel) widzą migawki w Panko bez stanu „Brak dostępu”.
 SNAPCONF=$T/etc/snapper/configs/root
 if [ -f "$SNAPCONF" ]; then
@@ -188,6 +198,17 @@ if [ -f "$DRV" ]; then
   for p in $DRIVER_PACKAGES; do
     chroot "$T" rpm -q --whatprovides "$p" >/dev/null 2>&1 && continue
     chroot "$T" "${ZYP[@]}" install --no-recommends "$p" >/dev/null 2>&1 || log "sterownik niedostępny: $p"
+  done
+fi
+# Kodeki PipeWire/GStreamer (zgoda w kroku „Licencje”) już przy instalacji, z repozytorium na pendrivie:
+# po instalacji offline komputer bez sieci ma odtwarzanie od razu. Czego tu nie ma (openh264 od Cisco,
+# sterownik NVIDIA), shrimp-setup-apply doinstaluje sam, gdy pojawi się internet (shrimp-setup-later).
+if [ -f "$DRV" ] && grep -q '"proprietary":true' "$STATE/install.json"; then
+  # shellcheck source=/dev/null
+  CODEC_PACKAGES=$(. "$DRV"; echo "${CODEC_PACKAGES:-}")
+  for p in $CODEC_PACKAGES; do
+    chroot "$T" rpm -q --whatprovides "$p" >/dev/null 2>&1 && continue
+    chroot "$T" "${ZYP[@]}" install --no-recommends "$p" >/dev/null 2>&1 || log "kodek niedostępny: $p"
   done
 fi
 # Wyszukiwanie plików (localsearch-extractor) potrzebuje libz.so.1, którego Leap 16.1 sam nie dokłada.

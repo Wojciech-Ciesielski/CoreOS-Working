@@ -9,7 +9,7 @@ import {
 } from "./data";
 import { firstName, slug, loginFrom, isReservedUser, proposals, windowsList, tnow, esc, prefill, installLang, regionLabel, zoneName, keyboardName, type Prefill } from "./logic";
 import { load } from "./i18n";
-import { InstallError, OfflineError, type Backends, type Disk, type FirstBootInfo, type InstallPlan, type Network, type Place, type Progress, type Transfer, type UsbResult, type UsbState } from "./backend/types";
+import { InstallError, type Backends, type Disk, type FirstBootInfo, type InstallPlan, type Network, type Place, type Progress, type Transfer, type UsbResult, type UsbState } from "./backend/types";
 
 const $ = <T extends Element = HTMLElement>(s: string, r: ParentNode = document) => r.querySelector(s) as T | null;
 const $$ = <T extends Element = HTMLElement>(s: string, r: ParentNode = document) => Array.from(r.querySelectorAll(s)) as T[];
@@ -227,7 +227,11 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
       case "siec": {
         if (sub === 1) return netHidden();
         if (sub === 2) return logo("calc(6 * var(--u))") + head(esc(tr("advanced"))) + body(`<div class="cols">${col(esc(tr("net.ip")), "ip", IPS.map((s, j) => (j === 0 ? rec(s) : esc(tx(s)))), S.ip)}${col(esc(tr("net.dns")), "dns", DNSS.map((s, j) => (j === 0 ? rec(s) : esc(tx(s)))), S.dns)}${col(esc(tr("net.proxy")), "proxy", plain(PROXY), S.proxy)}</div>`) + acts(esc(tr("done")), "", { act: "done" });
-        return logo("calc(6 * var(--u))") + head(esc(tr("net.title"))) + body(netList()) +
+        // Sieć po instalacji jest opcjonalna: bez karty Wi-Fi albo bez zasięgu krok wprost proponuje „Dalej bez sieci”.
+        if (!NETS.length) return logo("calc(6 * var(--u))") + head(esc(tr("net.title")), esc(tr("net.optional"))) +
+          body(`<p class="desc" id="desc" style="margin-top:0">${esc(tr("net.none"))}</p><p class="nstat" id="ndiag" role="status">${esc(tr("inet.scanning"))}</p>`) +
+          acts(esc(tr("net.nonet")), esc(tr("inet.rescan")), { act: "skip", skipAct: "rescan" }) + `<div class="mini"><button class="mlink" data-act="hid" type="button">${esc(tr("net.hiddenlink"))}</button></div>`;
+        return logo("calc(6 * var(--u))") + head(esc(tr("net.title")), esc(tr("net.optional"))) + body(netList()) +
           acts(esc(NEXT), esc(SKIP)) + `<div class="mini"><button class="mlink" data-act="hid" type="button">${esc(tr("net.hiddenlink"))}</button><button class="mlink" data-act="nadv" type="button">${esc(tr("advanced"))}</button></div>`;
       }
       case "wyglad":
@@ -281,7 +285,7 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
    *  i mówi, czego brakuje: karty Wi-Fi (sterownik, firmware), włączonego radia albo po prostu zasięgu. */
   let scanSeq = 0;
   async function scanLoop() {
-    const my = ++scanSeq, alive = () => my === scanSeq && cur() === "internet" && sub === 0;
+    const my = ++scanSeq, alive = () => my === scanSeq && (cur() === "internet" || cur() === "siec") && sub === 0;
     void be.firstboot.wifiDiag().then((d) => {
       console.log("shrimp-setup: Wi-Fi, brak sieci:", JSON.stringify(d));
       const e = $("#ndiag", pane); if (!e || !alive() || NETS.length) return;
@@ -311,7 +315,7 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
     if (id === "region") T.hello = window.setInterval(() => { const d = $("#desc"); if (d) d.textContent = descFor(); }, 15000);
     if (id === "instalacja") runInstall();
     if (id === "konto") syncAccount();
-    if (id === "internet" && sub === 0 && !NETS.length) void scanLoop();
+    if ((id === "internet" || id === "siec") && sub === 0 && !NETS.length) void scanLoop();
     if (id === "dysk" && sub === 0) updSplit();
     if (id === "dysk" && sub === 1) syncDisk();
     if (id === "programy" && sub === 3) runApps();
@@ -395,7 +399,7 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
     const ids = [...winApps(), ...props()].filter((p) => S.sel[p.key] !== false).map((p) => p.id);
     const uniq = [...new Set(ids)];
     try {
-      if (!S.online) throw new OfflineError();
+      // Bez sieci backend od razu odkłada wybór na później (shrimp-setup-later), więc nie ma tu okna błędu.
       await be.firstboot.installApps(uniq, (p) => { if (step === my && sub === mySub) setBar("#ab", "#aph", "#aeta", p); });
       if (step === my && sub === mySub) showActs();
     } catch {
@@ -423,6 +427,7 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
   function syncAccount() { const b = $<HTMLButtonElement>(".btn", pane); if (b) b.disabled = !S.full.trim() || !S.user || !S.pass || (S.confirm && !S.pass2); }
   function syncNet() {
     const b = $<HTMLButtonElement>(".btn", pane); if (!b) return;
+    if (sub === 0 && cur() === "siec" && !NETS.length) return; // „Dalej bez sieci”
     if (sub === 0) b.disabled = !NETS[S.net] || (NETS[S.net].secure && !S.netPass);
     if (sub === 1) b.disabled = !S.ssid.trim() || (S.hsec > 0 && !S.hpass);
   }
@@ -574,6 +579,9 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
       if (id === "programy" && sub === 0) return go(step + 1);
       return go(step + 1);
     }
+    if (a === "rescan" && id === "siec") return guarded(async () => {
+      NETS = await be.firstboot.networks().catch(() => []); S.net = 0; render(false);
+    });
     if (a === "rescan") return guarded(async () => {
       if (await afterConnect(1)) { const was = NETS[S.net]?.ssid; NETS = await be.firstboot.networks().catch(() => []); S.net = Math.max(0, NETS.findIndex((x) => x.ssid === was)); render(false); }
     });

@@ -205,7 +205,7 @@
 204	err.user.d	Choose a different user name, for example with a number at the end.
 205	err.nodisk.t	No drive for Shrimp
 206	err.nodisk.d	Setup can't see this computer's internal drive. On some laptops it is hidden by Intel RST (VMD) in the firmware settings. Check the drive and try again.
-207	inet.sub	Shrimp downloads the system from the internet while it installs. Choose your Wi-Fi network.
+207	inet.sub	This stick has no package repository (it may have been made by an older Shrimp Install), so Shrimp has to download the system. Choose your Wi-Fi network, or make the stick again with Shrimp Install.
 208	inet.none	No Wi-Fi networks found. Connect a network cable or move closer to the router, then search again.
 209	inet.rescan	Search again
 210	err.offline.d	Shrimp needs the internet to install. Connect to a network and try again.
@@ -246,3 +246,7 @@
 245	files.move.d	Documents go to Documents, pictures to Pictures, and so on, as in Windows.
 246	files.keep.d	Everything goes to the Windows folder in your home folder.
 247	files.folder	Windows
+248	net.optional	Optional. Without a network you can finish setting up, and Shrimp installs the rest by itself once you connect.
+249	net.none	No Wi-Fi networks found. You can continue without a network and connect later from the top bar.
+250	net.nonet	Continue without a network
+251	apps.later	The programs will install by themselves once you connect to the internet.
