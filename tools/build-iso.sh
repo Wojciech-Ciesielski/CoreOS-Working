@@ -29,7 +29,7 @@ mkdir -p out
     ok=0
     for i in 1 2 3; do
       zypper -n in --no-recommends python3-kiwi kiwi-systemdeps-iso-media kiwi-systemdeps-bootloaders kiwi-systemdeps-filesystems binutils findutils gawk sed coreutils \
-        nodejs-default npm-default tar gzip rustup gcc createrepo_c squashfs xorriso && { ok=1; break; }
+        nodejs-default npm-default tar gzip rustup gcc createrepo_c squashfs xorriso gpg2 && { ok=1; break; }
       sed -i -E 's#https?://(download|cdn)\.opensuse\.org#https://downloadcontent.opensuse.org#' /etc/zypp/repos.d/*.repo
       zypper -n clean -a; sleep 20; zypper -n --gpg-auto-import-keys ref -f
     done

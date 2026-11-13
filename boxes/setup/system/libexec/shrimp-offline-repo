@@ -30,11 +30,19 @@ for k in "$repo"/gpg-pubkey-*.asc; do
   install -Dm644 "$k" "/usr/lib/rpm/gnupg/keys/$(basename "$k")"
   rpm --import "$k" 2>/dev/null || true
 done
-if [ -f "$repo/repodata/repomd.xml.key" ]; then
-  install -Dm644 "$repo/repodata/repomd.xml.key" /usr/lib/rpm/gnupg/keys/gpg-pubkey-shrimp-offline-repomd.asc
-  rpm --import "$repo/repodata/repomd.xml.key" 2>/dev/null || true
-fi
+# Klucz openSUSE z repodata install/ i jednorazowy klucz budowy, którym podpisane jest extra/.
+for k in "$repo/repodata/repomd.xml.key:install" "$MNT/extra/repodata/repomd.xml.key:extra"; do
+  f=${k%:*}
+  [ -f "$f" ] || continue
+  install -Dm644 "$f" "/usr/lib/rpm/gnupg/keys/gpg-pubkey-shrimp-offline-${k##*:}.asc"
+  rpm --import "$f" 2>/dev/null || true
+done
 # Jedyne repozytorium instalacji w produkcie: lokalne (internet nie jest potrzebny ani sprawdzany).
-sed -i -E "s#^( *- url: )https?://download\.opensuse\.org/.*#\1dir://$repo#" "$PRODUCT"
+# extra/ (pakiety spoza repozytorium Leap, np. exfatprogs dla partycji exFAT pendrive'a) jako drugie.
+if [ -f "$MNT/extra/repodata/repomd.xml.asc" ]; then
+  sed -i -E "s#^( *)- url: https?://download\.opensuse\.org/.*#\1- url: dir://$repo\n\1- url: dir://$MNT/extra#" "$PRODUCT"
+else
+  sed -i -E "s#^( *- url: )https?://download\.opensuse\.org/.*#\1dir://$repo#" "$PRODUCT"
+fi
 grep -q "dir://$repo" "$PRODUCT" || { log "nie udało się ustawić repozytorium w $PRODUCT"; exit 1; }
 log "instalacja offline z $img ($repo)"

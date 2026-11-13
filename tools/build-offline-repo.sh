@@ -51,6 +51,14 @@ if [ -s "$W/missing.txt" ]; then
   find "$R/var/cache/zypp/packages" -name '*.rpm' -exec mv -t "$W/stage/extra" {} +
 fi
 createrepo_c -q "$W/stage/extra"
+# extra/ podpisane jednorazowym kluczem tej budowy: Agama potrzebuje z niego pakietów, które sama
+# dokłada (np. exfatprogs, bo pendrive ma partycję exFAT), a niepodpisane repozytorium kończy się
+# pytaniem, na które nikt nie odpowiada. shrimp-offline-repo ufa temu kluczowi (repomd.xml.key).
+export GNUPGHOME="$W/gnupg"; mkdir -m 700 "$GNUPGHOME"
+gpg --batch --pinentry-mode loopback --passphrase '' --quick-gen-key "Shrimp offline repository (build $(date -u +%Y%m%d))" rsa3072 sign 1y
+gpg --batch --yes --armor --detach-sign -o "$W/stage/extra/repodata/repomd.xml.asc" "$W/stage/extra/repodata/repomd.xml"
+gpg --batch --armor --export > "$W/stage/extra/repodata/repomd.xml.key"
+unset GNUPGHOME
 log "extra/: $(find "$W/stage/extra" -name '*.rpm' | wc -l) pakietów, $(du -sh "$W/stage/extra" | cut -f1)"
 rm -rf "$R"
 

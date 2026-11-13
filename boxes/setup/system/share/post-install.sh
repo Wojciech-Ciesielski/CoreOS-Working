@@ -35,7 +35,7 @@ if [ -n "$OFFLINE_URL" ] && mountpoint -q /run/shrimp-repo; then
   chroot "$T" zypper -n lr -u 2>/dev/null | grep -qF "$OFFLINE_URL" \
     || chroot "$T" zypper -n ar -f "$OFFLINE_URL" shrimp-offline >/dev/null 2>&1 || log "nie można dodać repozytorium z nośnika"
   # Pakiety pulpitu spoza oficjalnego repozytorium offline (extra/, bez podpisu metadanych: tylko tutaj).
-  if [ -f /run/shrimp-repo/extra/repodata/repomd.xml ]; then
+  if [ -f /run/shrimp-repo/extra/repodata/repomd.xml ] && ! chroot "$T" zypper -n lr -u 2>/dev/null | grep -qF "dir:///run/shrimp-repo/extra"; then
     chroot "$T" zypper -n ar -f -G dir:///run/shrimp-repo/extra shrimp-offline-extra >/dev/null 2>&1 || log "nie można dodać extra/"
   fi
   curl -fsI -m 8 https://download.opensuse.org/ >/dev/null 2>&1 || ZYP+=(--no-remote)
