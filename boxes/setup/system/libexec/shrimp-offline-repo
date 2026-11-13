@@ -21,7 +21,7 @@ if [ -z "$img" ]; then
   done
 fi
 if [ -z "$img" ]; then
-  for i in $(seq 10); do dev=$(blkid -L SHRIMP_LIVE 2>/dev/null || true); [ -n "$dev" ] && break; sleep 1; done
+  for _ in $(seq 10); do dev=$(blkid -L SHRIMP_LIVE 2>/dev/null || true); [ -n "$dev" ] && break; sleep 1; done
   if [ -n "${dev:-}" ]; then
     mkdir -p /run/shrimp-live
     mountpoint -q /run/shrimp-live || mount -o ro "$dev" /run/shrimp-live 2>/dev/null || mount -t exfat -o ro "$dev" /run/shrimp-live || true

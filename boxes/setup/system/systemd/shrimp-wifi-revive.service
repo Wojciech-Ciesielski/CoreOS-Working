@@ -1,0 +1,14 @@
+# Karta Wi-Fi bez interfejsu po starcie (MT7921 po restarcie z Windows): jednorazowe przeładowanie (shrimp-wifi-revive).
+[Unit]
+Description=Shrimp: uruchomienie karty Wi-Fi, która nie wstała
+After=systemd-modules-load.service
+# NetworkManager sam podchwytuje kartę, gdy jej interfejs pojawi się później, więc start nie czeka na tę usługę.
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+TimeoutStartSec=90
+ExecStart=/usr/libexec/shrimp-wifi-revive
+
+[Install]
+WantedBy=multi-user.target

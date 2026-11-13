@@ -38,6 +38,8 @@ struct Inner {
     nvidia: String,
     apps: Job,
     usb: Job,
+    /// Programy wybrane bez internetu: shrimp-setup-apply zapisuje je na później (shrimp-setup-later).
+    later_apps: Vec<String>,
 }
 
 #[derive(Clone)]
@@ -58,7 +60,7 @@ pub fn spawn(ui_dir: PathBuf) -> std::io::Result<(u16, String)> {
     let port = std_listener.local_addr()?.port();
     let state = App {
         key: Arc::new(key.clone()),
-        inner: Arc::new(Mutex::new(Inner { codecs: false, nvidia: "none".into(), apps: Job { state: "idle", ..Default::default() }, usb: Job { state: "idle", ..Default::default() } })),
+        inner: Arc::new(Mutex::new(Inner { codecs: false, nvidia: "none".into(), apps: Job { state: "idle", ..Default::default() }, usb: Job { state: "idle", ..Default::default() }, later_apps: Vec::new() })),
     };
     std::thread::spawn(move || {
         let rt = tokio::runtime::Runtime::new().expect("tokio");
@@ -189,15 +191,25 @@ async fn apps_start(State(s): State<App>, Json(a): Json<Apps>) -> Response {
     }
     let inner = s.inner.clone();
     tokio::spawn(async move {
+        // Bez internetu (instalacja offline, brak Wi-Fi): wybór czeka, aż komputer połączy się z siecią.
+        let later = |ids: &[String]| {
+            let ids = ids.to_vec();
+            let inner = inner.clone();
+            async move {
+                let mut i = inner.lock().await;
+                i.later_apps = ids;
+                i.apps = Job { state: "later", percent: 100.0, phase: "apps.later".into(), eta_min: None };
+            }
+        };
         if !system::online().await {
-            inner.lock().await.apps.state = "offline";
+            later(&a.ids).await;
             return;
         }
         // Najpierw zestaw podstawowy ze sklepu Shrimp; niepowodzenie nie zatrzymuje wyboru użytkownika.
         if let Err(e) = system::install_base_apps().await {
             eprintln!("shrimp-setup: zestaw podstawowy: {}", e.0);
             if !system::online().await {
-                inner.lock().await.apps.state = "offline";
+                later(&a.ids).await;
                 return;
             }
         }
@@ -208,7 +220,7 @@ async fn apps_start(State(s): State<App>, Json(a): Json<Apps>) -> Response {
             if let Err(e) = system::install_app(id).await {
                 eprintln!("shrimp-setup: {id}: {}", e.0);
                 if !system::online().await {
-                    inner.lock().await.apps.state = "offline";
+                    later(&a.ids[n..]).await;
                     return;
                 }
                 // Jeden program, którego nie ma we Flathub (albo nie da się go zainstalować), nie zatrzymuje reszty.
@@ -301,8 +313,8 @@ async fn files_place(Json(a): Json<FilesAction>) -> Response {
 }
 
 async fn finish(State(s): State<App>) -> Response {
-    let (codecs, nvidia) = { let i = s.inner.lock().await; (i.codecs, i.nvidia.clone()) };
-    match system::apply(codecs, &nvidia).await {
+    let (codecs, nvidia, later) = { let i = s.inner.lock().await; (i.codecs, i.nvidia.clone(), i.later_apps.clone()) };
+    match system::apply(codecs, &nvidia, &later).await {
         Ok(reboot) => {
             if reboot { system::reboot().await; }
             QUIT.store(true, std::sync::atomic::Ordering::SeqCst);

@@ -74,6 +74,7 @@ export const demoFirstBoot: FirstBootBackend = {
   async setInputSource() {},
   async setDrivers() {},
   async installApps(_ids, onProgress) {
+    if (q.get("fail") === "offline") { await sleep(fast ? 50 : 600); onProgress({ percent: 100, phase: "apps.later" }); return; }
     try {
       await simulate(onProgress, [[100, "apps.phase"]], 2, q.get("fail") === "net" ? 12 : undefined);
     } catch { throw new OfflineError(); }

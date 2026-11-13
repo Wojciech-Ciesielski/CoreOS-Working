@@ -497,10 +497,11 @@ pub async fn install_base_apps() -> Result<(), CmdError> {
 
 /// Kodeki i sterowniki (jedna migawka transactional-update) oraz zdjęcie znacznika pierwszego
 /// uruchomienia. Zwraca true, jeśli trzeba uruchomić komputer ponownie.
-pub async fn apply(codecs: bool, nvidia: &str) -> Result<bool, CmdError> {
+pub async fn apply(codecs: bool, nvidia: &str, later_apps: &[String]) -> Result<bool, CmdError> {
+    let apps = later_apps.join(" ");
     let out = run(
         "pkexec",
-        &[APPLY_HELPER, "--codecs", if codecs { "yes" } else { "no" }, "--nvidia", nvidia],
+        &[APPLY_HELPER, "--codecs", if codecs { "yes" } else { "no" }, "--nvidia", nvidia, "--apps", &apps],
     )
     .await?;
     Ok(out.lines().any(|l| l.trim() == "reboot"))

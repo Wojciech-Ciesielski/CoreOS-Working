@@ -41,7 +41,7 @@ cat "$T/sb" 2>/dev/null
 Z
 chmod +x "$T/bin/"*
 export SHRIMP_NVIDIA_LIB=$HERE/../../linu-x/root/usr/share/shrimp/linux/nvidia-open.sh
-export PATH="$T/bin:$PATH" SHRIMP_AUTOSTART_DIR=$T/autostart SHRIMP_STATE=$T/state SHRIMP_SYSFS=$T/sys SHRIMP_DRIVERS_CONF=$HERE/../../linu-x/root/usr/share/shrimp/linux/drivers.conf
+export SHRIMP_ONLINE=1 PATH="$T/bin:$PATH" SHRIMP_AUTOSTART_DIR=$T/autostart SHRIMP_STATE=$T/state SHRIMP_SYSFS=$T/sys SHRIMP_DRIVERS_CONF=$HERE/../../linu-x/root/usr/share/shrimp/linux/drivers.conf
 
 gpu() { rm -rf "$T/sys"; mkdir -p "$T/sys/bus/pci/devices/0000:01:00.0"; local d=$T/sys/bus/pci/devices/0000:01:00.0; echo 0x10de > "$d/vendor"; echo 0x030000 > "$d/class"; echo "$1" > "$d/device"; }
 run() { : > "$LOG"; touch "$T/state/first-boot"; mkdir -p "$T/autostart"; touch "$T/autostart/shrimp-setup-first-boot.desktop"; "$APPLY" "$@" 2>>"$T/stderr"; }
@@ -100,4 +100,27 @@ rm -rf "$T/sys"; printf '%s\n' gstreamer-plugins-good > "$T/avail"
 run --codecs yes --nvidia none >/dev/null
 grep -q 'zypper --non-interactive addrepo --refresh http://codecs.opensuse.org/openh264/' "$LOG" || fail "6: repozytorium openh264"
 grep -q 'install --no-recommends gstreamer-plugins-good$' "$LOG" || fail "6: kodeki"
-echo "test-apply: 7/7 OK"
+# 7. Bez internetu: pierwsza konfiguracja się kończy, pakiety i programy czekają w later.
+echo 595.99.02-lp161.10.1 > "$T/good"
+gpu 0x2504
+printf '%s\n' openSUSE-repos-Leap-NVIDIA nvidia-open-driver-G07-signed-kmp-meta gstreamer-plugins-good > "$T/avail"
+cat > "$T/bin/flatpak" <<Z
+#!/bin/bash
+echo "flatpak \$*" >> "$LOG"
+Z
+chmod +x "$T/bin/flatpak"
+OUT=$(SHRIMP_ONLINE=0 run --codecs yes --nvidia nvidia --apps "org.gimp.GIMP com.valvesoftware.Steam")
+[ -z "$OUT" ] || fail "7: reboot bez internetu"
+! grep -q '^transactional-update' "$LOG" || fail "7: migawka bez internetu"
+[ ! -f "$T/state/first-boot" ] || fail "7: pierwsza konfiguracja nie zakończona"
+grep -q '^NVIDIA=nvidia' "$T/state/later" && grep -q 'org.gimp.GIMP' "$T/state/later" || fail "7: brak later"
+# 8. Później, nadal bez sieci: nic się nie dzieje, later zostaje.
+: > "$LOG"; SHRIMP_ONLINE=0 "$APPLY" --later 2>>"$T/stderr"
+[ ! -s "$LOG" ] && [ -f "$T/state/later" ] || fail "8: działanie bez sieci"
+# 9. Później, z siecią: jedna migawka (kodeki + NVIDIA), programy, later znika, restart.
+: > "$LOG"; OUT=$(SHRIMP_ONLINE=1 "$APPLY" --later 2>>"$T/stderr") || { tail -5 "$T/stderr"; fail "9: kod"; }
+[ "$OUT" = reboot ] || fail "9: brak reboot"
+[ "$(grep -c '^transactional-update' "$LOG")" = 1 ] || fail "9: migawka"
+grep -q 'flatpak install --system --noninteractive -y flathub com.valvesoftware.Steam' "$LOG" || fail "9: programy"
+[ ! -f "$T/state/later" ] || fail "9: later został"
+echo "test-apply: 10/10 OK"

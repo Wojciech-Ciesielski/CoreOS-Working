@@ -1,0 +1,32 @@
+#!/bin/bash
+# Karta Wi-Fi jest w komputerze (PCI, klasa 0x0280), ale system nie ma dla niej interfejsu sieciowego:
+# typowe dla MediaTek MT7921/MT7922 po ponownym uruchomieniu z Windows (karta zostaje w stanie, z którego
+# sterownik jej nie budzi). Jednorazowo: przeładowanie sterownika, a gdy to nie pomoże, ponowne wykrycie
+# urządzenia PCI. Nie robi nic, gdy Wi-Fi działa albo karty nie ma.
+log() { echo "shrimp-wifi-revive: $*"; }
+dead() {
+  local d out=""
+  for d in /sys/bus/pci/devices/*; do
+    case "$(cat "$d/class" 2>/dev/null)" in 0x0280*) ;; *) continue ;; esac
+    ls "$d"/net/* >/dev/null 2>&1 && continue
+    ls "$d"/ieee80211/* >/dev/null 2>&1 && continue
+    out="$out $d"
+  done
+  echo "$out"
+}
+# Sterownik dostaje chwilę na załadowanie firmware.
+for _ in $(seq 20); do [ -z "$(dead)" ] && exit 0; sleep 1; done
+for d in $(dead); do
+  id="$(cat "$d/vendor"):$(cat "$d/device")"
+  drv=$(basename "$(readlink "$d/driver" 2>/dev/null)" 2>/dev/null)
+  log "karta $id ($(basename "$d")) bez interfejsu, sterownik: ${drv:-brak}"
+  dmesg 2>/dev/null | grep -iE "${drv:-mt79|iwlwifi|rtw|ath}" | tail -n 8 | sed 's/^/shrimp-wifi-revive: /'
+  if [ -n "$drv" ]; then
+    modprobe -r "$drv" 2>/dev/null && sleep 2 && modprobe "$drv" 2>/dev/null
+    for _ in $(seq 10); do ls "$d"/net/* >/dev/null 2>&1 && { log "karta $id działa po przeładowaniu $drv"; continue 2; }; sleep 1; done
+  fi
+  echo 1 > "$d/remove" 2>/dev/null; sleep 2; echo 1 > /sys/bus/pci/rescan
+  for _ in $(seq 15); do ls "$d"/net/* >/dev/null 2>&1 && { log "karta $id działa po ponownym wykryciu PCI"; continue 2; }; sleep 1; done
+  log "karta $id nadal bez interfejsu: pomoże pełne wyłączenie komputera (nie restart) przed startem Shrimp"
+done
+exit 0
