@@ -25,11 +25,18 @@ install -Dm644 "$HERE/system/polkit/org.shrimp.setup.policy" "$D/usr/share/polki
 install -Dm644 "$HERE/system/polkit/50-shrimp-setup.rules" "$D/usr/share/polkit-1/rules.d/50-shrimp-setup.rules"
 install -Dm644 "$HERE/system/autostart/shrimp-setup-first-boot.desktop" "$D/etc/xdg/autostart/shrimp-setup-first-boot.desktop"
 install -Dm644 "$HERE/system/systemd/shrimp-nvidia-flatpak.service" "$D/usr/lib/systemd/system/shrimp-nvidia-flatpak.service"
+# Aktualizacje w tle bez restartu (Setup i Cocktail: shrimp-auto-updates on|off).
+install -Dm755 "$HERE/system/libexec/shrimp-auto-updates" "$D/usr/libexec/shrimp-auto-updates"
+install -Dm644 "$HERE/system/systemd/shrimp-flatpak-update.service" "$D/usr/lib/systemd/system/shrimp-flatpak-update.service"
+install -Dm644 "$HERE/system/systemd/shrimp-flatpak-update.timer" "$D/usr/lib/systemd/system/shrimp-flatpak-update.timer"
 # Bez internetu w pierwszej konfiguracji: doinstalowanie później. Karta Wi-Fi, która nie wstała (MT7921).
 install -Dm755 "$HERE/system/libexec/shrimp-setup-later" "$D/usr/libexec/shrimp-setup-later"
 install -Dm644 "$HERE/system/systemd/shrimp-setup-later.service" "$D/usr/lib/systemd/system/shrimp-setup-later.service"
 install -Dm644 "$HERE/system/systemd/shrimp-setup-later.timer" "$D/usr/lib/systemd/system/shrimp-setup-later.timer"
 install -Dm755 "$HERE/system/libexec/shrimp-wifi-revive" "$D/usr/libexec/shrimp-wifi-revive"
+# Shrimp pierwszy w kolejności rozruchu UEFI (obok Windows; post-install.sh włącza usługę w systemie).
+install -Dm755 "$HERE/system/libexec/shrimp-boot-order" "$D/usr/libexec/shrimp-boot-order"
+install -Dm644 "$HERE/system/systemd/shrimp-boot-order.service" "$D/usr/lib/systemd/system/shrimp-boot-order.service"
 install -Dm644 "$HERE/system/systemd/shrimp-wifi-revive.service" "$D/usr/lib/systemd/system/shrimp-wifi-revive.service"
 install -Dm644 "$HERE/system/modprobe/50-shrimp-wifi.conf" "$D/usr/lib/modprobe.d/50-shrimp-wifi.conf"
 install -Dm644 "$HERE/system/agama/shrimp.yaml" "$D/usr/share/agama/products.d/shrimp.yaml"

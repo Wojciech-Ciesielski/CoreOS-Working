@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
-      - run: shellcheck -S warning boxes/setup/install.sh boxes/setup/system/share/post-install.sh boxes/setup/system/libexec/shrimp-setup-apply boxes/setup/system/libexec/shrimp-usb-backup boxes/setup/system/libexec/shrimp-setup-later boxes/setup/system/libexec/shrimp-wifi-revive boxes/setup/system/libexec/shrimp-offline-repo boxes/setup/tests/test-usb-backup.sh boxes/app-style/shrimp-app-style boxes/app-style/install.sh
+      - run: shellcheck -S warning boxes/setup/install.sh boxes/setup/system/share/post-install.sh boxes/setup/system/libexec/shrimp-setup-apply boxes/setup/system/libexec/shrimp-usb-backup boxes/setup/system/libexec/shrimp-setup-later boxes/setup/system/libexec/shrimp-wifi-revive boxes/setup/system/libexec/shrimp-offline-repo boxes/setup/tests/test-usb-backup.sh boxes/app-style/shrimp-app-style boxes/app-style/install.sh boxes/setup/system/libexec/shrimp-auto-updates boxes/setup/system/libexec/shrimp-boot-order
       - run: boxes/setup/tests/test-apply.sh
       - run: boxes/setup/tests/test-usb-backup.sh
       - run: python3 -c "import yaml; yaml.safe_load(open('boxes/setup/system/agama/shrimp.yaml'))"

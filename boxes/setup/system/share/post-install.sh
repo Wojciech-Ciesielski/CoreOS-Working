@@ -132,15 +132,26 @@ MIME
 
 # Cichy start zainstalowanego systemu: menu GRUB ukryte (Esc, F4 lub F8 w ciągu sekundy je pokazuje,
 # pod BIOS także wciśnięty Shift), bez komunikatów „Loading Linux/initial ramdisk” i bez logów jądra.
+# Obok Windows menu jest widoczne (wybór systemu), a Shrimp jest pierwszy w kolejności rozruchu UEFI.
 GRUB_REGEN=0
+BESIDE=0
+grep -q '"beside":true' "$STATE/install.json" 2>/dev/null && BESIDE=1
 DEF=$T/etc/default/grub
 if [ -f "$DEF" ]; then
   setkey() {
     if grep -q "^$1=" "$DEF"; then sed -i "s|^$1=.*|$1=$2|" "$DEF"; else echo "$1=$2" >> "$DEF"; fi
   }
-  setkey GRUB_TIMEOUT 1
-  setkey GRUB_TIMEOUT_STYLE hidden
-  setkey GRUB_HIDDEN_TIMEOUT_QUIET true
+  if [ "$BESIDE" = 1 ]; then
+    # Obok Windows menu GRUB jest zawsze widoczne (5 s): wybór Shrimp/Windows i „Poprzednie wersje
+    # systemu” (migawki Panko). Wpis Windows daje 35_shrimp_windows niżej, bez os-prober.
+    setkey GRUB_TIMEOUT 5
+    setkey GRUB_TIMEOUT_STYLE menu
+    sed -i '/^GRUB_HIDDEN_TIMEOUT/d' "$DEF"
+  else
+    setkey GRUB_TIMEOUT 1
+    setkey GRUB_TIMEOUT_STYLE hidden
+    setkey GRUB_HIDDEN_TIMEOUT_QUIET true
+  fi
   CMD=$(sed -n 's/^GRUB_CMDLINE_LINUX_DEFAULT="\(.*\)"$/\1/p' "$DEF" | head -n1)
   for o in quiet splash=silent loglevel=3 rd.udev.log_level=3 udev.log_level=3 systemd.show_status=false rd.systemd.show_status=false vt.global_cursor_default=0; do
     case " $CMD " in *" ${o%%=*}="*|*" $o "*) ;; *) CMD="$CMD $o";; esac
@@ -148,6 +159,42 @@ if [ -f "$DEF" ]; then
   setkey GRUB_CMDLINE_LINUX_DEFAULT "\"${CMD# }\""
   GRUB_REGEN=1
   log "GRUB: ukryte menu, cichy start"
+fi
+# Wpis Windows w menu GRUB obok Windows (UEFI): łańcuchowo Menedżer rozruchu Windows z partycji EFI,
+# znalezionej po pliku. Nie zależy od os-prober (w chroot bez /dev i /sys nie widział Windows), więc os-prober
+# jest wyłączony, żeby nie było dwóch wpisów. BIOS: os-prober jak dotąd.
+if [ "$BESIDE" = 1 ] && [ -f "$DEF" ]; then
+  if [ -d /sys/firmware/efi ]; then
+    cat > "$T/etc/grub.d/35_shrimp_windows" <<'GRUBWIN'
+#!/bin/sh
+# Shrimp: Windows obok Shrimp (post-install.sh). Plik z partycji EFI Windows, bez os-prober.
+cat <<'MENU'
+menuentry 'Windows' --class windows --class os {
+	insmod part_gpt
+	insmod fat
+	insmod chain
+	search --no-floppy --file --set=root /EFI/Microsoft/Boot/bootmgfw.efi
+	chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+}
+MENU
+GRUBWIN
+    chmod 755 "$T/etc/grub.d/35_shrimp_windows"
+    if grep -q '^GRUB_DISABLE_OS_PROBER=' "$DEF"; then sed -i 's/^GRUB_DISABLE_OS_PROBER=.*/GRUB_DISABLE_OS_PROBER=true/' "$DEF"
+    else echo 'GRUB_DISABLE_OS_PROBER=true' >> "$DEF"; fi
+    log "GRUB: wpis Windows (UEFI), menu widoczne 5 s"
+  else
+    if grep -q '^GRUB_DISABLE_OS_PROBER=' "$DEF"; then sed -i 's/^GRUB_DISABLE_OS_PROBER=.*/GRUB_DISABLE_OS_PROBER=false/' "$DEF"
+    else echo 'GRUB_DISABLE_OS_PROBER=false' >> "$DEF"; fi
+    log "GRUB: Windows przez os-prober (BIOS), menu widoczne 5 s"
+  fi
+  GRUB_REGEN=1
+fi
+# Shrimp pierwszy w kolejności rozruchu UEFI: teraz i przy każdym starcie (aktualizacje Windows potrafią
+# przesunąć Menedżer rozruchu Windows na początek).
+if [ -f /usr/libexec/shrimp-boot-order ]; then
+  install -Dm755 /usr/libexec/shrimp-boot-order "$T/usr/libexec/shrimp-boot-order"
+  install -Dm644 /usr/lib/systemd/system/shrimp-boot-order.service "$T/usr/lib/systemd/system/shrimp-boot-order.service"
+  chroot "$T" systemctl enable shrimp-boot-order.service >/dev/null 2>&1 || log "nie można włączyć shrimp-boot-order"
 fi
 # 10_linux wypisuje echo przed jądrem i initrd; plik jest %config, więc aktualizacja zostawi .rpmnew.
 if [ -f "$T/etc/grub.d/10_linux" ]; then
@@ -182,6 +229,18 @@ if [ -f "$MAN/desktop.packages" ]; then
       done
     fi
   fi
+fi
+# Narzędzia wiersza poleceń Cherry (lista w /usr/share/cherry/tools.txt): na nośniku zainstalowane miękko
+# (configure.sh boxa cherry), więc są w extra/ i działają też offline. Pierwsza dostępna nazwa z każdej linii.
+TOOLS=/usr/share/cherry/tools.txt
+if [ -f "$TOOLS" ]; then
+  while read -r -a group; do
+    case "${group[0]:-#}" in \#*) continue ;; esac
+    for p in "${group[@]}"; do
+      chroot "$T" rpm -q --whatprovides "$p" </dev/null >/dev/null 2>&1 && break
+      chroot "$T" "${ZYP[@]}" install --no-recommends "$p" </dev/null >/dev/null 2>&1 && break
+    done
+  done < "$TOOLS"
 fi
 # Pakiety produktu spoza oficjalnego repozytorium Leap offline (shrimp.yaml): okno Setup w pierwszej
 # konfiguracji (WebKitGTK 6), exFAT dla kopii pendrive'a, reguły kontrolerów i GameMode dla Steam.
@@ -327,7 +386,17 @@ if [ -n "$FW" ] && [ -f "$T/etc/grub.d/30_uefi-firmware" ]; then
   GRUB_REGEN=1
 fi
 if [ "$GRUB_REGEN" = 1 ]; then
+  # /dev, /proc i /sys w chroot: grub2-mkconfig (i os-prober pod BIOS) muszą widzieć dyski.
+  BOUND=()
+  for m in dev proc sys run; do
+    mountpoint -q "$T/$m" && continue
+    mkdir -p "$T/$m" && mount --bind "/$m" "$T/$m" && BOUND+=("$T/$m")
+  done
   chroot "$T" grub2-mkconfig -o /boot/grub2/grub.cfg >/dev/null 2>&1 || log "grub2-mkconfig nie powiodło się (zmiany GRUB wejdą przy jego następnej aktualizacji)"
+  for ((i=${#BOUND[@]}-1; i>=0; i--)); do umount -l "${BOUND[$i]}" 2>/dev/null || true; done
+fi
+if [ "$BESIDE" = 1 ] && [ -x /usr/libexec/shrimp-boot-order ]; then
+  /usr/libexec/shrimp-boot-order --install || true
 fi
 
 # Pierwsza konfiguracja: znacznik + jednorazowe logowanie automatyczne (zdejmuje je shrimp-setup-apply).

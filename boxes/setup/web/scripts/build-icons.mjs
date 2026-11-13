@@ -14,6 +14,25 @@ const ICONS = [
   "dialog-warning-symbolic",
   "view-reveal-symbolic",
   "view-conceal-symbolic",
+  // onboarding: duże znaki po lewej stronie (sieć, pliki, pendrive, przeglądarka, programy, wygląd)
+  "network-wireless-signal-excellent-symbolic",
+  "network-wired-symbolic",
+  "folder-symbolic",
+  "folder-documents-symbolic",
+  "folder-pictures-symbolic",
+  "folder-music-symbolic",
+  "folder-videos-symbolic",
+  "drive-removable-media-symbolic",
+  "web-browser-symbolic",
+  "view-app-grid-symbolic",
+  "applications-games-symbolic",
+  "x-office-document-symbolic",
+  "preferences-desktop-appearance-symbolic",
+  "emblem-ok-symbolic",
+  // krok „Wygląd”: jasny, ciemny, światło nocne; aktualizacje w tle
+  "weather-clear-symbolic",
+  "weather-clear-night-symbolic",
+  "software-update-available-symbolic",
 ];
 
 const out = ['<svg xmlns="http://www.w3.org/2000/svg">'];
@@ -29,6 +48,8 @@ for (const name of ICONS) {
     // Symbolic icons are recoloured by GTK; in the browser they follow currentColor.
     .replace(/fill="#[0-9a-fA-F]{3,8}"/g, 'fill="currentColor"')
     .replace(/fill:#[0-9a-fA-F]{3,8}/g, "fill:currentColor")
+    // color="#000" na grupie przykrywa currentColor (web-browser-symbolic był zawsze czarny).
+    .replace(/\scolor="#[0-9a-fA-F]{3,8}"/g, "")
     .replace(/<!--[\s\S]*?-->/g, "")
     .replace(/\s+/g, " ")
     .trim();

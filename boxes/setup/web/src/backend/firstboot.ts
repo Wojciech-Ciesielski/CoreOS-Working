@@ -1,7 +1,7 @@
 // Część 2 Setup: pierwsza konfiguracja. Mówi z lokalnym serwerem shrimp-setup (Rust)
 // pod tym samym originem: /shrimp/api/*. Token sesji przychodzi w adresie strony (?k=…).
-import { mapWindowsApps } from "../logic";
-import { OfflineError, WifiError, type UsbResult, type UsbState, type DriverChoice, type FirstBootBackend, type FirstBootInfo, type Network, type NetworkAdvanced, type WifiDiag, type Progress } from "./types";
+import { mapWindowsApps, noAlternative } from "../logic";
+import { OfflineError, WifiError, type AppItem, type UsbResult, type UsbState, type DriverChoice, type FirstBootBackend, type FirstBootInfo, type Network, type NetworkAdvanced, type WifiDiag, type Prefs, type Progress, type WindowsFiles } from "./types";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -28,7 +28,7 @@ function caller(base: string, key: string) {
   };
 }
 
-interface Job { state: "running" | "done" | "failed" | "offline" | "later"; percent: number; phase: string; etaMin?: number }
+interface Job { state: "running" | "done" | "failed" | "offline" | "later"; percent: number; phase: string; etaMin?: number; items?: AppItem[] }
 
 export class ShrimpFirstBoot implements FirstBootBackend {
   private call: <T>(method: string, path: string, body?: unknown) => Promise<T>;
@@ -36,10 +36,11 @@ export class ShrimpFirstBoot implements FirstBootBackend {
   async online() { return (await this.call<{ online: boolean }>("GET", "/online")).online; }
   /** Serwer zwraca programy z shrimp.json (nazwy i pakiety Store); odpowiedniki dobieramy tutaj. */
   async info(): Promise<FirstBootInfo> {
-    const i = await this.call<Omit<FirstBootInfo, "windowsApps"> & { windowsApps: string[] | null; storeApps?: string[] | null }>("GET", "/info");
+    const i = await this.call<Omit<FirstBootInfo, "windowsApps" | "noAlternative" | "windowsNames"> & { windowsApps: string[] | null; storeApps?: string[] | null }>("GET", "/info");
     const { storeApps, ...rest } = i;
-    const apps = i.windowsApps || storeApps ? mapWindowsApps(i.windowsApps || [], storeApps || []) : null;
-    return { ...rest, windowsApps: apps && apps.length ? apps : null };
+    const names = i.windowsApps || [];
+    const apps = i.windowsApps || storeApps ? mapWindowsApps(names, storeApps || []) : null;
+    return { ...rest, defaultBrowser: i.defaultBrowser ?? null, windowsApps: apps && apps.length ? apps : null, windowsNames: names, noAlternative: noAlternative(names, storeApps || []) };
   }
   networks() { return this.call<Network[]>("GET", "/networks"); }
   wifiDiag() { return this.call<WifiDiag>("GET", "/network/diag"); }
@@ -51,16 +52,18 @@ export class ShrimpFirstBoot implements FirstBootBackend {
   async setAppearance(scheme: "default" | "prefer-dark", accent: string | null) { await this.call("POST", "/appearance", { scheme, accent }); }
   async setInputSource(keymap: string) { await this.call("POST", "/keymap", { keymap }); }
   async setDrivers(c: DriverChoice) { await this.call("POST", "/drivers", c); }
-  async installApps(ids: string[], onProgress: (p: Progress) => void) {
-    await this.call("POST", "/apps", { ids });
+  async setBrowser(id: string) { await this.call("POST", "/browser", { id }); }
+  async setPrefs(p: Prefs) { await this.call("POST", "/prefs", p); }
+  async installApps(ids: string[], browser: string | null, onProgress: (p: Progress) => void) {
+    await this.call("POST", "/apps", { ids, browser });
     for (;;) {
       await sleep(700);
       const j = await this.call<Job>("GET", "/apps");
       // Bez internetu backend zapisuje wybór na później (shrimp-setup-later): krok kończy się normalnie.
-      if (j.state === "later") { onProgress({ percent: 100, phase: "apps.later" }); return; }
+      if (j.state === "later") { onProgress({ percent: 100, phase: "apps.later", items: j.items }); return; }
       if (j.state === "offline") throw new OfflineError();
       if (j.state === "failed") throw new OfflineError(j.phase);
-      onProgress({ percent: j.percent, phase: j.state === "done" ? "done" : j.phase, etaMin: j.etaMin });
+      onProgress({ percent: j.percent, phase: j.state === "done" ? "done" : j.phase, etaMin: j.etaMin, items: j.items });
       if (j.state === "done") return;
     }
   }
@@ -76,8 +79,8 @@ export class ShrimpFirstBoot implements FirstBootBackend {
       if (j.state === "done" || j.state === "home" || j.state === "failed") return j.state as UsbResult;
     }
   }
-  async windowsFiles() {
-    return (await this.call<{ files: number; bytes: number }>("GET", "/files").catch(() => null)) ?? { files: 0, bytes: 0 };
+  async windowsFiles(): Promise<WindowsFiles> {
+    return (await this.call<WindowsFiles>("GET", "/files").catch(() => null)) ?? { files: 0, bytes: 0 };
   }
   async placeWindowsFiles(intoFolders: boolean, folder: string) { await this.call("POST", "/files", { into_folders: intoFolders, folder }); }
   async finish() { await this.call("POST", "/finish"); }

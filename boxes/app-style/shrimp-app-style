@@ -8,7 +8,9 @@
 #                    Adwaita (dekoracje „adwaita” z QtWayland 6.8+), okna plików
 #                    i ustawienia przez portal xdg-desktop-portal (wybór plików z GNOME).
 #   Electron/Chromium  okna plików GNOME (portal), jasny/ciemny i kolor akcentu z portalu
-#                    Settings, Wayland; własny pasek tytułu aplikacji zostaje.
+#                    Settings. Aplikacje Electron działają przez XWayland, żeby pasek tytułu rysował
+#                    GNOME (taki sam jak w GTK4); na Waylandzie Electron rysuje własny, inny. Ostrość
+#                    przy skalowaniu daje xwayland-native-scaling (99_shrimp.gschema.override).
 #   wszystkie        dostęp tylko do odczytu do motywów i ikon użytkownika.
 #
 # Działa globalnie (flatpak override --system), więc obejmuje też aplikacje instalowane później.
@@ -84,6 +86,27 @@ extensions() {
   done
 }
 
+# Czy aplikacja jest na Electronie? Electron ma resources/app.asar (albo resources/app/); przeglądarki
+# na Chromium (Chrome, Brave) go nie mają i zostają na Waylandzie z własnym paskiem jak w GNOME.
+is_electron_app() {
+  local dir
+  dir=$(flatpak info --system --show-location "$1" 2>/dev/null)/files
+  [ -d "$dir" ] || return 1
+  find "$dir" -maxdepth 6 \( -path '*/resources/app.asar' -o -path '*/resources/app/package.json' \) -print -quit 2>/dev/null | grep -q .
+}
+
+# Electron: XWayland (pasek tytułu GNOME). Nadpisanie tylko dla tych aplikacji, z dostępem do X11,
+# bo część z nich ma tylko fallback-x11, który przy Waylandzie jest wyłączony.
+electron_apps() {
+  flatpak list --system --app --columns=application 2>/dev/null | while read -r app; do
+    [ -n "$app" ] || continue
+    if is_electron_app "$app"; then
+      flatpak override --system --socket=x11 --env=ELECTRON_OZONE_PLATFORM_HINT=x11 "$app" \
+        && log "Electron przez XWayland: $app"
+    fi
+  done
+}
+
 # Czy aplikacja jest GTK3 (bez GTK4/libadwaita)? Szukamy bibliotek w plikach aplikacji.
 is_gtk3_app() {
   local dir
@@ -120,7 +143,8 @@ case "${1:-}" in
   "")
     [ "$(id -u)" = 0 ] || { log "uruchom jako root"; exit 1; }
     global_overrides
-    extensions ;;
+    extensions
+    electron_apps ;;
   --user)
     per_user ;;
   --watch)

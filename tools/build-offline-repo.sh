@@ -80,9 +80,18 @@ log "squashfs: $(du -h "$SQ" | cut -f1)"
 
 # Do ISO jako LiveOS/shrimp-repo.squashfs; rozruch (El Torito, EFI, hybryda MBR/GPT) bez zmian.
 # Poziom 3 ISO 9660: plik może mieć ponad 4 GiB.
+# -joliet on: xorriso przy -indev/-outdev NIE przenosi drzewa Joliet z obrazu KIWI. Windows (Mount-DiskImage,
+# z którego kopiuje Shrimp Install) czyta wtedy tylko nazwy ISO 9660: wielkie litery i „_” zamiast „-”,
+# czyli LiveOS/SHRIMP_REPO.SQUASHFS. Na exFAT pendrive'a Linux szukał shrimp-repo.squashfs i go nie znajdował,
+# więc Setup prosił o internet mimo repozytorium na nośniku (Beta 5 i 5r na VivoBooku). Test QEMU czyta ISO
+# przez Rock Ridge, dlatego tego nie widział.
 OUT="$ISO.offline"
-xorriso -indev "$ISO" -outdev "$OUT" -compliance iso_9660_level=3 \
+xorriso -indev "$ISO" -outdev "$OUT" -compliance iso_9660_level=3 -joliet on \
   -map "$SQ" /LiveOS/shrimp-repo.squashfs -boot_image any replay
+# Bez Joliet obraz nie nadaje się dla Shrimp Install: przerywamy budowę zamiast wydać zepsuty nośnik.
+if ! xorriso -indev "$OUT" -toc 2>/dev/null | grep -q 'Joliet'; then
+  log "BŁĄD: obraz bez drzewa Joliet (Windows zobaczy nazwy ISO 9660)"; exit 1
+fi
 mv "$OUT" "$ISO"
 rm -f "$SQ"
 xorriso -indev "$ISO" -lsl /LiveOS 2>/dev/null

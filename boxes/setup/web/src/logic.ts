@@ -1,6 +1,6 @@
 // Czyste funkcje Setup (testy: logic.test.ts).
 import { resolveTag, type I18n } from "../../../i18n-core/core";
-import { APPS, WIN_CATALOG_ORDERED, KLID_XKB, LANGID_XKB, TZ_ALIAS, defaultTz, type WinApp, type Lang, type Region, type Keyboard } from "./data";
+import { BROWSERS, WIN_CATALOG_ORDERED, KLID_XKB, LANGID_XKB, TZ_ALIAS, defaultTz, type Browser, type WinApp, type Lang, type Region, type Keyboard } from "./data";
 import type { Transfer } from "./backend/types";
 
 export const esc = (s: string) =>
@@ -61,13 +61,18 @@ export function keyboardName(L: I18n, k: Keyboard): string {
   return (lang.charAt(0).toLocaleUpperCase(L.locale) + lang.slice(1)) + (extra ? ` (${extra})` : "");
 }
 
-export interface Pick { key: string; id: string; label: string }
+export interface Pick { key: string; id: string; label: string; windows: string; name: string }
 
-/** „Twoje programy z Windows”: maks. 5 pozycji; inny odpowiednik jako „A → B”. */
+/** Ile programów z Windows pokazujemy w kroku „Programy” (najpopularniejsze najpierw). */
+export const MAX_WINDOWS_APPS = 12;
+
+/** „Twoje programy z Windows”: bez przeglądarek (mają własny krok); inny odpowiednik jako „A → B”. */
 export function windowsList(apps: WinApp[] | null): Pick[] {
-  return (apps || []).slice(0, 5).map((a) => ({
+  return (apps || []).filter((a) => !isBrowser(a.id)).slice(0, MAX_WINDOWS_APPS).map((a) => ({
     key: "w:" + a.windows,
     id: a.id,
+    windows: a.windows,
+    name: a.name,
     label: a.windows === a.name ? esc(a.name) : esc(a.windows) + '<span class="arr">→</span>' + esc(a.name),
   }));
 }
@@ -134,21 +139,26 @@ export function prefill(t: Transfer, langs: Lang[], regs: Region[], kbs: Keyboar
   return { lang, region, kb, full, user };
 }
 
-/** Ile programów proponujemy naraz: wszystkie z kategorii z dokumentu (3 + 2 + 3 + 1). */
-export const MAX_PROPOSALS = 9;
-/** „Proponowane programy”: po jednym z każdej wybranej kategorii na zmianę, bez duplikatów i bez tych z Windows. */
-export function proposals(L: I18n, use: boolean[], winApps: WinApp[] | null): Pick[] {
-  const out: Pick[] = [];
-  const seen = new Set((winApps || []).slice(0, 5).map((a) => a.id));
-  const sel = use.map((u, i) => (u ? i : -1)).filter((i) => i >= 0);
-  for (let r = 0, any = true; any && out.length < MAX_PROPOSALS; r++) {
-    any = false;
-    for (const i of sel) {
-      const a = APPS[i][r];
-      if (!a) continue;
-      any = true;
-      if (!seen.has(a.id) && out.length < MAX_PROPOSALS) { seen.add(a.id); out.push({ key: a.id, id: a.id, label: `${esc(a.name)} <span class="meta">${esc(L.t(a.what))}</span>` }); }
-    }
+/** Przeglądarki w kroku „Przeglądarka”: pięć stałych i te z Windows spoza listy (Opera, Vivaldi). */
+export function browserChoices(names: string[], progId: string | null): Browser[] {
+  return BROWSERS.filter((b) => !b.extra || names.some((n) => b.re.test(n.trim())) || (!!progId && b.prog.test(progId)));
+}
+
+/** Indeks przeglądarki z Windows: domyślna (ProgId), a bez niej pierwsza zainstalowana; -1, gdy nic nie wiadomo.
+ *  Edge jest w każdym Windows, więc liczy się tylko jako domyślna. */
+export function windowsBrowser(list: Browser[], names: string[], progId: string | null): number {
+  if (progId) { const i = list.findIndex((b) => b.prog.test(progId)); if (i >= 0) return i; }
+  return list.findIndex((b) => b.id !== "com.microsoft.Edge" && names.some((n) => b.re.test(n.trim())));
+}
+
+export const isBrowser = (id: string) => BROWSERS.some((b) => b.id === id);
+
+/** Programy z Windows bez odpowiednika (wpis w katalogu bez `linux` i bez `skip`), bez powtórzeń. */
+export function noAlternative(names: string[], store: string[] = []): string[] {
+  const out: string[] = [];
+  for (const m of WIN_CATALOG_ORDERED) {
+    if (m.linux || m.skip || out.includes(m.windows)) continue;
+    if (names.some((n) => m.re.test(n.trim())) || (m.store && store.some((s) => m.store!.test(s)))) out.push(m.windows);
   }
   return out;
 }

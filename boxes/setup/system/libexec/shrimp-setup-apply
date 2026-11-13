@@ -1,6 +1,6 @@
 #!/bin/bash
 # Pomocnik Setup Shrimp uruchamiany przez pkexec na końcu pierwszej konfiguracji.
-#   shrimp-setup-apply --codecs yes|no --nvidia nvidia|open|none [--apps "id1 id2"]
+#   shrimp-setup-apply --codecs yes|no --nvidia nvidia|open|none [--apps "id1 id2"] [--auto-updates yes|no]
 #   shrimp-setup-apply --later   (shrimp-setup-later.service: to, co czekało na internet)
 # Instaluje kodeki i sterownik w jednej migawce (transactional-update), zdejmuje logowanie
 # automatyczne i znacznik pierwszego uruchomienia. Wypisuje „reboot”, gdy potrzebny restart.
@@ -8,12 +8,13 @@
 # a kodek H.264, sterownik NVIDIA i wybrane programy czekają w $STATE/later: shrimp-setup-later.timer
 # doinstaluje je sam, gdy komputer połączy się z siecią.
 set -euo pipefail
-CODECS=no; NVIDIA=none; APPS=""; LATER=no
+CODECS=no; NVIDIA=none; APPS=""; LATER=no; AUTO=yes
 while [ $# -gt 0 ]; do
   case "$1" in
     --codecs) CODECS=$2; shift 2 ;;
     --nvidia) NVIDIA=$2; shift 2 ;;
     --apps) APPS=$2; shift 2 ;;
+    --auto-updates) AUTO=$2; shift 2 ;;
     --later) LATER=yes; shift ;;
     *) echo "nieznany argument: $1" >&2; exit 2 ;;
   esac
@@ -156,7 +157,12 @@ if [ "$LATER" = yes ]; then
   exit 0
 fi
 
-# Koniec pierwszej konfiguracji.
+# Koniec pierwszej konfiguracji. Aktualizacje w tle (domyślnie tak): nowa migawka bez restartu,
+# zmiany wchodzą przy następnym uruchomieniu komputera.
+AU=${SHRIMP_AUTO_UPDATES:-/usr/libexec/shrimp-auto-updates}
+if [ -x "$AU" ]; then
+  if [ "$AUTO" = no ]; then "$AU" off >&2; else "$AU" on >&2; fi
+fi
 sed -i 's/^DISPLAYMANAGER_AUTOLOGIN=.*/DISPLAYMANAGER_AUTOLOGIN=""/' /etc/sysconfig/displaymanager 2>/dev/null || true
 if [ -f /etc/gdm/custom.conf ]; then
   sed -i 's/^AutomaticLoginEnable=.*/AutomaticLoginEnable=False/; /^AutomaticLogin=/d' /etc/gdm/custom.conf

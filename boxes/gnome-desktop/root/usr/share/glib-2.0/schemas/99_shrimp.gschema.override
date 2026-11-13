@@ -31,7 +31,11 @@ button-layout='appmenu:minimize,maximize,close'
 [org.gnome.shell]
 enabled-extensions=['shrimp-setup-guard@shrimp', 'shrimp-menu@shrimp', 'ding@rastersoft.com', 'blur-my-shell@aunetx', 'dash-to-dock@micxgx.gmail.com', 'just-perfection-desktop@just-perfection', 'light-style@gnome-shell-extensions.gcampax.github.com']
 disable-user-extensions=false
-favorite-apps=['org.mozilla.firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.shrimp.Apps.desktop', 'org.shrimp.Cherry.desktop', 'org.gnome.Settings.desktop']
+# Dock at the start (owner, 2026-11-13): browser, Steam, Files, store, Calculator, Calendar, LibreOffice,
+# Settings; nothing that needs knowing the system (Cherry, Panko). Onboarding puts the browser the user
+# chose in place of Firefox. Apps that are not installed yet (Flatpaks from the first configuration)
+# simply do not show until they are.
+favorite-apps=['org.mozilla.firefox.desktop', 'com.valvesoftware.Steam.desktop', 'org.shrimp.Filer.desktop', 'org.shrimp.Apps.desktop', 'org.gnome.Calculator.desktop', 'org.gnome.Calendar.desktop', 'org.libreoffice.LibreOffice.desktop', 'org.gnome.Settings.desktop']
 welcome-dialog-last-shown-version='999'
 
 # Just Perfection: no Activities button in the top bar
@@ -45,6 +49,12 @@ blur=true
 [org.gnome.shell.extensions.blur-my-shell.panel]
 blur=false
 
+# Dock: real (dynamic) blur of what is behind it. The default static blur only blurs the wallpaper, so
+# windows under the dock showed through sharp (owner's review, 2026-11-13).
+[org.gnome.shell.extensions.blur-my-shell.dash-to-dock]
+blur=true
+static-blur=false
+
 [org.gnome.shell.extensions.dash-to-dock]
 dock-position='BOTTOM'
 dock-fixed=false
@@ -56,3 +66,17 @@ show-mounts=false
 show-home=true
 show-trash=true
 show-volumes=false
+
+[org.gnome.mutter]
+# New windows open in the middle of the screen, as in Windows.
+center-new-windows=true
+# Fractional scaling (125 %, 150 %) in Settings › Displays, and sharp X11 apps when scaled: Electron apps
+# run through XWayland so GNOME draws their title bar (shrimp-app-style).
+experimental-features=['scale-monitor-framebuffer', 'xwayland-native-scaling']
+
+# Windows keyboard habits: Super+D shows the desktop, Super+E opens the home folder (in Filer).
+[org.gnome.desktop.wm.keybindings]
+show-desktop=['<Super>d']
+
+[org.gnome.settings-daemon.plugins.media-keys]
+home=['<Super>e']

@@ -316,6 +316,44 @@ pub fn staged(home: &Path) -> (u64, u64) {
     n
 }
 
+/// To samo co [`staged`] dla każdego folderu najwyższego poziomu poczekalni (Dokumenty, Obrazy…),
+/// od największego: nazwa, pliki, bajty. Pliki leżące wprost w poczekalni są pod nazwą "".
+pub fn staged_folders(home: &Path) -> Vec<(String, u64, u64)> {
+    let stage = home.join(STAGE);
+    let Ok(rd) = fs::read_dir(&stage) else { return Vec::new() };
+    let mut out: Vec<(String, u64, u64)> = Vec::new();
+    let mut loose = (0u64, 0u64);
+    for e in rd.flatten() {
+        let Ok(md) = e.metadata() else { continue };
+        if md.is_dir() {
+            let mut n = (0u64, 0u64);
+            count(&e.path(), &mut n);
+            out.push((e.file_name().to_string_lossy().into_owned(), n.0, n.1));
+        } else {
+            loose.0 += 1;
+            loose.1 += md.len();
+        }
+    }
+    if loose.0 > 0 {
+        out.push((String::new(), loose.0, loose.1));
+    }
+    out.sort_by(|a, b| b.2.cmp(&a.2));
+    out
+}
+
+fn count(p: &Path, n: &mut (u64, u64)) {
+    let Ok(rd) = fs::read_dir(p) else { return };
+    for e in rd.flatten() {
+        let Ok(md) = e.metadata() else { continue };
+        if md.is_dir() {
+            count(&e.path(), n);
+        } else {
+            n.0 += 1;
+            n.1 += md.len();
+        }
+    }
+}
+
 /// Przenosi pliki z poczekalni: `into_folders` = do folderów użytkownika (Dokumenty, Obrazy… i katalog
 /// domowy, scalając; nazwy zajęte dostają „(Windows)”), inaczej całość do folderu `folder` w katalogu domowym.
 /// Ten sam system plików, więc to tylko zmiana nazw. Poczekalnia znika.

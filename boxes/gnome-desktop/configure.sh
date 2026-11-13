@@ -30,7 +30,6 @@ if [ -n "$OPT_REPO" ]; then
   opt_pkg iio-sensor-proxy                      # Quick Settings: auto-rotate (2-in-1 laptops)
   opt_pkg gnome-system-monitor                  # Shrimp menu: System Monitor
   opt_pkg gnome-disk-utility                    # Shrimp menu: Disks
-  opt_pkg gnome-extensions                      # Shrimp menu: Extensions
   opt_pkg baobab                                # app grid: disk usage
   opt_pkg gnome-logs                            # app grid: system log
   opt_pkg gvfs-lang                             # translated "Trash" on the desktop (trash:// display name)

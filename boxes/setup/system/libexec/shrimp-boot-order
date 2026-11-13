@@ -1,0 +1,31 @@
+#!/bin/bash
+# Shrimp na pierwszym miejscu kolejności rozruchu UEFI (BootOrder).
+#   shrimp-boot-order          przy każdym starcie zainstalowanego systemu (shrimp-boot-order.service)
+#   shrimp-boot-order --install z post-install.sh (sesja live, BootCurrent to pendrive)
+# Obok Windows komputer po instalacji startował od razu Windows: Menedżer rozruchu Windows był pierwszy
+# w BootOrder (niektóre laptopy i aktualizacje Windows przesuwają go na początek), więc menu GRUB Shrimp
+# (wybór systemu, poprzednie wersje z Panko) w ogóle się nie pokazywało (test właściciela, Beta 5).
+# Nic nie robi bez UEFI, bez efibootmgr albo gdy Shrimp już jest pierwszy. Zawsze kończy się kodem 0.
+set -uo pipefail
+log() { echo "shrimp-boot-order: $*"; }
+command -v efibootmgr >/dev/null 2>&1 && [ -d /sys/firmware/efi ] || exit 0
+out=$(efibootmgr 2>/dev/null) || exit 0
+order=$(sed -n 's/^BootOrder: *//p' <<<"$out")
+cur=$(sed -n 's/^BootCurrent: *//p' <<<"$out")
+label() { grep -E "^Boot$1\*? " <<<"$out" | head -n1; }
+ours_re='opensuse|shrimp|leap|suse'
+ours=""
+# Uruchomiony z wpisu Shrimp (nie z pendrive'a Shrimp Install): to jest nasz wpis.
+if [ "${1:-}" != --install ] && [ -n "$cur" ] && label "$cur" | grep -qiE "$ours_re" && ! label "$cur" | grep -qi "Shrimp Install"; then
+  ours=$cur
+fi
+# W przeciwnym razie pierwszy wpis, który wygląda na Shrimp (shim/GRUB openSUSE), bez pendrive'a.
+if [ -z "$ours" ]; then
+  ours=$(grep -iE "^Boot[0-9A-Fa-f]{4}\*? .*($ours_re)" <<<"$out" | grep -vi "Shrimp Install" | head -n1 | sed -E 's/^Boot([0-9A-Fa-f]{4}).*/\1/')
+fi
+[ -n "$ours" ] || { log "brak wpisu UEFI Shrimp"; exit 0; }
+[ "${order%%,*}" = "$ours" ] && exit 0
+rest=$(tr ',' '\n' <<<"$order" | grep -vix "$ours" | paste -sd, -)
+new="$ours${rest:+,$rest}"
+if efibootmgr -q -o "$new"; then log "BootOrder: $order → $new"; else log "nie można zmienić BootOrder ($order)"; fi
+exit 0

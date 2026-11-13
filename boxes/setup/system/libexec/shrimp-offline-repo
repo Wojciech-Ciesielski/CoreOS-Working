@@ -9,15 +9,28 @@ MNT=/run/shrimp-repo
 PRODUCT=/usr/share/agama/products.d/shrimp.yaml
 log() { echo "shrimp-offline-repo: $*"; }
 
+# Obraz repozytorium w katalogu nośnika. Nazwa bez względu na wielkość liter i z „_” zamiast „-”:
+# Windows bez drzewa Joliet w ISO widział SHRIMP_REPO.SQUASHFS i Shrimp Install tak go zapisał (Beta 5/5r).
+find_repo() {
+  local d=$1 f
+  [ -d "$d" ] || return 1
+  for f in "$d"/[Ll][Ii][Vv][Ee][Oo][Ss]/*; do
+    [ -f "$f" ] || continue
+    case "$(basename "$f" | tr 'A-Z_' 'a-z-')" in shrimp-repo.squashfs) echo "$f"; return 0;; esac
+  done
+  return 1
+}
 img=""
 for d in /run/overlay/live /run/initramfs/live /run/media/*/SHRIMP_LIVE; do
-  [ -f "$d/LiveOS/shrimp-repo.squashfs" ] && { img=$d/LiveOS/shrimp-repo.squashfs; break; }
+  img=$(find_repo "$d") && break
+  img=""
 done
 # Na prawdziwym sprzęcie partycja exFAT bywa podpięta gdzie indziej (albo wcale): szukamy jej po etykiecie
 # wśród wszystkich punktów montowania, a w ostateczności podpinamy ją sami tylko do odczytu.
 if [ -z "$img" ]; then
   for t in $(findmnt -rn -o TARGET 2>/dev/null); do
-    [ -f "$t/LiveOS/shrimp-repo.squashfs" ] && { img=$t/LiveOS/shrimp-repo.squashfs; break; }
+    img=$(find_repo "$t") && break
+    img=""
   done
 fi
 if [ -z "$img" ]; then
@@ -25,11 +38,11 @@ if [ -z "$img" ]; then
   if [ -n "${dev:-}" ]; then
     mkdir -p /run/shrimp-live
     mountpoint -q /run/shrimp-live || mount -o ro "$dev" /run/shrimp-live 2>/dev/null || mount -t exfat -o ro "$dev" /run/shrimp-live || true
-    [ -f /run/shrimp-live/LiveOS/shrimp-repo.squashfs ] && img=/run/shrimp-live/LiveOS/shrimp-repo.squashfs
+    img=$(find_repo /run/shrimp-live) || img=""
   fi
   log "szukanie po etykiecie SHRIMP_LIVE: urządzenie '${dev:-brak}', obraz '${img:-brak}'"
 fi
-[ -n "$img" ] || { log "brak repozytorium na nośniku, instalacja z internetu"; lsblk -f 2>&1 | sed 's/^/shrimp-offline-repo: /'; findmnt -rn 2>&1 | grep -i live | sed 's/^/shrimp-offline-repo: /'; exit 0; }
+[ -n "$img" ] || { log "brak repozytorium na nośniku, instalacja z internetu"; for t in /run/initramfs/live /run/overlay/live /run/shrimp-live; do [ -d "$t" ] && ls -la "$t"/*/ 2>&1 | sed 's/^/shrimp-offline-repo: /'; done; lsblk -f 2>&1 | sed 's/^/shrimp-offline-repo: /'; findmnt -rn 2>&1 | grep -i live | sed 's/^/shrimp-offline-repo: /'; exit 0; }
 
 mkdir -p "$MNT"
 mountpoint -q "$MNT" || mount -t squashfs -o loop,ro "$img" "$MNT"

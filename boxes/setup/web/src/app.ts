@@ -4,21 +4,21 @@ import logoSrc from "./assets/logo.svg?raw";
 import iconSprite from "./assets/icons.svg?raw";
 import type { I18n } from "../../../i18n-core/core";
 import {
-  HELLO, ENCS, HSEC, IPS, DNSS, PROXY, THEMES, LIC, LIC_TEXT, FILES, ACCENTS, PLACES, USES, ERR, SHRIMP_MIN_GB,
+  HELLO, ENCS, HSEC, IPS, DNSS, PROXY, THEMES, LIC, LIC_TEXT, FILES, ACCENTS, PLACES, ERR, SHRIMP_MIN_GB,
   defaultKeymap, defaultTz, slides, type ErrKey, type Lang, type Region, type Keyboard,
 } from "./data";
-import { firstName, slug, loginFrom, isReservedUser, proposals, windowsList, tnow, esc, prefill, installLang, regionLabel, zoneName, keyboardName, type Prefill } from "./logic";
+import { firstName, slug, loginFrom, isReservedUser, browserChoices, windowsBrowser, windowsList, tnow, esc, prefill, installLang, regionLabel, zoneName, keyboardName, type Prefill } from "./logic";
 import { load } from "./i18n";
-import { InstallError, type Backends, type Disk, type FirstBootInfo, type InstallPlan, type Network, type Place, type Progress, type Transfer, type UsbResult, type UsbState } from "./backend/types";
+import { InstallError, type AppItem, type Backends, type Disk, type FirstBootInfo, type InstallPlan, type Network, type Place, type Progress, type Transfer, type UsbResult, type UsbState, type WindowsFiles } from "./backend/types";
 
 const $ = <T extends Element = HTMLElement>(s: string, r: ParentNode = document) => r.querySelector(s) as T | null;
 const $$ = <T extends Element = HTMLElement>(s: string, r: ParentNode = document) => Array.from(r.querySelectorAll(s)) as T[];
 
 // Setup (offline): licencje, język, miejsce, klawiatura, sposób instalacji, konto, instalacja. Krok „internet”
-// pojawia się tylko, gdy Agama nie widzi repozytoriów. Onboarding: sieć, wygląd, pliki z Windows, programy, pendrive.
-// Licencje są zaraz po języku, żeby ich tekst był w wybranym języku.
+// pojawia się tylko, gdy Agama nie widzi repozytoriów. Onboarding (kolejność od właściciela, 2026-11-13): sieć (albo bez),
+// pliki z Windows i pendrive, przeglądarka, programy z Windows, wygląd. Licencje są zaraz po języku, żeby ich tekst był w wybranym języku.
 const STEPS = ["witaj", "jezyk", "licencja", "region", "klawiatura", "dysk", "konto", "internet", "podsumowanie", "instalacja", "restart",
-  "czesc", "siec", "wyglad", "pliki", "programy", "pendrive", "gotowe"] as const;
+  "czesc", "siec", "pliki", "pendrive", "przegladarka", "programy", "wyglad", "gotowe"] as const;
 type StepId = (typeof STEPS)[number];
 const idx = (id: StepId) => STEPS.indexOf(id);
 const THEME_STEP = idx("wyglad");
@@ -70,9 +70,11 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
 
   // --- dane z backendów ---
   let LANGS: Lang[] = [], REGS: Region[] = [], KBS: Keyboard[] = [], DISKS: Disk[] = [], NETS: Network[] = [];
-  let INFO: FirstBootInfo = { fullName: "", beside: false, proprietary: true, wired: false, nvidia: null, windowsApps: null };
+  let INFO: FirstBootInfo = { fullName: "", beside: false, proprietary: true, wired: false, nvidia: null, windowsApps: null, noAlternative: [], windowsNames: [], defaultBrowser: null };
   /** Pliki z Windows czekające na zgodę (krok „pliki”, pomijany, gdy nic nie czeka). */
-  let WF = { files: 0, bytes: 0 };
+  let WF: WindowsFiles = { files: 0, bytes: 0 };
+  /** Stan instalacji programów (krok „Programy”, podkrok 1): wiersz na program. */
+  let ITEMS: AppItem[] = [];
   /** Dane z Shrimp Install i wartości, które z nich wynikają (język, strefa, klawiatura, konto). */
   let TR: Transfer | null = null, PRE: Prefill | null = null;
   /** Pendrive z Shrimp Install: jego zawartość czeka na przywrócenie (krok „pendrive”, tylko gdy jest co przywracać). */
@@ -83,7 +85,8 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
     full: "", user: "", userEdited: false, pass: "", pass2: "", confirm: false,
     net: 0, netPass: "", hsec: 1, ssid: "", hpass: "", ip: 0, dns: 0, proxy: 0,
     theme: "light" as "light" | "dark", accent: null as number | null, lic: 0, files: 0,
-    use: [true, false, false, false, false], sel: {} as Record<string, boolean>, err: null as ErrKey | null,
+    browser: 0, textScale: 1, night: false, auto: true,
+    sel: {} as Record<string, boolean>, err: null as ErrKey | null,
   };
   let step = 0, sub = 0, boot = true, busy = false;
   /** Krok „dysk”: trwa świeży odczyt dysków z Agamy (diskSeq odrzuca odpowiedzi z wcześniejszych wejść). */
@@ -103,7 +106,8 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
   const winMin = () => disk()?.windows?.minGB ?? 0;
   const place = (): Place => (!hasWin() ? "whole" : S.place === 0 ? "beside" : "replace");
   const winApps = () => windowsList(INFO.windowsApps);
-  const props = () => proposals(L, S.use, INFO.windowsApps);
+  const browsers = () => browserChoices(INFO.windowsNames, INFO.defaultBrowser);
+  const winBrowser = () => windowsBrowser(browsers(), INFO.windowsNames, INFO.defaultBrowser);
   const hasNvidia = () => !!INFO.nvidia;
 
   // --- wygląd: jasny do kroku „Wygląd”, od niego wybrany ---
@@ -145,6 +149,8 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
       : `<input id="${id}" type="${type}" value="${esc(val)}" autocomplete="off" spellcheck="false">`) + "</div>";
 
   /** Pozycja listy ze znacznikiem „(Zalecane)”. */
+  /** „Zalecane” bez nawiasów, jako dopisek pod nazwą w wierszu feedu. */
+  const recTag = () => tr("recommended").replace(/^[(（]|[)）]$/g, "");
   const rec = (s: string) => `${esc(tx(s))} <em>${esc(tr("recommended"))}</em>`;
   const plain = (l: string[]) => l.map((s) => esc(tx(s)));
   const regLabel = (r: Region) => regionLabel(L, r);
@@ -179,6 +185,38 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
   }
   const isNet = () => cur() === "siec" || cur() === "internet";
 
+  // --- onboarding: dwie kolumny. Z lewej kilka dużych, płaskich znaków z głębią (pseudo-3D, powolny ruch),
+  // z prawej treść kroku jako „feed”: wiersze z ikonami, przełącznikami i suwakami. ---
+  const ART: Partial<Record<StepId, [string, string, string]>> = {
+    siec: ["network-wireless-signal-excellent-symbolic", "network-wired-symbolic", "web-browser-symbolic"],
+    pliki: ["folder-documents-symbolic", "folder-pictures-symbolic", "folder-music-symbolic"],
+    pendrive: ["drive-removable-media-symbolic", "folder-symbolic", "emblem-ok-symbolic"],
+    przegladarka: ["web-browser-symbolic", "view-app-grid-symbolic", "emblem-ok-symbolic"],
+    programy: ["view-app-grid-symbolic", "applications-games-symbolic", "x-office-document-symbolic"],
+    wyglad: ["preferences-desktop-appearance-symbolic", "folder-pictures-symbolic", "emblem-ok-symbolic"],
+  };
+  const duoStep = () => !!ART[cur()] && !(cur() === "siec" && sub > 0);
+  function duo(html: string) {
+    const a = ART[cur()]!;
+    return `<div class="duo"><div class="art" aria-hidden="true"><div class="tile t1">${icon(a[0])}</div><div class="tile t2">${icon(a[1])}</div><div class="tile t3">${icon(a[2])}</div></div><div class="feed">${html}</div></div>`;
+  }
+  /** Ikona programu z Flathub (128 px); bez internetu zostaje ikona symboliczna pod spodem. */
+  const appIcon = (id: string, fb = "view-app-grid-symbolic") =>
+    `<span class="aic">${icon(fb)}${/^[A-Za-z0-9._-]+$/.test(id) ? `<img src="https://dl.flathub.org/repo/appstream/x86_64/icons/128x128/${id}.png" alt="" onerror="this.remove()">` : ""}</span>`;
+  /** Wiersz feedu: ikona, nazwa, dopisek; `data` to atrybuty wyboru (data-i / data-t). */
+  const row = (ic: string, title: string, meta: string, cls: string, attrs: string) =>
+    `<button class="opt rw ${cls}" type="button" ${attrs}>${ic}<span class="rt"><b>${title}</b>${meta ? `<small>${meta}</small>` : ""}</span><span class="rk">${icon("object-select-symbolic")}</span></button>`;
+  const FOLDER_ICON: Record<string, string> = { documents: "folder-documents-symbolic", pictures: "folder-pictures-symbolic", music: "folder-music-symbolic", videos: "folder-videos-symbolic" };
+  const itemName = (id: string) => id === "base" ? tr("prog.base") : browsers().find((b) => b.id === id)?.name || winApps().find((w) => w.id === id)?.name || id;
+  function itemsHtml() {
+    const ITEM_STATE = { wait: tr("item.wait"), run: tr("item.run"), done: tr("item.done"), fail: tr("item.fail"), later: tr("item.later") };
+    return ITEMS.map((it) => {
+      const st = it.state === "run" ? `<span class="spin"></span>` : it.state === "done" ? icon("object-select-symbolic", "ok") : "";
+      return `<div class="rw it ${it.state}">${it.id === "base" ? `<span class="aic">${icon("view-app-grid-symbolic")}</span>` : appIcon(it.id)}<span class="rt"><b>${esc(itemName(it.id))}</b><small>${esc(ITEM_STATE[it.state])}</small></span><span class="rs">${st}</span></div>`;
+    }).join("");
+  }
+  function renderItems() { const e = $("#items", pane); if (e) e.innerHTML = itemsHtml(); }
+
   // --- widoki kroków ---
   function view(): string {
     const NEXT = tr("next"), SKIP = tr("skip");
@@ -186,7 +224,7 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
       case "witaj": return logo("calc(13 * var(--u))") + `<h1 class="h1" id="hello">${esc(HELLO[0])}</h1><p class="sub">${esc(tr("welcome.sub"))}</p>` + acts(esc(tr("start")));
       case "internet": {
         if (sub === 1) return netHidden();
-        return logo("calc(6 * var(--u))") + head(esc(tr("net.title")), esc(tr("inet.sub"))) + body(NETS.length ? netList() : `<p class="desc" id="desc" style="margin-top:0">${esc(tr("inet.none"))}</p><p class="nstat" id="ndiag" role="status">${esc(tr("inet.scanning"))}</p>`) +
+        return logo("calc(6 * var(--u))") + head(esc(tr("net.title")), esc(tr("inet.sub2"))) + body(NETS.length ? netList() : `<p class="desc" id="desc" style="margin-top:0">${esc(tr("inet.none"))}</p><p class="nstat" id="ndiag" role="status">${esc(tr("inet.scanning"))}</p>`) +
           acts(NETS.length ? esc(NEXT) : "", esc(tr("inet.rescan")), { skipAct: "rescan" }) + `<div class="mini"><button class="mlink" data-act="hid" type="button">${esc(tr("net.hiddenlink"))}</button></div>`;
       }
       case "licencja": return logo("calc(6 * var(--u))") + head(esc(tr("lic.title")), esc(tr("lic.sub"))) +
@@ -228,45 +266,62 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
         if (sub === 1) return netHidden();
         if (sub === 2) return logo("calc(6 * var(--u))") + head(esc(tr("advanced"))) + body(`<div class="cols">${col(esc(tr("net.ip")), "ip", IPS.map((s, j) => (j === 0 ? rec(s) : esc(tx(s)))), S.ip)}${col(esc(tr("net.dns")), "dns", DNSS.map((s, j) => (j === 0 ? rec(s) : esc(tx(s)))), S.dns)}${col(esc(tr("net.proxy")), "proxy", plain(PROXY), S.proxy)}</div>`) + acts(esc(tr("done")), "", { act: "done" });
         // Sieć po instalacji jest opcjonalna: bez karty Wi-Fi albo bez zasięgu krok wprost proponuje „Dalej bez sieci”.
-        if (!NETS.length) return logo("calc(6 * var(--u))") + head(esc(tr("net.title")), esc(tr("net.optional"))) +
+        if (!NETS.length) return head(esc(tr("net.title")), esc(tr("net.optional"))) +
           body(`<p class="desc" id="desc" style="margin-top:0">${esc(tr("net.none"))}</p><p class="nstat" id="ndiag" role="status">${esc(tr("inet.scanning"))}</p>`) +
           acts(esc(tr("net.nonet")), esc(tr("inet.rescan")), { act: "skip", skipAct: "rescan" }) + `<div class="mini"><button class="mlink" data-act="hid" type="button">${esc(tr("net.hiddenlink"))}</button></div>`;
-        return logo("calc(6 * var(--u))") + head(esc(tr("net.title")), esc(tr("net.optional"))) + body(netList()) +
+        return head(esc(tr("net.title")), esc(tr("net.optional"))) + body(netList()) +
           acts(esc(NEXT), esc(SKIP)) + `<div class="mini"><button class="mlink" data-act="hid" type="button">${esc(tr("net.hiddenlink"))}</button><button class="mlink" data-act="nadv" type="button">${esc(tr("advanced"))}</button></div>`;
       }
-      case "wyglad":
-        if (sub === 1) return logo("calc(6 * var(--u))") + head(esc(tr("look.color"))) + body(`<div class="sws" role="radiogroup">` + ACCENTS.map((a, j) =>
-          `<button class="sw" role="radio" aria-checked="${S.accent === j}" aria-label="${esc(tr(a[0]))}" data-c="${j}" style="--c:${a[2]}" type="button"></button>`).join("") +
-          `</div><p class="accname" id="accn">${S.accent === null ? "" : esc(tr(ACCENTS[S.accent][0]))}</p>`) + acts(esc(NEXT));
-        return logo("calc(6 * var(--u))") + head(esc(tr("look.title"))) + body(lst("theme", plain(THEMES), S.theme === "dark" ? 1 : 0) + `<p class="desc" id="desc">${esc(descFor())}</p>`) + acts(esc(NEXT));
+      case "wyglad": {
+        const sws = `<div class="sws" role="radiogroup">` + ACCENTS.map((c, j) =>
+          `<button class="sw" role="radio" aria-checked="${S.accent === j}" aria-label="${esc(tr(c[0]))}" data-c="${j}" style="--c:${c[2]}" type="button"></button>`).join("") + `</div>`;
+        const pct = Math.round(S.textScale * 100);
+        return head(esc(tr("look.title")), esc(tr("look.note"))) + body(
+          `<div class="list rows two" data-l="theme" role="radiogroup">` + THEMES.map((t, j) => row(`<span class="aic">${icon(j ? "weather-clear-night-symbolic" : "weather-clear-symbolic")}</span>`, esc(tr(t)), "", (S.theme === "dark") === (j === 1) ? "sel" : "", `role="radio" data-i="${j}" aria-checked="${(S.theme === "dark") === (j === 1)}"`)).join("") + `</div>` +
+          `<div class="sect">${esc(tr("look.color"))}</div>${sws}<p class="accname" id="accn">${S.accent === null ? "" : esc(tr(ACCENTS[S.accent][0]))}</p>` +
+          `<div class="slider"><label for="ts">${esc(tr("look.text"))}</label><input class="rng" id="ts" type="range" min="80" max="160" step="10" value="${pct}" style="--v:${(pct - 80) / 80}"><b id="tsv">${pct}%</b></div>` +
+          `<div class="list rows" data-l="pref">` +
+          row(`<span class="aic">${icon("weather-clear-night-symbolic")}</span>`, esc(tr("look.night")), esc(tr("look.night.d")), "tg" + (S.night ? " on" : ""), `role="switch" data-t="0" aria-checked="${S.night}"`) +
+          row(`<span class="aic">${icon("software-update-available-symbolic")}</span>`, esc(tr("look.auto")), esc(tr("look.auto.d")), "tg" + (S.auto ? " on" : ""), `role="switch" data-t="1" aria-checked="${S.auto}"`) +
+          `</div>`) + acts(esc(tr("next")));
+      }
       case "pliki": {
         const what = tr("files.sub", { files: L.num(WF.files, 0), size: L.unit(Math.round(WF.bytes / 1e8) / 10, "gigabyte") });
-        return logo("calc(6 * var(--u))") + head(esc(tr("files.title")), esc(what)) +
-          body(lst("files", FILES.map((s, j) => (j === 0 ? rec(s) : esc(tr(s)))), S.files) + `<p class="desc" id="desc">${esc(descFor())}</p>`) + acts(esc(NEXT));
+        const folders = (WF.folders || []).map((f) => `<div class="rw info"><span class="aic">${icon(FOLDER_ICON[f.name.toLowerCase()] || "folder-symbolic")}</span><span class="rt"><b>${esc(f.name)}</b><small>${esc(tr("files.count", { files: L.num(f.files, 0), size: L.unit(Math.round(f.bytes / 1e8) / 10, "gigabyte") }))}</small></span></div>`).join("");
+        return head(esc(tr("files.title")), esc(what)) +
+          body((folders ? `<div class="rows info">${folders}</div>` : "") +
+            `<div class="list rows two" data-l="files" role="radiogroup" style="margin-top:calc(1.6 * var(--u))">` + FILES.map((f, j) => row(`<span class="aic">${icon(j ? "folder-symbolic" : "folder-documents-symbolic")}</span>`, esc(tr(f)), j === 0 ? esc(recTag()) : "", j === S.files ? "sel" : "", `role="radio" data-i="${j}" aria-checked="${j === S.files}"`)).join("") + `</div>` +
+            `<p class="desc" id="desc">${esc(descFor())}</p>`) + acts(esc(NEXT));
+      }
+      case "przegladarka": {
+        const B = browsers(), wb = winBrowser();
+        return head(esc(tr("browser.title")), esc(tr("browser.sub"))) + body(
+          `<div class="list rows" data-l="browser" role="radiogroup">` + B.map((b, j) =>
+            row(appIcon(b.id, "web-browser-symbolic"), esc(b.name), j === wb ? esc(tr("browser.windows")) : j === 0 && wb < 0 ? esc(recTag()) : "", j === S.browser ? "sel" : "", `role="radio" data-i="${j}" aria-checked="${j === S.browser}"`)).join("") + `</div>` +
+          (wb >= 0 ? `<p class="desc">${esc(tr("browser.windows.note", { name: B[wb].name }))}</p>` : "")) + acts(esc(NEXT));
       }
       case "programy": {
-        if (sub === 1) {
-          const W = winApps();
-          return logo("calc(5 * var(--u))") + head(esc(tr("win.title")), esc(tr("win.sub"))) + body(tgl("win", W.map((p) => p.label), (j) => S.sel[W[j].key] !== false)) + acts(esc(NEXT), esc(SKIP));
-        }
-        if (sub === 2) {
-          const P = props();
-          return logo("calc(5 * var(--u))") + head(esc(tr("prop.title")), esc(tr("prop.sub"))) +
-            body(P.length ? tgl("sel", P.map((p) => p.label), (j) => S.sel[P[j].key] !== false) : `<p class="desc">${esc(tr("prop.none"))}</p>`) + acts(P.length ? esc(tr("drv.install")) : "", esc(SKIP));
-        }
-        if (sub === 3) return logo("calc(9 * var(--u))") + head(esc(tr("apps.run"))) + `<div class="pbar" role="progressbar"><i id="ab"></i></div><div class="cap"><b id="aph">${esc(tr("apps.phase"))}</b><span id="aeta">${esc(tr("eta.left", { min: L.num(2, 0) }))}</span></div>` + acts(esc(NEXT), "", { hid: true });
-        return logo("calc(5 * var(--u))") + head(esc(tr("apps.title")), esc(tr("apps.sub"))) + body(tgl("use", USES.map((s) => esc(tr(s))), (j) => S.use[j], [0])) + acts(esc(NEXT), esc(SKIP));
+        if (sub === 1) return head(esc(tr("apps.run"))) + `<div class="rows items" id="items" role="status">${itemsHtml()}</div>` +
+          `<div class="pbar" role="progressbar"><i id="ab"></i></div><div class="cap"><b id="aph">${esc(tr("apps.phase"))}</b><span id="aeta"></span></div>` + acts(esc(NEXT), "", { hid: true });
+        const W = winApps(), none = INFO.noAlternative;
+        const base = `<div class="rw fixed">` + `<span class="aic">${icon("view-app-grid-symbolic")}</span><span class="rt"><b>${esc(tr("prog.base"))}</b><small>${esc(tr("prog.base.d"))}</small></span><span class="rk">${icon("object-select-symbolic")}</span></div>`;
+        return head(esc(tr(W.length ? "win.title" : "prog.title")), esc(tr(W.length ? "win.sub" : "prog.nowin"))) + body(
+          `<div class="list rows" data-l="win">${base}` + W.map((p, j) => row(appIcon(p.id), esc(p.name), p.windows === p.name ? "" : esc(tr("prog.instead", { name: p.windows })), "tg" + (S.sel[p.key] !== false ? " on" : ""), `role="checkbox" data-t="${j}" aria-checked="${S.sel[p.key] !== false}"`)).join("") + `</div>` +
+          (none.length ? `<div class="sect">${esc(tr("prog.none.title"))}</div><p class="desc sm">${esc(tr("prog.none.sub"))}</p><div class="rows info">` +
+            none.slice(0, 8).map((n) => `<div class="rw info dim"><span class="aic">${icon("dialog-warning-symbolic")}</span><span class="rt"><b>${esc(n)}</b></span></div>`).join("") +
+            (none.length > 8 ? `<div class="rw info dim"><span class="rt"><small>${esc(tr("prog.more", { n: L.num(none.length - 8, 0) }))}</small></span></div>` : "") + `</div>` : "")) +
+          acts(esc(tr("prog.install")));
       }
       case "pendrive": {
-        if (sub === 1) return logo("calc(9 * var(--u))") + head(esc(tr("usb.run"))) + `<div class="pbar run" role="progressbar"><i></i></div>`;
+        if (sub === 1) return head(esc(tr("usb.run"))) + `<div class="pbar run" role="progressbar"><i></i></div>`;
         if (sub === 2) {
           const k = USB_RES === "done" ? "usb.done" : USB_RES === "home" ? "usb.home" : "usb.fail";
-          return logo("calc(6 * var(--u))") + head(esc(tr(k + ".t")), esc(tr(k + ".d"))) + acts(esc(USB_RES === "failed" ? tr("usb.retry") : NEXT), "", { act: USB_RES === "failed" ? "usbcheck" : "next" });
+          return head(esc(tr(k + ".t")), esc(tr(k + ".d"))) + acts(esc(USB_RES === "failed" ? tr("usb.retry") : NEXT), "", { act: USB_RES === "failed" ? "usbcheck" : "next" });
         }
         const what = tr("usb.sub", { files: L.num(USB.files, 0), size: L.unit(Math.round(USB.bytes / 1e8) / 10, "gigabyte") });
         return USB.present
-          ? logo("calc(6 * var(--u))") + head(esc(tr("usb.title")), esc(what)) + acts(esc(tr("usb.go")), esc(tr("usb.keep")), { act: "usbgo", skipAct: "usbhome" })
-          : logo("calc(6 * var(--u))") + head(esc(tr("usb.plug.title")), esc(tr("usb.plug.sub"))) + acts(esc(tr("usb.check")), esc(tr("usb.keep")), { act: "usbcheck", skipAct: "usbhome" });
+          ? head(esc(tr("usb.title")), esc(what)) + acts(esc(tr("usb.go")), esc(tr("usb.keep")), { act: "usbgo", skipAct: "usbhome" })
+          : head(esc(tr("usb.plug.title")), esc(tr("usb.plug.sub"))) + acts(esc(tr("usb.check")), esc(tr("usb.keep")), { act: "usbcheck", skipAct: "usbhome" });
       }
       case "gotowe": {
         const SL = slides(beside());
@@ -299,10 +354,10 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
       await new Promise((r) => setTimeout(r, 1500));
     }
   }
-  function rise() { $$("#pane > *").forEach((el, i) => { el.style.setProperty("--i", String(i)); el.classList.add("rise"); }); }
+  function rise() { $$(duoStep() ? "#pane .art, #pane .feed > *" : "#pane > *").forEach((el, i) => { el.style.setProperty("--i", String(i)); el.classList.add("rise"); }); }
   function render(anim: boolean) {
-    pane.className = "pane" + (bigStep() ? " big" : "");
-    pane.innerHTML = view();
+    pane.className = "pane" + (bigStep() ? " big" : "") + (duoStep() ? " duo-pane" : "");
+    pane.innerHTML = duoStep() ? duo(view()) : view();
     if (anim) rise();
     post();
   }
@@ -318,7 +373,7 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
     if ((id === "internet" || id === "siec") && sub === 0 && !NETS.length) void scanLoop();
     if (id === "dysk" && sub === 0) updSplit();
     if (id === "dysk" && sub === 1) syncDisk();
-    if (id === "programy" && sub === 3) runApps();
+    if (id === "programy" && sub === 1) runApps();
     if (id === "siec" || id === "internet") syncNet();
     $$<HTMLElement>(".list.scroll", pane).forEach(centerSel);
   }
@@ -327,7 +382,7 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
   function chrome() {
     const id = cur();
     const first = be.mode === "firstboot" ? FIRST_BOOT : 0;
-    $("#back")!.hidden = step <= first || ["witaj", "instalacja", "restart", "czesc"].includes(id) || (id === "programy" && sub === 3) || (id === "pendrive" && sub > 0);
+    $("#back")!.hidden = step <= first || ["witaj", "instalacja", "restart", "czesc"].includes(id) || (id === "programy" && sub === 1) || (id === "pendrive" && sub > 0);
     $("#infoBtn")!.hidden = true; $("#infoPop")!.hidden = true; $("#infoPop")!.classList.remove("show");
   }
   function go(n: number, s = 0, keep = false) {
@@ -396,11 +451,17 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
   }
   async function runApps() {
     const my = step, mySub = sub;
-    const ids = [...winApps(), ...props()].filter((p) => S.sel[p.key] !== false).map((p) => p.id);
-    const uniq = [...new Set(ids)];
+    const ids = [...new Set(winApps().filter((p) => S.sel[p.key] !== false).map((p) => p.id))];
+    const b = browsers()[S.browser]?.id ?? null;
+    ITEMS = [...(b ? [{ id: b, state: "wait" as const }] : []), { id: "base", state: "wait" as const }, ...ids.filter((i) => i !== b).map((id) => ({ id, state: "wait" as const }))];
+    renderItems();
     try {
       // Bez sieci backend od razu odkłada wybór na później (shrimp-setup-later), więc nie ma tu okna błędu.
-      await be.firstboot.installApps(uniq, (p) => { if (step === my && sub === mySub) setBar("#ab", "#aph", "#aeta", p); });
+      await be.firstboot.installApps(ids, b, (p) => {
+        if (step !== my || sub !== mySub) return;
+        setBar("#ab", "#aph", "#aeta", p);
+        if (p.items) { ITEMS = p.items; renderItems(); }
+      });
       if (step === my && sub === mySub) showActs();
     } catch {
       if (step === my && sub === mySub) openErr("net");
@@ -440,6 +501,7 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
   pane.addEventListener("input", (e) => {
     const t = e.target as HTMLInputElement, id = t.id;
     if (id === "rng") { updSplit(); return; }
+    if (id === "ts") { S.textScale = +t.value / 100; t.style.setProperty("--v", String((+t.value - 80) / 80)); const v = $("#tsv"); if (v) v.textContent = t.value + "%"; return; }
     if (id === "inFull") { S.full = t.value; if (!S.userEdited) { S.user = loginFrom(S.full); $<HTMLInputElement>("#inUser")!.value = S.user; } syncAccount(); }
     else if (id === "inUser") { S.user = t.value = slug(t.value); S.userEdited = true; syncAccount(); }
     else if (id === "inPass") { S.pass = t.value; syncAccount(); }
@@ -452,7 +514,7 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
   });
 
   // --- wybór ---
-  const SINGLE: Record<string, 1> = { lang: 1, region: 1, kb: 1, place: 1, disk: 1, enc: 1, net: 1, hsec: 1, ip: 1, dns: 1, proxy: 1, drv: 1, nv: 1, theme: 1 };
+  const SINGLE: Record<string, 1> = { lang: 1, region: 1, kb: 1, place: 1, disk: 1, enc: 1, net: 1, hsec: 1, ip: 1, dns: 1, proxy: 1, drv: 1, nv: 1, theme: 1, browser: 1 };
   const RELAYOUT: Record<string, 1> = { place: 1, net: 1, hsec: 1, disk: 1, enc: 1 };
   /** Interfejs przechodzi na wybrany język, gdy wybór się zatrzyma (przewijanie listy klawiszem albo
    *  touchpadem nie ładuje po drodze każdego języka i nie przebudowuje listy w trakcie ruchu). */
@@ -515,8 +577,9 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
   function toggle(l: string, i: number) {
     const o = $(`.list[data-l="${l}"] .opt[data-t="${i}"]`, pane)!;
     let on: boolean;
-    if (l === "sel" || l === "win") { const P = l === "win" ? winApps() : props(); S.sel[P[i].key] = S.sel[P[i].key] === false; on = S.sel[P[i].key] !== false; }
-    else { if (i === 0) return; S.use[i] = !S.use[i]; on = S.use[i]; }
+    if (l === "win") { const P = winApps(); S.sel[P[i].key] = S.sel[P[i].key] === false; on = S.sel[P[i].key] !== false; }
+    else if (l === "pref") { if (i === 0) { S.night = !S.night; on = S.night; } else { S.auto = !S.auto; on = S.auto; } }
+    else return;
     o.classList.toggle("on", on); o.setAttribute("aria-checked", String(on));
   }
   pane.addEventListener("click", (e) => {
@@ -538,7 +601,7 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
     if (sw) {
       S.accent = +sw.getAttribute("data-c")!; applyAccent();
       $$(".sw", pane).forEach((b) => b.setAttribute("aria-checked", String(b === sw)));
-      $("#accn")!.textContent = ACCENTS[S.accent][0]; return;
+      $("#accn")!.textContent = tr(ACCENTS[S.accent][0]); return;
     }
     const a = t.closest("[data-act]"); if (a) act(a.getAttribute("data-act")!);
   });
@@ -575,8 +638,6 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
     if (a === "usbcheck") return void be.firstboot.usb().then((u) => { USB = u; if (step === idx("pendrive")) go(step, 0); });
     if (a === "skip") {
       if (id === "siec") S.online = false;
-      if (id === "programy" && sub === 1) return go(step, 2);
-      if (id === "programy" && sub === 0) return go(step + 1);
       return go(step + 1);
     }
     if (a === "rescan" && id === "siec") return guarded(async () => {
@@ -630,7 +691,11 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
     }
     if (id === "wyglad") {
       be.firstboot.setAppearance(S.theme === "dark" ? "prefer-dark" : "default", S.accent === null ? null : ACCENTS[S.accent][1]).catch(() => {});
-      if (sub === 0) return go(step, 1);
+      be.firstboot.setPrefs({ textScale: S.textScale, nightLight: S.night, autoUpdates: S.auto }).catch(() => {});
+    }
+    if (id === "przegladarka") {
+      const b = browsers()[S.browser];
+      if (b) be.firstboot.setBrowser(b.id).catch((e) => console.log("shrimp-setup: przeglądarka:", String((e as Error)?.message || e)));
     }
     if (id === "pliki") {
       return guarded(async () => {
@@ -639,14 +704,8 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
         go(step + 1);
       });
     }
-    if (id === "programy") {
-      if (sub === 0) return go(step, winApps().length ? 1 : 2);
-      if (sub === 1) return go(step, 2);
-      if (sub === 2) {
-        const any = [...winApps(), ...props()].some((p) => S.sel[p.key] !== false);
-        return any ? go(step, 3) : go(step + 1);
-      }
-    }
+    // Programy instalują się zawsze: przeglądarka i zestaw podstawowy są w każdym Shrimp.
+    if (id === "programy" && sub === 0) return go(step, 1);
     if (id === "restart") return restart();
     if (id === "gotowe") {
       const n = slides(beside()).length;
@@ -680,7 +739,6 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
   $("#back")!.addEventListener("click", () => {
     const id = cur();
     if (sub > 0) {
-      if (id === "programy" && sub === 2 && !winApps().length) return go(step, 0, true);
       return go(step, sub - 1, true);
     }
     // Wstecz na krok z podkrokami wraca do jego ostatniego podkroku, tak jak w makiecie wraca do początku kroku.
@@ -718,7 +776,7 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
     else if (k === "stall" || k === "agama") runInstall(true);
     else if (k === "user") { S.userEdited = true; render(false); const u = $<HTMLInputElement>("#inUser"); if (u) { u.focus(); u.select(); } }
     else if (k === "wifi") { if (sub === 0) S.netPass = ""; else S.hpass = ""; render(false); $<HTMLInputElement>(sub === 0 ? "#inNet" : "#inHPass")?.focus(); }
-    else if (k === "net") { S.online = true; go(step, 3); }
+    else if (k === "net") { S.online = true; go(step, 1); }
   });
   $("#dS")!.addEventListener("click", () => {
     const k = S.err; closeErr();
@@ -785,6 +843,7 @@ export function start(root: HTMLElement, be: Backends, L0: I18n) {
       WF = await be.firstboot.windowsFiles().catch(() => ({ files: 0, bytes: 0 }));
       // Kodeki i sterowniki według zgody z kroku „Licencje”; instalują się przy „Zaczynajmy” (jedna migawka).
       be.firstboot.setDrivers({ install: INFO.proprietary, nvidia: INFO.proprietary && hasNvidia() ? "nvidia" : undefined }).catch(() => {});
+      { const wb = winBrowser(); S.browser = wb >= 0 ? wb : 0; }
       if (be.mode === "demo") { S.full = "Anna Kowalska"; S.user = "anna"; S.pass = S.pass2 = "shrimp2024"; S.netPass = "dom12345"; }
     }
     const h = parseInt(q.get("step") || location.hash.slice(1), 10);
