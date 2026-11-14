@@ -41,6 +41,10 @@ mkdir -p out
     SB=out/shrimp-box/release/shrimp-box
     rm -rf out/build
     \$SB image iso-live out/desc --repo '$REPO'
+    # systemd-boot: jądro i initrd leżą na partycji EFI ISO (ok. 600 MB). KIWI odrzuca to z myślą o limicie El Torito
+    # (31 MB), ale iso-boot.sh i tak dokleja partycję EFI jako osobną partycję (appended_partition_2), jak archiso.
+    mkdir -p /root/.config/kiwi
+    printf 'runtime_checks:\n  disable:\n    - check_efi_fat_image_has_correct_size\n' > /root/.config/kiwi/config.yml
     kiwi-ng --logfile out/kiwi.log --color-output system build \
       --description out/desc --set-repo '$REPO' --target-dir out/build
     mv out/build/*.iso out/
