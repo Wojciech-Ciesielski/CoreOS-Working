@@ -21,6 +21,9 @@ jobs:
         run: tools/fetch-shrimps.sh
       - run: cargo test --locked
       - run: cargo run --locked -q -- check
+      - name: Wspólne wartości (shrimp.toml)
+        working-directory: .
+        run: tools/check-shrimp-toml.py
       - name: Opis obrazu ISO (config.kiwi, config.sh, root/) bez budowania
         run: |
           cargo run --locked -q -- kiwi iso-live /tmp/desc --repo https://download.opensuse.org/distribution/leap/16.1/repo/oss/x86_64

@@ -1,0 +1,27 @@
+# Wspólne wartości Shrimp: jedno miejsce na to, co powtarza się w wielu plikach i programach.
+# Zmieniasz wartość tutaj, a tools/check-shrimp-toml.py (CI „Boxy”) pokazuje każde miejsce, które jeszcze
+# ma starą. Skrypty powłoki czytają wartości przez tools/shrimp-var (np. `tools/shrimp-var base.leap`).
+# Kopie w innych repozytoriach (Shrimps-Working, Install-Working, Site-Working) sprawdza ten sam skrypt,
+# gdy ich pliki są obok (tools/fetch-shrimps.sh dokłada boxy Shrimps).
+
+[release]
+# Nazwa wydania widoczna w systemie (O systemie, Cocktail, Shrimp Install).
+version = "Beta 6"
+
+[base]
+# openSUSE Leap pod spodem i jego repozytorium (ISO, Agama, repozytorium offline).
+leap = "16.1"
+repo = "https://download.opensuse.org/distribution/leap/16.1/repo/oss"
+
+[site]
+# Strona Shrimp; „O …” w aplikacjach otwiera strony pomocy (help) z boxa help-links.
+url = "https://shrimp-organization.dev"
+help = "https://shrimp-organization.dev/help"
+
+[install]
+# Najmniejsze miejsce na Shrimp (GB) i zapas zostawiany Windows przy instalacji obok.
+min_gb = 40
+windows_spare_gb = 20
+
+[flathub]
+repo = "https://dl.flathub.org/repo/flathub.flatpakrepo"

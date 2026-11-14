@@ -55,8 +55,11 @@ blur=false
 blur=true
 static-blur=false
 
+# Dock na dole, przy samej krawędzi ekranu (bez odstępu: arkusz shrimp-menu), wyśrodkowany, nie na całą szerokość.
 [org.gnome.shell.extensions.dash-to-dock]
 dock-position='BOTTOM'
+extend-height=false
+custom-theme-shrink=true
 dock-fixed=false
 intellihide=true
 show-trash=false

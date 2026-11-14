@@ -5,8 +5,9 @@ use crate::{ci, graph, kiwi};
 use std::fs;
 
 /// Co może leżeć w korzeniu repo poza boxami (narzędzia repo, CI, opisy).
+// shrimp.toml: wspólne wartości (wersja, Leap, adresy), sprawdza je tools/check-shrimp-toml.py.
 const TOP_LEVEL: &[&str] = &[
-    "boxes", "containers", "tools", ".github", ".git", ".gitignore", "README.md", "OPEN-SOURCE.md", "out", "test-results",
+    "boxes", "containers", "tools", ".github", ".git", ".gitignore", "README.md", "OPEN-SOURCE.md", "shrimp.toml", "out", "test-results",
 ];
 
 pub fn check(repo: &Repo) -> Vec<String> {
