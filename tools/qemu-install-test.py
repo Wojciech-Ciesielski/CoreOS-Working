@@ -24,7 +24,7 @@ import sys
 import time
 
 USB, OUT = sys.argv[1], sys.argv[2]
-SESSION_RE = r"shrimp-setup|shrimp-live-session|SHRIMP_TEST|sesja no|GNOME Session|gnome-session|gdm|kgx|cherry|Cherry|accounts-daemon"
+SESSION_RE = r"shrimp-test|shrimp-setup|sudo|shrimp-live-session|SHRIMP_TEST|sesja no|GNOME Session|gnome-session|gdm|kgx|cherry|Cherry|accounts-daemon"
 USB_GUARD = os.path.join(os.path.dirname(USB) or '.', 'usb-guard.img')
 if not os.path.exists(USB_GUARD):
     USB_GUARD = USB
@@ -270,10 +270,21 @@ try:
     wait_stages(240, 15, "live")
     stage("setup", keep_duplicates=True)
     # Setup window up: drive Agama from a terminal (same token and config as Setup).
-    run_dialog("pkill -f shrimp-setup")
+    run_dialog("sh -c 'logger shrimp-test: run-dialog; pkill -f shrimp-setup'")
     pause(5)
     run_dialog(TERMINAL)
     pause(10)
+    # The journal goes to the serial port: a marker shows that the terminal runs what is typed.
+    type_text("logger shrimp-test: terminal\n")
+    pause(10)
+    if not serial_has("live", "shrimp-test: terminal"):
+        print(f"[{t():6.1f}s] terminal did not run the typed command, trying GNOME Console", flush=True)
+        run_dialog("kgx")
+        pause(10)
+        type_text("logger shrimp-test: terminal kgx\n")
+        pause(10)
+    print(f"[{t():6.1f}s] run dialog: {serial_has('live', 'shrimp-test: run-dialog')}, "
+          f"terminal: {serial_has('live', 'shrimp-test: terminal')}", flush=True)
     # Where the stick is mounted is part of what we check: log it, fall back to mounting by label.
     type_text("echo shrimp | sudo -S true; findmnt -l | sudo tee /dev/ttyS0; "
               "f=$(find /run /media -maxdepth 5 -name agama-install.sh 2>/dev/null | head -n1); "
