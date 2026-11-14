@@ -6,7 +6,9 @@ set -euo pipefail
 T=/mnt
 STATE=$T/var/lib/shrimp-setup
 SRC=/usr/share/shrimp-setup
-log() { echo "shrimp-post-install: $*"; }
+# Dziennik zostaje też w zainstalowanym systemie (/var/lib/shrimp-setup/post-install.log): sesja live znika
+# po restarcie, a bez niego nie da się sprawdzić, co poszło nie tak (GRUB, Plymouth, pakiety).
+log() { echo "shrimp-post-install: $*"; echo "$(date '+%F %T') $*" >> "$STATE/post-install.log" 2>/dev/null || true; }
 
 mkdir -p "$STATE"
 
@@ -58,8 +60,10 @@ kill_chroot_procs() {
   done
   return 0
 }
+CHROOT_BOUND=()
 cleanup() {
   kill_chroot_procs
+  for ((i=${#CHROOT_BOUND[@]}-1; i>=0; i--)); do umount -l "${CHROOT_BOUND[$i]}" 2>/dev/null || true; done
   if [ -n "$OFFLINE_URL" ]; then
     # zypper zapisuje adres jako dir:/run/… (jeden ukośnik); grep bez trafienia nie może przerwać sprzątania.
     grep -lE "dir:/+run/shrimp-repo" "$T"/etc/zypp/repos.d/*.repo 2>/dev/null | xargs -r rm -f || true
@@ -71,6 +75,12 @@ cleanup() {
   return 0
 }
 trap cleanup EXIT
+# /dev, /proc i /sys w chroot przez cały skrypt: bez nich dracut nie budował nowego initrd (ekran startu
+# zostawał z logo Leap i logami zamiast Shrimp), a grub2-mkconfig nie widział dysków.
+for m in dev proc sys; do
+  mountpoint -q "$T/$m" && continue
+  mkdir -p "$T/$m" && mount --bind "/$m" "$T/$m" && CHROOT_BOUND+=("$T/$m")
+done
 
 USER_NAME=$(sed -n 's/.*"userName":"\([^"]*\)".*/\1/p' "$STATE/install.json")
 [ -n "$USER_NAME" ] || { log "brak userName w install.json"; exit 1; }
@@ -141,9 +151,14 @@ if [ -f "$DEF" ]; then
   setkey() {
     if grep -q "^$1=" "$DEF"; then sed -i "s|^$1=.*|$1=$2|" "$DEF"; else echo "$1=$2" >> "$DEF"; fi
   }
+  # Menu w rozdzielczości, dla której jest motyw (Leap ma „auto”, które na laptopach daje 800x600 i ogromne
+  # menu), bez tła Leap (zasłaniało czarne tło motywu) i bez przełączania trybu ekranu przy starcie jądra.
+  setkey GRUB_GFXMODE '"1920x1080,1920x1200,1600x900,1366x768,auto"'
+  setkey GRUB_GFXPAYLOAD_LINUX keep
+  sed -i '/^GRUB_BACKGROUND=/d' "$DEF"
   if [ "$BESIDE" = 1 ]; then
     # Obok Windows menu GRUB jest zawsze widoczne (5 s): wybór Shrimp/Windows i „Poprzednie wersje
-    # systemu” (migawki Panko). Wpis Windows daje 35_shrimp_windows niżej, bez os-prober.
+    # systemu” (migawki Panko). Wpis Windows daje 11_shrimp_windows niżej, bez os-prober.
     setkey GRUB_TIMEOUT 5
     setkey GRUB_TIMEOUT_STYLE menu
     sed -i '/^GRUB_HIDDEN_TIMEOUT/d' "$DEF"
@@ -165,7 +180,7 @@ fi
 # jest wyłączony, żeby nie było dwóch wpisów. BIOS: os-prober jak dotąd.
 if [ "$BESIDE" = 1 ] && [ -f "$DEF" ]; then
   if [ -d /sys/firmware/efi ]; then
-    cat > "$T/etc/grub.d/35_shrimp_windows" <<'GRUBWIN'
+    cat > "$T/etc/grub.d/11_shrimp_windows" <<'GRUBWIN'
 #!/bin/sh
 # Shrimp: Windows obok Shrimp (post-install.sh). Plik z partycji EFI Windows, bez os-prober.
 cat <<'MENU'
@@ -178,7 +193,7 @@ menuentry 'Windows' --class windows --class os {
 }
 MENU
 GRUBWIN
-    chmod 755 "$T/etc/grub.d/35_shrimp_windows"
+    chmod 755 "$T/etc/grub.d/11_shrimp_windows"
     if grep -q '^GRUB_DISABLE_OS_PROBER=' "$DEF"; then sed -i 's/^GRUB_DISABLE_OS_PROBER=.*/GRUB_DISABLE_OS_PROBER=true/' "$DEF"
     else echo 'GRUB_DISABLE_OS_PROBER=true' >> "$DEF"; fi
     log "GRUB: wpis Windows (UEFI), menu widoczne 5 s"
@@ -320,7 +335,7 @@ if [ -d "$T/usr/share/grub2/themes/shrimp" ]; then
   if [ -f "$G" ]; then
     sed -i -e 's|^GRUB_DISTRIBUTOR=.*|GRUB_DISTRIBUTOR="Shrimp"|' -e '/^GRUB_THEME=/d' "$G"
     echo 'GRUB_THEME=/boot/grub2/themes/shrimp/theme.txt' >> "$G"
-    grep -q '^GRUB_GFXMODE=' "$G" || echo 'GRUB_GFXMODE=1920x1080,auto' >> "$G"
+    sed -i '/^GRUB_BACKGROUND=/d' "$G"
   fi
   if chroot "$T" grub2-mkconfig -o /boot/grub2/grub.cfg >/dev/null 2>&1; then log "GRUB: motyw shrimp"
   else log "GRUB: grub2-mkconfig nie powiódł się, motyw wejdzie przy następnej aktualizacji GRUB"; fi
