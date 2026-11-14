@@ -35,8 +35,6 @@ install -Dm644 "$HERE/system/systemd/shrimp-setup-later.service" "$D/usr/lib/sys
 install -Dm644 "$HERE/system/systemd/shrimp-setup-later.timer" "$D/usr/lib/systemd/system/shrimp-setup-later.timer"
 install -Dm755 "$HERE/system/libexec/shrimp-wifi-revive" "$D/usr/libexec/shrimp-wifi-revive"
 # Shrimp pierwszy w kolejności rozruchu UEFI (obok Windows; post-install.sh włącza usługę w systemie).
-install -Dm755 "$HERE/system/libexec/shrimp-boot-order" "$D/usr/libexec/shrimp-boot-order"
-install -Dm644 "$HERE/system/systemd/shrimp-boot-order.service" "$D/usr/lib/systemd/system/shrimp-boot-order.service"
 install -Dm644 "$HERE/system/systemd/shrimp-wifi-revive.service" "$D/usr/lib/systemd/system/shrimp-wifi-revive.service"
 install -Dm644 "$HERE/system/modprobe/50-shrimp-wifi.conf" "$D/usr/lib/modprobe.d/50-shrimp-wifi.conf"
 install -Dm644 "$HERE/system/agama/shrimp.yaml" "$D/usr/share/agama/products.d/shrimp.yaml"

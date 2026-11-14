@@ -36,9 +36,14 @@ software:
     # Pakiet Shrimp z tym Setup, motywami i skryptem wyglądu (repozytorium Shrimp: do ustalenia
     # razem z budową ISO; dopóki go nie ma, ISO wgrywa pliki do obrazu docelowego w post-install.sh).
     # - shrimp-setup
-  optional_packages:
-    - os-prober
+    # przełączanie systemów z Shrimp Center (BootNext) i kolejność rozruchu UEFI
+    - efibootmgr
+  optional_packages: []
   base_product: Leap
+# Bez GRUB-a (Beta 6): systemd-boot przez sdbootutil (shim dla Secure Boot, wpisy migawek dla Panko).
+# Menu jest ukryte (post-install.sh: timeout 0); system wybiera się w Shrimp Center, nie przy starcie.
+boot:
+  default_efi_bootloader: "systemd-boot"
 modes:
   - id: immutable
     name: Shrimp
@@ -67,8 +72,6 @@ modes:
               - path: boot/writable
               - path: var
                 copy_on_write: false
-              - path: boot/grub2/x86_64-efi
-                archs: x86_64
           size:
             auto: false
             min: 20 GiB

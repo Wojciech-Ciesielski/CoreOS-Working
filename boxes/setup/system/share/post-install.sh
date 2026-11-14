@@ -7,7 +7,7 @@ T=/mnt
 STATE=$T/var/lib/shrimp-setup
 SRC=/usr/share/shrimp-setup
 # Dziennik zostaje też w zainstalowanym systemie (/var/lib/shrimp-setup/post-install.log): sesja live znika
-# po restarcie, a bez niego nie da się sprawdzić, co poszło nie tak (GRUB, Plymouth, pakiety).
+# po restarcie, a bez niego nie da się sprawdzić, co poszło nie tak (rozruch, Plymouth, pakiety).
 log() { echo "shrimp-post-install: $*"; echo "$(date '+%F %T') $*" >> "$STATE/post-install.log" 2>/dev/null || true; }
 
 mkdir -p "$STATE"
@@ -76,7 +76,7 @@ cleanup() {
 }
 trap cleanup EXIT
 # /dev, /proc i /sys w chroot przez cały skrypt: bez nich dracut nie budował nowego initrd (ekran startu
-# zostawał z logo Leap i logami zamiast Shrimp), a grub2-mkconfig nie widział dysków.
+# zostawał z logo Leap i logami zamiast Shrimp), a sdbootutil nie widział dysków.
 for m in dev proc sys; do
   mountpoint -q "$T/$m" && continue
   mkdir -p "$T/$m" && mount --bind "/$m" "$T/$m" && CHROOT_BOUND+=("$T/$m")
@@ -140,81 +140,19 @@ text/html=org.mozilla.firefox.desktop
 application/xhtml+xml=org.mozilla.firefox.desktop
 MIME
 
-# Cichy start zainstalowanego systemu: menu GRUB ukryte (Esc, F4 lub F8 w ciągu sekundy je pokazuje,
-# pod BIOS także wciśnięty Shift), bez komunikatów „Loading Linux/initial ramdisk” i bez logów jądra.
-# Obok Windows menu jest widoczne (wybór systemu), a Shrimp jest pierwszy w kolejności rozruchu UEFI.
-GRUB_REGEN=0
-BESIDE=0
-grep -q '"beside":true' "$STATE/install.json" 2>/dev/null && BESIDE=1
-DEF=$T/etc/default/grub
-if [ -f "$DEF" ]; then
-  setkey() {
-    if grep -q "^$1=" "$DEF"; then sed -i "s|^$1=.*|$1=$2|" "$DEF"; else echo "$1=$2" >> "$DEF"; fi
-  }
-  # Menu w rozdzielczości, dla której jest motyw (Leap ma „auto”, które na laptopach daje 800x600 i ogromne
-  # menu), bez tła Leap (zasłaniało czarne tło motywu) i bez przełączania trybu ekranu przy starcie jądra.
-  setkey GRUB_GFXMODE '"1920x1080,1920x1200,1600x900,1366x768,auto"'
-  setkey GRUB_GFXPAYLOAD_LINUX keep
-  sed -i '/^GRUB_BACKGROUND=/d' "$DEF"
-  if [ "$BESIDE" = 1 ]; then
-    # Obok Windows menu GRUB jest zawsze widoczne (5 s): wybór Shrimp/Windows i „Poprzednie wersje
-    # systemu” (migawki Panko). Wpis Windows daje 11_shrimp_windows niżej, bez os-prober.
-    setkey GRUB_TIMEOUT 5
-    setkey GRUB_TIMEOUT_STYLE menu
-    sed -i '/^GRUB_HIDDEN_TIMEOUT/d' "$DEF"
-  else
-    setkey GRUB_TIMEOUT 1
-    setkey GRUB_TIMEOUT_STYLE hidden
-    setkey GRUB_HIDDEN_TIMEOUT_QUIET true
-  fi
-  CMD=$(sed -n 's/^GRUB_CMDLINE_LINUX_DEFAULT="\(.*\)"$/\1/p' "$DEF" | head -n1)
-  for o in quiet splash=silent loglevel=3 rd.udev.log_level=3 udev.log_level=3 systemd.show_status=false rd.systemd.show_status=false vt.global_cursor_default=0; do
-    case " $CMD " in *" ${o%%=*}="*|*" $o "*) ;; *) CMD="$CMD $o";; esac
-  done
-  setkey GRUB_CMDLINE_LINUX_DEFAULT "\"${CMD# }\""
-  GRUB_REGEN=1
-  log "GRUB: ukryte menu, cichy start"
-fi
-# Wpis Windows w menu GRUB obok Windows (UEFI): łańcuchowo Menedżer rozruchu Windows z partycji EFI,
-# znalezionej po pliku. Nie zależy od os-prober (w chroot bez /dev i /sys nie widział Windows), więc os-prober
-# jest wyłączony, żeby nie było dwóch wpisów. BIOS: os-prober jak dotąd.
-if [ "$BESIDE" = 1 ] && [ -f "$DEF" ]; then
-  if [ -d /sys/firmware/efi ]; then
-    cat > "$T/etc/grub.d/11_shrimp_windows" <<'GRUBWIN'
-#!/bin/sh
-# Shrimp: Windows obok Shrimp (post-install.sh). Plik z partycji EFI Windows, bez os-prober.
-cat <<'MENU'
-menuentry 'Windows' --class windows --class os {
-	insmod part_gpt
-	insmod fat
-	insmod chain
-	search --no-floppy --file --set=root /EFI/Microsoft/Boot/bootmgfw.efi
-	chainloader /EFI/Microsoft/Boot/bootmgfw.efi
-}
-MENU
-GRUBWIN
-    chmod 755 "$T/etc/grub.d/11_shrimp_windows"
-    if grep -q '^GRUB_DISABLE_OS_PROBER=' "$DEF"; then sed -i 's/^GRUB_DISABLE_OS_PROBER=.*/GRUB_DISABLE_OS_PROBER=true/' "$DEF"
-    else echo 'GRUB_DISABLE_OS_PROBER=true' >> "$DEF"; fi
-    log "GRUB: wpis Windows (UEFI), menu widoczne 5 s"
-  else
-    if grep -q '^GRUB_DISABLE_OS_PROBER=' "$DEF"; then sed -i 's/^GRUB_DISABLE_OS_PROBER=.*/GRUB_DISABLE_OS_PROBER=false/' "$DEF"
-    else echo 'GRUB_DISABLE_OS_PROBER=false' >> "$DEF"; fi
-    log "GRUB: Windows przez os-prober (BIOS), menu widoczne 5 s"
-  fi
-  GRUB_REGEN=1
-fi
-# Shrimp pierwszy w kolejności rozruchu UEFI: teraz i przy każdym starcie (aktualizacje Windows potrafią
-# przesunąć Menedżer rozruchu Windows na początek).
-if [ -f /usr/libexec/shrimp-boot-order ]; then
-  install -Dm755 /usr/libexec/shrimp-boot-order "$T/usr/libexec/shrimp-boot-order"
-  install -Dm644 /usr/lib/systemd/system/shrimp-boot-order.service "$T/usr/lib/systemd/system/shrimp-boot-order.service"
-  chroot "$T" systemctl enable shrimp-boot-order.service >/dev/null 2>&1 || log "nie można włączyć shrimp-boot-order"
-fi
-# 10_linux wypisuje echo przed jądrem i initrd; plik jest %config, więc aktualizacja zostawi .rpmnew.
-if [ -f "$T/etc/grub.d/10_linux" ]; then
-  sed -i "/^[[:space:]]*echo[[:space:]]*'\$(echo \"\$message\" | grub_quote)'/d" "$T/etc/grub.d/10_linux"
-  GRUB_REGEN=1
+# Rozruch bez GRUB-a (Beta 6): systemd-boot, który Agama instaluje przez sdbootutil (shim dla Secure Boot).
+# Menu jest ukryte (klawisz przy starcie je pokazuje), start bez komunikatów jądra. System wybiera się
+# w Shrimp Center (BootNext), a poprzednie wersje systemu w Panko, nie w menu przy starcie.
+mkdir -p "$T/etc/kernel/cmdline.d"
+echo "quiet splash=silent loglevel=3 rd.udev.log_level=3 udev.log_level=3 systemd.show_status=false rd.systemd.show_status=false vt.global_cursor_default=0" \
+  > "$T/etc/kernel/cmdline.d/50-shrimp-quiet.conf"
+SDBOOT=0
+if chroot "$T" sdbootutil is-installed >/dev/null 2>&1; then
+  SDBOOT=1
+  chroot "$T" sdbootutil set-timeout menu-hidden >/dev/null 2>&1 || log "systemd-boot: nie można ukryć menu"
+  log "systemd-boot: menu ukryte"
+else
+  log "UWAGA: systemd-boot nie jest zainstalowany przez sdbootutil (Agama wybrała inny program rozruchowy?)"
 fi
 
 # Nazwa Shrimp w os-release (O systemie) zamiast openSUSE, bez adresów openSUSE.
@@ -310,7 +248,7 @@ if [ -f "$MAN/desktop.units" ]; then
   done < "$MAN/desktop.units"
 fi
 # Pliki, które boxy generują przy budowie obrazu (nie ma ich w nakładkach root/).
-for d in /usr/share/plymouth/themes/shrimp /usr/share/fonts/truetype/inter /usr/share/grub2/themes/shrimp; do
+for d in /usr/share/plymouth/themes/shrimp /usr/share/fonts/truetype/inter; do
   [ -d "$d" ] && { mkdir -p "$T$d"; cp -a "$d"/. "$T$d"/; }
 done
 # Motyw powłoki i ekranu logowania (gnome-shell-theme.gresource z dodatkami Shrimp) tylko przy tej
@@ -328,18 +266,6 @@ if ! ls "$T"/usr/lib64/girepository-1.0/GLibUnix-2.0.typelib >/dev/null 2>&1; th
   chroot "$T" "${ZYP[@]}" install --no-recommends 'typelib(GLibUnix)' >/dev/null 2>&1 \
     && log "doinstalowano typelib GLibUnix (DING)" || log "brak typelib GLibUnix: DING może nie działać"
 fi
-# Menu GRUB Shrimp: motyw w /boot (jak na nośniku), GRUB_THEME i nowy grub.cfg.
-if [ -d "$T/usr/share/grub2/themes/shrimp" ]; then
-  mkdir -p "$T/boot/grub2/themes/shrimp" && cp -a "$T/usr/share/grub2/themes/shrimp"/. "$T/boot/grub2/themes/shrimp"/
-  G="$T/etc/default/grub"
-  if [ -f "$G" ]; then
-    sed -i -e 's|^GRUB_DISTRIBUTOR=.*|GRUB_DISTRIBUTOR="Shrimp"|' -e '/^GRUB_THEME=/d' "$G"
-    echo 'GRUB_THEME=/boot/grub2/themes/shrimp/theme.txt' >> "$G"
-    sed -i '/^GRUB_BACKGROUND=/d' "$G"
-  fi
-  if chroot "$T" grub2-mkconfig -o /boot/grub2/grub.cfg >/dev/null 2>&1; then log "GRUB: motyw shrimp"
-  else log "GRUB: grub2-mkconfig nie powiódł się, motyw wejdzie przy następnej aktualizacji GRUB"; fi
-fi
 # Ekran startu Shrimp: motyw Plymouth i nowy initrd (motyw jest w initrd). plymouth-set-default-theme
 # bywa nieobecny w systemie (osobny pakiet skryptów), wtedy wpis w plymouthd.conf.
 if [ -d "$T/usr/share/plymouth/themes/shrimp" ]; then
@@ -347,7 +273,12 @@ if [ -d "$T/usr/share/plymouth/themes/shrimp" ]; then
     mkdir -p "$T/etc/plymouth"
     printf '[Daemon]\nTheme=shrimp\n' > "$T/etc/plymouth/plymouthd.conf"
   fi
-  if chroot "$T" dracut -f --regenerate-all >/dev/null 2>&1; then log "Plymouth: motyw shrimp"
+  # Motyw jest w initrd, a initrd systemd-boot leży na partycji EFI: odświeża go sdbootutil (razem z opcjami
+  # jądra z /etc/kernel/cmdline.d). Bez sdbootutil zostaje dracut.
+  if [ "$SDBOOT" = 1 ]; then
+    if chroot "$T" sdbootutil mkinitrd >/dev/null 2>&1; then log "Plymouth: motyw shrimp, initrd na partycji EFI"
+    else log "Plymouth: sdbootutil mkinitrd nie powiódł się, motyw wejdzie przy następnej aktualizacji jądra"; fi
+  elif chroot "$T" dracut -f --regenerate-all >/dev/null 2>&1; then log "Plymouth: motyw shrimp"
   else log "Plymouth: dracut nie powiódł się, motyw wejdzie przy następnej aktualizacji jądra"; fi
 else
   log "Plymouth: brak motywu shrimp na nośniku"
@@ -374,45 +305,6 @@ done
 chroot "$T" glib-compile-schemas "$SCH" || log "glib-compile-schemas nie powiodło się"
 chroot "$T" gtk-update-icon-cache -f /usr/share/icons/hicolor >/dev/null 2>&1 || true
 chroot "$T" gtk-update-icon-cache -f /usr/share/icons/MoreWaita >/dev/null 2>&1 || true
-
-# GRUB w języku konta: nazwa wpisu „Computer settings” (boxes/grub-theme/i18n, motyw Shrimp: lang/<znacznik>.cfg).
-# Wpis firmware GRUB-a w docelowym systemie pochodzi z pakietu (angielski), więc podmieniamy go tutaj.
-grub_tag() {
-  local l="${1%%.*}" mod="" p r
-  case "$l" in *@*) mod="${l#*@}"; l="${l%%@*}";; esac
-  p="${l%%_*}"; r=""; case "$l" in *_*) r="${l#*_}";; esac
-  case "$p" in
-    zh) case "$r" in TW|HK|MO) echo zh-hant;; *) echo zh-hans;; esac;;
-    pt) [ "$r" = PT ] && echo pt-pt || echo pt-br;;
-    sr) [ "$mod" = latin ] && echo sr-latn || echo sr-cyrl;;
-    uz) [ "$mod" = cyrillic ] && echo uz-cyrl || echo uz;;
-    be) [ "$mod" = latin ] && echo be-latn || echo be;;
-    ca) [ "$mod" = valencia ] && echo ca-valencia || echo ca;;
-    no) echo nb;;
-    *) echo "$p";;
-  esac
-}
-SYS_LANG=$(sed -n 's/^LANG=//p' "$T/etc/locale.conf" 2>/dev/null | tr -d '"' | head -n1)
-TAG=$(grub_tag "${SYS_LANG:-en}")
-FW=$(sed -n 's/^set shrimp_fw="\(.*\)"$/\1/p' "/usr/share/grub2/themes/shrimp/lang/$TAG.cfg" 2>/dev/null | head -n1)
-if [ -n "$FW" ] && [ -f "$T/etc/grub.d/30_uefi-firmware" ]; then
-  sed -i "s|UEFI Firmware Settings|$FW|" "$T/etc/grub.d/30_uefi-firmware"
-  log "GRUB: wpis firmware w języku $TAG"
-  GRUB_REGEN=1
-fi
-if [ "$GRUB_REGEN" = 1 ]; then
-  # /dev, /proc i /sys w chroot: grub2-mkconfig (i os-prober pod BIOS) muszą widzieć dyski.
-  BOUND=()
-  for m in dev proc sys run; do
-    mountpoint -q "$T/$m" && continue
-    mkdir -p "$T/$m" && mount --bind "/$m" "$T/$m" && BOUND+=("$T/$m")
-  done
-  chroot "$T" grub2-mkconfig -o /boot/grub2/grub.cfg >/dev/null 2>&1 || log "grub2-mkconfig nie powiodło się (zmiany GRUB wejdą przy jego następnej aktualizacji)"
-  for ((i=${#BOUND[@]}-1; i>=0; i--)); do umount -l "${BOUND[$i]}" 2>/dev/null || true; done
-fi
-if [ "$BESIDE" = 1 ] && [ -x /usr/libexec/shrimp-boot-order ]; then
-  /usr/libexec/shrimp-boot-order --install || true
-fi
 
 # Pierwsza konfiguracja: znacznik + jednorazowe logowanie automatyczne (zdejmuje je shrimp-setup-apply).
 touch "$STATE/first-boot"

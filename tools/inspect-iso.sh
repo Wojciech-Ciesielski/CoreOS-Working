@@ -15,7 +15,7 @@ echo "=== gnome-shell"; ls "$r/usr/share/gnome-shell/extensions"
 for d in "$r"/usr/share/gnome-shell/extensions/*/; do
   python3 -c "import json,sys;d=json.load(open(sys.argv[1]));print(d['uuid'],'version',d.get('version'),d.get('version-name',''),'shell',d.get('shell-version'))" "$d/metadata.json"
 done
-rpm --root "$r" -q gnome-shell gnome-shell-extensions-common gdm plymouth grub2 \
+rpm --root "$r" -q gnome-shell gnome-shell-extensions-common gdm plymouth systemd-boot shim \
   pipewire wireplumber bluez upower gnome-bluetooth tuned-ppd power-profiles-daemon iio-sensor-proxy \
   gnome-software gnome-system-monitor gnome-disk-utility gnome-extensions baobab gnome-logs 2>/dev/null || ls "$r"/usr/lib64/gnome-shell 2>/dev/null
 echo "=== typelibs"; ls "$r"/usr/lib64/girepository-1.0/ | grep -i -E 'gnomedesktop|gnomebg' || echo "no GnomeDesktop typelib"
@@ -42,7 +42,8 @@ for c in $(gresource list "$r/usr/share/gnome-shell/gnome-shell-theme.gresource"
 done
 echo "=== override warnings"; glib-compile-schemas --dry-run --strict "$S" 2>&1 | head -20
 echo "=== gdm"; cat "$r/etc/gdm/custom.conf"; ls -l "$r"/etc/systemd/system/display-manager.service 2>&1
-echo "=== grub.cfg (EFI)"; f=$(find "$m/iso" -path '*EFI*' -name grub.cfg -print -quit); [ -n "$f" ] && cat "$f"
-echo "=== grub.cfg (BIOS)"; f=$(find "$m/iso/boot" -name grub.cfg -print -quit); [ -n "$f" ] && cat "$f"
-echo "=== theme"; ls -la "$m/iso/boot/grub2/themes/shrimp" 2>&1
+echo "=== systemd-boot (shim + grub.efi = systemd-boot)"; ls -la "$m/iso/EFI/BOOT" 2>&1
+echo "=== loader.conf"; cat "$m/iso/loader/loader.conf" 2>&1
+for e in "$m"/iso/loader/entries/*.conf; do echo "=== $(basename "$e")"; cat "$e"; done
+rpm --root "$r" -qa 'grub2*' | sed 's/^/UWAGA: pakiet GRUB w obrazie: /'
 umount "$m/root" 2>/dev/null; umount "$m/sq"; umount "$m/iso"

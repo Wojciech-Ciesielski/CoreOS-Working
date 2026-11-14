@@ -89,9 +89,9 @@ jobs:
           cp --sparse=always usb.img usb-guard.img
           LOOP=$(sudo losetup -Pf --show usb-guard.img)
           sudo mount "${LOOP}p1" /mnt/boot
-          for g in $(sudo find /mnt/boot -name grub.cfg); do
-            sudo sed -i -E '/^\s*linux(efi)?\s/ s/$/ console=tty0 console=ttyS0,115200 plymouth.ignore-serial-consoles systemd.journald.forward_to_console=1/' "$g"
-            echo "$g:"; sudo grep -nE '^\s*linux(efi)?\s' "$g" | head -n 4 || true
+          for g in /mnt/boot/loader/entries/*.conf; do
+            sudo sed -i -E '/^options / s/$/ console=tty0 console=ttyS0,115200 plymouth.ignore-serial-consoles systemd.journald.forward_to_console=1/' "$g"
+            echo "$g:"; sudo grep -n '^options ' "$g" || true
           done
           sudo umount /mnt/boot
           sudo losetup -d "$LOOP"

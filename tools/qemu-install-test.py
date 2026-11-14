@@ -8,7 +8,7 @@ Usage: qemu-install-test.py <usb.img> <outdir>
 
 Phase 0 boots the stick with the Setup guard ON (no SHRIMP_TEST drive) and checks that a mouse
 click reaches the Setup window (Beta 3.2: the pointer moved, clicks did nothing). The journal is
-forwarded to the serial port (kernel parameters added to the stick's GRUB by the workflow).
+forwarded to the serial port (kernel parameters added to the stick's systemd-boot entry by the workflow).
 Phase 1 boots the stick (UEFI) with an empty 40 GB disk, waits for the Setup window, then
 runs shrimp-test/agama-install.sh, which drives Agama with Setup's own configuration and
 logs to the serial port. Phase 2 boots the installed disk and captures the first boot
@@ -309,7 +309,7 @@ try:
                   "sudo ls -la /var/lib/shrimp-setup; sudo cat /var/lib/shrimp-setup/install.json; "
                   "ls /etc/xdg/autostart /usr/etc/xdg/autostart; cat /etc/gdm/custom.conf; "
                   "plymouth-set-default-theme; ls /usr/share/plymouth/themes; gnome-extensions list --details; "
-                  "echo ===MISSING; for f in /usr/share/fonts/truetype/inter /usr/share/grub2/themes/shrimp "
+                  "echo ===MISSING; for f in /usr/share/fonts/truetype/inter "
                   "/usr/share/plymouth/themes/shrimp /usr/share/shrimp /usr/share/icons/MoreWaita /usr/bin/cocktail /usr/bin/panko /usr/bin/cherry "
                   "/usr/bin/shrimp-apps; do [ -e $f ] || echo missing $f; done; "
                   "rpm -q typelib-1_0-GnomeDesktop-3_0 gvfs plymouth-plugin-script plymouth-plugin-label adwaita-icon-theme "

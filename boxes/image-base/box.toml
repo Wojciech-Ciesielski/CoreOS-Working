@@ -2,7 +2,7 @@
 id = "image-base"
 version = "0.1.0"
 kind = "image"
-summary = "Szkielet obrazu live: config.kiwi (KIWI, Leap 16.1), jądro, rozruch, system bazowy"
+summary = "Szkielet obrazu live: config.kiwi (KIWI, Leap 16.1), jądro, rozruch (systemd-boot + shim), system bazowy"
 
 [packages]
 image = [
@@ -14,10 +14,10 @@ image = [
     "dracut",
     "dracut-kiwi-live",
     "exfatprogs",
-    "grub2",
-    "grub2-x86_64-efi",
-    "grub2-i386-pc",
+    "systemd-boot",
     "shim",
+    "mokutil",
+    "efibootmgr",
     "glibc-locale",
     "timezone",
     "sudo",

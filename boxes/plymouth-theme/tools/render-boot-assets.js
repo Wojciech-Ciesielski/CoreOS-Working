@@ -1,4 +1,4 @@
-// Renders Plymouth/GRUB bitmaps straight from the design mockup (mockups/boot.html)
+// Renders Plymouth bitmaps straight from the design mockup (mockups/boot.html)
 // at the 1920x1080 reference size, plus @2x, and writes measured geometry to JSON.
 // Usage: node boxes/plymouth-theme/tools/render-boot-assets.js <handoff-dir> <out-dir>
 const { chromium } = require('playwright');
@@ -108,25 +108,6 @@ async function run(scale) {
     await (await p.$('#cap')).screenshot({ path: path.join(dir, `${name}-cap${suffix}.png`), omitBackground: true });
     await (await p.$('#body')).screenshot({ path: path.join(dir, `${name}-body${suffix}.png`), omitBackground: true });
   }
-
-  // GRUB
-  const gdir = path.join(out, 'grub');
-  fs.mkdirSync(gdir, { recursive: true });
-  await p.close();
-  p = await b.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: scale });
-  await p.goto('file://' + path.resolve(handoff, 'mockups/boot.html') + '#grub');
-  await p.addStyleTag({ content: css });
-  await p.evaluate(() => document.fonts.ready);
-  await p.waitForTimeout(700);
-  const g = 'grub';
-  const G = `[data-pane="${g}"]`;
-  const O = await (await p.$('.screen')).boundingBox();
-  const items = await p.$$eval(G + ' .menu .item', (els, O) => els.map(e => { const r = e.getBoundingClientRect(); return { x: r.x - O.x, y: r.y - O.y, w: r.width, h: r.height, text: e.textContent.trim(), sel: e.classList.contains('sel') }; }), O);
-  const mk = await p.$eval(G + ' .item.sel .mk', (e, O) => { const r = e.getBoundingClientRect(); const c = getComputedStyle(e); return { x: r.x - O.x, y: r.y - O.y, w: r.width, h: r.height, fontSize: c.fontSize }; }, O);
-  const istyle = await p.$eval(G + ' .item', e => { const c = getComputedStyle(e); return { fontSize: c.fontSize, lineHeight: c.lineHeight }; });
-  const hint = await p.$eval(G + ' .hintbar', (e, O) => { const r = e.getBoundingClientRect(); const c = getComputedStyle(e); return { x: r.x - O.x, y: r.y - O.y, w: r.width, h: r.height, fontSize: c.fontSize, text: e.textContent.trim() }; }, O);
-  geo.grub = { pane: g, logo: await box(G + ' .logo svg'), menu: await box(G + ' .menu'), items, marker: mk, itemStyle: istyle, hint };
-  await (await p.$(G + ' .logo svg')).screenshot({ path: path.join(gdir, `logo${suffix}.png`), omitBackground: true });
 
   await b.close();
   return geo;

@@ -2,9 +2,9 @@
 """Boot the Shrimp live ISO in QEMU and log every stage (no screenshots are taken or kept).
 
 Usage: qemu-test.py <iso> <outdir> <mode>
-  mode: uefi        full run: silent GRUB (no menu), Plymouth, desktop, extensions, lock screen, GDM, shutdown
-        secureboot  OVMF with Microsoft keys enrolled, F4 opens the hidden GRUB menu, boot stages only
-        bios        SeaBIOS, F4 opens the hidden GRUB menu, boot stages only
+  mode: uefi        full run: hidden systemd-boot menu, Plymouth, desktop, extensions, lock screen, GDM, shutdown
+        secureboot  OVMF with Microsoft keys enrolled (shim → systemd-boot → kernel), boot stages only
+The medium has no BIOS boot (no GRUB since Beta 6), so there is no bios mode.
 
 Keys and clicks are injected through QMP, and diagnostics typed into a terminal in the live session are
 written to the serial port (<outdir>/serial.log).
@@ -42,19 +42,18 @@ cmd = [
     "-qmp", f"unix:{QMP_SOCK},server=on,wait=off",
     "-serial", f"file:{os.path.join(OUT, 'serial.log')}",
 ]
-if MODE in ("uefi", "secureboot"):
-    if MODE == "uefi":
-        code, vars_ = "/usr/share/OVMF/OVMF_CODE_4M.fd", "/usr/share/OVMF/OVMF_VARS_4M.fd"
-        cmd += ["-machine", "q35"]
-    else:
-        code, vars_ = "/usr/share/OVMF/OVMF_CODE_4M.secboot.fd", "/usr/share/OVMF/OVMF_VARS_4M.ms.fd"
-        cmd += ["-machine", "q35,smm=on", "-global", "driver=cfi.pflash01,property=secure,value=on"]
-    local_vars = os.path.join(OUT, "vars.fd")
-    shutil.copy(vars_, local_vars)
-    cmd += ["-drive", f"if=pflash,format=raw,unit=0,readonly=on,file={code}",
-            "-drive", f"if=pflash,format=raw,unit=1,file={local_vars}"]
-else:
+if MODE not in ("uefi", "secureboot"):
+    raise SystemExit(f"unknown mode {MODE} (uefi | secureboot)")
+if MODE == "uefi":
+    code, vars_ = "/usr/share/OVMF/OVMF_CODE_4M.fd", "/usr/share/OVMF/OVMF_VARS_4M.fd"
     cmd += ["-machine", "q35"]
+else:
+    code, vars_ = "/usr/share/OVMF/OVMF_CODE_4M.secboot.fd", "/usr/share/OVMF/OVMF_VARS_4M.ms.fd"
+    cmd += ["-machine", "q35,smm=on", "-global", "driver=cfi.pflash01,property=secure,value=on"]
+local_vars = os.path.join(OUT, "vars.fd")
+shutil.copy(vars_, local_vars)
+cmd += ["-drive", f"if=pflash,format=raw,unit=0,readonly=on,file={code}",
+        "-drive", f"if=pflash,format=raw,unit=1,file={local_vars}"]
 
 if MODE == "uefi":
     cmd += noguard_drive(OUT)
@@ -204,16 +203,7 @@ def run_dialog(command):
 
 # ----------------------------------------------------------------- plan ----
 try:
-    if MODE != "uefi":
-        # The menu is hidden (1 s); F4 during that second must open it. F4 does nothing in
-        # SeaBIOS/OVMF (Esc would open their own menus), so tap it from power-on.
-        while t() < 25 and qemu.poll() is None:
-            press(["f4"])
-            stage("grub-f4")
-            time.sleep(0.25)
-        stage("grub-menu", keep_duplicates=True)
-        keys("ret")
-    # Normal start: no GRUB menu, no boot text, then the Plymouth splash. Dense frames.
+    # Normal start: no boot menu (systemd-boot, timeout 0), no boot text, then the Plymouth splash. Dense frames.
     wait_stages(45, 1, "boot")
     if MODE != "uefi":
         wait_stages(240, 5, "boot")

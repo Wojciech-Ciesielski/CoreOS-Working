@@ -8,7 +8,6 @@ boxes = [
     "icon-theme",
     "fonts",
     "plymouth-theme",
-    "grub-theme",
     "gnome-desktop",
     "shell-theme",
     "shell-extensions",
