@@ -16,6 +16,7 @@ second wizard: Setup collected everything before the installation) and captures 
 """
 import json
 import os
+import re
 import shutil
 import socket
 import subprocess
@@ -23,6 +24,7 @@ import sys
 import time
 
 USB, OUT = sys.argv[1], sys.argv[2]
+SESSION_RE = r"shrimp-setup|shrimp-live-session|SHRIMP_TEST|sesja no|GNOME Session|gnome-session|gdm|kgx|cherry|Cherry|accounts-daemon"
 USB_GUARD = os.path.join(os.path.dirname(USB) or '.', 'usb-guard.img')
 if not os.path.exists(USB_GUARD):
     USB_GUARD = USB
@@ -344,9 +346,18 @@ finally:
     # The serial logs are only an artifact; print the parts worth reading into the job log too.
     try:
         with open(os.path.join(OUT, "serial-guard.log"), errors="replace") as f:
-            glines = [l for l in f.read().splitlines() if "shrimp-setup" in l or "JS ERROR" in l]
+            glines = [l for l in f.read().splitlines() if re.search(SESSION_RE, l) or "JS ERROR" in l]
         print("::group::serial-guard: Setup guard and Setup", flush=True)
         print("\n".join(glines[-80:]))
+        print("::endgroup::", flush=True)
+    except OSError:
+        pass
+    # Live session (kiosk or GNOME desktop with SHRIMP_TEST), Setup, terminal: why the test script did not start.
+    try:
+        with open(os.path.join(OUT, "serial-live.log"), errors="replace") as f:
+            llines = [l for l in f.read().splitlines() if re.search(SESSION_RE, l)]
+        print("::group::serial-live: session, Setup and terminal", flush=True)
+        print("\n".join(llines[:120]))
         print("::endgroup::", flush=True)
     except OSError:
         pass

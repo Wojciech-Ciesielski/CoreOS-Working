@@ -78,15 +78,18 @@ jobs:
           JSON
           sudo cp tools/install-test/* /mnt/usb/shrimp-test/
           ls -la /mnt/boot /mnt/usb /mnt/usb/shrimp-test
+          # Journal to the serial port on the install stick too (kernel command line only): the job log
+          # shows which live session started and whether the terminal opened.
+          for g in /mnt/boot/loader/entries/*.conf; do
+            sudo sed -i -E '/^options / s/$/ console=tty0 console=ttyS0,115200 plymouth.ignore-serial-consoles systemd.journald.forward_to_console=1/' "$g"
+          done
           sudo umount /mnt/boot /mnt/usb /mnt/iso
           sudo losetup -d "$LOOP"
-          # Copy for phase 0 (Setup guard test): journal to the serial port. The stick for the install
-          # (phase 1) stays exactly as Shrimp Install writes it.
+          # Copy for phase 0 (kiosk session test, no SHRIMP_TEST drive).
           cp --sparse=always usb.img usb-guard.img
           LOOP=$(sudo losetup -Pf --show usb-guard.img)
           sudo mount "${LOOP}p1" /mnt/boot
           for g in /mnt/boot/loader/entries/*.conf; do
-            sudo sed -i -E '/^options / s/$/ console=tty0 console=ttyS0,115200 plymouth.ignore-serial-consoles systemd.journald.forward_to_console=1/' "$g"
             echo "$g:"; sudo grep -n '^options ' "$g" || true
           done
           sudo umount /mnt/boot
