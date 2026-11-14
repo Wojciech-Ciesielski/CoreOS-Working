@@ -1,0 +1,8 @@
+# Nośnik Shrimp: dysk SHRIMP_TEST podłączony po starcie GDM (reguła udev 90-shrimp-live-test.rules).
+[Unit]
+Description=Shrimp: pulpit testowy po podłączeniu dysku SHRIMP_TEST
+After=shrimp-live-session.service display-manager.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/shrimp-live-session --switch

@@ -51,7 +51,7 @@ system jest gotowy: ekran logowania, bez drugiego kreatora, logowania automatycz
 
 - **Nośnik**: przed GDM `shrimp-live-session` wybiera sesję `shrimp-setup` (gnome-kiosk + sam kreator, usługa
   użytkownika `org.shrimp.Setup.service` z `Restart=always`). Dysk z etykietą `SHRIMP_TEST` daje zamiast niej pulpit
-  GNOME (testy QEMU, pomoc techniczna). Kreator rozmawia z HTTP API Agamy (Leap 16.1) przez `http://127.0.0.1`
+  GNOME (testy QEMU, pomoc techniczna), także gdy dysk pojawi się po starcie GDM (reguła udev). Kreator rozmawia z HTTP API Agamy (Leap 16.1) przez `http://127.0.0.1`
   (token z `/run/shrimp-setup/token`). Produkt Agamy: `boxes/setup/system/agama/shrimp.yaml`.
 - **Kroki**: witaj, język, licencje, region, klawiatura, internet (tylko bez sieci), dysk, konto, pliki z Windows,
   pendrive, przeglądarka, programy, wygląd, podsumowanie, instalacja, restart. Wybory idą do `install.json`

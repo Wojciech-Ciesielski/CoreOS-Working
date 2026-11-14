@@ -48,6 +48,8 @@ if [ "$LIVE" = --live ]; then
   # Wybór sesji przed GDM: kiosk albo pulpit GNOME z dyskiem SHRIMP_TEST (testy QEMU, pomoc techniczna).
   install -Dm755 "$S/shrimp-live-session" "$D/usr/libexec/shrimp-live-session"
   install -Dm644 "$S/shrimp-live-session.service" "$D/usr/lib/systemd/system/shrimp-live-session.service"
+  install -Dm644 "$S/shrimp-live-session-switch.service" "$D/usr/lib/systemd/system/shrimp-live-session-switch.service"
+  install -Dm644 "$S/90-shrimp-live-test.rules" "$D/usr/lib/udev/rules.d/90-shrimp-live-test.rules"
   install -Dm644 "$S/shrimp-setup-test.desktop" "$D/etc/xdg/autostart/shrimp-setup-test.desktop"
   # Agama słucha tylko lokalnie; token czytelny dla użytkownika live (kreator i test instalacji).
   install -Dm644 "$HERE/system/systemd/agama-web-server.service.d/50-shrimp.conf" "$D/usr/lib/systemd/system/agama-web-server.service.d/50-shrimp.conf"
