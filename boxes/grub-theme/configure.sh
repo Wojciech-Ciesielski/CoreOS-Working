@@ -41,9 +41,10 @@ if [ -f /etc/default/grub ]; then
   sed -i -e 's|^GRUB_DISTRIBUTOR=.*|GRUB_DISTRIBUTOR="Shrimp"|' \
          -e 's|^GRUB_TIMEOUT=.*|GRUB_TIMEOUT=5|' \
          -e 's|^GRUB_THEME=.*|GRUB_THEME=/boot/grub2/themes/shrimp/theme.txt|' \
-         -e 's|^GRUB_GFXMODE=.*|GRUB_GFXMODE=1920x1080,auto|' /etc/default/grub
+         -e 's|^GRUB_GFXMODE=.*|GRUB_GFXMODE="1920x1080,1920x1200,1600x900,1366x768,auto"|' \
+         -e '/^GRUB_BACKGROUND=/d' /etc/default/grub
   grep -q '^GRUB_THEME=' /etc/default/grub || echo 'GRUB_THEME=/boot/grub2/themes/shrimp/theme.txt' >> /etc/default/grub
-  grep -q '^GRUB_GFXMODE=' /etc/default/grub || echo 'GRUB_GFXMODE=1920x1080,auto' >> /etc/default/grub
+  grep -q '^GRUB_GFXMODE=' /etc/default/grub || echo 'GRUB_GFXMODE="1920x1080,1920x1200,1600x900,1366x768,auto"' >> /etc/default/grub
 fi
 # menu names from specs/grub.md
 [ -f /etc/grub.d/30_uefi-firmware ] && sed -i 's/UEFI Firmware Settings/Computer settings/' /etc/grub.d/30_uefi-firmware || true

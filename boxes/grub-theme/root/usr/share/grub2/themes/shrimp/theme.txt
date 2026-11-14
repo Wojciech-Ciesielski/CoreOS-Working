@@ -20,7 +20,9 @@ terminal-font: "@FONT_REGULAR_27@"
   left = 50%-304
   top = 50%+4
   width = 574
-  height = 332
+  # five entries (Shrimp, advanced options, Windows, computer settings, previous versions): without a
+  # scrollbar a sixth would be hidden, as Windows was below three visible rows in Beta 5.1
+  height = 413
   item_font = "@FONT_REGULAR_38@"
   selected_item_font = "@FONT_SEMIBOLD_38@"
   item_color = "#8c8c8c"
