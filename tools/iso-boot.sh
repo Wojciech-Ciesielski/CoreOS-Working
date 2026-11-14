@@ -19,6 +19,7 @@ ROOT="$2"
 log() { echo "iso-boot: $*"; }
 W=$(mktemp -d)
 trap 'rm -rf "$W"' EXIT
+trap 'log "BŁĄD (linia $LINENO): $BASH_COMMAND"' ERR
 
 # 1. Partycja EFI doklejona przez KIWI (typ 0xef w MBR albo ESP w GPT).
 read -r START SECTORS < <(python3 - "$ISO" <<'PY'
@@ -54,7 +55,9 @@ SDBOOT="$ROOT/usr/lib/systemd-boot/systemd-bootx64.efi"
 [ -f "$SDBOOT" ] || SDBOOT="$ROOT/usr/lib/systemd/boot/efi/systemd-bootx64.efi"
 [ -f "$SHIM_DIR/shim.efi" ] || { log "BŁĄD: brak shim.efi w obrazie ($SHIM_DIR)"; exit 1; }
 [ -f "$SDBOOT" ] || { log "BŁĄD: brak systemd-bootx64.efi w obrazie"; exit 1; }
-rm -rf "$W/esp/EFI"
+# KIWI zapisuje katalog małymi literami (efi/boot, efi/systemd). FAT nie rozróżnia wielkości liter, więc
+# zostawiony „efi” obok nowego „EFI” zatrzymuje mcopy w kroku 4 (bez komunikatu).
+find "$W/esp" -maxdepth 1 -iname efi -exec rm -rf {} +
 mkdir -p "$W/esp/EFI/BOOT"
 install -m644 "$SHIM_DIR/shim.efi" "$W/esp/EFI/BOOT/bootx64.efi"
 install -m644 "$SDBOOT" "$W/esp/EFI/BOOT/grub.efi"
