@@ -1,7 +1,8 @@
 #!/bin/bash
 # Skrypt Agamy po instalacji (scripts.post, chroot: false). System docelowy jest w /mnt.
-# Ustawia pierwsze uruchomienie Shrimp: jednorazowe logowanie automatyczne nowego konta,
-# znacznik dla shrimp-setup --first-boot, pliki przeniesione przez Shrimp Install i jego wpis UEFI.
+# Kreator na nośniku zebrał już wszystkie wybory (install.json): skrypt kładzie je w systemie
+# (shrimp-setup --apply), przenosi pliki z Shrimp Install i kopię pendrive'a, sieć Wi-Fi z sesji live
+# i sprząta wpis UEFI Shrimp Install. Po restarcie system jest gotowy: ekran logowania, bez drugiego kreatora.
 set -euo pipefail
 T=/mnt
 STATE=$T/var/lib/shrimp-setup
@@ -93,12 +94,13 @@ if ! chroot "$T" rpm -q shrimp-setup >/dev/null 2>&1; then
   install -Dm755 /usr/bin/shrimp-setup "$T/usr/bin/shrimp-setup"
   install -Dm755 /usr/libexec/shrimp-setup-apply "$T/usr/libexec/shrimp-setup-apply"
   install -Dm755 /usr/libexec/shrimp-usb-backup "$T/usr/libexec/shrimp-usb-backup"
-  mkdir -p "$T$SRC" && cp -a "$SRC/ui" "$T$SRC/"
-  install -Dm644 /usr/share/polkit-1/actions/org.shrimp.setup.policy "$T/usr/share/polkit-1/actions/org.shrimp.setup.policy"
+  install -Dm755 /usr/libexec/shrimp-auto-updates "$T/usr/libexec/shrimp-auto-updates"
   install -Dm644 /usr/share/polkit-1/rules.d/50-shrimp-setup.rules "$T/usr/share/polkit-1/rules.d/50-shrimp-setup.rules"
-  install -Dm644 /etc/xdg/autostart/shrimp-setup-first-boot.desktop "$T/etc/xdg/autostart/shrimp-setup-first-boot.desktop"
-  install -Dm644 /usr/lib/systemd/system/shrimp-nvidia-flatpak.service "$T/usr/lib/systemd/system/shrimp-nvidia-flatpak.service"
-  chroot "$T" systemctl enable shrimp-nvidia-flatpak.service || true
+  for u in shrimp-nvidia-flatpak.service shrimp-usb-restore.service shrimp-usb-restore.timer \
+           shrimp-flatpak-update.service shrimp-flatpak-update.timer; do
+    install -Dm644 "/usr/lib/systemd/system/$u" "$T/usr/lib/systemd/system/$u"
+  done
+  chroot "$T" systemctl enable shrimp-nvidia-flatpak.service shrimp-usb-restore.timer || true
 fi
 # Doinstalowanie po pierwszej konfiguracji bez sieci (NVIDIA, H.264, programy) i karta Wi-Fi, która nie
 # wstała po restarcie z Windows: też w zainstalowanym systemie.
@@ -195,9 +197,9 @@ if [ -f "$TOOLS" ]; then
     done
   done < "$TOOLS"
 fi
-# Pakiety produktu spoza oficjalnego repozytorium Leap offline (shrimp.yaml): okno Setup w pierwszej
-# konfiguracji (WebKitGTK 6), exFAT dla kopii pendrive'a, reguły kontrolerów i GameMode dla Steam.
-for p in libwebkitgtk-6_0-4 exfatprogs steam-devices gamemode; do
+# Pakiety produktu spoza oficjalnego repozytorium Leap offline (shrimp.yaml): exFAT dla kopii pendrive'a,
+# reguły kontrolerów i GameMode dla Steam.
+for p in exfatprogs steam-devices gamemode; do
   chroot "$T" rpm -q "$p" >/dev/null 2>&1 && continue
   chroot "$T" "${ZYP[@]}" install --no-recommends "$p" >/dev/null 2>&1 || log "pakiet niedostępny: $p"
 done
@@ -306,20 +308,7 @@ chroot "$T" glib-compile-schemas "$SCH" || log "glib-compile-schemas nie powiod�
 chroot "$T" gtk-update-icon-cache -f /usr/share/icons/hicolor >/dev/null 2>&1 || true
 chroot "$T" gtk-update-icon-cache -f /usr/share/icons/MoreWaita >/dev/null 2>&1 || true
 
-# Pierwsza konfiguracja: znacznik + jednorazowe logowanie automatyczne (zdejmuje je shrimp-setup-apply).
-touch "$STATE/first-boot"
-if [ -f "$T/etc/sysconfig/displaymanager" ]; then
-  sed -i "s/^DISPLAYMANAGER_AUTOLOGIN=.*/DISPLAYMANAGER_AUTOLOGIN=\"$USER_NAME\"/" "$T/etc/sysconfig/displaymanager"
-fi
-mkdir -p "$T/etc/gdm"
-cat > "$T/etc/gdm/custom.conf" <<CONF
-# Shrimp: logowanie automatyczne tylko na pierwszą konfigurację (zdejmuje je shrimp-setup-apply).
-[daemon]
-AutomaticLoginEnable=True
-AutomaticLogin=$USER_NAME
-CONF
-
-# Bez gnome-initial-setup: jego kroki robi Setup Shrimp.
+# Bez gnome-initial-setup: jego kroki zrobił już kreator na nośniku.
 HOME_DIR=$(chroot "$T" getent passwd "$USER_NAME" | cut -d: -f6)
 OWNER=$(chroot "$T" id -u "$USER_NAME"):$(chroot "$T" id -g "$USER_NAME")
 install -d -o "${OWNER%:*}" -g "${OWNER#*:}" "$T$HOME_DIR/.config"
@@ -334,19 +323,48 @@ for f in "$T"/usr/etc/xdg/autostart/*welcome*.desktop "$T"/etc/xdg/autostart/*we
   log "ukryto autostart $n"
 done
 
-# Flathub dla całego systemu (instalacja programów w kroku Programy).
+# Flathub dla całego systemu (programy z kroku Programy instaluje shrimp-setup-later po pierwszym starcie).
 chroot "$T" flatpak remote-add --system --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo || \
-  log "Flathub zostanie dodany przy pierwszej konfiguracji"
+  log "Flathub doda shrimp-setup-later"
+
+# Sieć z kroku Internet (Wi-Fi z hasłem): po restarcie komputer łączy się sam, więc programy i sterowniki
+# odłożone na później wchodzą bez pytania o hasło drugi raz.
+NMC=/etc/NetworkManager/system-connections
+if [ -d "$NMC" ] && ls "$NMC"/*.nmconnection >/dev/null 2>&1; then
+  install -d -m 0700 "$T$NMC"
+  for f in "$NMC"/*.nmconnection; do
+    grep -q '^type=\(wifi\|802-11-wireless\)' "$f" || continue
+    install -m 0600 "$f" "$T$NMC/$(basename "$f")" && log "sieć Wi-Fi z instalacji: $(sed -n 's/^id=//p' "$f" | head -n1)"
+  done
+fi
 
 # Pliki i lista programów z Shrimp Install (shrimp-transfer/ na nośniku): foldery Windows trafiają do
 # folderów XDG nowego konta w jego języku, pliki podzielone (> 4 GB) są sklejane, shrimp.json idzie do $STATE.
-if /usr/bin/shrimp-setup --restore --root "$T" --user "$USER_NAME"; then :; else
+# Gdzie mają trafić (krok Pliki): do folderów użytkownika albo do jednego folderu.
+PLACE=$(sed -n 's/.*"files":"\([a-z]*\)".*/\1/p' "$STATE/install.json")
+FOLDER=$(sed -n 's/.*"filesFolder":"\([^"]*\)".*/\1/p' "$STATE/install.json")
+if /usr/bin/shrimp-setup --restore --root "$T" --user "$USER_NAME" --place "${PLACE:-folders}" --folder "${FOLDER:-Windows}"; then :; else
   log "bez plików z Shrimp Install"
 fi
 
-# Dawna zawartość pendrive'a (shrimp-backup/ na nośniku): sprawdzona kopia na dysku komputera. Przywróci ją
-# pierwsza konfiguracja (formatuje pendrive i wgrywa pliki z powrotem). Brak shrimp-backup to nie błąd.
+# Dawna zawartość pendrive'a (shrimp-backup/ na nośniku): sprawdzona kopia na dysku komputera. Po pierwszym
+# starcie shrimp-usb-restore.timer formatuje pendrive i wgrywa pliki z powrotem albo kładzie je w ~/Pendrive
+# (wybór z kroku Pendrive, zapisuje go --apply niżej). Brak shrimp-backup to nie błąd.
 /usr/libexec/shrimp-usb-backup stash --root "$T" || log "bez kopii zawartości pendrive'a (kod $?)"
+
+# Wybory z kreatora: przeglądarka domyślna, wygląd (motyw, kolor, rozmiar tekstu, światło nocne, dok),
+# programy i sterowniki na później (shrimp-setup-later), decyzja o pendrivie.
+if /usr/bin/shrimp-setup --apply --root "$T"; then
+  chroot "$T" glib-compile-schemas "$SCH" || log "glib-compile-schemas nie powiodło się"
+  log "wybory z kreatora zapisane"
+else
+  log "UWAGA: shrimp-setup --apply nie powiodło się, zostają ustawienia domyślne"
+fi
+# Aktualizacje w tle (krok Wygląd, domyślnie tak): nowa migawka bez restartu, zmiany po następnym starcie.
+if [ -x "$T/usr/libexec/shrimp-auto-updates" ]; then
+  if grep -q '"autoUpdates":false' "$STATE/install.json"; then chroot "$T" /usr/libexec/shrimp-auto-updates off
+  else chroot "$T" /usr/libexec/shrimp-auto-updates on; fi >/dev/null 2>&1 || log "shrimp-auto-updates nie powiodło się"
+fi
 
 # Jednorazowy wpis UEFI „Shrimp Install” (BootNext z Windows) nie jest już potrzebny.
 if command -v efibootmgr >/dev/null && [ -d /sys/firmware/efi ]; then

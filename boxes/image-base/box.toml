@@ -18,6 +18,7 @@ image = [
     "shim",
     "mokutil",
     "efibootmgr",
+    "sdbootutil",
     "glibc-locale",
     "timezone",
     "sudo",

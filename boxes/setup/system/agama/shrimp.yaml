@@ -30,7 +30,7 @@ software:
     - parted
     - dosfstools
     - ntfsprogs
-    # Pakietów spoza oficjalnego repozytorium Leap offline (libwebkitgtk-6_0-4 dla okna Setup, exfatprogs,
+    # Pakietów spoza oficjalnego repozytorium Leap offline (exfatprogs,
     # steam-devices i gamemode dla Steam) tu nie ma: Agama przerwałaby instalację offline. Dokłada je
     # post-install.sh (PRODUCT_EXTRA) z extra/ na nośniku albo z internetu.
     # Pakiet Shrimp z tym Setup, motywami i skryptem wyglądu (repozytorium Shrimp: do ustalenia

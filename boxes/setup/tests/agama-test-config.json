@@ -1,0 +1,51 @@
+{
+  "files": [
+    {
+      "content": "{\"accent\":\"\",\"apps\":[],\"autoUpdates\":true,\"beside\":false,\"browser\":\"org.mozilla.firefox\",\"colorScheme\":\"default\",\"files\":\"folders\",\"filesFolder\":\"Windows\",\"fullName\":\"Jan Testowy\",\"nightLight\":false,\"proprietary\":true,\"textScale\":1.0,\"usb\":\"restore\",\"userName\":\"jan\"}",
+      "destination": "/var/lib/shrimp-setup/install.json",
+      "permissions": "0644"
+    }
+  ],
+  "l10n": {
+    "keymap": "pl",
+    "locale": "pl_PL.UTF-8",
+    "timezone": "Europe/Warsaw"
+  },
+  "product": {
+    "id": "Shrimp",
+    "mode": "immutable"
+  },
+  "scripts": {
+    "post": [
+      {
+        "chroot": false,
+        "name": "shrimp-post-install",
+        "url": "file:///usr/share/shrimp-setup/post-install.sh"
+      }
+    ]
+  },
+  "storage": {
+    "drives": [
+      {
+        "partitions": [
+          {
+            "delete": true,
+            "search": "*"
+          },
+          {
+            "generate": {
+              "partitions": "default"
+            }
+          }
+        ],
+        "search": "/dev/vda"
+      }
+    ]
+  },
+  "user": {
+    "fullName": "Jan Testowy",
+    "hashedPassword": false,
+    "password": "shrimp",
+    "userName": "jan"
+  }
+}

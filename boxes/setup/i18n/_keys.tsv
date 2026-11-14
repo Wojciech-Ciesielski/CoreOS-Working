@@ -275,3 +275,25 @@
 274	look.auto	Automatic updates
 275	look.auto.d	Installed in the background, active after a restart
 276	files.count	{files} files, {size}
+277	usb.choice.title	Your USB drive
+278	usb.choice.sub	{files} files ({size}) from the drive are saved on it. After Shrimp starts for the first time, we'll put them back and the drive will work as before.
+279	usb.choice.restore	Restore the drive after the first start
+280	usb.choice.keep	Keep the files on this computer
+281	usb.choice.restore.d	Leave the drive plugged in. Shrimp checks every file before and after.
+282	usb.choice.keep.d	You'll find them in the Pendrive folder in your home folder.
+283	folder.documents	Documents
+284	folder.pictures	Pictures
+285	folder.desktop	Desktop
+286	folder.music	Music
+287	folder.videos	Videos
+288	folder.downloads	Downloads
+289	folder.other	Other files
+290	start.wait	Starting the installer…
+291	prog.after	Shrimp installs them by itself after the first start, as soon as it's online.
+292	sum.browser	Browser
+293	sum.apps	Programs
+294	sum.files	Files from Windows
+295	sum.look	Look
+296	sum.usb	USB drive
+297	inet.optional	Optional. Shrimp can install without the internet, and with it, your programs arrive right after the first start.
+298	look.preview	This is how Shrimp will look.

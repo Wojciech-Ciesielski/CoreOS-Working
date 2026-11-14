@@ -1,0 +1,4 @@
+# Sesja nośnika Shrimp: sam kreator w kompozytorze kiosku (bez powłoki GNOME, pulpitu, przeglądu i skrótów).
+[GNOME Session]
+Name=Shrimp Setup
+RequiredComponents=org.gnome.Kiosk;org.shrimp.Setup;

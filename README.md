@@ -44,16 +44,27 @@ Standard Shrimp ponad zwykłego Linuksa (pełna nazwa i hasło tylko na stronie 
 
 Brak pakietu lub repozytorium nie przerywa budowy, tylko daje linię `WARNING: Linu(x): …` w logu (`tools/build-iso.sh` ją wypisuje).
 
-## Setup (instalator i pierwsza konfiguracja)
+## Setup (jeden kreator: instalacja i konfiguracja)
 
-Jeden interfejs z makiety `setup.html`, w dwóch częściach:
+Jeden kreator GTK4 + libadwaita (Rust, `boxes/setup/shell`) prowadzi od języka po wygląd i instalację, a po restarcie
+system jest gotowy: ekran logowania, bez drugiego kreatora, logowania automatycznego i strażnika.
 
-- **Instalacja** (kroki 1–9, nośnik): `shrimp-setup --install` otwiera na pełnym ekranie interfejs serwowany przez `agama-web-server --web-ui-dir /usr/share/shrimp-setup/ui` i rozmawia z HTTP API Agamy (Leap 16.1, API v2). Produkt Agamy: `boxes/setup/system/agama/shrimp.yaml` (tryb niezmienny, jeden wolumin Btrfs).
-- **Pierwsza konfiguracja** (kroki 10–15, po restarcie): `post-install.sh` włącza jednorazowe logowanie automatyczne, a `shrimp-setup --first-boot` uruchamia lokalny serwer w Rust (sieć przez NetworkManager, wygląd przez GSettings, programy z Flathub). Kodeki i sterownik NVIDIA instaluje na końcu `shrimp-setup-apply` (pkexec → transactional-update, jedna migawka). Pakiety: `drivers.conf` boxa `linu-x` (patrz Linu(x)).
-- **Pliki z Windows** (Shrimp Install) (program dla Windows z Install-Working): nośnik ma `shrimp-transfer/shrimp.json` i pliki użytkownika. `shrimp-setup --install` podaje stronie podpowiedzi (`window.SHRIMP_TRANSFER`: imię, język, strefa, klawiatura, BitLocker, rozmiar plików), a `post-install.sh` wywołuje `shrimp-setup --restore`: foldery Windows trafiają do folderów nowego konta w jego języku (Dokumenty, Obrazy…), pliki > 4 GB są sklejane, wpis UEFI „Shrimp Install” jest usuwany. Krok Programy dobiera odpowiedniki po wzorcach nazw (`WIN_MATCH` w `boxes/setup/web/src/data.ts`).
+- **Nośnik**: przed GDM `shrimp-live-session` wybiera sesję `shrimp-setup` (gnome-kiosk + sam kreator, usługa
+  użytkownika `org.shrimp.Setup.service` z `Restart=always`). Dysk z etykietą `SHRIMP_TEST` daje zamiast niej pulpit
+  GNOME (testy QEMU, pomoc techniczna). Kreator rozmawia z HTTP API Agamy (Leap 16.1) przez `http://127.0.0.1`
+  (token z `/run/shrimp-setup/token`). Produkt Agamy: `boxes/setup/system/agama/shrimp.yaml`.
+- **Kroki**: witaj, język, licencje, region, klawiatura, internet (tylko bez sieci), dysk, konto, pliki z Windows,
+  pendrive, przeglądarka, programy, wygląd, podsumowanie, instalacja, restart. Wybory idą do `install.json`
+  w systemie docelowym.
+- **Po instalacji** (`post-install.sh`, Agama): `shrimp-setup --restore` (pliki z Shrimp Install do folderów konta
+  albo jednego folderu), `shrimp-usb-backup stash` (kopia pendrive'a), `shrimp-setup --apply` (przeglądarka, wygląd,
+  dok, plik `later`), sieć Wi-Fi z nośnika, aktualizacje w tle. Po pierwszym starcie `shrimp-setup-later.timer`
+  instaluje kodeki, NVIDIA i programy, gdy jest internet, a `shrimp-usb-restore.timer` przywraca pendrive.
+- **Pliki z Windows** (Shrimp Install): nośnik ma `shrimp-transfer/shrimp.json` i pliki użytkownika; kreator bierze
+  z niego imię, język, strefę, klawiaturę, BitLocker, programy (`shell/data/windows-apps.json`).
 
-Katalogi boxa `setup`: `web` (TypeScript, Vite), `shell` (Rust, GTK4 + WebKitGTK 6), `system` (Agama, polkit, autostart, skrypty), `i18n` (teksty).
-Podgląd w przeglądarce na danych z makiety: `cd boxes/setup/web && npm ci && npm run dev` (`?step=4&sub=1`, `?err=space`, `?fail=install`, `?bitlocker=1`).
+Katalogi boxa `setup`: `shell` (Rust), `system` (Agama, sesja kiosku, polkit, usługi, skrypty), `i18n` (teksty), `tests`.
+Podgląd na danych z makiety: `cargo run -- --demo --window` (w `boxes/setup/shell`, `SHRIMP_SETUP_STEP=Dysk` otwiera krok).
 Budowa i instalacja do katalogu (pakiet/KIWI): `boxes/setup/install.sh DESTDIR [--live]`.
 
 ## Jeden wygląd aplikacji

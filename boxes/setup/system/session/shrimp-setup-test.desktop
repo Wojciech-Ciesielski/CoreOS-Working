@@ -1,0 +1,9 @@
+# Tylko pulpit GNOME na nośniku testowym (dysk SHRIMP_TEST): kreator startuje sam, test zamyka go i używa terminala.
+[Desktop Entry]
+Type=Application
+Name=Shrimp Setup
+Exec=/usr/bin/shrimp-setup
+TryExec=/usr/bin/shrimp-setup
+NoDisplay=true
+OnlyShowIn=GNOME;
+X-GNOME-Autostart-Phase=Applications

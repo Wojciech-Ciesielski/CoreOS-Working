@@ -2,9 +2,10 @@ name: Test install
 
 # Full Shrimp path in QEMU: a stick made like Shrimp Install makes it (GPT: ISO files but LiveOS on FAT32
 # SHRIMP_BOOT, LiveOS and shrimp-transfer/shrimp.json with files on exFAT SHRIMP_LIVE), Setup on the live session,
-# installation with Agama onto an empty disk (Setup's own configuration from
-# boxes/setup/web/scripts/agama-test-config.ts), then the first boot of the installed system.
-# Before that, phase 0 boots the stick with the Setup guard on and checks that a click reaches Setup.
+# installation with Agama onto an empty disk (Setup's own configuration for /dev/vda,
+# boxes/setup/tests/agama-test-config.json, kept current by cargo test), then the first boot of the installed
+# system and a login at GDM. Before that, phase 0 boots the stick normally (kiosk session) and checks that a
+# click reaches Setup.
 # Serial logs and the Agama result are kept as an artifact (14 days). No screenshots, nothing is committed.
 
 on:
@@ -39,15 +40,10 @@ jobs:
           gh run download "$id" -R "$GITHUB_REPOSITORY" -n shrimp-live-iso -D iso
           ls -l iso
 
-      - uses: actions/setup-node@v7
-        with: { node-version: 22 }
-
       - name: Setup's Agama configuration for the test disk
-        working-directory: boxes/setup/web
         run: |
-          npm ci
-          npx --yes tsx scripts/agama-test-config.ts /dev/vda > ../../../tools/install-test/config.json
-          cat ../../../tools/install-test/config.json
+          cp boxes/setup/tests/agama-test-config.json tools/install-test/config.json
+          cat tools/install-test/config.json
 
       - name: Make the stick (like Shrimp Install)
         run: |

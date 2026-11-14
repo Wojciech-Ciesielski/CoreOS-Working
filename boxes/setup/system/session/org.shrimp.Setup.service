@@ -1,0 +1,11 @@
+# Kreator w sesji kiosku. Gdy okno się zamknie albo program padnie, wraca od razu (stan zaczyna się od nowa,
+# nic nie zostało zapisane przed kliknięciem „Zainstaluj”).
+[Unit]
+Description=Shrimp Setup
+BindsTo=gnome-session.target
+After=gnome-session.target
+
+[Service]
+ExecStart=/usr/bin/shrimp-setup
+Restart=always
+RestartSec=1

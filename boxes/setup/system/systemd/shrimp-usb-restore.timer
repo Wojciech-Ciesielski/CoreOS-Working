@@ -1,0 +1,10 @@
+# Co 2 minuty po starcie: czy pendrive z kopii jest podłączony. Bez kopii usługa nic nie robi.
+[Unit]
+Description=Shrimp: czekanie na pendrive z instalacji
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=2min
+
+[Install]
+WantedBy=timers.target

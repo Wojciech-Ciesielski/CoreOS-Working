@@ -29,7 +29,7 @@ sources=[('xkb', 'pl')]
 button-layout='appmenu:minimize,maximize,close'
 
 [org.gnome.shell]
-enabled-extensions=['shrimp-setup-guard@shrimp', 'shrimp-menu@shrimp', 'ding@rastersoft.com', 'blur-my-shell@aunetx', 'dash-to-dock@micxgx.gmail.com', 'just-perfection-desktop@just-perfection', 'light-style@gnome-shell-extensions.gcampax.github.com']
+enabled-extensions=['shrimp-menu@shrimp', 'ding@rastersoft.com', 'blur-my-shell@aunetx', 'dash-to-dock@micxgx.gmail.com', 'just-perfection-desktop@just-perfection', 'light-style@gnome-shell-extensions.gcampax.github.com']
 disable-user-extensions=false
 # Dock at the start (owner, 2026-11-13): browser, Steam, Files, store, Calculator, Calendar, LibreOffice,
 # Settings; nothing that needs knowing the system (Cherry, Panko). Onboarding puts the browser the user

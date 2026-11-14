@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Shrimp Setup
+Comment=Instalacja Shrimp
+Exec=gnome-session --session shrimp-setup
+TryExec=gnome-kiosk
+Type=Application
+DesktopNames=GNOME-Kiosk
+X-GDM-SessionRegisters=true

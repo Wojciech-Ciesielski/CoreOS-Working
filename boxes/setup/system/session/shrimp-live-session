@@ -1,0 +1,16 @@
+#!/bin/bash
+# Przed GDM na nośniku: która sesja dla użytkownika live (logowanie automatyczne).
+#   shrimp-setup  kreator w kiosku (zwykły start)
+#   gnome         pulpit GNOME, gdy podłączony jest dysk SHRIMP_TEST (testy QEMU, pomoc techniczna)
+#                 albo gdy obraz nie ma gnome-kiosk (kreator i tak startuje, z autostartu)
+set -u
+S=shrimp-setup
+udevadm settle --timeout=5 2>/dev/null || true
+for _ in 1 2 3 4; do
+  [ -e /dev/disk/by-label/SHRIMP_TEST ] && { S=gnome; break; }
+  sleep 0.5
+done
+command -v gnome-kiosk >/dev/null 2>&1 || S=gnome
+install -d -m 0755 /var/lib/AccountsService/users
+printf '[User]\nSession=%s\nXSession=%s\nSystemAccount=false\n' "$S" "$S" > /var/lib/AccountsService/users/shrimp
+echo "shrimp-live-session: $S"

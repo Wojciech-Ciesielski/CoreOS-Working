@@ -23,8 +23,8 @@ QMP_SOCK = os.path.join(OUT, "qmp.sock")
 W, H = 1920, 1080
 
 def noguard_drive(outdir):
-    """Small FAT drive labelled SHRIMP_TEST: switches off the Shrimp Setup guard (GNOME Shell
-    extension shrimp-setup-guard@shrimp), so the test can close Setup and use the desktop."""
+    """Small FAT drive labelled SHRIMP_TEST: gives the GNOME desktop instead of the kiosk session
+    (shrimp-live-session), so the test can close Setup and use the desktop."""
     img = os.path.join(outdir, "noguard.img")
     if not os.path.exists(img):
         subprocess.run(["mkfs.vfat", "-C", "-n", "SHRIMP_TEST", img, "2048"], check=True, stdout=subprocess.DEVNULL)
@@ -211,7 +211,7 @@ try:
 
     # Live session: GDM autologin into GNOME (software rendering, so be patient).
     wait_stages(150, 10, "session")
-    # Shrimp Setup opens full screen on its own once Agama is up (autostart, shrimp-setup --install).
+    # Shrimp Setup opens full screen on its own (autostart in the GNOME session of the SHRIMP_TEST stick).
     wait_stages(t() + 90, 10, "setup")
     stage("setup", keep_duplicates=True)
     # Close it for the desktop checks below (the window itself refuses to close).
@@ -251,8 +251,8 @@ try:
     diag = (
         "{ echo ===EXT; gnome-extensions list --details; echo ===SHELL; "
         "sudo journalctl -b _UID=$(id -u) -o short-monotonic --no-pager | grep -iE 'gnome-shell|extension|JS ERROR|ding' | tail -n 300; "
-        "echo ===SETUP; ls -l /usr/bin/shrimp-setup /etc/xdg/autostart/shrimp-setup-install.desktop /run/shrimp-setup /run/agama; "
-        "systemctl status --no-pager agama-web-server agama shrimp-setup-token | head -n 60; "
+        "echo ===SETUP; ls -l /usr/bin/shrimp-setup /etc/xdg/autostart/shrimp-setup-test.desktop /usr/share/wayland-sessions/shrimp-setup.desktop /run/shrimp-setup /run/agama; "
+        "systemctl status --no-pager agama-web-server agama shrimp-setup-token shrimp-live-session | head -n 60; "
         "sudo journalctl -b -o short-monotonic --no-pager | grep -iE 'shrimp-setup|agama|webkit' | tail -n 150; "
         "echo ===FAILED; systemctl --failed --no-pager; echo ===END; } 2>&1 | sudo tee /dev/ttyS0 >/dev/null\n"
     )

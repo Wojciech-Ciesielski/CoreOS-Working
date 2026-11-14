@@ -274,3 +274,25 @@
 274	Aktualizacje automatyczne
 275	Instalowane w tle, działają po ponownym uruchomieniu
 276	plików: {files}, {size}
+277	Twój pendrive
+278	Na nośniku jest kopia {files} plików z pendrive'a ({size}). Po pierwszym uruchomieniu Shrimp wgramy je z powrotem i pendrive będzie działał jak wcześniej.
+279	Przywróć pendrive po pierwszym uruchomieniu
+280	Zostaw pliki na komputerze
+281	Zostaw pendrive w komputerze. Shrimp sprawdzi każdy plik przed i po.
+282	Znajdziesz je w folderze Pendrive w katalogu domowym.
+283	Dokumenty
+284	Obrazy
+285	Pulpit
+286	Muzyka
+287	Wideo
+288	Pobrane
+289	Inne pliki
+290	Uruchamiam instalator…
+291	Shrimp zainstaluje je sam po pierwszym uruchomieniu, gdy tylko będzie internet.
+292	Przeglądarka
+293	Programy
+294	Pliki z Windows
+295	Wygląd
+296	Pendrive
+297	Opcjonalnie. Shrimp zainstaluje się bez internetu, a z nim programy pojawią się zaraz po pierwszym uruchomieniu.
+298	Tak będzie wyglądał Shrimp.

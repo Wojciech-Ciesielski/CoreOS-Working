@@ -1,0 +1,11 @@
+# Składnik sesji shrimp-setup (uruchamia go systemd: org.shrimp.Setup.service) i autostart w pulpicie GNOME
+# nośnika testowego (dysk SHRIMP_TEST, test QEMU).
+[Desktop Entry]
+Type=Application
+Name=Shrimp Setup
+Exec=/usr/bin/shrimp-setup
+TryExec=/usr/bin/shrimp-setup
+Icon=shrimp-logo
+NoDisplay=true
+X-GNOME-HiddenUnderSystemd=true
+X-GNOME-AutoRestart=true

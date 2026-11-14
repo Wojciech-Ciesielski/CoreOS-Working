@@ -1,101 +1,21 @@
-//! Dostęp do systemu w pierwszej konfiguracji. Działa jako zalogowany użytkownik:
-//! sieć przez NetworkManager (nmcli), wygląd przez GSettings, aplikacje przez Flatpak (Flathub),
-//! zmiany systemu (kodeki, sterowniki) przez pomocnika z uprawnieniami (pkexec → transactional-update).
-use serde::{Deserialize, Serialize};
-use std::path::Path;
-use tokio::process::Command;
-
-pub const STATE_DIR: &str = "/var/lib/shrimp-setup";
-/// Znacznik zostawiany przez post-install.sh; usuwa go shrimp-setup-apply po zakończeniu.
-pub const FIRST_BOOT_MARKER: &str = "/var/lib/shrimp-setup/first-boot";
-pub const APPLY_HELPER: &str = "/usr/libexec/shrimp-setup-apply";
-pub const USB_HELPER: &str = "/usr/libexec/shrimp-usb-backup";
-
-pub fn first_boot_pending() -> bool {
-    Path::new(FIRST_BOOT_MARKER).exists()
-}
+//! Dostęp do systemu z kreatora Setup na nośniku: sieć przez NetworkManager (nmcli), układ klawiatury
+//! sesji (GSettings), karta NVIDIA. Wywołania blokują, więc okno woła je w osobnym wątku (gio::spawn_blocking).
+use std::process::Command;
 
 #[derive(Debug)]
 pub struct CmdError(pub String);
 
-async fn run(cmd: &str, args: &[&str]) -> Result<String, CmdError> {
+fn run(cmd: &str, args: &[&str]) -> Result<String, CmdError> {
     let out = Command::new(cmd)
         .args(args)
         .env("LC_ALL", "C")
         .output()
-        .await
         .map_err(|e| CmdError(format!("{cmd}: {e}")))?;
     if out.status.success() {
         Ok(String::from_utf8_lossy(&out.stdout).into_owned())
     } else {
         Err(CmdError(String::from_utf8_lossy(&out.stderr).trim().to_string()))
     }
-}
-
-// ---------- informacje z instalacji ----------
-
-#[derive(Deserialize, Default)]
-#[serde(rename_all = "camelCase")]
-struct Handoff {
-    #[serde(default)]
-    full_name: String,
-    #[serde(default)]
-    beside: bool,
-    /// Zgoda na licencje kodeków i sterowników własnościowych (krok „Licencje” w Setup).
-    /// Brak pola (instalacje sprzed kroku): zgoda, jak dotychczasowy domyślny wybór.
-    #[serde(default = "yes")]
-    proprietary: bool,
-}
-
-fn yes() -> bool {
-    true
-}
-
-#[derive(Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct Info {
-    pub full_name: String,
-    pub beside: bool,
-    pub proprietary: bool,
-    pub wired: bool,
-    pub nvidia: Option<String>,
-    pub windows_apps: Option<Vec<String>>,
-    pub store_apps: Option<Vec<String>>,
-    /// Domyślna przeglądarka Windows (ProgId z shrimp.json, np. „ChromeHTML”), jeśli Shrimp Install ją zapisał.
-    pub default_browser: Option<String>,
-}
-
-pub async fn info() -> Info {
-    let h: Handoff = std::fs::read_to_string(format!("{STATE_DIR}/install.json"))
-        .ok()
-        .and_then(|s| serde_json::from_str(&s).ok())
-        .unwrap_or_default();
-    // Lista programów z Shrimp Install (post-install.sh kopiuje shrimp.json z nośnika).
-    let shrimp_json = std::fs::read_to_string(format!("{STATE_DIR}/shrimp.json"))
-        .ok()
-        .and_then(|s| serde_json::from_str::<serde_json::Value>(&s).ok());
-    let (windows_apps, store_apps) = shrimp_json.as_ref().map(windows_apps_of).unwrap_or((None, None));
-    let default_browser = shrimp_json.as_ref().and_then(|v| v["defaultBrowser"].as_str()).filter(|s| !s.is_empty()).map(str::to_string);
-    let full_name = if h.full_name.is_empty() { real_name() } else { h.full_name };
-    Info { full_name, beside: h.beside, proprietary: h.proprietary, wired: wired_online().await, nvidia: nvidia_gpu(), windows_apps, store_apps, default_browser }
-}
-
-/// `apps[].name` i `storeApps` z shrimp.json. Odpowiedniki dobiera interfejs (windows-apps.json).
-pub fn windows_apps_of(v: &serde_json::Value) -> (Option<Vec<String>>, Option<Vec<String>>) {
-    let apps = v["apps"].as_array().map(|a| a.iter().filter_map(|x| x["name"].as_str().map(str::to_string)).collect());
-    let store = v["storeApps"].as_array().map(|a| a.iter().filter_map(|x| x.as_str().map(str::to_string)).collect());
-    (apps, store)
-}
-
-fn real_name() -> String {
-    let user = std::env::var("USER").unwrap_or_default();
-    std::fs::read_to_string("/etc/passwd")
-        .unwrap_or_default()
-        .lines()
-        .find(|l| l.starts_with(&format!("{user}:")))
-        .and_then(|l| l.split(':').nth(4))
-        .map(|g| g.split(',').next().unwrap_or("").to_string())
-        .unwrap_or(user)
 }
 
 // ---------- karta NVIDIA ----------
@@ -147,7 +67,7 @@ pub fn pci_name_in(db: &str, vendor: &str, device: &str) -> Option<String> {
 
 // ---------- sieć ----------
 
-#[derive(Serialize, Clone)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct Network {
     pub ssid: String,
     pub secure: bool,
@@ -161,17 +81,12 @@ pub fn offline_repo() -> bool {
 
 /// Internet jest, gdy NetworkManager tak mówi. Bez sprawdzania łączności w NetworkManagerze
 /// („unknown”) wystarcza stan „connected” (jest trasa domyślna).
-pub async fn online() -> bool {
-    match run("nmcli", &["networking", "connectivity", "check"]).await.map(|s| s.trim().to_string()) {
+pub fn online() -> bool {
+    match run("nmcli", &["networking", "connectivity", "check"]).map(|s| s.trim().to_string()) {
         Ok(s) if s == "full" => true,
-        Ok(s) if s == "unknown" => matches!(run("nmcli", &["-t", "-f", "STATE", "general"]).await, Ok(g) if g.trim() == "connected"),
+        Ok(s) if s == "unknown" => matches!(run("nmcli", &["-t", "-f", "STATE", "general"]), Ok(g) if g.trim() == "connected"),
         _ => false,
     }
-}
-
-async fn wired_online() -> bool {
-    let devs = run("nmcli", &["-t", "-f", "TYPE,STATE", "device"]).await.unwrap_or_default();
-    devs.lines().any(|l| l.starts_with("ethernet:connected")) && online().await
 }
 
 /// Sieci Wi-Fi bez powtórzeń (najsilniejszy punkt dla każdej nazwy), od najsilniejszej.
@@ -179,33 +94,33 @@ async fn wired_online() -> bool {
 /// bo skan trwa kilka sekund (karty Intel kilkanaście). Wcześniej Setup pytał raz i pokazywał „Nie widzę sieci
 /// Wi-Fi”; kolejne kliknięcie „Wyszukaj ponownie” dawało dopiero wynik poprzedniego skanu. Teraz: włącza radio
 /// Wi-Fi, prosi o skan i czeka na wynik (do ok. 12 s), gdy lista jest pusta.
-pub async fn networks() -> Vec<Network> {
-    let list = || async {
-        parse_networks(&run("nmcli", &["-t", "-f", "SSID,SIGNAL,SECURITY", "device", "wifi", "list", "--rescan", "no"]).await.unwrap_or_default())
+pub fn networks() -> Vec<Network> {
+    let list = || {
+        parse_networks(&run("nmcli", &["-t", "-f", "SSID,SIGNAL,SECURITY", "device", "wifi", "list", "--rescan", "no"]).unwrap_or_default())
     };
-    let first = list().await;
+    let first = list();
     if !first.is_empty() {
         // Skan w tle na następny odczyt (lista ma być świeża, gdy ktoś wróci do kroku).
-        let _ = run("nmcli", &["device", "wifi", "rescan"]).await;
+        let _ = run("nmcli", &["device", "wifi", "rescan"]);
         return first;
     }
-    let _ = run("nmcli", &["radio", "wifi", "on"]).await;
-    let _ = run("rfkill", &["unblock", "wifi"]).await;
+    let _ = run("nmcli", &["radio", "wifi", "on"]);
+    let _ = run("rfkill", &["unblock", "wifi"]);
     for i in 0..4 {
-        let _ = run("nmcli", &["device", "wifi", "rescan"]).await;
-        tokio::time::sleep(std::time::Duration::from_secs(3)).await;
-        let n = list().await;
+        let _ = run("nmcli", &["device", "wifi", "rescan"]);
+        std::thread::sleep(std::time::Duration::from_secs(3));
+        let n = list();
         if !n.is_empty() {
             eprintln!("shrimp-setup: Wi-Fi: sieci widać po {} s", (i + 1) * 3);
             return n;
         }
     }
-    eprintln!("shrimp-setup: Wi-Fi: brak sieci po skanowaniu, {}", wifi_diag().await.summary());
+    eprintln!("shrimp-setup: Wi-Fi: brak sieci po skanowaniu, {}", wifi_diag().summary());
     Vec::new()
 }
 
 /// Stan karty Wi-Fi: czy system ją widzi (sterownik i firmware), czy radio jest włączone, czy nie ma blokady.
-#[derive(Serialize, Default, Debug)]
+#[derive(Default, Debug)]
 pub struct WifiDiag {
     /// Urządzenia Wi-Fi widziane przez NetworkManager: „nazwa:stan” (np. „wlan0:disconnected”).
     pub devices: Vec<String>,
@@ -223,14 +138,14 @@ impl WifiDiag {
     }
 }
 
-pub async fn wifi_diag() -> WifiDiag {
-    let devs = run("nmcli", &["-t", "-f", "DEVICE,TYPE,STATE", "device"]).await.unwrap_or_default();
+pub fn wifi_diag() -> WifiDiag {
+    let devs = run("nmcli", &["-t", "-f", "DEVICE,TYPE,STATE", "device"]).unwrap_or_default();
     let devices: Vec<String> = devs.lines().filter_map(|l| {
         let f: Vec<&str> = l.split(':').collect();
         (f.len() >= 3 && f[1] == "wifi").then(|| format!("{}:{}", f[0], f[2]))
     }).collect();
-    let radio = run("nmcli", &["radio", "wifi"]).await.map(|s| s.trim().to_string()).unwrap_or_default();
-    let blocked = match run("rfkill", &["-n", "-o", "TYPE,SOFT,HARD", "list", "wifi"]).await {
+    let radio = run("nmcli", &["radio", "wifi"]).map(|s| s.trim().to_string()).unwrap_or_default();
+    let blocked = match run("rfkill", &["-n", "-o", "TYPE,SOFT,HARD", "list", "wifi"]) {
         Ok(o) => {
             let (mut soft, mut hard) = (false, false);
             for l in o.lines() { let f: Vec<&str> = l.split_whitespace().collect(); if f.len() >= 3 { soft |= f[1] == "blocked"; hard |= f[2] == "blocked"; } }
@@ -240,7 +155,7 @@ pub async fn wifi_diag() -> WifiDiag {
     };
     // Bez urządzenia Wi-Fi: co system widzi na PCI (karta bez sterownika albo bez firmware).
     let hardware = if devices.is_empty() {
-        run("lspci", &["-nnk"]).await.map(|o| {
+        run("lspci", &["-nnk"]).map(|o| {
             let mut out = Vec::new();
             let lines: Vec<&str> = o.lines().collect();
             for (i, l) in lines.iter().enumerate() {
@@ -289,17 +204,16 @@ pub fn parse_networks(out: &str) -> Vec<Network> {
     nets
 }
 
-#[derive(Deserialize)]
+#[derive(Default)]
 pub struct Connect {
     pub ssid: String,
     pub password: Option<String>,
-    #[serde(default)]
     pub hidden: bool,
     /// "none" | "wpa2" | "wpa3" (tylko ukryta sieć).
     pub security: Option<String>,
 }
 
-pub async fn connect(c: &Connect) -> Result<(), CmdError> {
+pub fn connect(c: &Connect) -> Result<(), CmdError> {
     if c.hidden {
         let name = format!("{} (Shrimp)", c.ssid);
         let mut args: Vec<&str> = vec!["connection", "add", "type", "wifi", "con-name", &name, "ssid", &c.ssid, "802-11-wireless.hidden", "yes"];
@@ -309,21 +223,21 @@ pub async fn connect(c: &Connect) -> Result<(), CmdError> {
             Some("wpa3") => args.extend(["wifi-sec.key-mgmt", "sae", "wifi-sec.psk", &pw]),
             _ => {}
         }
-        run("nmcli", &args).await?;
-        if let Err(e) = run("nmcli", &["--wait", "30", "connection", "up", &name]).await {
-            let _ = run("nmcli", &["connection", "delete", &name]).await;
+        run("nmcli", &args)?;
+        if let Err(e) = run("nmcli", &["--wait", "30", "connection", "up", &name]) {
+            let _ = run("nmcli", &["connection", "delete", &name]);
             return Err(e);
         }
         return Ok(());
     }
     let pw = c.password.as_deref().filter(|p| !p.is_empty());
     // Profil z poprzedniej, nieudanej próby (stare hasło) psuje kolejną: nmcli bierze go zamiast nowego hasła.
-    forget(&c.ssid).await;
+    forget(&c.ssid);
     let mut args = vec!["--wait", "30", "device", "wifi", "connect", c.ssid.as_str()];
     if let Some(pw) = pw {
         args.extend(["password", pw]);
     }
-    let first = match run("nmcli", &args).await {
+    let first = match run("nmcli", &args) {
         Ok(_) => return Ok(()),
         Err(e) => e,
     };
@@ -335,12 +249,12 @@ pub async fn connect(c: &Connect) -> Result<(), CmdError> {
     let name = c.ssid.as_str();
     let mut errs = vec![first.0];
     for mgmt in ["wpa-psk", "sae"] {
-        forget(name).await;
-        let r = async {
+        forget(name);
+        let r = (|| {
             run("nmcli", &["connection", "add", "type", "wifi", "ifname", "*", "con-name", name, "ssid", name,
-                "wifi-sec.key-mgmt", mgmt, "wifi-sec.psk", pw]).await?;
-            run("nmcli", &["--wait", "30", "connection", "up", "id", name]).await
-        }.await;
+                "wifi-sec.key-mgmt", mgmt, "wifi-sec.psk", pw])?;
+            run("nmcli", &["--wait", "30", "connection", "up", "id", name])
+        })();
         match r {
             Ok(_) => {
                 eprintln!("shrimp-setup: Wi-Fi {name}: połączono profilem {mgmt}");
@@ -352,17 +266,17 @@ pub async fn connect(c: &Connect) -> Result<(), CmdError> {
             }
         }
     }
-    forget(name).await;
+    forget(name);
     Err(CmdError(errs.join(" / ")))
 }
 
 /// Usuwa profile Wi-Fi o tej nazwie (nmcli nazywa profil nazwą sieci).
-async fn forget(ssid: &str) {
-    let list = run("nmcli", &["-t", "-f", "NAME,TYPE", "connection", "show"]).await.unwrap_or_default();
+fn forget(ssid: &str) {
+    let list = run("nmcli", &["-t", "-f", "NAME,TYPE", "connection", "show"]).unwrap_or_default();
     for line in list.lines() {
         if let Some((n, t)) = line.rsplit_once(':') {
             if t == "802-11-wireless" && n.replace("\\:", ":") == ssid {
-                let _ = run("nmcli", &["connection", "delete", "id", ssid]).await;
+                let _ = run("nmcli", &["connection", "delete", "id", ssid]);
                 return;
             }
         }
@@ -370,60 +284,19 @@ async fn forget(ssid: &str) {
 }
 
 /// Układ klawiatury w bieżącej sesji GNOME. Setup podaje układ jak Agama/XKB: „pl”, „pl(qwertz)”.
-pub async fn input_source(keymap: &str) -> Result<(), CmdError> {
+pub fn input_source(keymap: &str) -> Result<(), CmdError> {
     let ok = !keymap.is_empty() && keymap.chars().all(|c| c.is_ascii_alphanumeric() || "()_-".contains(c));
     if !ok {
         return Err(CmdError(format!("zły układ klawiatury: {keymap}")));
     }
     let xkb = keymap.replace('(', "+").replace(')', "");
-    run("gsettings", &["set", "org.gnome.desktop.input-sources", "sources", &format!("[('xkb', '{xkb}')]")]).await.map(|_| ())
-}
-
-#[derive(Deserialize)]
-pub struct Advanced {
-    pub ip: String,
-    pub dns: String,
-    pub proxy: String,
-}
-
-/// DNS na aktywnym połączeniu, proxy w GSettings. „Ręczny” adres IP ustawia się w Ustawieniach
-/// (makieta nie ma pól adresu), więc tutaj go nie zmieniamy.
-pub async fn advanced(a: &Advanced) -> Result<(), CmdError> {
-    let dns = match a.dns.as_str() {
-        "cloudflare" => Some("1.1.1.1 1.0.0.1"),
-        "google" => Some("8.8.8.8 8.8.4.4"),
-        _ => None,
-    };
-    let active = run("nmcli", &["-t", "-f", "NAME,TYPE", "connection", "show", "--active"]).await.unwrap_or_default();
-    for name in active.lines().filter(|l| !l.contains(":loopback")).filter_map(|l| l.rsplit_once(':').map(|x| x.0)) {
-        let name = name.replace("\\:", ":");
-        let (servers, ignore) = match dns { Some(d) => (d, "yes"), None => ("", "no") };
-        run("nmcli", &["connection", "modify", &name, "ipv4.dns", servers, "ipv4.ignore-auto-dns", ignore]).await?;
-        let _ = run("nmcli", &["connection", "up", &name]).await;
-    }
-    let mode = if a.proxy == "auto" { "auto" } else { "none" };
-    run("gsettings", &["set", "org.gnome.system.proxy", "mode", mode]).await?;
-    let _ = &a.ip;
-    Ok(())
-}
-
-// ---------- wygląd ----------
-
-const ACCENTS: [&str; 9] = ["blue", "teal", "green", "yellow", "orange", "red", "pink", "purple", "slate"];
-
-pub async fn appearance(scheme: &str, accent: Option<&str>) -> Result<(), CmdError> {
-    let scheme = if scheme == "prefer-dark" { "prefer-dark" } else { "default" };
-    run("gsettings", &["set", "org.gnome.desktop.interface", "color-scheme", scheme]).await?;
-    if let Some(a) = accent.filter(|a| ACCENTS.contains(a)) {
-        run("gsettings", &["set", "org.gnome.desktop.interface", "accent-color", a]).await?;
-    }
-    Ok(())
+    run("gsettings", &["set", "org.gnome.desktop.input-sources", "sources", &format!("[('xkb', '{xkb}')]")]).map(|_| ())
 }
 
 // ---------- przeglądarka, dock, preferencje ----------
 
 /// Typy, które otwiera domyślna przeglądarka (Ustawienia › Aplikacje domyślne › Sieć).
-const BROWSER_TYPES: [&str; 6] =
+pub const BROWSER_TYPES: [&str; 6] =
     ["x-scheme-handler/http", "x-scheme-handler/https", "text/html", "application/xhtml+xml", "x-scheme-handler/about", "x-scheme-handler/unknown"];
 
 /// Identyfikator Flatpaka jak z Flathub (org.mozilla.firefox, com.google.Chrome).
@@ -479,21 +352,6 @@ pub fn mimeapps_with(text: &str, types: &[&str], desktop: &str) -> String {
     out.join("\n") + "\n"
 }
 
-/// Domyślna przeglądarka użytkownika (~/.config/mimeapps.list). Działa też, zanim Flatpak się zainstaluje:
-/// wpis zaczyna działać, gdy pojawi się plik .desktop.
-pub async fn set_browser(id: &str) -> Result<(), CmdError> {
-    if !valid_app_id(id) {
-        return Err(CmdError(format!("zła przeglądarka: {id}")));
-    }
-    let home = std::env::var_os("HOME").map(std::path::PathBuf::from).ok_or(CmdError("brak HOME".into()))?;
-    let path = home.join(".config/mimeapps.list");
-    let old = std::fs::read_to_string(&path).unwrap_or_default();
-    let new = mimeapps_with(&old, &BROWSER_TYPES, &format!("{id}.desktop"));
-    std::fs::create_dir_all(path.parent().unwrap()).map_err(|e| CmdError(e.to_string()))?;
-    std::fs::write(&path, new).map_err(|e| CmdError(e.to_string()))?;
-    set_dock(id).await
-}
-
 /// Dock na start (lista właściciela, 2026-11-13): przeglądarka, Steam, Pliki, sklep, Kalkulator, Kalendarz,
 /// LibreOffice, Ustawienia. Pliki = Filer, a bez niego Nautilus.
 pub fn dock(browser: &str, filer: bool) -> Vec<String> {
@@ -504,133 +362,9 @@ pub fn dock(browser: &str, filer: bool) -> Vec<String> {
         .collect()
 }
 
-async fn set_dock(browser: &str) -> Result<(), CmdError> {
-    let filer = Path::new("/usr/share/applications/org.shrimp.Filer.desktop").exists();
-    let list = dock(browser, filer).iter().map(|d| format!("'{d}'")).collect::<Vec<_>>().join(", ");
-    run("gsettings", &["set", "org.gnome.shell", "favorite-apps", &format!("[{list}]")]).await.map(|_| ())
-}
-
-#[derive(Deserialize, Default, Clone, Copy)]
-#[serde(rename_all = "camelCase")]
-pub struct Prefs {
-    /// Rozmiar tekstu: 0.8–1.6 (GNOME: text-scaling-factor).
-    pub text_scale: f64,
-    pub night_light: bool,
-    /// Automatyczne aktualizacje w tle (Cocktail), stosowane po ponownym uruchomieniu.
-    pub auto_updates: bool,
-}
-
-pub async fn prefs(p: &Prefs) -> Result<(), CmdError> {
-    let scale = if p.text_scale.is_finite() { p.text_scale.clamp(0.8, 1.6) } else { 1.0 };
-    run("gsettings", &["set", "org.gnome.desktop.interface", "text-scaling-factor", &format!("{scale:.2}")]).await?;
-    let on = if p.night_light { "true" } else { "false" };
-    let _ = run("gsettings", &["set", "org.gnome.settings-daemon.plugins.color", "night-light-schedule-automatic", "true"]).await;
-    run("gsettings", &["set", "org.gnome.settings-daemon.plugins.color", "night-light-enabled", on]).await.map(|_| ())
-}
-
-// ---------- aplikacje ----------
-
-/// Dodatki, bez których aplikacja z Flathub nie działa albo kapryśnie się instaluje. Steam potrzebuje
-/// 32-bitowych bibliotek GL (gry i sam klient) oraz kodeków do wideo w sklepie. Instalowane przed Steamem,
-/// błąd któregokolwiek nie blokuje reszty (Flatpak dociągnie, co jeszcze brakuje).
-pub fn app_dependencies(id: &str) -> &'static [&'static str] {
-    match id {
-        "com.valvesoftware.Steam" => &["org.freedesktop.Platform.GL32.default", "org.freedesktop.Platform.ffmpeg-full"],
-        _ => &[],
-    }
-}
-
-const SHRIMP_APPS: &str = "/usr/bin/shrimp-apps";
-
-/// Aplikacje instaluje sklep Shrimp (shrimp-apps --install), a nie bezpośrednio flatpak:
-/// to jego repozytorium i backend pobierają wszystko. Bez sklepu (np. test na obrazie bez niego) działa flatpak.
-pub async fn install_app(id: &str) -> Result<(), CmdError> {
-    if std::path::Path::new(SHRIMP_APPS).exists() {
-        return run(SHRIMP_APPS, &["--install", id]).await.map(|_| ());
-    }
-    let _ = run("flatpak", &["remote-add", "--system", "--if-not-exists", "flathub", "https://dl.flathub.org/repo/flathub.flatpakrepo"]).await;
-    for dep in app_dependencies(id) {
-        if let Err(e) = run("flatpak", &["install", "--system", "--noninteractive", "-y", "flathub", dep]).await {
-            eprintln!("shrimp-setup: {id}: dodatek {dep}: {}", e.0);
-        }
-    }
-    run("flatpak", &["install", "--system", "--noninteractive", "-y", "flathub", id]).await.map(|_| ())
-}
-
-// ---------- pendrive z Shrimp Install ----------
-
-#[derive(Debug, Default, Deserialize, Serialize, PartialEq)]
-#[serde(rename_all = "camelCase")]
-pub struct Usb {
-    #[serde(default)]
-    pub pending: bool,
-    /// Pendrive z kopii jest teraz podłączony.
-    #[serde(default)]
-    pub present: bool,
-    #[serde(default)]
-    pub device: String,
-    #[serde(default)]
-    pub bytes: u64,
-    #[serde(default)]
-    pub files: u64,
-}
-
-/// Czy po instalacji czeka zawartość pendrive'a i czy pendrive jest podłączony (bez uprawnień).
-pub async fn usb_status() -> Usb {
-    run(USB_HELPER, &["status"]).await.ok().and_then(|o| parse_usb(&o)).unwrap_or_default()
-}
-
-pub fn parse_usb(out: &str) -> Option<Usb> {
-    serde_json::from_str(out.lines().last()?).ok()
-}
-
-/// Formatuje podłączony pendrive i wgrywa na niego pliki (pkexec; pomocnik sam sprawdza kopię i tożsamość dysku).
-pub async fn usb_restore(device: &str) -> Result<(), CmdError> {
-    run("pkexec", &[USB_HELPER, "restore", device]).await.map(|_| ())
-}
-
-/// Pliki do ~/Pendrive: gdy pendrive nie wróci na miejsce albo użytkownik zrezygnuje.
-pub async fn usb_to_home() -> Result<(), CmdError> {
-    run("pkexec", &[USB_HELPER, "to-home"]).await.map(|_| ())
-}
-
-/// Zestaw podstawowy (Firefox i aplikacje GNOME z /usr/share/shrimp/base-apps.json) przez sklep Shrimp.
-/// Brak sklepu albo manifestu nie jest błędem (np. test), pojedyncze nieudane aplikacje też nie.
-pub async fn install_base_apps() -> Result<(), CmdError> {
-    if !std::path::Path::new(SHRIMP_APPS).exists() || !std::path::Path::new("/usr/share/shrimp/base-apps.json").exists() {
-        return Ok(());
-    }
-    run(SHRIMP_APPS, &["--install", "--base"]).await.map(|_| ())
-}
-
-// ---------- zakończenie ----------
-
-/// Kodeki i sterowniki (jedna migawka transactional-update) oraz zdjęcie znacznika pierwszego
-/// uruchomienia. Zwraca true, jeśli trzeba uruchomić komputer ponownie.
-pub async fn apply(codecs: bool, nvidia: &str, later_apps: &[String], auto_updates: bool) -> Result<bool, CmdError> {
-    let apps = later_apps.join(" ");
-    let out = run(
-        "pkexec",
-        &[APPLY_HELPER, "--codecs", if codecs { "yes" } else { "no" }, "--nvidia", nvidia, "--apps", &apps,
-          "--auto-updates", if auto_updates { "yes" } else { "no" }],
-    )
-    .await?;
-    Ok(out.lines().any(|l| l.trim() == "reboot"))
-}
-
-pub async fn reboot() {
-    let _ = run("systemctl", &["reboot"]).await;
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn steam_gets_32bit_gl() {
-        assert!(app_dependencies("com.valvesoftware.Steam").iter().any(|d| d.contains("GL32")));
-        assert!(app_dependencies("org.mozilla.firefox").is_empty());
-    }
 
     #[test]
     fn default_browser_in_mimeapps() {
@@ -653,38 +387,12 @@ mod tests {
     }
 
     #[test]
-    fn usb_status_json() {
-        let u = parse_usb("{\"pending\":true,\"present\":true,\"device\":\"/dev/sdb\",\"bytes\":5,\"files\":2}\n").unwrap();
-        assert!(u.pending && u.present && u.device == "/dev/sdb" && u.files == 2);
-        assert_eq!(parse_usb("{\"pending\":false}").unwrap(), Usb::default());
-        assert!(parse_usb("śmieci").is_none());
-    }
-
-    #[test]
     fn nmcli_parsing_dedupes_and_unescapes() {
         let out = "Dom 5G:80:WPA2\nDom 5G:40:WPA2\nKawiarnia:40:\nA\\:B:60:WPA3\n:20:WPA2\n";
         let n = parse_networks(out);
         assert_eq!(n.iter().map(|x| x.ssid.as_str()).collect::<Vec<_>>(), ["Dom 5G", "A:B", "Kawiarnia"]);
         assert!(n[0].secure && !n[2].secure);
         assert_eq!(n[0].strength, 80);
-    }
-
-    #[test]
-    fn windows_apps_from_contract_example() {
-        let p = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../install-schema/shrimp.example.json");
-        let v: serde_json::Value = serde_json::from_str(&std::fs::read_to_string(p).unwrap()).unwrap();
-        let (apps, store) = windows_apps_of(&v);
-        assert_eq!(apps.unwrap()[1], "Steam");
-        assert_eq!(store.unwrap(), vec!["SpotifyAB.SpotifyMusic".to_string()]);
-    }
-
-    #[test]
-    fn windows_apps_from_shrimp_json() {
-        let v = serde_json::json!({ "apps": [{ "name": "Steam", "version": "2.10" }, { "publisher": "x" }], "storeApps": ["SpotifyAB.SpotifyMusic"] });
-        let (a, s) = windows_apps_of(&v);
-        assert_eq!(a.unwrap(), ["Steam"]);
-        assert_eq!(s.unwrap(), ["SpotifyAB.SpotifyMusic"]);
-        assert_eq!(windows_apps_of(&serde_json::json!({})), (None, None));
     }
 
     #[test]

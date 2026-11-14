@@ -1,0 +1,13 @@
+# Nośnik Shrimp: sesja live wybrana przed startem GDM (shrimp-live-session).
+[Unit]
+Description=Shrimp: sesja nośnika (kreator albo pulpit testowy)
+After=systemd-udevd.service
+Before=accounts-daemon.service display-manager.service gdm.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/libexec/shrimp-live-session
+
+[Install]
+WantedBy=graphical.target

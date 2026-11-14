@@ -1,4 +1,4 @@
-# Nośnik Shrimp: kopia tokenu Agamy czytelna dla użytkownika live (okno shrimp-setup --install).
+# Nośnik Shrimp: kopia tokenu Agamy czytelna dla użytkownika live (kreator shrimp-setup i test instalacji).
 [Unit]
 Description=Shrimp Setup: token Agamy dla sesji live
 After=agama-web-server.service
