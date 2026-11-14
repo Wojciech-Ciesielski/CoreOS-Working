@@ -69,6 +69,28 @@ for f in "$ENTRIES"/*.conf; do
   [ "$(basename "$f")" = "$ENTRY" ] || rm -f "$f"
 done
 sed -i -e 's/^title .*/title Shrimp/' "$ENTRIES/$ENTRY"
+# KIWI 11 zostawia w wpisie systemd-boot puste „options” dla ISO live. Uzupełniamy je tak, jak KIWI robi to
+# w menu GRUB (bootloader/config/grub2.py: root=live:CDLABEL, rd.live.image, trwała nakładka) i dokładamy
+# kernelcmdline z config.kiwi.
+if ! grep -q '^options .*root=live:' "$ENTRIES/$ENTRY"; then
+  CFG=${KIWI_CONFIG:-out/desc/config.kiwi}; [ -f "$CFG" ] || CFG=boxes/image-base/config.kiwi
+  OPTS=$(python3 - "$CFG" <<'PY'
+import sys, xml.etree.ElementTree as ET
+t = ET.parse(sys.argv[1]).getroot().find("preferences/type")
+o = [f"root=live:CDLABEL={t.get('volid', 'CDROM')}", "rd.live.image"]
+if t.get("hybridpersistent") == "true":
+    o.append("rd.live.overlay.persistent")
+    if t.get("hybridpersistent_filesystem"):
+        o.append(f"rd.live.overlay.cowfs={t.get('hybridpersistent_filesystem')}")
+o += (t.get("kernelcmdline") or "").split()
+print(" ".join(o))
+PY
+)
+  OLD=$(sed -n 's/^options *//p' "$ENTRIES/$ENTRY")
+  sed -i '/^options/d' "$ENTRIES/$ENTRY"
+  echo "options $OPTS${OLD:+ $OLD}" >> "$ENTRIES/$ENTRY"
+  log "options uzupełnione z config.kiwi"
+fi
 grep -q '^options .*root=live:' "$ENTRIES/$ENTRY" || { log "BŁĄD: wpis bez root=live: ($ENTRY)"; cat "$ENTRIES/$ENTRY"; exit 1; }
 cat > "$W/esp/loader/loader.conf" <<EOF
 default $ENTRY
