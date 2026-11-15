@@ -24,7 +24,7 @@ import sys
 import time
 
 USB, OUT = sys.argv[1], sys.argv[2]
-SESSION_RE = r"shrimp-test|shrimp-setup|sudo|shrimp-live-session|SHRIMP_TEST|sesja no|GNOME Session|gnome-session|gdm|kgx|cherry|Cherry|accounts-daemon"
+SESSION_RE = r"shrimp-test|zsh|shrimp-setup|sudo|shrimp-live-session|SHRIMP_TEST|sesja no|GNOME Session|gnome-session|gdm|kgx|cherry|Cherry|accounts-daemon"
 USB_GUARD = os.path.join(os.path.dirname(USB) or '.', 'usb-guard.img')
 if not os.path.exists(USB_GUARD):
     USB_GUARD = USB
@@ -278,7 +278,17 @@ try:
     type_text("logger shrimp-test: terminal\n")
     pause(10)
     if not serial_has("live", "shrimp-test: terminal"):
-        print(f"[{t():6.1f}s] terminal did not run the typed command, trying GNOME Console", flush=True)
+        # Keyboard focus: a click in the terminal (window in the middle, sidebar on the left).
+        print(f"[{t():6.1f}s] terminal did not run the typed command, clicking into it", flush=True)
+        click(1150, 600)
+        pause(2)
+        type_text("logger shrimp-test: terminal after click\n")
+        pause(10)
+    if not serial_has("live", "shrimp-test: terminal"):
+        # Cherry's zsh start files in a pseudo terminal: errors go to the journal (serial port).
+        run_dialog("sh -c 'ZDOTDIR=$HOME/.config/cherry/zsh script -qec \"zsh -i -c \\\"print zsh-ok\\\"\" /dev/null 2>&1 | logger -t shrimp-test-zsh'")
+        pause(15)
+        print(f"[{t():6.1f}s] trying GNOME Console", flush=True)
         run_dialog("kgx")
         pause(10)
         type_text("logger shrimp-test: terminal kgx\n")
