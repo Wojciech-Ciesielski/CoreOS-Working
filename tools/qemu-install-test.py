@@ -269,37 +269,14 @@ try:
     set_net(False)  # Vivobook: no cable, Wi-Fi not set up yet
     wait_stages(240, 15, "live")
     stage("setup", keep_duplicates=True)
-    # Setup window up: drive Agama from a terminal (same token and config as Setup).
+    # Setup window up: drive Agama from the test script (same token and config as Setup).
     run_dialog("sh -c 'logger shrimp-test: run-dialog; pkill -f shrimp-setup'")
     pause(5)
+    # Cherry first (its window and zsh are checked by run-install.sh), then the test script from the stick
+    # through Alt+F2: run-install.sh gives it a pseudo terminal, no typing into a terminal window.
     run_dialog(TERMINAL)
-    pause(10)
-    # The journal goes to the serial port: a marker shows that the terminal runs what is typed.
-    type_text("logger shrimp-test: terminal\n")
-    pause(10)
-    if not serial_has("live", "shrimp-test: terminal"):
-        # Keyboard focus: a click in the terminal (window in the middle, sidebar on the left).
-        print(f"[{t():6.1f}s] terminal did not run the typed command, clicking into it", flush=True)
-        click(1150, 600)
-        pause(2)
-        type_text("logger shrimp-test: terminal after click\n")
-        pause(10)
-    if not serial_has("live", "shrimp-test: terminal"):
-        # Cherry's zsh start files in a pseudo terminal: errors go to the journal (serial port).
-        run_dialog("sh -c 'ZDOTDIR=$HOME/.config/cherry/zsh script -qec \"zsh -i -c \\\"print zsh-ok\\\"\" /dev/null 2>&1 | logger -t shrimp-test-zsh'")
-        pause(15)
-        print(f"[{t():6.1f}s] trying GNOME Console", flush=True)
-        run_dialog("kgx")
-        pause(10)
-        type_text("logger shrimp-test: terminal kgx\n")
-        pause(10)
-    print(f"[{t():6.1f}s] run dialog: {serial_has('live', 'shrimp-test: run-dialog')}, "
-          f"terminal: {serial_has('live', 'shrimp-test: terminal')}", flush=True)
-    # Where the stick is mounted is part of what we check: log it, fall back to mounting by label.
-    type_text("echo shrimp | sudo -S true; findmnt -l | sudo tee /dev/ttyS0; "
-              "f=$(find /run /media -maxdepth 5 -name agama-install.sh 2>/dev/null | head -n1); "
-              "[ -n \"$f\" ] || { sudo mkdir -p /tmp/stick; sudo mount -o ro LABEL=SHRIMP_LIVE /tmp/stick; "
-              "f=/tmp/stick/shrimp-test/agama-install.sh; }; echo \"script: $f\" | sudo tee /dev/ttyS0; bash \"$f\"\n")
+    pause(15)
+    run_dialog("sh -c 'bash \"$(find /run /media -maxdepth 5 -name run-install.sh 2>/dev/null | head -n1)\"'")
     pause(20)
     stage("terminal", keep_duplicates=True)
     deadline = t() + 150 * 60  # offline: ~3900 steps of package installation from the stick took ~85 min in QEMU
