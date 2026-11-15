@@ -118,6 +118,6 @@ przy budowie (motywy, ikony MoreWaita, rozszerzenia), bo nie ma ich w manifestac
 
 ## Co dalej
 
-- Pliki generowane przez `configure.sh` (MoreWaita, rozszerzenia, motyw GRUB) też w manifeście, żeby
+- Pliki generowane przez `configure.sh` (MoreWaita, rozszerzenia) też w manifeście, żeby
   `post-install.sh` nie miał listy katalogów.
 - Jeden box = jeden pakiet RPM: `box.toml` ma już wersję, pakiety, usługi i instalację do DESTDIR.

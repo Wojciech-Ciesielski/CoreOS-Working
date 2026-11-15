@@ -1,0 +1,8 @@
+#!/usr/bin/env python3
+"""Wartość z shrimp.toml dla skryptów: `tools/shrimp-var base.leap` → 16.1."""
+import pathlib, sys, tomllib
+
+data = tomllib.loads((pathlib.Path(__file__).resolve().parent.parent / "shrimp.toml").read_text())
+for part in sys.argv[1].split("."):
+    data = data[part]
+print(data)

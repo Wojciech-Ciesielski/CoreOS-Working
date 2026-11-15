@@ -1,0 +1,8 @@
+# Pendrive z Shrimp Install wraca do stanu sprzed instalacji (wybór z Setup: $STATE/usb/choice).
+[Unit]
+Description=Shrimp: przywrócenie pendrive'a z instalacji
+ConditionPathExists=/var/lib/shrimp-setup/usb/pending
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/shrimp-usb-backup auto

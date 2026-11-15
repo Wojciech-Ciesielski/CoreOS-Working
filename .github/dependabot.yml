@@ -6,14 +6,7 @@ updates:
     open-pull-requests-limit: 5
     groups:
       gtk-rs:
-        patterns: ["gtk4", "libadwaita", "glib", "gio", "webkit6"]
-  - package-ecosystem: npm
-    directory: /boxes/setup/web
-    schedule: { interval: weekly }
-    open-pull-requests-limit: 5
-    groups:
-      toolchain:
-        patterns: ["typescript", "vite", "vitest"]
+        patterns: ["gtk4", "libadwaita", "glib", "gio"]
   - package-ecosystem: github-actions
     directory: /
     schedule: { interval: monthly }

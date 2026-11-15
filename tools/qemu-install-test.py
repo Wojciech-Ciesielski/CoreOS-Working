@@ -6,16 +6,17 @@ Usage: qemu-install-test.py <usb.img> <outdir>
            exFAT SHRIMP_LIVE with LiveOS,
            shrimp-transfer/ with shrimp.json and files) plus shrimp-test/agama-install.sh.
 
-Phase 0 boots the stick with the Setup guard ON (no SHRIMP_TEST drive) and checks that a mouse
-click reaches the Setup window (Beta 3.2: the pointer moved, clicks did nothing). The journal is
-forwarded to the serial port (kernel parameters added to the stick's GRUB by the workflow).
+Phase 0 boots the stick like a real computer (no SHRIMP_TEST drive: kiosk session with Setup only) and
+checks that a mouse click reaches the Setup window (Beta 3.2: the pointer moved, clicks did nothing). The journal is
+forwarded to the serial port (kernel parameters added to the stick's systemd-boot entry by the workflow).
 Phase 1 boots the stick (UEFI) with an empty 40 GB disk, waits for the Setup window, then
 runs shrimp-test/agama-install.sh, which drives Agama with Setup's own configuration and
-logs to the serial port. Phase 2 boots the installed disk and captures the first boot
-(Setup, first configuration). Everything lands in <outdir> (serial*.log, result.json); no screenshots.
+logs to the serial port. Phase 2 boots the installed disk, logs in at GDM (no autologin, no
+second wizard: Setup collected everything before the installation) and captures the first boot. Everything lands in <outdir> (serial*.log, result.json); no screenshots.
 """
 import json
 import os
+import re
 import shutil
 import socket
 import subprocess
@@ -23,6 +24,7 @@ import sys
 import time
 
 USB, OUT = sys.argv[1], sys.argv[2]
+SESSION_RE = r"shrimp-test|zsh|shrimp-setup|sudo|shrimp-live-session|SHRIMP_TEST|sesja no|GNOME Session|gnome-session|gdm|kgx|cherry|Cherry|accounts-daemon"
 USB_GUARD = os.path.join(os.path.dirname(USB) or '.', 'usb-guard.img')
 if not os.path.exists(USB_GUARD):
     USB_GUARD = USB
@@ -36,8 +38,8 @@ shutil.copy("/usr/share/OVMF/OVMF_VARS_4M.fd", VARS)
 
 
 def noguard_drive(outdir):
-    """Small FAT drive labelled SHRIMP_TEST: switches off the Shrimp Setup guard (GNOME Shell
-    extension shrimp-setup-guard@shrimp), so the test can close Setup and use the desktop."""
+    """Small FAT drive labelled SHRIMP_TEST: the live session is the GNOME desktop instead of the
+    kiosk session (shrimp-live-session), so the test can close Setup and use a terminal."""
     img = os.path.join(outdir, "noguard.img")
     if not os.path.exists(img):
         subprocess.run(["mkfs.vfat", "-C", "-n", "SHRIMP_TEST", img, "2048"], check=True, stdout=subprocess.DEVNULL)
@@ -239,14 +241,14 @@ result = "unknown"
 guard = "unknown"
 try:
     # ---------------------------------------------------------- phase 0 ----
-    # Setup guard on, like on a real computer: a click in the middle of the Setup window must reach Setup.
+    # Kiosk session, like on a real computer: a click in the middle of the Setup window must reach Setup.
     qemu = start("guard", True, guard=True)
     qmp = QMP(QMP_SOCK)
     deadline = t() + 360
-    while t() < deadline and qemu.poll() is None and not serial_has("guard", "shrimp-setup-guard: window:"):
+    while t() < deadline and qemu.poll() is None and not serial_has("guard", "shrimp-setup: start"):
         time.sleep(5)
     stage("guard-setup", keep_duplicates=True)
-    pause(20)  # Setup page loaded (Agama token, first screen)
+    pause(30)  # first screen up (Agama answered, splash gone)
     for _ in range(3):
         if serial_has("guard", "shrimp-setup: pierwsze klikni"):
             break
@@ -254,9 +256,11 @@ try:
         pause(8)
     if serial_has("guard", "shrimp-setup: pierwsze klikni"):
         guard = "click-ok"
-    elif serial_has("guard", "shrimp-setup-guard: window:"):
+    elif serial_has("guard", "shrimp-setup: start"):
         guard = "click-blocked"
-    print(f"[{t():6.1f}s] Setup guard: {guard}", flush=True)
+    else:
+        guard = "no-setup"
+    print(f"[{t():6.1f}s] kiosk session: {guard} (session: {'kiosk' if serial_has('guard', 'shrimp-live-session: shrimp-setup') else 'not kiosk'})", flush=True)
     stop()
 
     # ---------------------------------------------------------- phase 1 ----
@@ -265,16 +269,14 @@ try:
     set_net(False)  # Vivobook: no cable, Wi-Fi not set up yet
     wait_stages(240, 15, "live")
     stage("setup", keep_duplicates=True)
-    # Setup window up: drive Agama from a terminal (same token and config as Setup).
-    run_dialog("pkill -f shrimp-setup")
+    # Setup window up: drive Agama from the test script (same token and config as Setup).
+    run_dialog("sh -c 'logger shrimp-test: run-dialog; pkill -f shrimp-setup'")
     pause(5)
+    # Cherry first (its window and zsh are checked by run-install.sh), then the test script from the stick
+    # through Alt+F2: run-install.sh gives it a pseudo terminal, no typing into a terminal window.
     run_dialog(TERMINAL)
-    pause(10)
-    # Where the stick is mounted is part of what we check: log it, fall back to mounting by label.
-    type_text("echo shrimp | sudo -S true; findmnt -l | sudo tee /dev/ttyS0; "
-              "f=$(find /run /media -maxdepth 5 -name agama-install.sh 2>/dev/null | head -n1); "
-              "[ -n \"$f\" ] || { sudo mkdir -p /tmp/stick; sudo mount -o ro LABEL=SHRIMP_LIVE /tmp/stick; "
-              "f=/tmp/stick/shrimp-test/agama-install.sh; }; echo \"script: $f\" | sudo tee /dev/ttyS0; bash \"$f\"\n")
+    pause(15)
+    run_dialog("sh -c 'bash \"$(find /run /media -maxdepth 5 -name run-install.sh 2>/dev/null | head -n1)\"'")
     pause(20)
     stage("terminal", keep_duplicates=True)
     deadline = t() + 150 * 60  # offline: ~3900 steps of package installation from the stick took ~85 min in QEMU
@@ -301,6 +303,12 @@ try:
         qemu = start("installed", False)
         qmp = QMP(QMP_SOCK)
         wait_stages(t() + 300, 10, "firstboot")
+        stage("gdm", keep_duplicates=True)
+        # GDM: the only account is selected, password from the test configuration.
+        keys("ret")
+        pause(3)
+        type_text("shrimp\n")
+        wait_stages(t() + 90, 10, "login")
         stage("firstboot", keep_duplicates=True)
         # What the installed system got: files from Windows, Setup state, autostart, journal.
         run_dialog(TERMINAL)
@@ -309,7 +317,7 @@ try:
                   "sudo ls -la /var/lib/shrimp-setup; sudo cat /var/lib/shrimp-setup/install.json; "
                   "ls /etc/xdg/autostart /usr/etc/xdg/autostart; cat /etc/gdm/custom.conf; "
                   "plymouth-set-default-theme; ls /usr/share/plymouth/themes; gnome-extensions list --details; "
-                  "echo ===MISSING; for f in /usr/share/fonts/truetype/inter /usr/share/grub2/themes/shrimp "
+                  "echo ===MISSING; for f in /usr/share/fonts/truetype/inter "
                   "/usr/share/plymouth/themes/shrimp /usr/share/shrimp /usr/share/icons/MoreWaita /usr/bin/cocktail /usr/bin/panko /usr/bin/cherry "
                   "/usr/bin/shrimp-apps; do [ -e $f ] || echo missing $f; done; "
                   "rpm -q typelib-1_0-GnomeDesktop-3_0 gvfs plymouth-plugin-script plymouth-plugin-label adwaita-icon-theme "
@@ -336,9 +344,18 @@ finally:
     # The serial logs are only an artifact; print the parts worth reading into the job log too.
     try:
         with open(os.path.join(OUT, "serial-guard.log"), errors="replace") as f:
-            glines = [l for l in f.read().splitlines() if "shrimp-setup" in l or "JS ERROR" in l]
+            glines = [l for l in f.read().splitlines() if re.search(SESSION_RE, l) or "JS ERROR" in l]
         print("::group::serial-guard: Setup guard and Setup", flush=True)
         print("\n".join(glines[-80:]))
+        print("::endgroup::", flush=True)
+    except OSError:
+        pass
+    # Live session (kiosk or GNOME desktop with SHRIMP_TEST), Setup, terminal: why the test script did not start.
+    try:
+        with open(os.path.join(OUT, "serial-live.log"), errors="replace") as f:
+            llines = [l for l in f.read().splitlines() if re.search(SESSION_RE, l)]
+        print("::group::serial-live: session, Setup and terminal", flush=True)
+        print("\n".join(llines[:120]))
         print("::endgroup::", flush=True)
     except OSError:
         pass
@@ -362,7 +379,7 @@ finally:
         if a >= 0:
             print(text[a:b if b > a else a + 20000][:20000])
         print("::endgroup::", flush=True)
-    print(f"done, Agama {result}, Setup guard {guard}, logs in {OUT}", flush=True)
+    print(f"done, Agama {result}, kiosk click {guard}, logs in {OUT}", flush=True)
 offline = "yes" if serial_has("live", "===OFFLINE-ISSUE yes") else "no"
 offline_repo = serial_has("live", "===OFFLINE-REPO yes")
 reprobe = "ok" if serial_has("live", "=== REPROBE probe") or offline_repo else "FAILED"
@@ -383,5 +400,5 @@ if result != "finished":
     print(f"::error::Agama did not finish the installation ({result})", flush=True)
     sys.exit(1)
 if guard == "click-blocked":
-    print("::error::Setup guard on: a click did not reach the Setup window", flush=True)
+    print("::error::Kiosk session: a click did not reach the Setup window", flush=True)
     sys.exit(1)

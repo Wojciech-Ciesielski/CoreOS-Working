@@ -1,19 +1,25 @@
 [package]
 name = "shrimp-setup"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
-description = "Okno Setup Shrimp: instalacja nad Agamą i pierwsza konfiguracja"
+description = "Shrimp Setup: instalacja i pierwsza konfiguracja w jednym kreatorze (GTK4 + libadwaita, nad Agamą)"
 license = "GPL-3.0-or-later"
+build = "build.rs"
+
+[build-dependencies]
+# teksty z ../i18n i lista języków z boxes/i18n-core/langs.ts (shrimp_i18n::codegen)
+shrimp-i18n = { path = "../../shrimp-i18n" }
 
 [dependencies]
+shrimp-i18n = { path = "../../shrimp-i18n" }
 gtk = { package = "gtk4", version = "0.11", features = ["v4_14"] }
-webkit6 = "0.6"
-tokio = { version = "1", features = ["rt-multi-thread", "macros", "process", "net", "fs", "sync", "time"] }
-axum = "0.8"
-tower-http = { version = "0.7", features = ["fs"] }
+adw = { package = "libadwaita", version = "0.9", features = ["v1_5"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-rand = "0.10"
+# API Agamy na 127.0.0.1 (bez TLS)
+ureq = { version = "2", default-features = false, features = ["json"] }
+# wzorce katalogu programów Windows (składnia JS z lookahead, np. „^Microsoft Edge(?!.*WebView)”)
+fancy-regex = "0.14"
 
 [profile.release]
 lto = true

@@ -17,14 +17,14 @@
         <rpm-excludedocs>true</rpm-excludedocs>
         <rpm-check-signatures>false</rpm-check-signatures>
         <bootsplash-theme>shrimp</bootsplash-theme>
-        <bootloader-theme>shrimp</bootloader-theme>
         <type image="iso" primary="true" flags="overlay"
               hybridpersistent="true" hybridpersistent_filesystem="ext4"
-              firmware="uefi" mediacheck="false"
+              firmware="uefi" eficsm="false" mediacheck="false" efifatimagesize="600"
               kernelcmdline="splash quiet loglevel=3 rd.udev.log_level=3 udev.log_level=3 systemd.show_status=false rd.systemd.show_status=false vt.global_cursor_default=0 multipath=off"
-              editbootconfig="edit_boot_config.sh"
               volid="SHRIMP_LIVE" publisher="Shrimp" application_id="Shrimp">
-            <bootloader name="grub2" output_console="gfxterm" input_console="console" video_mode="1920x1080" timeout="1" timeout_style="hidden"/>
+            <!-- Bez GRUB-a (Beta 6): systemd-boot z ukrytym menu. KIWI składa z niego obraz EFI (jądro i initrd w os/),
+                 a tools/iso-boot.sh dokłada shim (Secure Boot) i kopiuje te pliki do drzewa ISO dla Shrimp Install. -->
+            <bootloader name="systemd_boot" timeout="0"/>
         </type>
     </preferences>
     <users>

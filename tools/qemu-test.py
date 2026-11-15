@@ -2,9 +2,9 @@
 """Boot the Shrimp live ISO in QEMU and log every stage (no screenshots are taken or kept).
 
 Usage: qemu-test.py <iso> <outdir> <mode>
-  mode: uefi        full run: silent GRUB (no menu), Plymouth, desktop, extensions, lock screen, GDM, shutdown
-        secureboot  OVMF with Microsoft keys enrolled, F4 opens the hidden GRUB menu, boot stages only
-        bios        SeaBIOS, F4 opens the hidden GRUB menu, boot stages only
+  mode: uefi        full run: hidden systemd-boot menu, Plymouth, desktop, extensions, lock screen, GDM, shutdown
+        secureboot  OVMF with Microsoft keys enrolled (shim → systemd-boot → kernel), boot stages only
+The medium has no BIOS boot (no GRUB since Beta 6), so there is no bios mode.
 
 Keys and clicks are injected through QMP, and diagnostics typed into a terminal in the live session are
 written to the serial port (<outdir>/serial.log).
@@ -23,8 +23,8 @@ QMP_SOCK = os.path.join(OUT, "qmp.sock")
 W, H = 1920, 1080
 
 def noguard_drive(outdir):
-    """Small FAT drive labelled SHRIMP_TEST: switches off the Shrimp Setup guard (GNOME Shell
-    extension shrimp-setup-guard@shrimp), so the test can close Setup and use the desktop."""
+    """Small FAT drive labelled SHRIMP_TEST: gives the GNOME desktop instead of the kiosk session
+    (shrimp-live-session), so the test can close Setup and use the desktop."""
     img = os.path.join(outdir, "noguard.img")
     if not os.path.exists(img):
         subprocess.run(["mkfs.vfat", "-C", "-n", "SHRIMP_TEST", img, "2048"], check=True, stdout=subprocess.DEVNULL)
@@ -42,19 +42,18 @@ cmd = [
     "-qmp", f"unix:{QMP_SOCK},server=on,wait=off",
     "-serial", f"file:{os.path.join(OUT, 'serial.log')}",
 ]
-if MODE in ("uefi", "secureboot"):
-    if MODE == "uefi":
-        code, vars_ = "/usr/share/OVMF/OVMF_CODE_4M.fd", "/usr/share/OVMF/OVMF_VARS_4M.fd"
-        cmd += ["-machine", "q35"]
-    else:
-        code, vars_ = "/usr/share/OVMF/OVMF_CODE_4M.secboot.fd", "/usr/share/OVMF/OVMF_VARS_4M.ms.fd"
-        cmd += ["-machine", "q35,smm=on", "-global", "driver=cfi.pflash01,property=secure,value=on"]
-    local_vars = os.path.join(OUT, "vars.fd")
-    shutil.copy(vars_, local_vars)
-    cmd += ["-drive", f"if=pflash,format=raw,unit=0,readonly=on,file={code}",
-            "-drive", f"if=pflash,format=raw,unit=1,file={local_vars}"]
-else:
+if MODE not in ("uefi", "secureboot"):
+    raise SystemExit(f"unknown mode {MODE} (uefi | secureboot)")
+if MODE == "uefi":
+    code, vars_ = "/usr/share/OVMF/OVMF_CODE_4M.fd", "/usr/share/OVMF/OVMF_VARS_4M.fd"
     cmd += ["-machine", "q35"]
+else:
+    code, vars_ = "/usr/share/OVMF/OVMF_CODE_4M.secboot.fd", "/usr/share/OVMF/OVMF_VARS_4M.ms.fd"
+    cmd += ["-machine", "q35,smm=on", "-global", "driver=cfi.pflash01,property=secure,value=on"]
+local_vars = os.path.join(OUT, "vars.fd")
+shutil.copy(vars_, local_vars)
+cmd += ["-drive", f"if=pflash,format=raw,unit=0,readonly=on,file={code}",
+        "-drive", f"if=pflash,format=raw,unit=1,file={local_vars}"]
 
 if MODE == "uefi":
     cmd += noguard_drive(OUT)
@@ -204,16 +203,7 @@ def run_dialog(command):
 
 # ----------------------------------------------------------------- plan ----
 try:
-    if MODE != "uefi":
-        # The menu is hidden (1 s); F4 during that second must open it. F4 does nothing in
-        # SeaBIOS/OVMF (Esc would open their own menus), so tap it from power-on.
-        while t() < 25 and qemu.poll() is None:
-            press(["f4"])
-            stage("grub-f4")
-            time.sleep(0.25)
-        stage("grub-menu", keep_duplicates=True)
-        keys("ret")
-    # Normal start: no GRUB menu, no boot text, then the Plymouth splash. Dense frames.
+    # Normal start: no boot menu (systemd-boot, timeout 0), no boot text, then the Plymouth splash. Dense frames.
     wait_stages(45, 1, "boot")
     if MODE != "uefi":
         wait_stages(240, 5, "boot")
@@ -221,7 +211,7 @@ try:
 
     # Live session: GDM autologin into GNOME (software rendering, so be patient).
     wait_stages(150, 10, "session")
-    # Shrimp Setup opens full screen on its own once Agama is up (autostart, shrimp-setup --install).
+    # Shrimp Setup opens full screen on its own (autostart in the GNOME session of the SHRIMP_TEST stick).
     wait_stages(t() + 90, 10, "setup")
     stage("setup", keep_duplicates=True)
     # Close it for the desktop checks below (the window itself refuses to close).
@@ -261,8 +251,8 @@ try:
     diag = (
         "{ echo ===EXT; gnome-extensions list --details; echo ===SHELL; "
         "sudo journalctl -b _UID=$(id -u) -o short-monotonic --no-pager | grep -iE 'gnome-shell|extension|JS ERROR|ding' | tail -n 300; "
-        "echo ===SETUP; ls -l /usr/bin/shrimp-setup /etc/xdg/autostart/shrimp-setup-install.desktop /run/shrimp-setup /run/agama; "
-        "systemctl status --no-pager agama-web-server agama shrimp-setup-token | head -n 60; "
+        "echo ===SETUP; ls -l /usr/bin/shrimp-setup /etc/xdg/autostart/shrimp-setup-test.desktop /usr/share/wayland-sessions/shrimp-setup.desktop /run/shrimp-setup /run/agama; "
+        "systemctl status --no-pager agama-web-server agama shrimp-setup-token shrimp-live-session | head -n 60; "
         "sudo journalctl -b -o short-monotonic --no-pager | grep -iE 'shrimp-setup|agama|webkit' | tail -n 150; "
         "echo ===FAILED; systemctl --failed --no-pager; echo ===END; } 2>&1 | sudo tee /dev/ttyS0 >/dev/null\n"
     )

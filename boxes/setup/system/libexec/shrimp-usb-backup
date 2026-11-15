@@ -4,7 +4,10 @@
 #                                              z sumami SHA-256 przed i po zapisie
 #   shrimp-usb-backup status                   JSON dla Setup (bez uprawnień): czy jest co przywracać i czy pendrive jest podłączony
 #   shrimp-usb-backup restore URZĄDZENIE       pkexec: sprawdza kopię, formatuje TEN pendrive, wgrywa pliki, sprawdza je
-#   shrimp-usb-backup to-home [--user NAZWA]   pkexec: kopia do ~/Pendrive (gdy przywrócenie nie wyjdzie albo użytkownik rezygnuje)
+#   shrimp-usb-backup to-home [--user NAZWA]   kopia do ~/Pendrive (gdy przywrócenie nie wyjdzie albo użytkownik rezygnuje)
+#   shrimp-usb-backup auto                     shrimp-usb-restore.timer (root): wybór z Setup ($STATE/usb/choice,
+#                                              „restore|home” i nazwa konta): przywraca pendrive, gdy jest podłączony,
+#                                              albo kopiuje pliki do ~/Pendrive; po 3 nieudanych próbach też do ~/Pendrive
 #
 # Zasady: nic nie jest formatowane, dopóki kopia na dysku komputera nie przejdzie sprawdzenia sum;
 # formatowany jest tylko dysk USB o tym samym numerze seryjnym i rozmiarze co pendrive z kopii;
@@ -64,7 +67,7 @@ disk_identity() {
 stash() {
   local root="" src="" cand
   while [ $# -gt 0 ]; do case "$1" in --root) root=$2; shift 2 ;; *) die "nieznany argument: $1" ;; esac; done
-  for cand in "${SHRIMP_USB_SRC:-}" /run/initramfs/live/shrimp-backup /run/media/*/*/shrimp-backup; do
+  for cand in "${SHRIMP_USB_SRC:-}" /run/overlay/live/shrimp-backup /run/initramfs/live/shrimp-backup /run/media/*/*/shrimp-backup; do
     [ -n "$cand" ] && [ -f "$cand/manifest.tsv" ] && { src=$cand; break; }
   done
   [ -n "$src" ] || { log "brak shrimp-backup na nośniku"; exit 3; }
@@ -231,11 +234,43 @@ to_home() {
   echo "$dest"
 }
 
+# Powiadomienie w sesjach zalogowanych użytkowników (bez sesji: tylko dziennik).
+notify() {
+  local u
+  for u in $(loginctl list-users --no-legend 2>/dev/null | awk '$1 >= 1000 { print $1 }'); do
+    runuser -u "$(id -nu "$u")" -- env DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$u/bus" \
+      notify-send -a Shrimp -i drive-removable-media "Shrimp" "$1" 2>/dev/null || true
+  done
+}
+
+auto() {
+  [ -f "$STATE/usb/pending" ] || exit 0
+  local choice user fails=0 dev out
+  { read -r choice; read -r user; } <"$STATE/usb/choice" 2>/dev/null || { choice=restore; user=""; }
+  [ -n "$user" ] || user=$(getent passwd | awk -F: '$3 >= 1000 && $3 < 60000 { print $1; exit }')
+  [ -f "$STATE/usb/fails" ] && fails=$(cat "$STATE/usb/fails")
+  if [ "$choice" = restore ] && [ "$fails" -lt 3 ]; then
+    dev=$(find_device)
+    if [ -z "$dev" ]; then log "pendrive niepodłączony, czekam"; exit 0; fi
+    if out=$( (restore "/dev/$dev") 2>&1); then
+      notify "Pendrive jest taki jak przed instalacją. Możesz go odłączyć."
+      exit 0
+    fi
+    log "$out"
+    echo $((fails + 1)) >"$STATE/usb/fails"
+    [ $((fails + 1)) -lt 3 ] && exit 0
+  fi
+  [ -n "$user" ] || die "brak konta dla kopii pendrive'a"
+  out=$(to_home --user "$user") || die "kopia do katalogu domowego nie wyszła"
+  notify "Pliki z pendrive'a są w folderze $(basename "$out")."
+}
+
 cmd=${1:-}; shift || true
 case "$cmd" in
   stash) stash "$@" ;;
   status) status ;;
   restore) restore "$@" ;;
   to-home) to_home "$@" ;;
-  *) die "użycie: shrimp-usb-backup stash|status|restore|to-home" ;;
+  auto) auto ;;
+  *) die "użycie: shrimp-usb-backup stash|status|restore|to-home|auto" ;;
 esac

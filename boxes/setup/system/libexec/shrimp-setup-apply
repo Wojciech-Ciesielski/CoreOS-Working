@@ -1,44 +1,23 @@
 #!/bin/bash
-# Pomocnik Setup Shrimp uruchamiany przez pkexec na końcu pierwszej konfiguracji.
-#   shrimp-setup-apply --codecs yes|no --nvidia nvidia|open|none [--apps "id1 id2"] [--auto-updates yes|no]
-#   shrimp-setup-apply --later   (shrimp-setup-later.service: to, co czekało na internet)
-# Instaluje kodeki i sterownik w jednej migawce (transactional-update), zdejmuje logowanie
-# automatyczne i znacznik pierwszego uruchomienia. Wypisuje „reboot”, gdy potrzebny restart.
-# Bez internetu (instalacja offline, brak karty Wi-Fi, brak kabla) pierwsza konfiguracja kończy się normalnie,
-# a kodek H.264, sterownik NVIDIA i wybrane programy czekają w $STATE/later: shrimp-setup-later.timer
-# doinstaluje je sam, gdy komputer połączy się z siecią.
+# Doinstalowanie po pierwszym starcie (shrimp-setup-later.service, root):
+#   shrimp-setup-apply --later
+# Kreator na nośniku zapisuje wybory w $STATE/later (shrimp-setup --apply w post-install.sh): kodek H.264,
+# sterownik NVIDIA i programy z kroku Programy. Gdy jest internet, kodeki i sterownik wchodzą w jednej migawce
+# (transactional-update, aktywne po restarcie), programy z Flathub od razu. Wypisuje „reboot”, gdy potrzebny restart.
+# Bez internetu nic nie robi; shrimp-setup-later.timer spróbuje znowu za 10 minut.
 set -euo pipefail
-CODECS=no; NVIDIA=none; APPS=""; LATER=no; AUTO=yes
-while [ $# -gt 0 ]; do
-  case "$1" in
-    --codecs) CODECS=$2; shift 2 ;;
-    --nvidia) NVIDIA=$2; shift 2 ;;
-    --apps) APPS=$2; shift 2 ;;
-    --auto-updates) AUTO=$2; shift 2 ;;
-    --later) LATER=yes; shift ;;
-    *) echo "nieznany argument: $1" >&2; exit 2 ;;
-  esac
-done
+CODECS=no; NVIDIA=none; APPS=""; LATER=no
+case "${1:-}" in
+  --later) LATER=yes ;;
+  *) echo "użycie: shrimp-setup-apply --later" >&2; exit 2 ;;
+esac
 STATE=${SHRIMP_STATE:-/var/lib/shrimp-setup}
 online() { [ -n "${SHRIMP_ONLINE:-}" ] && { [ "$SHRIMP_ONLINE" = 1 ]; return; }; curl -fsI -m 10 https://download.opensuse.org/ >/dev/null 2>&1; }
-if [ "$LATER" = yes ]; then
-  [ -f "$STATE/later" ] || exit 0
-  online || { echo "shrimp-setup-apply: nadal bez internetu, czekam" >&2; exit 0; }
-  # shellcheck source=/dev/null
-  . "$STATE/later"
-else
-  [ -f "$STATE/first-boot" ] || { echo "pierwsza konfiguracja już zakończona" >&2; exit 1; }
-fi
-# Pierwsza konfiguracja bez internetu: wybory zapisane na później, pakiety nie są nawet szukane.
+[ -f "$STATE/later" ] || exit 0
+online || { echo "shrimp-setup-apply: nadal bez internetu, czekam" >&2; exit 0; }
+# shellcheck source=/dev/null
+. "$STATE/later"
 OFFLINE=no
-if [ "$LATER" = no ] && ! online; then
-  OFFLINE=yes
-  printf 'CODECS=%q\nNVIDIA=%q\nAPPS=%q\n' "$CODECS" "$NVIDIA" "$APPS" > "$STATE/later"
-  echo "shrimp-setup-apply: bez internetu, kodeki/NVIDIA/programy później (shrimp-setup-later)" >&2
-elif [ "$LATER" = no ] && [ -n "$APPS" ]; then
-  # Sieć wróciła dopiero pod koniec: programy, które nie zdążyły wejść, i tak doinstaluje shrimp-setup-later.
-  printf 'CODECS=no\nNVIDIA=none\nAPPS=%q\n' "$APPS" > "$STATE/later"
-fi
 # shellcheck source=/dev/null
 . "${SHRIMP_DRIVERS_CONF:-/usr/share/shrimp/linux/drivers.conf}"
 # Wybór wersji otwartego modułu NVIDIA (wspólny z budową nośnika); dołączany w migawce.
@@ -142,34 +121,15 @@ if [ -n "$NV_SCRIPT" ]; then
   fi
 fi
 
-if [ "$LATER" = yes ]; then
-  # Programy z pierwszej konfiguracji (zestaw podstawowy i wybór użytkownika), potem koniec czekania.
-  SA=/usr/bin/shrimp-apps
-  if [ -x "$SA" ] && [ -f /usr/share/shrimp/base-apps.json ]; then "$SA" --install --base >&2 || echo "shrimp-setup-apply: zestaw podstawowy nie wszedł" >&2; fi
-  flatpak remote-add --system --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo >&2 || true
-  for a in $APPS; do
-    if [ -x "$SA" ]; then "$SA" --install "$a" >&2; else flatpak install --system --noninteractive -y flathub "$a" >&2; fi \
-      || echo "shrimp-setup-apply: program $a nie wszedł" >&2
-  done
-  rm -f "$STATE/later"
-  echo "shrimp-setup-apply: doinstalowane po połączeniu z siecią" >&2
-  [ "$REBOOT" = yes ] && echo reboot
-  exit 0
-fi
-
-# Koniec pierwszej konfiguracji. Aktualizacje w tle (domyślnie tak): nowa migawka bez restartu,
-# zmiany wchodzą przy następnym uruchomieniu komputera.
-AU=${SHRIMP_AUTO_UPDATES:-/usr/libexec/shrimp-auto-updates}
-if [ -x "$AU" ]; then
-  if [ "$AUTO" = no ]; then "$AU" off >&2; else "$AU" on >&2; fi
-fi
-sed -i 's/^DISPLAYMANAGER_AUTOLOGIN=.*/DISPLAYMANAGER_AUTOLOGIN=""/' /etc/sysconfig/displaymanager 2>/dev/null || true
-if [ -f /etc/gdm/custom.conf ]; then
-  sed -i 's/^AutomaticLoginEnable=.*/AutomaticLoginEnable=False/; /^AutomaticLogin=/d' /etc/gdm/custom.conf
-fi
-rm -f "$STATE/first-boot"
-# Setup znika z systemu: bez autostartu (okno i tak by od razu kończyło, a strażnik Setup wyłącza się
-# razem ze znacznikiem). Program zostaje w /usr (system tylko do odczytu), ale nic go już nie uruchamia.
-rm -f "${SHRIMP_AUTOSTART_DIR:-/etc/xdg/autostart}/shrimp-setup-first-boot.desktop"
+# Programy z pierwszej konfiguracji (zestaw podstawowy i wybór użytkownika), potem koniec czekania.
+SA=/usr/bin/shrimp-apps
+if [ -x "$SA" ] && [ -f /usr/share/shrimp/base-apps.json ]; then "$SA" --install --base >&2 || echo "shrimp-setup-apply: zestaw podstawowy nie wszedł" >&2; fi
+flatpak remote-add --system --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo >&2 || true
+for a in $APPS; do
+  if [ -x "$SA" ]; then "$SA" --install "$a" >&2; else flatpak install --system --noninteractive -y flathub "$a" >&2; fi \
+    || echo "shrimp-setup-apply: program $a nie wszedł" >&2
+done
+rm -f "$STATE/later"
+echo "shrimp-setup-apply: doinstalowane po połączeniu z siecią" >&2
 [ "$REBOOT" = yes ] && echo reboot
 exit 0

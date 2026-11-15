@@ -1,2 +1,0 @@
-1	Tölvustillingar
-2	Shrimp ræsist eftir %d s

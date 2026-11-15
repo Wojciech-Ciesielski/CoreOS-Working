@@ -1,5 +1,5 @@
 #!/bin/bash
-# Test shrimp-setup-apply na atrapach zypper/transactional-update/mokutil i sztucznym sysfs.
+# Test shrimp-setup-apply --later (wybory z kreatora w $STATE/later) na atrapach zypper/transactional-update/mokutil i sztucznym sysfs.
 #   setup/tests/test-apply.sh
 set -euo pipefail
 HERE=$(cd "$(dirname "$0")" && pwd)
@@ -39,12 +39,22 @@ cat > "$T/bin/mokutil" <<Z
 #!/bin/bash
 cat "$T/sb" 2>/dev/null
 Z
+cat > "$T/bin/flatpak" <<Z
+#!/bin/bash
+echo "flatpak \$*" >> "$LOG"
+Z
 chmod +x "$T/bin/"*
 export SHRIMP_NVIDIA_LIB=$HERE/../../linu-x/root/usr/share/shrimp/linux/nvidia-open.sh
 export SHRIMP_ONLINE=1 PATH="$T/bin:$PATH" SHRIMP_AUTOSTART_DIR=$T/autostart SHRIMP_STATE=$T/state SHRIMP_SYSFS=$T/sys SHRIMP_DRIVERS_CONF=$HERE/../../linu-x/root/usr/share/shrimp/linux/drivers.conf
 
 gpu() { rm -rf "$T/sys"; mkdir -p "$T/sys/bus/pci/devices/0000:01:00.0"; local d=$T/sys/bus/pci/devices/0000:01:00.0; echo 0x10de > "$d/vendor"; echo 0x030000 > "$d/class"; echo "$1" > "$d/device"; }
-run() { : > "$LOG"; touch "$T/state/first-boot"; mkdir -p "$T/autostart"; touch "$T/autostart/shrimp-setup-first-boot.desktop"; "$APPLY" "$@" 2>>"$T/stderr"; }
+# run --codecs yes|no --nvidia nvidia|open|none [--apps "..."]: plik later jak z shrimp-setup --apply, potem --later.
+run() {
+  local c=no n=none a=""
+  while [ $# -gt 0 ]; do case "$1" in --codecs) c=$2 ;; --nvidia) n=$2 ;; --apps) a=$2 ;; esac; shift 2; done
+  : > "$LOG"; printf "CODECS=%s\nNVIDIA=%s\nAPPS='%s'\n" "$c" "$n" "$a" > "$T/state/later"
+  "$APPLY" --later 2>>"$T/stderr"
+}
 fail() { echo "FAIL: $*"; echo "--- log"; cat "$LOG"; echo "--- stderr"; tail -5 "$T/stderr"; exit 1; }
 
 # 1. RTX 3060 (Turing+), G07 dostępne: otwarty sterownik G07 + kodeki, jedna migawka, restart.
@@ -64,8 +74,7 @@ grep -q 'install --no-recommends --auto-agree-with-licenses nvidia-compute-utils
 grep -q 'install --no-recommends gstreamer-plugin-pipewire gstreamer-plugins-good mozilla-openh264' "$LOG" || fail "1: kodeki"
 ! grep -q 'addrepo.*openh264' "$LOG" || fail "1: repozytorium openh264 dodane, choć pakiet jest"
 grep -q 'systemctl enable nvidia-suspend.service' "$LOG" || fail "1: usługi uśpienia NVIDIA"
-[ -f "$T/state/nvidia-flatpak" ] && [ ! -f "$T/state/first-boot" ] || fail "1: znaczniki"
-[ ! -e "$T/autostart/shrimp-setup-first-boot.desktop" ] || fail "1: autostart Setup został po konfiguracji"
+[ -f "$T/state/nvidia-flatpak" ] && [ ! -f "$T/state/later" ] || fail "1: znaczniki"
 
 # 2. G07 bez żadnej wersji z modułem, G06 ma moduł: wybiera G06.
 printf '%s\n' nvidia-open-driver-G06-signed-kmp-meta nvidia-video-G06 nvidia-gl-G06 > "$T/avail"
@@ -75,10 +84,10 @@ grep -q 'install --no-recommends --auto-agree-with-licenses nvidia-open-driver-G
 grep -q 'nvidia-gl-G06 = 580.178.04$' "$LOG" || fail "2: biblioteki G06"
 ! grep -qE 'nvidia-(video|gl)-G07' "$LOG" || fail "2: biblioteki G07 bez modułu"
 
-# 2b. Żadna seria nie ma modułu: migawka się nie udaje, bez restartu, konfiguracja i tak kończy się.
+# 2b. Żadna seria nie ma modułu: migawka się nie udaje, bez restartu; kolejna próba przy następnym liczniku.
 : > "$T/good"
-OUT=$(run --codecs no --nvidia nvidia)
-[ -z "$OUT" ] && [ ! -f "$T/state/first-boot" ] || fail "2b: brak modułu"
+OUT=$(run --codecs no --nvidia nvidia) && fail "2b: kod 0 mimo nieudanej migawki"
+[ -z "$OUT" ] && grep -q '^FAILS=1' "$T/state/later" || fail "2b: brak modułu"
 
 # 3. GTX 1060 (Pascal) z Secure Boot: bez sterownika NVIDIA, bez migawki.
 gpu 0x1c03; echo "SecureBoot enabled" > "$T/sb"
@@ -100,20 +109,11 @@ rm -rf "$T/sys"; printf '%s\n' gstreamer-plugins-good > "$T/avail"
 run --codecs yes --nvidia none >/dev/null
 grep -q 'zypper --non-interactive addrepo --refresh http://codecs.opensuse.org/openh264/' "$LOG" || fail "6: repozytorium openh264"
 grep -q 'install --no-recommends gstreamer-plugins-good$' "$LOG" || fail "6: kodeki"
-# 7. Bez internetu: pierwsza konfiguracja się kończy, pakiety i programy czekają w later.
+# 7. Wybory z kreatora bez internetu: nic się nie instaluje, later czeka.
 echo 595.99.02-lp161.10.1 > "$T/good"
 gpu 0x2504
 printf '%s\n' openSUSE-repos-Leap-NVIDIA nvidia-open-driver-G07-signed-kmp-meta gstreamer-plugins-good > "$T/avail"
-cat > "$T/bin/flatpak" <<Z
-#!/bin/bash
-echo "flatpak \$*" >> "$LOG"
-Z
-chmod +x "$T/bin/flatpak"
-OUT=$(SHRIMP_ONLINE=0 run --codecs yes --nvidia nvidia --apps "org.gimp.GIMP com.valvesoftware.Steam")
-[ -z "$OUT" ] || fail "7: reboot bez internetu"
-! grep -q '^transactional-update' "$LOG" || fail "7: migawka bez internetu"
-[ ! -f "$T/state/first-boot" ] || fail "7: pierwsza konfiguracja nie zakończona"
-grep -q '^NVIDIA=nvidia' "$T/state/later" && grep -q 'org.gimp.GIMP' "$T/state/later" || fail "7: brak later"
+printf "CODECS=yes\nNVIDIA=nvidia\nAPPS='org.gimp.GIMP com.valvesoftware.Steam'\n" > "$T/state/later"
 # 8. Później, nadal bez sieci: nic się nie dzieje, later zostaje.
 : > "$LOG"; SHRIMP_ONLINE=0 "$APPLY" --later 2>>"$T/stderr"
 [ ! -s "$LOG" ] && [ -f "$T/state/later" ] || fail "8: działanie bez sieci"
@@ -123,4 +123,4 @@ grep -q '^NVIDIA=nvidia' "$T/state/later" && grep -q 'org.gimp.GIMP' "$T/state/l
 [ "$(grep -c '^transactional-update' "$LOG")" = 1 ] || fail "9: migawka"
 grep -q 'flatpak install --system --noninteractive -y flathub com.valvesoftware.Steam' "$LOG" || fail "9: programy"
 [ ! -f "$T/state/later" ] || fail "9: later został"
-echo "test-apply: 10/10 OK"
+echo "test-apply: OK"

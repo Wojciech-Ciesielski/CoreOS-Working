@@ -29,7 +29,7 @@ mkdir -p out
     ok=0
     for i in 1 2 3; do
       zypper -n in --no-recommends python3-kiwi kiwi-systemdeps-iso-media kiwi-systemdeps-bootloaders kiwi-systemdeps-filesystems binutils findutils gawk sed coreutils \
-        nodejs-default npm-default tar gzip rustup gcc createrepo_c squashfs xorriso gpg2 && { ok=1; break; }
+        nodejs-default npm-default tar gzip rustup gcc createrepo_c squashfs xorriso gpg2 mtools dosfstools gptfdisk && { ok=1; break; }
       sed -i -E 's#https?://(download|cdn)\.opensuse\.org#https://downloadcontent.opensuse.org#' /etc/zypp/repos.d/*.repo
       zypper -n clean -a; sleep 20; zypper -n --gpg-auto-import-keys ref -f
     done
@@ -41,9 +41,17 @@ mkdir -p out
     SB=out/shrimp-box/release/shrimp-box
     rm -rf out/build
     \$SB image iso-live out/desc --repo '$REPO'
+    # systemd-boot: jądro i initrd leżą na partycji EFI ISO (ok. 600 MB). KIWI odrzuca to z myślą o limicie El Torito
+    # (31 MB), ale iso-boot.sh i tak dokleja partycję EFI jako osobną partycję (appended_partition_2), jak archiso.
+    mkdir -p /root/.config/kiwi
+    # Format listy (KIWI z Leap/Tumbleweed w kontenerze budowy); nowsze KIWI 11 czytają słownik, ale z tym
+    # obrazem ten zapis kończył się KiwiRuntimeConfigFormatError przy formacie słownika.
+    printf 'runtime_checks:\n  - disable:\n      - check_efi_fat_image_has_correct_size\n' > /root/.config/kiwi/config.yml
     kiwi-ng --logfile out/kiwi.log --color-output system build \
       --description out/desc --set-repo '$REPO' --target-dir out/build
     mv out/build/*.iso out/
+    # Rozruch bez GRUB-a: shim + systemd-boot na partycji EFI i te same pliki w drzewie ISO (Shrimp Install).
+    tools/iso-boot.sh \$(ls out/*.iso | head -n1) out/build/build/image-root
     # Adwaita icon sources used by the boot themes, printed for design previews
     for n in go-next-symbolic changes-prevent-symbolic system-lock-screen-symbolic network-wireless-signal-excellent-symbolic \\
              audio-volume-high-symbolic battery-level-100-symbolic system-shutdown-symbolic; do
@@ -52,7 +60,7 @@ mkdir -p out
     done
     # pakiety sesji live (dla repozytorium offline: extra/)
     chroot out/build/build/image-root rpm -qa --qf '%{NAME}\\n' | sort -u > out/live-packages.txt
-    grep -h 'GRUB fonts\|WARNING\|extension installed\|optional package installed\|config.sh\|Linu(x)' out/kiwi.log | tail -40 || true
+    grep -h 'WARNING\|extension installed\|optional package installed\|config.sh\|Linu(x)' out/kiwi.log | tail -40 || true
     rm -rf out/build out/desc
     # Instalacja bez internetu: repozytorium pakietów w ISO (LiveOS/shrimp-repo.squashfs).
     # SHRIMP_OFFLINE_REPO=0 pomija ten krok (szybsza budowa do testów samego nośnika).

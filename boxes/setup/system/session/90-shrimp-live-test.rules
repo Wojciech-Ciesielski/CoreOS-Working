@@ -1,0 +1,3 @@
+# Nośnik Shrimp: dysk SHRIMP_TEST (testy QEMU, pomoc techniczna) daje pulpit GNOME zamiast kiosku z kreatorem,
+# także gdy pojawi się dopiero po starcie GDM.
+ACTION=="add", SUBSYSTEM=="block", ENV{ID_FS_LABEL}=="SHRIMP_TEST", TAG+="systemd", ENV{SYSTEMD_WANTS}+="shrimp-live-session-switch.service"

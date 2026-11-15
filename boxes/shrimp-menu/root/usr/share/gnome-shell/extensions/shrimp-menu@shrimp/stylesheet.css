@@ -5,3 +5,14 @@
 .shrimp-menu-header {
   font-weight: bold;
 }
+
+/* Dash to Dock przy samej dolnej krawędzi ekranu (Beta 6): bez odstępu od krawędzi, zaokrąglone tylko górne
+   rogi. #uiGroup podnosi pierwszeństwo nad arkuszem Dash to Dock, który wczytuje się po tym. */
+#uiGroup #dashtodockContainer.bottom #dash {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+#uiGroup #dashtodockContainer.bottom #dash .dash-background {
+  margin-bottom: 0;
+  border-radius: 18px 18px 0 0;
+}

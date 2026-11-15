@@ -1,2 +1,0 @@
-1	Bilgisayar ayarları
-2	Shrimp %d sn içinde başlayacak

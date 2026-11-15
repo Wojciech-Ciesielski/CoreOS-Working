@@ -50,4 +50,10 @@ cmp "$T/usb2/big.iso" "$T/big" || fail "big.iso"
 [ ! -e "$T/state/usb" ] && [ ! -e "$T/state/usb-summary.json" ] || fail "kopia nie została usunięta po udanym przywróceniu"
 "$B" status | grep -q '"pending":false' || fail "status po przywróceniu"
 
+# 4. auto (licznik po pierwszym starcie): pendrive niepodłączony = czekanie, kopia zostaje
+rm -rf "$T/state" "$T/root$T/state"; SHRIMP_USB_SRC=$S "$B" stash --root "$T/root" 2>/dev/null; mv "$T/root$T/state" "$T/state"
+printf 'restore\njan\n' >"$T/state/usb/choice"
+"$B" auto 2>/dev/null || fail "auto bez pendrive'a"
+[ -f "$T/state/usb/pending" ] || fail "auto usunęło kopię bez przywrócenia"
+
 echo OK

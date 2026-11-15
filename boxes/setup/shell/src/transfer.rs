@@ -1,14 +1,12 @@
 //! Dane z Shrimp Install (shrimp-install/README.md › shrimp.json) na nośniku:
 //! `shrimp-transfer/shrimp.json` i `shrimp-transfer/files/<klucz>/…`.
 //!
-//! - `--install`: podpowiedzi dla kroków 1–9 (imię, język, strefa, klawiatura, BitLocker, rozmiar plików)
-//!   trafiają do strony jako `window.SHRIMP_TRANSFER` ([`hint`]).
-//! - `--restore` (post-install.sh, root): pliki czekają w katalogu domowym nowego konta, w [`STAGE`]
-//!   (układ jak docelowy), a shrimp.json trafia do /var/lib/shrimp-setup (lista programów dla kroku Programy).
-//! - Pierwsza konfiguracja, krok „Pliki z Windows” (jako użytkownik): po zgodzie pliki przechodzą do
-//!   folderów użytkownika ([`place`]), bez zgody do jednego folderu „Windows” w katalogu domowym.
+//! - Kreator Setup: podpowiedzi (imię, język, strefa, klawiatura, BitLocker, pliki, programy) z [`setup_transfer`].
+//! - `--restore` (post-install.sh, root): pliki trafiają do katalogu domowego nowego konta według wyboru
+//!   z kroku „Pliki z Windows” ([`Placement`]): do folderów użytkownika albo do jednego folderu.
+//!   Bez wyboru czekają w poczekalni [`STAGE`]. shrimp.json trafia do /var/lib/shrimp-setup.
 use serde::Deserialize;
-use serde_json::{json, Value};
+use serde_json::Value;
 use std::fs;
 use std::io::{self, Read, Write};
 use std::path::{Path, PathBuf};
@@ -41,54 +39,50 @@ pub fn known_format(v: &Value) -> bool {
     v["version"].as_u64().unwrap_or(FORMAT_VERSION) == FORMAT_VERSION
 }
 
-/// Tylko to, czego potrzebują kroki instalacji. Lista programów i ścieżki zostają poza stroną.
-/// Nieznana wersja formatu: bez podpowiedzi (imię, język mogłyby znaczyć co innego), tylko rozmiar plików.
-pub fn hint(v: &Value) -> Value {
-    let bytes: u64 = v["files"].as_array().map(|a| a.iter().filter_map(|f| f["bytes"].as_u64()).sum()).unwrap_or(0);
+/// Podpowiedzi dla Setup: konto, język, strefa, klawiatura, BitLocker, rozmiar i foldery plików, programy z Windows.
+/// Nieznana wersja formatu: tylko rozmiar plików (imię, język mogłyby znaczyć co innego).
+pub fn setup_transfer(v: &Value) -> crate::logic::Transfer {
+    let files: Vec<&Value> = v["files"].as_array().map(|a| a.iter().collect()).unwrap_or_default();
+    let bytes: u64 = files.iter().filter_map(|f| f["bytes"].as_u64()).sum();
+    let mut folders: Vec<(String, u64, u64)> = Vec::new();
+    for f in &files {
+        let key = f["key"].as_str().unwrap_or("other").to_string();
+        let b = f["bytes"].as_u64().unwrap_or(0);
+        match folders.iter_mut().find(|x| x.0 == key) {
+            Some(x) => x.2 += b,
+            None => folders.push((key, f["files"].as_u64().unwrap_or(0), b)),
+        }
+    }
+    let mut t = crate::logic::Transfer { bytes, folders, ..Default::default() };
     if !known_format(v) {
         eprintln!("shrimp-setup: shrimp.json w wersji {} (znana: {FORMAT_VERSION}), bez podpowiedzi", v["version"]);
-        return json!({ "bytes": bytes });
+        return t;
     }
-    json!({
-        "user": v["user"],
-        "locale": v["locale"],
-        "bitlocker": v["windows"]["bitlocker"].as_bool().unwrap_or(false),
-        "bytes": bytes,
-    })
+    let s = |x: &Value| x.as_str().filter(|s| !s.is_empty()).map(str::to_string);
+    t.user.name = s(&v["user"]["name"]).unwrap_or_default();
+    t.user.full_name = s(&v["user"]["fullName"]).unwrap_or_default();
+    t.locale.language = s(&v["locale"]["language"]);
+    t.locale.format = s(&v["locale"]["format"]);
+    t.locale.timezone = s(&v["locale"]["timezone"]);
+    t.locale.keyboards = v["locale"]["keyboards"].as_array().map(|a| a.iter().filter_map(s).collect()).unwrap_or_default();
+    t.bitlocker = v["windows"]["bitlocker"].as_bool().unwrap_or(false);
+    t.apps = v["apps"].as_array().map(|a| a.iter().filter_map(|x| s(&x["name"])).collect()).unwrap_or_default();
+    t.store_apps = v["storeApps"].as_array().map(|a| a.iter().filter_map(s).collect()).unwrap_or_default();
+    t.default_browser = s(&v["defaultBrowser"]);
+    t
 }
 
-/// Skrypt strony z podpowiedziami (JSON jest poprawnym wyrażeniem JS; `</` nie może zamknąć skryptu,
-/// ale skrypt użytkownika i tak nie jest w HTML).
-#[cfg(test)]
-pub fn hint_script(v: &Value) -> String {
-    page_hint(Some(v), None)
+/// Kopia zawartości pendrive'a zrobiona przez Shrimp Install (shrimp-backup/manifest.tsv): (pliki, bajty).
+pub fn usb_backup() -> Option<(u64, u64)> {
+    let roots = [PathBuf::from("/run/overlay/live"), PathBuf::from("/run/initramfs/live")];
+    let extra = find_dir().and_then(|d| d.parent().map(Path::to_path_buf));
+    let manifest = extra.iter().chain(roots.iter()).map(|r| r.join("shrimp-backup/manifest.tsv")).find(|p| p.is_file())?;
+    Some(parse_manifest(&fs::read_to_string(manifest).ok()?))
 }
 
-/// Podpowiedzi dla strony: shrimp.json (jeśli jest) i język menu GRUB z nośnika (`grubLang`).
-/// Bez shrimp.json strona i tak dostaje język z Windows, gdy Shrimp Install zapisał shrimp-lang.cfg.
-pub fn page_hint(v: Option<&Value>, grub: Option<String>) -> String {
-    let mut h = v.map(hint).unwrap_or_else(|| json!({}));
-    if let Some(g) = grub {
-        h["grubLang"] = json!(g);
-    }
-    format!("window.SHRIMP_TRANSFER = {h};")
-}
-
-/// `set shrimp_lang=de` → `de` (boot/grub2/shrimp-lang.cfg, zapisuje go Shrimp Install z języka interfejsu Windows).
-pub fn parse_grub_lang(s: &str) -> Option<String> {
-    s.lines()
-        .find_map(|l| l.trim().strip_prefix("set shrimp_lang="))
-        .map(|v| v.trim().trim_matches('"').to_string())
-        .filter(|v| !v.is_empty() && v.len() <= 16 && v.chars().all(|c| c.is_ascii_alphanumeric() || c == '-' || c == '_'))
-}
-
-/// Język menu GRUB z nośnika, z którego działa sesja live.
-pub fn grub_lang() -> Option<String> {
-    let mut roots = vec![PathBuf::from("/run/overlay/live"), PathBuf::from("/run/initramfs/live")];
-    if let Some(d) = find_dir().and_then(|d| d.parent().map(Path::to_path_buf)) {
-        roots.insert(0, d);
-    }
-    roots.iter().find_map(|r| fs::read_to_string(r.join("boot/grub2/shrimp-lang.cfg")).ok()).and_then(|s| parse_grub_lang(&s))
+/// Wiersze `f⇥sha⇥bajty⇥…` opisu kopii (format: shrimp-install/rufus/src/shrimp/usbbackup.c).
+pub fn parse_manifest(s: &str) -> (u64, u64) {
+    s.lines().filter_map(|l| l.strip_prefix("f\t")).fold((0, 0), |(n, b), l| (n + 1, b + l.split('\t').nth(1).and_then(|x| x.parse::<u64>().ok()).unwrap_or(0)))
 }
 
 // ---------- przywracanie plików ----------
@@ -298,7 +292,8 @@ fn mkdirs_owned(base: &Path, rel: &str, a: &Account) -> io::Result<PathBuf> {
 }
 
 /// Ile plików i bajtów czeka w poczekalni (`home`/[`STAGE`]). Brak poczekalni = (0, 0).
-pub fn staged(home: &Path) -> (u64, u64) {
+#[cfg(test)]
+fn staged(home: &Path) -> (u64, u64) {
     fn walk(p: &Path, n: &mut (u64, u64)) {
         let Ok(rd) = fs::read_dir(p) else { return };
         for e in rd.flatten() {
@@ -316,58 +311,32 @@ pub fn staged(home: &Path) -> (u64, u64) {
     n
 }
 
-/// To samo co [`staged`] dla każdego folderu najwyższego poziomu poczekalni (Dokumenty, Obrazy…),
-/// od największego: nazwa, pliki, bajty. Pliki leżące wprost w poczekalni są pod nazwą "".
-pub fn staged_folders(home: &Path) -> Vec<(String, u64, u64)> {
-    let stage = home.join(STAGE);
-    let Ok(rd) = fs::read_dir(&stage) else { return Vec::new() };
-    let mut out: Vec<(String, u64, u64)> = Vec::new();
-    let mut loose = (0u64, 0u64);
-    for e in rd.flatten() {
-        let Ok(md) = e.metadata() else { continue };
-        if md.is_dir() {
-            let mut n = (0u64, 0u64);
-            count(&e.path(), &mut n);
-            out.push((e.file_name().to_string_lossy().into_owned(), n.0, n.1));
-        } else {
-            loose.0 += 1;
-            loose.1 += md.len();
-        }
-    }
-    if loose.0 > 0 {
-        out.push((String::new(), loose.0, loose.1));
-    }
-    out.sort_by(|a, b| b.2.cmp(&a.2));
-    out
-}
-
-fn count(p: &Path, n: &mut (u64, u64)) {
-    let Ok(rd) = fs::read_dir(p) else { return };
-    for e in rd.flatten() {
-        let Ok(md) = e.metadata() else { continue };
-        if md.is_dir() {
-            count(&e.path(), n);
-        } else {
-            n.0 += 1;
-            n.1 += md.len();
-        }
-    }
+/// Nazwa folderu na pliki z Windows bez ukośników i kropki na początku („Windows”, gdy nic nie zostanie).
+pub fn safe_folder(f: &str) -> String {
+    let f = f.replace(['/', '\\'], "").trim().to_string();
+    if f.is_empty() || f.starts_with('.') { "Windows".into() } else { f }
 }
 
 /// Przenosi pliki z poczekalni: `into_folders` = do folderów użytkownika (Dokumenty, Obrazy… i katalog
 /// domowy, scalając; nazwy zajęte dostają „(Windows)”), inaczej całość do folderu `folder` w katalogu domowym.
 /// Ten sam system plików, więc to tylko zmiana nazw. Poczekalnia znika.
-pub fn place(home: &Path, into_folders: bool, folder: &str) -> Result<Stats, String> {
-    fn merge(src: &Path, dst: &Path, st: &mut Stats) {
+pub fn place(home: &Path, into_folders: bool, folder: &str, owner: Option<(u32, u32)>) -> Result<Stats, String> {
+    let merge_owner = owner;
+    fn merge(src: &Path, dst: &Path, st: &mut Stats, owner: Option<(u32, u32)>) {
         let Ok(rd) = fs::read_dir(src) else { return };
-        if let Err(e) = fs::create_dir_all(dst) {
-            st.failed.push(format!("{}: {e}", dst.display()));
-            return;
+        if !dst.is_dir() {
+            if let Err(e) = fs::create_dir_all(dst) {
+                st.failed.push(format!("{}: {e}", dst.display()));
+                return;
+            }
+            if let Some((u, g)) = owner {
+                let _ = std::os::unix::fs::chown(dst, Some(u), Some(g));
+            }
         }
         for e in rd.flatten() {
             let (from, to) = (e.path(), dst.join(e.file_name()));
             if from.is_dir() && to.is_dir() {
-                merge(&from, &to, st);
+                merge(&from, &to, st, owner);
                 continue;
             }
             let to = free_name(&to);
@@ -383,7 +352,7 @@ pub fn place(home: &Path, into_folders: bool, folder: &str) -> Result<Stats, Str
     }
     let mut st = Stats::default();
     let dst = if into_folders { home.to_path_buf() } else { free_name(&home.join(folder)) };
-    merge(&stage, &dst, &mut st);
+    merge(&stage, &dst, &mut st, merge_owner);
     if st.failed.is_empty() {
         fs::remove_dir_all(&stage).map_err(|e| e.to_string())?;
         Ok(st)
@@ -393,7 +362,13 @@ pub fn place(home: &Path, into_folders: bool, folder: &str) -> Result<Stats, Str
 }
 
 /// `shrimp-setup --restore [--from DIR] [--root /mnt] --user NAZWA` (post-install.sh, jako root).
-pub fn restore(from: Option<PathBuf>, root: &Path, user: &str) -> Result<Stats, String> {
+/// Gdzie trafiają pliki z Windows (krok „Pliki z Windows” w Setup): do folderów użytkownika albo do jednego folderu.
+pub enum Placement {
+    Folders,
+    Folder(String),
+}
+
+pub fn restore(from: Option<PathBuf>, root: &Path, user: &str, placement: Option<Placement>) -> Result<Stats, String> {
     let dir = from.or_else(find_dir).ok_or("brak shrimp-transfer na nośniku")?;
     let v = load(&dir).ok_or("nie można odczytać shrimp.json")?;
     let a = account(root, user).ok_or_else(|| format!("brak konta {user} w {}", root.display()))?;
@@ -439,12 +414,23 @@ pub fn restore(from: Option<PathBuf>, root: &Path, user: &str) -> Result<Stats, 
             }
         }
     }
+    // Wybór z Setup: od razu na miejsce (bez poczekalni i bez pytania po pierwszym uruchomieniu).
+    if let Some(p) = placement {
+        let (into, folder) = match p {
+            Placement::Folders => (true, String::new()),
+            Placement::Folder(f) => (false, safe_folder(&f)),
+        };
+        if let Err(e) = place(&real_home, into, &folder, Some((a.uid, a.gid))) {
+            st.failed.push(e);
+        }
+    }
     Ok(st)
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use serde_json::json;
 
     #[test]
     fn user_dirs() {
@@ -505,7 +491,7 @@ mod tests {
         fs::create_dir_all(root.join("home/jan/.config")).unwrap();
         fs::write(root.join("etc/passwd"), "root:x:0:0::/root:/bin/bash\njan:x:1000:1000:Jan:/home/jan:/bin/bash\n").unwrap();
         fs::write(root.join("home/jan/.config/user-dirs.dirs"), "XDG_DOCUMENTS_DIR=\"$HOME/Dokumenty\"\n").unwrap();
-        let st = restore(Some(tr.clone()), &root, "jan").unwrap();
+        let st = restore(Some(tr.clone()), &root, "jan", None).unwrap();
         let h = root.join("home/jan");
         let w = h.join(STAGE);
         assert_eq!(fs::read_to_string(w.join("Dokumenty/Umowy/najem.pdf")).unwrap(), "pdf");
@@ -514,11 +500,11 @@ mod tests {
         assert!(root.join("var/lib/shrimp-setup/shrimp.json").is_file());
         assert_eq!(st.files, 3);
         assert_eq!(staged(&h), (3, 7));
-        assert!(restore(Some(tr), &root, "ola").is_err());
+        assert!(restore(Some(tr), &root, "ola", None).is_err());
         // Zgoda: do folderów użytkownika, z konfliktem nazw.
         fs::create_dir_all(h.join("Dokumenty/Umowy")).unwrap();
         fs::write(h.join("Dokumenty/Umowy/najem.pdf"), "stary").unwrap();
-        let st = place(&h, true, "Windows").unwrap();
+        let st = place(&h, true, "Windows", None).unwrap();
         assert_eq!(st.files, 3);
         assert_eq!(fs::read_to_string(h.join("Dokumenty/Umowy/najem.pdf")).unwrap(), "stary");
         assert_eq!(fs::read_to_string(h.join("Dokumenty/Umowy/najem (Windows).pdf")).unwrap(), "pdf");
@@ -534,9 +520,12 @@ mod tests {
         fs::create_dir_all(h.join(STAGE).join("Obrazy")).unwrap();
         fs::write(h.join(STAGE).join("Obrazy/a.jpg"), "a").unwrap();
         fs::create_dir_all(h.join("Windows")).unwrap();
-        place(&h, false, "Windows").unwrap();
+        place(&h, false, "Windows", None).unwrap();
         assert_eq!(fs::read_to_string(h.join("Windows (Windows)/Obrazy/a.jpg")).unwrap(), "a");
-        assert!(place(&h, true, "Windows").unwrap().files == 0);
+        assert!(place(&h, true, "Windows", None).unwrap().files == 0);
+        assert_eq!(safe_folder("../x/"), "Windows");
+        assert_eq!(safe_folder("Pliki/Win"), "PlikiWin");
+        assert_eq!(safe_folder(" /"), "Windows");
         fs::remove_dir_all(&h).unwrap();
     }
 
@@ -547,45 +536,36 @@ mod tests {
     }
 
     #[test]
-    fn hint_from_contract_example() {
-        let v = example();
-        let h = hint(&v);
-        assert_eq!(h["user"]["name"], "Jan.Kowalski");
-        assert_eq!(h["locale"]["timezone"], "Europe/Warsaw");
-        assert_eq!(h["locale"]["keyboards"][0], "00000415");
-        assert_eq!(h["bitlocker"], false);
-        assert_eq!(h["bytes"], 3435973836u64 + 1024);
-        assert!(hint_script(&v).starts_with("window.SHRIMP_TRANSFER = {"));
+    fn transfer_from_contract_example() {
+        let t = setup_transfer(&example());
+        assert_eq!(t.user.name, "Jan.Kowalski");
+        assert_eq!(t.locale.timezone.as_deref(), Some("Europe/Warsaw"));
+        assert_eq!(t.locale.keyboards[0], "00000415");
+        assert!(!t.bitlocker);
+        assert_eq!(t.bytes, 3435973836u64 + 1024);
+        assert_eq!(t.apps[1], "Steam");
+        assert_eq!(t.store_apps, ["SpotifyAB.SpotifyMusic"]);
+        assert_eq!(t.default_browser.as_deref(), Some("FirefoxURL-308046B0AF4A39CB"));
+        assert_eq!(t.folders.iter().map(|f| f.0.as_str()).collect::<Vec<_>>(), ["documents", "other"]);
+        let p = crate::logic::prefill(&t, &crate::data::langs(), crate::data::REGIONS, crate::data::KEYBOARDS);
+        assert_eq!(crate::data::KEYBOARDS[p.kb.unwrap()].keymap, "pl");
+        assert_eq!(p.user, "jankowalski");
+        assert!(!crate::logic::map_windows_apps(&t.apps, &t.store_apps).is_empty());
     }
 
     #[test]
     fn unknown_format_version_gives_no_hints() {
         let mut v = example();
         v["version"] = json!(2);
-        let h = hint(&v);
-        assert!(h.get("user").is_none() && h.get("locale").is_none());
-        assert_eq!(h["bytes"], 3435973836u64 + 1024);
+        let t = setup_transfer(&v);
+        assert!(t.user.name.is_empty() && t.locale.language.is_none() && t.apps.is_empty());
+        assert_eq!(t.bytes, 3435973836u64 + 1024);
         assert!(known_format(&json!({})));
     }
 
     #[test]
-    fn grub_lang_from_shrimp_install() {
-        assert_eq!(parse_grub_lang("set shrimp_lang=de\n").as_deref(), Some("de"));
-        assert_eq!(parse_grub_lang("set shrimp_lang=ca-valencia").as_deref(), Some("ca-valencia"));
-        assert_eq!(parse_grub_lang("set shrimp_lang=\"x; rm\""), None);
-        assert_eq!(parse_grub_lang(""), None);
-        assert_eq!(page_hint(None, Some("en".into())), "window.SHRIMP_TRANSFER = {\"grubLang\":\"en\"};");
-        let v = example();
-        assert!(page_hint(Some(&v), Some("pl".into())).contains("\"grubLang\":\"pl\""));
-    }
-
-    #[test]
-    fn hint_sums_bytes_and_hides_apps() {
-        let v = json!({ "user": { "name": "jan" }, "windows": { "bitlocker": true }, "apps": [{ "name": "Steam" }],
-            "files": [{ "key": "documents", "bytes": 5 }, { "key": "other", "bytes": 7 }] });
-        let h = hint(&v);
-        assert_eq!(h["bytes"], 12);
-        assert_eq!(h["bitlocker"], true);
-        assert!(h.get("apps").is_none());
+    fn usb_manifest() {
+        let m = "#shrimp-backup 1\nlabel\tUSB\nd\tdocs\nf\t".to_string() + &"a".repeat(64) + "\t10\t0\t0\tdocs/a\nf\t" + &"b".repeat(64) + "\t5\t0\t0\tb\n";
+        assert_eq!(parse_manifest(&m), (2, 15));
     }
 }
