@@ -36,7 +36,7 @@ jobs:
           echo "sum=${sum:-none}" >> "$GITHUB_OUTPUT"
 
       - name: Cache Leap offline repository
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: cache/leap-${{ steps.leap.outputs.version }}
           key: leap-offline-${{ steps.leap.outputs.version }}-${{ steps.leap.outputs.sum }}
